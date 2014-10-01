@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:form id="frmUsuarios">
+			
+				<p:dataTable var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['usuario.lista.header']}"/>
+				    </f:facet>
+					<p:column headerText="#{msg['usuario.cpf']}">
+						<h:outputText value="#{usuario.cpfFormatado}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['usuario.nome']}">
+						<h:outputText value="#{usuario.nome}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['usuario.email']}">
+						<h:outputText value="#{usuario.email}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['usuario.telefone']}">
+						<h:outputText value="#{usuario.telefoneFormatado}" />
+					</p:column>
+				</p:dataTable>
+				
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
