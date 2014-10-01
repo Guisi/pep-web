@@ -1,0 +1,34 @@
+.ui-widget {
+	font-size: 12px !important;
+}
+
+body {
+	background-color: #F2F2F2;
+	margin: 0px;
+}
+
+#headerDiv {
+	background-color: #424548;
+	text-align: left;
+	color: white;
+	padding: 10px 0px 12px 15px;
+	font-size: 22px;
+	font-family: Verdana;
+}
+
+#fullPageDiv {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	position: relative;
+	text-align: center;
+}
+
+#centerPageDiv {
+	left: 50%;
+	margin-left: -50%;
+	position: absolute;
+	width: 100%;
+	min-width: 1000px;
+	height: 100%;
+}
