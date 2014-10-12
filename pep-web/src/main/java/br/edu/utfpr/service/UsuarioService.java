@@ -19,4 +19,16 @@ public class UsuarioService {
 	public List<Usuario> retornarUsuarios() {
 		return usuarioDao.retornarUsuarios();
 	}
+	
+	public Usuario retornarUsuario(Long id) {
+		return usuarioDao.getById(id);
+	}
+	
+	public void removerUsuario(Usuario usuario) {
+		usuarioDao.removeById(usuario.getId());
+	}
+	
+	public void salvarUsuario(Usuario usuario) {
+		usuarioDao.save(usuario);
+	}
 }

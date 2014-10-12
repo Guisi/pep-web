@@ -5,30 +5,101 @@
 body {
 	background-color: #F2F2F2;
 	margin: 0px;
+	height: 100%;
 }
 
-#headerDiv {
-	background-color: #424548;
+#headerBox {
+	width: 985px;
+	height: 70px;
+	margin: 0px 0px 0px 0px;
+	background: url(../resources/imgs/bg-header-box.jpg) 0px 0px;
+	background-repeat: repeat-x;
+	background-size: 100% 100%;
 	text-align: left;
-	color: white;
-	padding: 10px 0px 12px 15px;
-	font-size: 22px;
+	color: #000;
+	font-size: 19px;
 	font-family: Verdana;
+	font-weight: bold;
+	padding-top: 20px;
+	padding-left: 15px;
 }
 
 #fullPageDiv {
 	width: 100%;
 	height: 100%;
-	text-align: center;
 	position: relative;
 	text-align: center;
 }
 
 #centerPageDiv {
 	left: 50%;
-	margin-left: -50%;
-	position: absolute;
-	width: 100%;
+	margin-left: -500px;
+	position: relative;
+	width: 1000px;
 	min-width: 1000px;
 	height: 100%;
+}
+
+.noborder {
+	border: 0px;
+}
+
+.noborder tbody {
+	border: 0px;
+}
+
+.noborder tbody tr {
+	border: 0px;
+}
+
+.noborder tbody tr td {
+	border: 0px !important;
+}
+
+.labelColumn {
+	text-align: left;
+}
+
+.valueColumn {
+	text-align: left;
+}
+
+.datatable-button {
+	width: 28px;
+	height: 28px;
+	vertical-align: top;
+}
+
+.datatable-button-right {
+	margin-left: 5px;
+}
+
+fieldset {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.ui-datatable .ui-datatable-odd.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-datatable .ui-datatable-even.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-messages-info {
+	color: #393666 !important;
+	background-color: #D6E0F0 !important;
+	border-color: #B5B0F1 !important;
+}
 }

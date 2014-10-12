@@ -47,10 +47,24 @@ public class GenericDao<T extends BaseEntity, PK> {
 	}
 
 	public List<T> findAll() {
+		return findAll(new String[] {"id"});
+	}
+	
+	public List<T> findAll(String orderBy) {
+		return findAll(new String[] {orderBy});
+	}
+	
+	public List<T> findAll(String[] orderBy) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> q = qb.createQuery(getTypeClass());
 		Root<T> root = q.from(getTypeClass());
 		q.select(root);
+		
+		if (orderBy != null) {
+			for (String order : orderBy) {
+				q.orderBy(qb.asc(root.get(order)));
+			}
+		}
 		return entityManager.createQuery(q).getResultList();
 	}
 	
