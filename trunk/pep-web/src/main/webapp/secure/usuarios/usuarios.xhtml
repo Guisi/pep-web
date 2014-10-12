@@ -9,9 +9,17 @@
 
 	<ui:define name="content">
 		<p:panel>
+			<h:outputText value="#{usuarioMBean.emptyStr}"/>
+		
+			<p:messages autoUpdate="true" globalOnly="true"/>
+		
 			<h:form id="frmUsuarios">
+				<div align="right">
+					<p:commandButton value="#{msg['usuario.botao.novo']}" action="pretty:novoUsuario"
+						icon="ui-icon-document" style="margin: 0px; margin-bottom: 7px;"/>
+				</div>
 			
-				<p:dataTable var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}">
+				<p:dataTable id="usuarioTable" var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}">
 					<f:facet name="header">
 				        <h:outputText value="#{msg['usuario.lista.header']}"/>
 				    </f:facet>
@@ -30,8 +38,19 @@
 					<p:column headerText="#{msg['usuario.telefone']}">
 						<h:outputText value="#{usuario.telefoneFormatado}" />
 					</p:column>
+					
+					<p:column width="70px;">
+						<p:commandButton ajax="false" action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+							<f:setPropertyActionListener target="#{usuarioMBean.usuarioSelecionado}" value="#{usuario}"/>
+						</p:commandButton>
+					</p:column>
 				</p:dataTable>
 				
+				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">
+			        <p:commandButton value="#{msg['botao.sim']}" action="#{usuarioMBean.removerUsuario}" update="usuarioTable" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
 			</h:form>
 		</p:panel>
 	</ui:define>

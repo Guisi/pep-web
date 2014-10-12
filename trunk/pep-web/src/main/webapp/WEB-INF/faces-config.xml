@@ -13,8 +13,12 @@
 			<base-name>errors</base-name>
 			<var>err</var>
 		</resource-bundle>
+		<message-bundle>resources.application</message-bundle>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
+		</locale-config>
+		<locale-config>
+			<default-locale>en</default-locale>
 		</locale-config>
 	</application>
 </faces-config>

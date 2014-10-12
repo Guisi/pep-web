@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- INTERFACE -->
+	<cc:interface>
+		<cc:attribute name="sessionTimeout" required="true" type="boolean"/>
+	</cc:interface>
+	
+	<!-- IMPLEMENTATION -->
+	<cc:implementation>
+		<p:ajaxStatus onstart="statusDialog.show(); resetSessionTimeout();" onsuccess="statusDialog.hide();" rendered="#{cc.attrs.sessionTimeout}"/>
+		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" rendered="#{!cc.attrs.sessionTimeout}"/>
+
+		<!--Status Dialog para demonstrar estado de processamento -->
+		<p:dialog widgetVar="statusDialog" modal="false" closable="false"
+			resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">
+			<h:graphicImage library="imgs" name="ajaxloadingbar.gif"/>
+		</p:dialog>
+	</cc:implementation>
+</html>

@@ -5,7 +5,19 @@
 
 	<url-mapping id="home">
 		<pattern value="/home"/>
-		<view-id value="/secure/usuarios/usuarios.xhtml?faces-redirect=true" />
+		<view-id value="/secure/usuarios/usuarios.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="editarUsuario">
+		<pattern value="/editarUsuario/#{idUsuario}"/>
+		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+		<action>#{usuarioMBean.editarUsuario}</action>
+	</url-mapping>
+	
+	<url-mapping id="novoUsuario">
+		<pattern value="/novoUsuario"/>
+		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+		<action>#{usuarioMBean.novoUsuario}</action>
 	</url-mapping>
 	
 </pretty-config>
