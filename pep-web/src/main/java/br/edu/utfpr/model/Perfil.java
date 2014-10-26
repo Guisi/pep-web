@@ -42,6 +42,9 @@ public class Perfil extends BaseEntity {
         joinColumns=@JoinColumn(name="id_perfil"),
         inverseJoinColumns=@JoinColumn(name="id_autorizacao"))
 	private List<Autorizacao> autorizacoes;
+	
+	@ManyToMany(mappedBy="perfisUsuario", fetch = FetchType.LAZY)
+	private List<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
@@ -73,6 +76,14 @@ public class Perfil extends BaseEntity {
 
 	public void setAutorizacoes(List<Autorizacao> autorizacoes) {
 		this.autorizacoes = autorizacoes;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 	
 }
