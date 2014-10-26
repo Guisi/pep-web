@@ -6,6 +6,7 @@ public class AppException extends Exception {
 	
 	private String errorCode;
 	private String errorMessage;
+	private Object[] errorMessageParams;
 	
 	public AppException() {
 		super();
@@ -20,10 +21,16 @@ public class AppException extends Exception {
 		}
 	}
 
-	public AppException(String errorCode, String errorMessage, Throwable cause) {
+	public AppException(String errorCode, Object... errorMessageParams) {
+		this.errorCode = errorCode;
+		this.errorMessageParams = errorMessageParams;
+	}
+	
+	public AppException(String errorCode, String errorMessage, Throwable cause, Object... errorMessageParams) {
 		super(cause);
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
+		this.errorMessageParams = errorMessageParams;
 	}
 	
 	public AppException(String errorMessage, Throwable cause) {
@@ -46,4 +53,13 @@ public class AppException extends Exception {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
+
+	public Object[] getErrorMessageParams() {
+		return errorMessageParams;
+	}
+
+	public void setErrorMessageParams(Object[] errorMessageParams) {
+		this.errorMessageParams = errorMessageParams;
+	}
+
 }

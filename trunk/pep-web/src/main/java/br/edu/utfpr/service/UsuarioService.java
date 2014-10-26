@@ -21,7 +21,9 @@ public class UsuarioService {
 	}
 	
 	public Usuario retornarUsuario(Long id) {
-		return usuarioDao.getById(id);
+		Usuario usuario = usuarioDao.getById(id);
+		usuario.getPerfisUsuario().size();
+		return usuario;
 	}
 	
 	public void removerUsuario(Usuario usuario) {
@@ -29,6 +31,10 @@ public class UsuarioService {
 	}
 	
 	public void salvarUsuario(Usuario usuario) {
+		String telefone = usuario.getTelefone();
+		telefone = telefone.replaceAll("[^\\d.]", "");
+		usuario.setTelefone(telefone);
+
 		usuarioDao.save(usuario);
 	}
 }

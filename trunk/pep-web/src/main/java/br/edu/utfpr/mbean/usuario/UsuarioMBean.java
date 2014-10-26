@@ -2,6 +2,7 @@ package br.edu.utfpr.mbean.usuario;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +12,12 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.model.DualListModel;
 
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.service.PerfilService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
@@ -24,9 +28,12 @@ public class UsuarioMBean extends BaseMBean {
 
 	@Inject
 	private UsuarioService usuarioService;
+	@Inject
+	private PerfilService perfilService;
 	
 	private List<Usuario> usuarioList;
 	private Usuario usuarioSelecionado;
+	private DualListModel<Perfil> perfisPickList;
 	
 	@PostConstruct
 	public void init() {
@@ -37,12 +44,26 @@ public class UsuarioMBean extends BaseMBean {
 		this.usuarioList = usuarioService.retornarUsuarios();
 	}
 	
+	private void listarPerfis() {
+		List<Perfil> perfis = perfilService.retornarPerfis();
+		List<Perfil> perfisUsuario = usuarioSelecionado.getPerfisUsuario();
+		if (perfisUsuario != null) {
+			for (Perfil perfil : perfisUsuario) {
+				perfis.remove(perfil);
+			}
+		} else {
+			perfisUsuario = new ArrayList<Perfil>();
+		}
+		perfisPickList = new DualListModel<Perfil>(perfis, perfisUsuario);
+	}
+	
 	public String onEditUsuarioClick(Long idUsuario) {
 		return "/secure/usuarios/editarUsuario.xhtml?faces-redirect=true&idUsuario=" + idUsuario;
 	}
 	
 	public void novoUsuario() {
 		this.usuarioSelecionado = new Usuario();
+		this.listarPerfis();
 	}
 	
 	public void editarUsuario() {
@@ -51,6 +72,7 @@ public class UsuarioMBean extends BaseMBean {
 		
 		if (StringUtils.isNotEmpty(idUsuario) && StringUtils.isNumeric(idUsuario)) {
 			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
+			this.listarPerfis();
 		}
 	}
 	
@@ -65,11 +87,7 @@ public class UsuarioMBean extends BaseMBean {
 	
 	public String salvar() {
 		boolean isNew = usuarioSelecionado.isNew();
-		
-		String telefone = usuarioSelecionado.getTelefone();
-		telefone = telefone.replaceAll("[^\\d.]", "");
-		usuarioSelecionado.setTelefone(telefone);
-		
+		usuarioSelecionado.setPerfisUsuario(perfisPickList.getTarget());
 		usuarioService.salvarUsuario(usuarioSelecionado);
 		
 		if (isNew) {
@@ -91,5 +109,13 @@ public class UsuarioMBean extends BaseMBean {
 
 	public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
 		this.usuarioSelecionado = usuarioSelecionado;
+	}
+
+	public DualListModel<Perfil> getPerfisPickList() {
+		return perfisPickList;
+	}
+
+	public void setPerfisPickList(DualListModel<Perfil> perfisPickList) {
+		this.perfisPickList = perfisPickList;
 	}
 }

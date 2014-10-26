@@ -1,6 +1,5 @@
 package br.edu.utfpr.mbean.perfil;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import javax.inject.Inject;
 
 import org.primefaces.model.DualListModel;
 
+import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Autorizacao;
 import br.edu.utfpr.model.Perfil;
@@ -69,31 +69,33 @@ public class PerfilMBean extends BaseMBean {
 	}
 	
 	public void removerPerfil() {
-		perfilService.removerPerfil(perfilSelecionado);
-		perfilSelecionado = null;
-		
-		this.listarPerfis();
-		
-		addInfoMessage(getMsgs().getString("perfil.remover.sucesso"));
+		try {
+			perfilService.removerPerfil(perfilSelecionado);
+			perfilSelecionado = null;
+			
+			this.listarPerfis();
+			addInfoMessage(getMsgs().getString("perfil.remover.sucesso"));
+		} catch (AppException e) {
+			addressException(e);
+		}
 	}
 	
 	public void salvarPerfil() {
-		if (perfilService.retornarPerfilPorNome(perfilSelecionado.getNome()) != null) {
-			addErrorMessage(MessageFormat.format(getMsgs().getString("perfil.salvar.erro.nomeexistente"), perfilSelecionado.getNome()));
-			return;
-		}
-		
 		boolean isNew = perfilSelecionado.isNew();
 		perfilSelecionado.setAutorizacoes(autorizacoesPickList.getTarget());
-		perfilService.salvarPerfil(perfilSelecionado);
-		perfilSelecionado = null;
-
-		if (isNew) {
-			addInfoMessage(getMsgs().getString("perfil.criar.sucesso"));
-		} else {
-			addInfoMessage(getMsgs().getString("perfil.editar.sucesso"));
+		try {
+			perfilService.salvarPerfil(perfilSelecionado);
+			perfilSelecionado = null;
+			
+			if (isNew) {
+				addInfoMessage(getMsgs().getString("perfil.criar.sucesso"));
+			} else {
+				addInfoMessage(getMsgs().getString("perfil.editar.sucesso"));
+			}
+			this.listarPerfis();
+		} catch (AppException e) {
+			addressException(e);
 		}
-		this.listarPerfis();
 	}
 	
 	public List<Perfil> getPerfilList() {

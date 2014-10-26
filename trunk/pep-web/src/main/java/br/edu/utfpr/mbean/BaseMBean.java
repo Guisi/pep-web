@@ -1,6 +1,7 @@
 package br.edu.utfpr.mbean;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.el.ELContext;
@@ -86,7 +87,12 @@ public abstract class BaseMBean implements Serializable {
 		String errorCode = exception.getErrorCode();
 		
 		if (errorCode != null) {
-			addErrorMessage(getErrs().getString(errorCode));
+			Object[] errorMessageParams = exception.getErrorMessageParams();
+			if (errorMessageParams != null) {
+				addErrorMessage(MessageFormat.format(getErrs().getString(errorCode), errorMessageParams));
+			} else {
+				addErrorMessage(getErrs().getString(errorCode));
+			}
 		} else {
 			throw new RuntimeException(exception);
 		}

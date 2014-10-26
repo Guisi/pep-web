@@ -63,18 +63,23 @@
 										requiredMessage="#{msg['perfil.campoobrigatorio.descricao']}"/>
 								</p:panelGrid>
 							
-								<div align="center">
-									<p:pickList id="autorizacaoPickList" value="#{perfilMBean.autorizacoesPickList}" 
-										var="autorizacao" itemLabel="#{autorizacao.nome}" itemValue="#{autorizacao}"
-										styleClass="picklist-large"
-										converter="autorizacaoPickListConverter"
-										addAllLabel="#{msg['picklist.addall']}"
-						               	addLabel="#{msg['picklist.add']}"
-						               	removeAllLabel="#{msg['picklist.removeall']}"
-						               	removeLabel="#{msg['picklist.remove']}">
-						               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
-		        						<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
-									</p:pickList>
+								<div align="center" style="padding-top: 10px;">
+									<fieldset>
+									    <legend>#{msg['perfil.autorizacoes']}</legend>
+										<div align="center">
+											<p:pickList id="autorizacaoPickList" value="#{perfilMBean.autorizacoesPickList}" 
+												var="autorizacao" itemLabel="#{autorizacao.nome}" itemValue="#{autorizacao}"
+												styleClass="picklist-large"
+												converter="pickListConverter"
+												addAllLabel="#{msg['picklist.addall']}"
+								               	addLabel="#{msg['picklist.add']}"
+								               	removeAllLabel="#{msg['picklist.removeall']}"
+								               	removeLabel="#{msg['picklist.remove']}">
+								               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
+				        						<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
+											</p:pickList>
+										</div>
+									</fieldset>
 								</div>
 								
 								<div class="divBotoesEdicao">
