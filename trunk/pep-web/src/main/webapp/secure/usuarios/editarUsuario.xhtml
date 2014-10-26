@@ -40,9 +40,10 @@
 
 					</p:panelGrid>
 					
-					<div align="right" style="margin-top: 10px; margin-right: 10px;">
+					<div class="divBotoesEdicao">
 						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:home" icon="ui-icon-close" immediate="true"/>
-						<p:commandButton value="#{msg['botao.salvaralteracoes']}" update="msgs" action="#{usuarioMBean.salvar}" icon="ui-icon-check"/>
+						<p:commandButton value="#{msg['botao.salvaralteracoes']}" update="msgs" action="#{usuarioMBean.salvar}" 
+							icon="ui-icon-check" styleClass="botaoSalvar"/>
 					</div>
 				</fieldset>
 			</h:form>

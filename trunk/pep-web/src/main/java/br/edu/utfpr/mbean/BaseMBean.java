@@ -14,7 +14,8 @@ import javax.faces.context.FacesContext;
 
 import br.edu.utfpr.exception.AppException;
 
-public class BaseMBean implements Serializable {
+
+public abstract class BaseMBean implements Serializable {
 	
 	private static final long serialVersionUID = -4584871656033166513L;
 
@@ -34,21 +35,35 @@ public class BaseMBean implements Serializable {
 	    return (T) valueExp.getValue(elContext);
 	}
 	
-	public void addMessage(Severity severity, String message) {
+	public void addMessage(Severity severity, String message, boolean keepMessages) {
 		FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(severity, message, ""));
+        
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(keepMessages);
 	}
 
 	public void addInfoMessage(String message) {
-		addMessage(FacesMessage.SEVERITY_INFO, message);
+		addMessage(FacesMessage.SEVERITY_INFO, message, false);
 	}
 	
 	public void addErrorMessage(String message) {
-		addMessage(FacesMessage.SEVERITY_ERROR, message);
+		addMessage(FacesMessage.SEVERITY_ERROR, message, false);
 	}
 	
 	public void addWarnMessage(String message) {
-		addMessage(FacesMessage.SEVERITY_WARN, message);
+		addMessage(FacesMessage.SEVERITY_WARN, message, false);
+	}
+	
+	public void addInfoMessage(String message, boolean keepMessages) {
+		addMessage(FacesMessage.SEVERITY_INFO, message, keepMessages);
+	}
+	
+	public void addErrorMessage(String message, boolean keepMessages) {
+		addMessage(FacesMessage.SEVERITY_ERROR, message, keepMessages);
+	}
+	
+	public void addWarnMessage(String message, boolean keepMessages) {
+		addMessage(FacesMessage.SEVERITY_WARN, message, keepMessages);
 	}
 
 	public ResourceBundle getMsgs() {
@@ -75,5 +90,9 @@ public class BaseMBean implements Serializable {
 		} else {
 			throw new RuntimeException(exception);
 		}
+	}
+	
+	public String getEmptyStr() {
+		return "";
 	}
 }

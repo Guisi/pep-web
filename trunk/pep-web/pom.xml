@@ -72,12 +72,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>4.3.6.Final</version>
-		</dependency>
-
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
@@ -94,7 +88,7 @@
 				<filtering>true</filtering>
 			</resource>
 			<resource>
-				<directory>target/generated-sources/annotations</directory>
+				<directory>${project.build.directory}/generated-sources/annotations</directory>
 			</resource>
 		</resources>
 
@@ -107,30 +101,39 @@
 					<source>1.7</source>
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
-					<compilerArguments>
-						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-					</compilerArguments>
+					<compilerArgument>-proc:none</compilerArgument>
 				</configuration>
 			</plugin>
+
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.8</version>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>2.0.5</version>
 				<executions>
 					<execution>
-						<id>add-sources</id>
-						<phase>process-sources</phase>
+						<id>process</id>
 						<goals>
-							<goal>add-source</goal>
+							<goal>process</goal>
 						</goals>
+						<phase>generate-sources</phase>
 						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-sources/annotations</source>
-							</sources>
+							<compilerArgument>-proc:only</compilerArgument>
+							<outputDirectory>${project.build.directory}/generated-sources/annotations</outputDirectory>
+							<processors>
+								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+							</processors>
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-jpamodelgen</artifactId>
+						<version>4.3.6.Final</version>
+					</dependency>
+				</dependencies>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
