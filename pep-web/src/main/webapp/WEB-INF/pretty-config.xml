@@ -8,6 +8,11 @@
 		<view-id value="/secure/usuarios/usuarios.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="listarUsuarios">
+		<pattern value="/listarUsuarios"/>
+		<view-id value="/secure/usuarios/usuarios.xhtml" />
+	</url-mapping>
+	
 	<url-mapping id="editarUsuario">
 		<pattern value="/editarUsuario/#{idUsuario}"/>
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
@@ -18,6 +23,11 @@
 		<pattern value="/novoUsuario"/>
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
 		<action>#{usuarioMBean.novoUsuario}</action>
+	</url-mapping>
+	
+	<url-mapping id="listarPerfis">
+		<pattern value="/listarPerfis"/>
+		<view-id value="/secure/perfil/perfis.xhtml" />
 	</url-mapping>
 	
 </pretty-config>

@@ -102,4 +102,23 @@ fieldset {
 	background-color: #D6E0F0 !important;
 	border-color: #B5B0F1 !important;
 }
+
+.leftAligned {
+	text-align: left;
+}
+
+.divBotoesEdicao {
+	margin-top: 10px; margin-right: 10px; text-align: right;
+}
+
+.botaoNovo {
+	margin: 0px; margin-bottom: 7px;
+}
+
+.botaoSalvar {
+	margin-left: 5px;
+}
+
+.picklist-large tbody tr td ul {
+	width: 300px !important;
 }

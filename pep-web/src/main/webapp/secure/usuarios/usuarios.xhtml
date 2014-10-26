@@ -16,10 +16,12 @@
 			<h:form id="frmUsuarios">
 				<div align="right">
 					<p:commandButton value="#{msg['usuario.botao.novo']}" action="pretty:novoUsuario"
-						icon="ui-icon-document" style="margin: 0px; margin-bottom: 7px;"/>
+						icon="ui-icon-document" styleClass="botaoNovo"/>
 				</div>
 			
-				<p:dataTable id="usuarioTable" var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}">
+				<p:dataTable id="usuarioTable" var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<f:facet name="header">
 				        <h:outputText value="#{msg['usuario.lista.header']}"/>
 				    </f:facet>
@@ -48,7 +50,7 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" action="#{usuarioMBean.removerUsuario}" update="usuarioTable" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>

@@ -30,15 +30,6 @@ public class UsuarioMBean extends BaseMBean {
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		if (request.getParameter("editou") != null) {
-			addInfoMessage(getMsgs().getString("usuario.editar.sucesso"));
-		} else if (request.getParameter("criou") != null) {
-			addInfoMessage(getMsgs().getString("usuario.criar.sucesso"));
-		} else if (request.getParameter("excluiu") != null) {
-			addInfoMessage(getMsgs().getString("usuario.remover.sucesso"));
-		}
-		
 		this.listarUsuarios();
 	}
 	
@@ -63,23 +54,31 @@ public class UsuarioMBean extends BaseMBean {
 		}
 	}
 	
-	public String removerUsuario() {
+	public void removerUsuario() {
 		usuarioService.removerUsuario(usuarioSelecionado);
 		usuarioSelecionado = null;
 		
 		this.listarUsuarios();
 		
-		return "/secure/usuarios/usuarios.xhtml?faces-redirect=true&excluiu=true";
+		addInfoMessage(getMsgs().getString("usuario.remover.sucesso"));
 	}
 	
 	public String salvar() {
+		boolean isNew = usuarioSelecionado.isNew();
+		
 		String telefone = usuarioSelecionado.getTelefone();
 		telefone = telefone.replaceAll("[^\\d.]", "");
 		usuarioSelecionado.setTelefone(telefone);
 		
 		usuarioService.salvarUsuario(usuarioSelecionado);
 		
-		return "/secure/usuarios/usuarios.xhtml?faces-redirect=true&editou=true";
+		if (isNew) {
+			addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
+		} else {
+			addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+		}
+		
+		return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
 	}
 	
 	public List<Usuario> getUsuarioList() {
@@ -92,9 +91,5 @@ public class UsuarioMBean extends BaseMBean {
 
 	public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
 		this.usuarioSelecionado = usuarioSelecionado;
-	}
-
-	public String getEmptyStr() {
-		return "";
 	}
 }
