@@ -27,7 +27,9 @@
 					</span>
 				</div>
 				
-				<ui:include src="menu.xhtml"/>
+				<ui:insert name="header">
+					<ui:include src="menu.xhtml"/>
+				</ui:insert>
 			
 				<ui:insert name="content"/>
 			</div>

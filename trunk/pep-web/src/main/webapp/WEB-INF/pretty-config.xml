@@ -1,33 +1,52 @@
-<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
-                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3
+                                   		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
+
+	<!-- Tratamento na URL -->
+	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
+
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/login.xhtml?faces-redirect=true" />
+	</url-mapping>
+	
+	<url-mapping id="logout"> 
+	    <pattern value="/logout" /> 
+	    <view-id value="/processLogout" />
+	</url-mapping>
+	
+	<url-mapping id="notfound"> 
+	    <pattern value="/notfound" /> 
+	    <view-id value="/404.xhtml" />
+	</url-mapping>
 
 	<url-mapping id="home">
-		<pattern value="/home"/>
+		<pattern value="/home" />
 		<view-id value="/secure/usuarios/usuarios.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="listarUsuarios">
-		<pattern value="/listarUsuarios"/>
+		<pattern value="/listarUsuarios" />
 		<view-id value="/secure/usuarios/usuarios.xhtml" />
 	</url-mapping>
-	
+
 	<url-mapping id="editarUsuario">
-		<pattern value="/editarUsuario/#{idUsuario}"/>
+		<pattern value="/editarUsuario/#{idUsuario}" />
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
 		<action>#{usuarioMBean.editarUsuario}</action>
 	</url-mapping>
-	
+
 	<url-mapping id="novoUsuario">
-		<pattern value="/novoUsuario"/>
+		<pattern value="/novoUsuario" />
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
 		<action>#{usuarioMBean.novoUsuario}</action>
 	</url-mapping>
-	
+
 	<url-mapping id="listarPerfis">
-		<pattern value="/listarPerfis"/>
+		<pattern value="/listarPerfis" />
 		<view-id value="/secure/perfil/perfis.xhtml" />
 	</url-mapping>
-	
+
 </pretty-config>
