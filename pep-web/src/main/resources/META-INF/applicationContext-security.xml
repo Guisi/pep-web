@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<security:http auto-config="false" use-expressions="true" entry-point-ref="loginUrlAuthenticationEntryPoint">
+		<!-- Intercepts -->
+		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/*" access="permitAll" />
+
+		<!-- Configuracao do Logout -->
+		<security:logout logout-success-url="/login" logout-url="/processLogout" />
+
+		<!-- Configuracao Filtro Personalizado de Login -->
+		<security:custom-filter position="FORM_LOGIN_FILTER" ref="pepAuthenticationFilter" />
+		
+		<!-- Configuracao Filtro para Controle Sessao - Session Timeout -->
+		<security:custom-filter before="SESSION_MANAGEMENT_FILTER" ref="sessionManagementFilter" />
+	</security:http>
+	
+	<!-- EntryPoint -->	
+	<bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/login"/>
+	</bean>
+
+	<!-- Authentication Manager -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="pepAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<!-- Bean para o Provider -->
+	<bean id="pepAuthenticationProvider" class="br.edu.utfpr.authentication.PepAuthenticationProvider" />
+
+	<!-- Bean Configuracao do Filtro de Autenticacao -->
+	<bean id="pepAuthenticationFilter" class="br.edu.utfpr.authentication.PepAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="authenticationSuccessHandler" ref="successHandler" />
+		<property name="authenticationFailureHandler" ref="failureHandler" />
+	</bean>
+
+	<!-- Definicao da Pagina Padrao se Login efetuado com Sucesso -->
+	<bean id="successHandler" class="br.edu.utfpr.authentication.PepDynamicParamAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/home" />
+		<property name="alwaysUseDefaultTargetUrl" value="false" />
+	</bean>
+
+	<!-- Definicao da Pagina de Erro na Autenticacao -->
+	<bean id="failureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login" />
+	</bean>
+
+	<!--  Filter para Tratamento da Sessao -->
+	<bean id="sessionManagementFilter" class="org.springframework.security.web.session.SessionManagementFilter">
+		<constructor-arg name="securityContextRepository" ref="httpSessionSecurityContextRepository" />
+		<property name="invalidSessionStrategy" ref="jsfInvalidSessionStrategy" />
+	</bean>
+	
+ 	<bean id="jsfInvalidSessionStrategy" class="br.edu.utfpr.authentication.JsfInvalidSessionStrategy">
+		<property name="sessionTimeOutURL" value="/login" />
+	</bean>
+	
+	<bean id="httpSessionSecurityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository"/>	
+</beans>
