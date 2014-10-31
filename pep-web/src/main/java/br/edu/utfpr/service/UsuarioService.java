@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
 
 import br.edu.utfpr.dao.UsuarioDao;
+import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.model.Usuario;
 
 @Named
@@ -36,5 +38,13 @@ public class UsuarioService {
 		usuario.setTelefone(telefone);
 
 		usuarioDao.save(usuario);
+	}
+	
+	public Usuario autenticarUsuario(String username, String password) throws AppException {
+		try {
+			return usuarioDao.retornarUsuarioPorEmailSenha(username, password);
+		} catch (NoResultException e) {
+			throw new AppException("login.error.usuariosenhainvalido");
+		}
 	}
 }

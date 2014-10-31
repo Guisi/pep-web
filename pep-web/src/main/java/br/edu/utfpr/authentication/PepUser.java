@@ -25,8 +25,7 @@ public class PepUser implements UserDetails {
 	private final String username;
 	private String credentials;
 	private final String nomeUsuario;
-	private final String documento;
-	private final String email;
+	private final String cpf;
 	private final boolean enabled;
 	private final boolean isCredentialsNonExpired;
 	private final Set<GrantedAuthority> autorizacoes;
@@ -45,11 +44,10 @@ public class PepUser implements UserDetails {
 	 * @param acessos
 	 * @param autorizacoes
 	 */
-	public PepUser(String username, String nomeUsuario, String email, String documento, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes) {
+	public PepUser(String username, String nomeUsuario, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes) {
 		this.username = username;
 		this.nomeUsuario = nomeUsuario;
-		this.email = email;
-		this.documento = documento;
+		this.cpf = cpf;
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 		this.enabled = enabled;
 		this.autorizacoes = Collections.unmodifiableSet(sortAuthorities(autorizacoes));
@@ -99,56 +97,6 @@ public class PepUser implements UserDetails {
 		return enabled;
 	}
 
-	/**
-	 * Retorna o nome do usuario
-	 * 
-	 * @return String
-	 */
-	public String getNomeUsuario() {
-
-		return nomeUsuario;
-	}
-
-	/**
-	 * Getter de email
-	 * 
-	 * @return o valor de email
-	 */
-	public String getEmail() {
-
-		return email;
-	}
-
-	/**
-	 * Getter de autorizacoes
-	 * 
-	 * @return o valor de autorizacoes
-	 */
-	public Set<GrantedAuthority> getAutorizacoes() {
-
-		return autorizacoes;
-	}
-
-	/**
-	 * Getter de credentials
-	 * 
-	 * @return o valor de credentials
-	 */
-	public String getCredentials() {
-
-		return credentials;
-	}
-
-	/**
-	 * Getter de documento
-	 * 
-	 * @return o valor de documento
-	 */
-	public String getDocumento() {
-
-		return documento;
-	}	
-	
 	/**
 	 * Faz a ordenacao das autorizacoes
 	 * 
@@ -228,6 +176,26 @@ public class PepUser implements UserDetails {
 		return isCredentialsNonExpired;
 	}
 	
+	public String getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(String credentials) {
+		this.credentials = credentials;
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public Set<GrantedAuthority> getAutorizacoes() {
+		return autorizacoes;
+	}
+
 	/**
 	 * Retorna true se os usernames forem iguais, pois campos login e UNIQUE.
 	 * <p>

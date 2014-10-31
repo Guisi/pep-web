@@ -43,6 +43,10 @@ public class Usuario extends BaseEntity {
 	@Size(max=100)
 	private String email;
 	
+	@Column(name="senha", length=100)
+	@Size(max=100)
+	private String senha;
+	
 	@Column(name="telefone", length=20)
 	@Size(max=20)
 	private String telefone;
@@ -110,4 +114,13 @@ public class Usuario extends BaseEntity {
 	public void setPerfisUsuario(List<Perfil> perfisUsuario) {
 		this.perfisUsuario = perfisUsuario;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 }
