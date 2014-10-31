@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DualListModel;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
@@ -38,6 +40,9 @@ public class UsuarioMBean extends BaseMBean {
 	@PostConstruct
 	public void init() {
 		this.listarUsuarios();
+		
+		PepUser userDetails = (PepUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(userDetails);
 	}
 	
 	private void listarUsuarios() {

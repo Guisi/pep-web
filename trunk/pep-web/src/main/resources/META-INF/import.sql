@@ -1,6 +1,6 @@
 --cria usuarios
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, nome, telefone) VALUES (1, '05009090935', 'guisiagudos@gmail.com', 'Douglas Maciel Guisi', '4192669662');
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, nome, telefone) VALUES (2, '12345678901', 'teste@gmail.com', 'Usuário de Testes', '4199998888');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (1, '05009090935', 'guisiagudos@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Douglas Maciel Guisi', '4192669662');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (2, '12345678901', 'teste@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Usuário de Testes', '4199998888');
 ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 3;
 
 --cria perfis

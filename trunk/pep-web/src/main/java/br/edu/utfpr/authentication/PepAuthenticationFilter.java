@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.util.TextEscapeUtils;
 import org.springframework.util.Assert;
 
 /**
@@ -173,7 +172,7 @@ public class PepAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		HttpSession session = request.getSession(false);
 
 		if (session != null || getAllowSessionCreation()) {
-			request.getSession().setAttribute(SPRING_SECURITY_LAST_USERNAME_KEY, TextEscapeUtils.escapeEntities(username));
+			request.getSession().setAttribute(SPRING_SECURITY_LAST_USERNAME_KEY, username);
 		}
 
 		// Permite as subclasses que definam a propriedade "details"

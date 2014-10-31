@@ -24,6 +24,16 @@ body {
 	padding-left: 15px;
 }
 
+#headerBoxLogin {
+	height: 50px;
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+	color: #000;
+	font-size: 19px;
+	font-family: Verdana;
+	font-weight: bold;
+}
+
 #fullPageDiv {
 	width: 100%;
 	height: 100%;
@@ -38,6 +48,16 @@ body {
 	width: 1000px;
 	min-width: 1000px;
 	height: 100%;
+}
+
+#logindiv {
+   	width:500px;
+	height:200px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-100px;
+	margin-left:-250px;
 }
 
 .noborder {

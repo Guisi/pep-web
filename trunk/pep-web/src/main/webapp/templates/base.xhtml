@@ -21,13 +21,13 @@
 			<div id="centerPageDiv">
 				<utils:ajaxStatusDialog sessionTimeout="false"/>
 			
-				<div id="headerBox">
-					<span>
-						<h:outputText value="#{msg['general.app.title']}"/>
-					</span>
-				</div>
 				
 				<ui:insert name="header">
+					<div id="headerBox">
+						<span>
+							<h:outputText value="#{msg['general.app.title']}"/>
+						</span>
+					</div>
 					<ui:include src="menu.xhtml"/>
 				</ui:insert>
 			
