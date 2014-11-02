@@ -24,7 +24,7 @@
 
 	<url-mapping id="home">
 		<pattern value="/home" />
-		<view-id value="/secure/usuarios/usuarios.xhtml" />
+		<view-id value="/secure/home.xhtml" />
 	</url-mapping>
 
 	<url-mapping id="listarUsuarios">

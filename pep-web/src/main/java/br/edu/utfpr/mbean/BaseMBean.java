@@ -13,6 +13,9 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.exception.AppException;
 
 
@@ -65,6 +68,11 @@ public abstract class BaseMBean implements Serializable {
 	
 	public void addWarnMessage(String message, boolean keepMessages) {
 		addMessage(FacesMessage.SEVERITY_WARN, message, keepMessages);
+	}
+	
+	public PepUser getUsuarioLogado() {
+		PepUser userDetails = (PepUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return userDetails;
 	}
 
 	public ResourceBundle getMsgs() {

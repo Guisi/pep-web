@@ -3,7 +3,10 @@ package br.edu.utfpr.mbean.usuario;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,9 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DualListModel;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import br.edu.utfpr.authentication.PepUser;
+import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
@@ -40,9 +42,6 @@ public class UsuarioMBean extends BaseMBean {
 	@PostConstruct
 	public void init() {
 		this.listarUsuarios();
-		
-		PepUser userDetails = (PepUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(userDetails);
 	}
 	
 	private void listarUsuarios() {
@@ -51,15 +50,15 @@ public class UsuarioMBean extends BaseMBean {
 	
 	private void listarPerfis() {
 		List<Perfil> perfis = perfilService.retornarPerfis();
-		List<Perfil> perfisUsuario = usuarioSelecionado.getPerfisUsuario();
+		Set<Perfil> perfisUsuario = usuarioSelecionado.getPerfisUsuario();
 		if (perfisUsuario != null) {
 			for (Perfil perfil : perfisUsuario) {
 				perfis.remove(perfil);
 			}
 		} else {
-			perfisUsuario = new ArrayList<Perfil>();
+			perfisUsuario = new HashSet<>();
 		}
-		perfisPickList = new DualListModel<Perfil>(perfis, perfisUsuario);
+		perfisPickList = new DualListModel<Perfil>(perfis, new ArrayList<>(perfisUsuario));
 	}
 	
 	public String onEditUsuarioClick(Long idUsuario) {
@@ -92,16 +91,21 @@ public class UsuarioMBean extends BaseMBean {
 	
 	public String salvar() {
 		boolean isNew = usuarioSelecionado.isNew();
-		usuarioSelecionado.setPerfisUsuario(perfisPickList.getTarget());
-		usuarioService.salvarUsuario(usuarioSelecionado);
-		
-		if (isNew) {
-			addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
-		} else {
-			addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+		usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(perfisPickList.getTarget()));
+		try {
+			usuarioService.salvarUsuario(usuarioSelecionado);
+
+			if (isNew) {
+				addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
+			} else {
+				addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+			}
+			
+			return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
+		} catch (AppException e) {
+			addressException(e);
+			return null;
 		}
-		
-		return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
 	}
 	
 	public List<Usuario> getUsuarioList() {

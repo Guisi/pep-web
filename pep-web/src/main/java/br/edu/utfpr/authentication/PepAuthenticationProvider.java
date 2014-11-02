@@ -1,6 +1,7 @@
 package br.edu.utfpr.authentication;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -8,8 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import br.edu.utfpr.exception.AppException;
+import br.edu.utfpr.model.Autorizacao;
+import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.UsuarioService;
 import br.edu.utfpr.utils.MD5Util;
@@ -40,13 +44,29 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 			throw new AuthenticationServiceException("Usuário ou senha inválido");
 		}
 		
+		// Carrega as Authorities do Usuario
+		Set<Perfil> perfis = usuario.getPerfisUsuario();
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		if (perfis != null) {
+			for (Perfil perfil : perfis) {
+				Set<Autorizacao> autorizacoes = perfil.getAutorizacoes();
+
+				if (autorizacoes != null) {
+					for (Autorizacao autorizacao : autorizacoes) {
+						GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(autorizacao.getNome());
+						authorities.add(grantedAuthority);
+					}
+				}
+			}
+		}
+		
 		// Cria usuario Spring Autenticado
 		PepUser user = new PepUser(usuario.getEmail(), 
 								   usuario.getNome(), 
 								   usuario.getCpf(), 
 								   false, 
 								   true, 
-								   new LinkedHashSet<GrantedAuthority>());
+								   authorities);
 
 		// Finaliza a autenticacao
 		Authentication result = new UsernamePasswordAuthenticationToken(user, authentication, user.getAuthorities());

@@ -5,6 +5,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	template="/templates/base.xhtml">
 
 	<ui:define name="content">
@@ -14,10 +15,12 @@
 			<p:messages autoUpdate="true" globalOnly="true"/>
 		
 			<h:form id="frmUsuarios">
-				<div align="right">
-					<p:commandButton value="#{msg['usuario.botao.novo']}" action="pretty:novoUsuario"
-						icon="ui-icon-document" styleClass="botaoNovo"/>
-				</div>
+				<sec:ifAnyGranted roles="EDITAR_USUARIOS">
+					<div align="right">
+						<p:commandButton value="#{msg['usuario.botao.novo']}" action="pretty:novoUsuario"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</div>
+				</sec:ifAnyGranted>
 			
 				<p:dataTable id="usuarioTable" var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}"
 					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
@@ -41,12 +44,14 @@
 						<h:outputText value="#{usuario.telefoneFormatado}" />
 					</p:column>
 					
-					<p:column width="70px;">
-						<p:commandButton ajax="false" action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
-							<f:setPropertyActionListener target="#{usuarioMBean.usuarioSelecionado}" value="#{usuario}"/>
-						</p:commandButton>
-					</p:column>
+					<sec:ifAnyGranted roles="EDITAR_USUARIOS">
+						<p:column width="70px;">
+							<p:commandButton ajax="false" action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+							<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+								<f:setPropertyActionListener target="#{usuarioMBean.usuarioSelecionado}" value="#{usuario}"/>
+							</p:commandButton>
+						</p:column>
+					</sec:ifAnyGranted>
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">

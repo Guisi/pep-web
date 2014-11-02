@@ -1,6 +1,6 @@
 package br.edu.utfpr.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,10 +41,10 @@ public class Perfil extends BaseEntity {
     @JoinTable(name="tb_perfil_autorizacao",
         joinColumns=@JoinColumn(name="id_perfil"),
         inverseJoinColumns=@JoinColumn(name="id_autorizacao"))
-	private List<Autorizacao> autorizacoes;
+	private Set<Autorizacao> autorizacoes;
 	
 	@ManyToMany(mappedBy="perfisUsuario", fetch = FetchType.LAZY)
-	private List<Usuario> usuarios;
+	private Set<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
@@ -70,20 +70,21 @@ public class Perfil extends BaseEntity {
 		this.descricao = descricao;
 	}
 
-	public List<Autorizacao> getAutorizacoes() {
+	public Set<Autorizacao> getAutorizacoes() {
 		return autorizacoes;
 	}
 
-	public void setAutorizacoes(List<Autorizacao> autorizacoes) {
+	public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
 		this.autorizacoes = autorizacoes;
 	}
 
-	public List<Usuario> getUsuarios() {
+	public Set<Usuario> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
+	public void setUsuarios(Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
+
 	
 }
