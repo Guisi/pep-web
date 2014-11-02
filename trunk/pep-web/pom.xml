@@ -23,6 +23,10 @@
 			<url>http://repository.primefaces.org</url>
 			<layout>default</layout>
 		</repository>
+		<repository>
+			<id>org.springframework.security.taglibs.facelets</id>
+			<url>http://spring-security-facelets-taglib.googlecode.com/svn/repo/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -59,7 +63,7 @@
 			<artifactId>prettyfaces-jsf2</artifactId>
 			<version>3.3.3</version>
 		</dependency>
-		
+
 		<!-- SPRING SECURITY -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -75,6 +79,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>3.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>facelets-taglib-jsf20-spring-3</artifactId>
+			<version>0.5</version>
 		</dependency>
 
 		<dependency>
@@ -145,7 +154,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>

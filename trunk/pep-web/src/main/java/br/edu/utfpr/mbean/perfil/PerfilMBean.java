@@ -1,7 +1,9 @@
 package br.edu.utfpr.mbean.perfil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -43,15 +45,15 @@ public class PerfilMBean extends BaseMBean {
 	
 	private void listarAutorizacoes() {
 		List<Autorizacao> autorizacoes = autorizacaoService.retornarAutorizacoes();
-		List<Autorizacao> autorizacoesPerfil = perfilSelecionado.getAutorizacoes();
+		Set<Autorizacao> autorizacoesPerfil = perfilSelecionado.getAutorizacoes();
 		if (autorizacoesPerfil != null) {
 			for (Autorizacao autorizacao : autorizacoesPerfil) {
 				autorizacoes.remove(autorizacao);
 			}
 		} else {
-			autorizacoesPerfil = new ArrayList<Autorizacao>();
+			autorizacoesPerfil = new LinkedHashSet<>();
 		}
-		autorizacoesPickList = new DualListModel<Autorizacao>(autorizacoes, autorizacoesPerfil);
+		autorizacoesPickList = new DualListModel<Autorizacao>(autorizacoes, new ArrayList<>(autorizacoesPerfil));
 	}
 	
 	public void novoPerfil() {
@@ -82,7 +84,7 @@ public class PerfilMBean extends BaseMBean {
 	
 	public void salvarPerfil() {
 		boolean isNew = perfilSelecionado.isNew();
-		perfilSelecionado.setAutorizacoes(autorizacoesPickList.getTarget());
+		perfilSelecionado.setAutorizacoes(new LinkedHashSet<>(autorizacoesPickList.getTarget()));
 		try {
 			perfilService.salvarPerfil(perfilSelecionado);
 			perfilSelecionado = null;

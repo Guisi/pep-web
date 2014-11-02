@@ -1,6 +1,6 @@
 package br.edu.utfpr.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,6 +23,9 @@ import br.edu.utfpr.utils.FormatUtils;
 
 @Entity
 @Table(name=Constantes.PEP_OWNER + "tb_usuario")
+@NamedQueries({
+	@NamedQuery(name = "Usuario.retornarUsuarioPorEmailSenha",
+			query = "SELECT u FROM Usuario u LEFT JOIN FETCH u.perfisUsuario p LEFT JOIN FETCH p.autorizacoes WHERE u.email = :email AND u.senha = :senha")})		
 public class Usuario extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +44,7 @@ public class Usuario extends BaseEntity {
 	@Size(max=11)
 	private String cpf;
 	
-	@Column(name="email", length=100)
+	@Column(name="email", length=100, unique = true)
 	@Size(max=100)
 	private String email;
 	
@@ -55,7 +60,7 @@ public class Usuario extends BaseEntity {
     @JoinTable(name="tb_usuario_perfil",
         joinColumns=@JoinColumn(name="id_usuario"),
         inverseJoinColumns=@JoinColumn(name="id_perfil"))
-	private List<Perfil> perfisUsuario;
+	private Set<Perfil> perfisUsuario;
 	
 	@Transient
 	public String getTelefoneFormatado() {
@@ -107,11 +112,11 @@ public class Usuario extends BaseEntity {
 		this.telefone = telefone;
 	}
 
-	public List<Perfil> getPerfisUsuario() {
+	public Set<Perfil> getPerfisUsuario() {
 		return perfisUsuario;
 	}
 
-	public void setPerfisUsuario(List<Perfil> perfisUsuario) {
+	public void setPerfisUsuario(Set<Perfil> perfisUsuario) {
 		this.perfisUsuario = perfisUsuario;
 	}
 

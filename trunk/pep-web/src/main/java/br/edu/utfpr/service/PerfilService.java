@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.NoResultException;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.dao.PerfilDao;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.model.Perfil;
@@ -34,10 +36,13 @@ public class PerfilService {
 	}
 	
 	public void salvarPerfil(Perfil perfil) throws AppException {
+		String nomePerfil = StringUtils.trimToNull(perfil.getNome());
+		perfil.setNome(nomePerfil);
+		
 		//valida se nao esta duplicando
-		Perfil perfilBase = this.retornarPerfilPorNome(perfil.getNome());
+		Perfil perfilBase = this.retornarPerfilPorNome(nomePerfil);
 		if (perfilBase != null && !perfilBase.getId().equals(perfil.getId())) {
-			throw new AppException("perfil.salvar.erro.nomeexistente", perfil.getNome());
+			throw new AppException("perfil.salvar.erro.nomeexistente", nomePerfil);
 		}
 		
 		perfilDao.save(perfil);
