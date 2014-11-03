@@ -44,8 +44,5 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 				qb.equal(root.get(Usuario_.senha), senha)));
 		
 		return entityManager.createQuery(q).getSingleResult();
-		
-		//return entityManager.createNamedQuery("Usuario.retornarUsuarioPorEmailSenha", Usuario.class)
-				//.setParameter("email", email).setParameter("senha", senha).getSingleResult();
 	}
 }

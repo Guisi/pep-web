@@ -38,7 +38,7 @@ public class Perfil extends BaseEntity {
 	private String descricao;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="tb_perfil_autorizacao",
+    @JoinTable(name=Constantes.PEP_OWNER + "tb_perfil_autorizacao",
         joinColumns=@JoinColumn(name="id_perfil"),
         inverseJoinColumns=@JoinColumn(name="id_autorizacao"))
 	private Set<Autorizacao> autorizacoes;
