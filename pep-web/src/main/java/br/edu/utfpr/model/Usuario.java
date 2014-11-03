@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -23,9 +21,6 @@ import br.edu.utfpr.utils.FormatUtils;
 
 @Entity
 @Table(name=Constantes.PEP_OWNER + "tb_usuario")
-@NamedQueries({
-	@NamedQuery(name = "Usuario.retornarUsuarioPorEmailSenha",
-			query = "SELECT u FROM Usuario u LEFT JOIN FETCH u.perfisUsuario p LEFT JOIN FETCH p.autorizacoes WHERE u.email = :email AND u.senha = :senha")})		
 public class Usuario extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -57,7 +52,7 @@ public class Usuario extends BaseEntity {
 	private String telefone;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="tb_usuario_perfil",
+    @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
         joinColumns=@JoinColumn(name="id_usuario"),
         inverseJoinColumns=@JoinColumn(name="id_perfil"))
 	private Set<Perfil> perfisUsuario;
