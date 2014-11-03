@@ -8,7 +8,6 @@ import javax.inject.Named;
 
 import br.edu.utfpr.dao.AutorizacaoDao;
 import br.edu.utfpr.model.Autorizacao;
-import br.edu.utfpr.model.Perfil;
 
 @Named
 @Stateless

@@ -16,7 +16,7 @@ import br.edu.utfpr.model.Autorizacao;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.UsuarioService;
-import br.edu.utfpr.utils.MD5Util;
+import br.edu.utfpr.utils.PasswordHandler;
 
 public class PepAuthenticationProvider implements AuthenticationProvider {
 
@@ -35,7 +35,7 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 		String username = ((PepAuthenticationToken) authentication).getPrincipal().toString();
 		String password = ((PepAuthenticationToken) authentication).getCredentials().toString();
 		
-		password = MD5Util.stringToMD5(password);
+		password = PasswordHandler.encryptPassword(password);
 		
 		Usuario usuario;
 		try {

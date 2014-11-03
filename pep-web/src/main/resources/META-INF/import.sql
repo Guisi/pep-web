@@ -1,7 +1,7 @@
 --cria usuarios
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (1, '05009090935', 'guisiagudos@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Douglas Maciel Guisi', '4192669662');
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (2, '12345678901', 'teste@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'Usuário de Testes', '4199998888');
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (3, '98765432101', 'semperfil@email.com', 'e10adc3949ba59abbe56e057f20f883e', 'Usuário Sem Perfil', '4199998888');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (1, '05009090935', 'guisiagudos@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', 'Douglas Maciel Guisi', '4192669662');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (2, '12345678901', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', 'Usuário de Testes', '4199998888');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) VALUES (3, '98765432101', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', 'Usuário Sem Perfil', '4199998888');
 ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
 
 --cria perfis
