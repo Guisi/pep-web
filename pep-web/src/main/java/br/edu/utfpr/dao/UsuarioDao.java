@@ -15,8 +15,16 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Usuario> retornarUsuarios() {
-		return findAll();
+	public List<Usuario> retornarUsuarios(Boolean chkAtivo) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
+		Root<Usuario> root = q.from(Usuario.class);
+
+		if (chkAtivo != null) {
+			q.where(qb.equal(root.get(Usuario_.chkAtivo), chkAtivo));
+		}
+		
+		return entityManager.createQuery(q).getResultList();
 	}
 	
 	public Usuario retornarUsuarioPorEmail(String email) {

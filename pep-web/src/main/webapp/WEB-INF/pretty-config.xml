@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3
-                                   		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
-
-	<!-- Tratamento na URL -->
-	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
 
 	<url-mapping id="login">
 		<pattern value="/login" />
@@ -31,17 +27,15 @@
 		<pattern value="/listarUsuarios" />
 		<view-id value="/secure/usuarios/usuarios.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="novoUsuario">
+		<pattern value="/novoUsuario" />
+		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+	</url-mapping>
 
 	<url-mapping id="editarUsuario">
 		<pattern value="/editarUsuario/#{idUsuario}" />
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
-		<action>#{usuarioMBean.editarUsuario}</action>
-	</url-mapping>
-
-	<url-mapping id="novoUsuario">
-		<pattern value="/novoUsuario" />
-		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
-		<action>#{usuarioMBean.novoUsuario}</action>
 	</url-mapping>
 
 	<url-mapping id="listarPerfis">
