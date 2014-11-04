@@ -1,6 +1,8 @@
 package br.edu.utfpr.authentication;
 
+import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,6 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import br.edu.utfpr.constants.Constantes;
+import br.edu.utfpr.constants.MessageName;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.model.Autorizacao;
 import br.edu.utfpr.model.Perfil;
@@ -41,7 +45,7 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 		try {
 			usuario = usuarioService.autenticarUsuario(username, password);
 		} catch (AppException e) {
-			throw new AuthenticationServiceException("Usuário ou senha inválido");
+			throw new AuthenticationServiceException(getExceptionMessage(e));
 		}
 		
 		// Carrega as Authorities do Usuario
@@ -85,6 +89,22 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 
 	public void setUsuarioService(UsuarioService usuarioService) {
 		this.usuarioService = usuarioService;
+	}
+	
+	protected String getExceptionMessage(AppException exception) {
+		String errorCode = exception.getErrorCode();
+		
+		if (errorCode != null) {
+			ResourceBundle bundle = ResourceBundle.getBundle(MessageName.ERRORS.value(), Constantes.LOCALE_PT_BR);
+			Object[] errorMessageParams = exception.getErrorMessageParams();
+			if (errorMessageParams != null) {
+				return MessageFormat.format(bundle.getString(errorCode), errorMessageParams);
+			} else {
+				return bundle.getString(errorCode);
+			}
+		} else {
+			return exception.getMessage();
+		}
 	}
 	
 }

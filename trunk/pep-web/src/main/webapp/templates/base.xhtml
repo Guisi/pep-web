@@ -21,12 +21,20 @@
 			<div id="centerPageDiv">
 				<utils:ajaxStatusDialog sessionTimeout="false"/>
 			
-				
 				<ui:insert name="header">
 					<div id="headerBox">
-						<span>
-							<h:outputText value="#{msg['general.app.title']}"/>
-						</span>
+						<table>
+							<tr>
+								<td style="width: 100%;">
+									<span>
+										<h:outputText value="#{msg['general.app.title']}"/>
+									</span>
+								</td>
+								<td>
+									<p:commandButton action="pretty:logout" icon="ui-icon-power" value="#{msg['menu.logout']}" style="margin-right: 15px;"/>
+								</td>
+							</tr>
+						</table>
 					</div>
 					<ui:include src="menu.xhtml"/>
 				</ui:insert>
