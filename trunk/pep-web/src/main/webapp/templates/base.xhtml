@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:utils="http://java.sun.com/jsf/composite/utils">
+	xmlns:p="http://primefaces.org/ui">
 	
 	<h:head>
 		<title>#{msg['general.app.title']}</title>
@@ -27,20 +26,22 @@
 				</p:dialog>
 			
 				<ui:insert name="header">
-					<div id="headerBox">
-						<table>
-							<tr>
-								<td style="width: 100%;">
-									<span>
-										<h:outputText value="#{msg['general.app.title']}"/>
-									</span>
-								</td>
-								<td>
-									<p:commandButton action="pretty:logout" icon="ui-icon-power" value="#{msg['menu.logout']}" style="margin-right: 15px;"/>
-								</td>
-							</tr>
-						</table>
-					</div>
+					<h:form>
+						<div id="headerBox">
+							<table>
+								<tr>
+									<td style="width: 100%;">
+										<span>
+											<h:outputText value="#{msg['general.app.title']}"/>
+										</span>
+									</td>
+									<td>
+										<p:commandButton action="pretty:logout" icon="ui-icon-power" value="#{msg['menu.logout']}" style="margin-right: 15px;"/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:form>
 					<ui:include src="menu.xhtml"/>
 				</ui:insert>
 			

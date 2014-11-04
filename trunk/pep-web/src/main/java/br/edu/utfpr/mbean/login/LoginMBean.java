@@ -2,6 +2,7 @@ package br.edu.utfpr.mbean.login;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -10,16 +11,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.context.RequestContext;
 import org.springframework.security.core.AuthenticationException;
 
+import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.service.UsuarioService;
 
 /**
  * ManagedBean da pagina de login da aplicacao
@@ -32,9 +35,13 @@ public class LoginMBean extends BaseMBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private UsuarioService usuarioService;
+	
 	private String login;
 	private String mensagem;
 	private String loginAlteracao;
+	private boolean sucessoSolicitacaoAlteracao;
 
 	/**
 	 * Metodo a ser executado depois da construcao do objeto. Este tem a finalidade de remover a mensagem de erro da sessao para que o usuario nao veja o erro anterior.
@@ -69,6 +76,8 @@ public class LoginMBean extends BaseMBean implements Serializable {
 		for (Iterator<FacesMessage> iterator = FacesContext.getCurrentInstance().getMessageList().iterator(); iterator.hasNext();) {
 			iterator.remove();
 		}
+		sucessoSolicitacaoAlteracao = false;
+		loginAlteracao = null;
 	}
 	
 	/**
@@ -92,7 +101,13 @@ public class LoginMBean extends BaseMBean implements Serializable {
 	}
 	
 	public void solicitarAlteracaoSenha() {
-		RequestContext.getCurrentInstance().addCallbackParam("error", true);
+		try {
+			usuarioService.reiniciarSenha(loginAlteracao);
+			addInfoMessage(MessageFormat.format(getMsgs().getString("login.solicitaralteracaosenha.sucesso"), loginAlteracao));
+			sucessoSolicitacaoAlteracao = true;
+		} catch (AppException e) {
+			addressException(e);
+		}
 	}
 
 	public String getLogin() {
@@ -117,6 +132,14 @@ public class LoginMBean extends BaseMBean implements Serializable {
 
 	public void setLoginAlteracao(String loginAlteracao) {
 		this.loginAlteracao = loginAlteracao;
+	}
+
+	public boolean isSucessoSolicitacaoAlteracao() {
+		return sucessoSolicitacaoAlteracao;
+	}
+
+	public void setSucessoSolicitacaoAlteracao(boolean sucessoSolicitacaoAlteracao) {
+		this.sucessoSolicitacaoAlteracao = sucessoSolicitacaoAlteracao;
 	}
 	
 }
