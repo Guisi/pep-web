@@ -51,13 +51,13 @@ body {
 }
 
 #logindiv {
-   	width:500px;
-	height:200px;
-	position:absolute;
-	top:50%;
-	left:50%;
-	margin-top:-100px;
-	margin-left:-250px;
+	width: 500px;
+	height: 200px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -100px;
+	margin-left: -250px;
 }
 
 .noborder {
@@ -127,12 +127,19 @@ fieldset {
 	text-align: left;
 }
 
+.rightAligned {
+	text-align: right;
+}
+
 .divBotoesEdicao {
-	margin-top: 10px; margin-right: 10px; text-align: right;
+	margin-top: 10px;
+	margin-right: 10px;
+	text-align: right;
 }
 
 .botaoNovo {
-	margin: 0px; margin-bottom: 7px;
+	margin: 0px;
+	margin-bottom: 7px;
 }
 
 .botaoSalvar {
@@ -145,4 +152,52 @@ fieldset {
 
 .picklist-nopadding tbody tr td {
 	padding: 0px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding: .4em 1em;
+	position: relative;
+}
+
+.ui-dialog .ui-dialog-title {
+	float: left;
+	margin: .1em 16px .1em 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	position: absolute;
+	right: .3em;
+	top: 50%;
+	width: 19px;
+	margin: -10px 0 0 0;
+	padding: 1px;
+	height: 18px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+	display: block;
+	margin: 1px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close:hover,.ui-dialog .ui-dialog-titlebar-close:focus {
+	padding: 0;
+}
+
+.ui-dialog-title {
+	font-size: 12px !important;
+}
+
+.ui-dialog .ui-dialog-content {
+	position: relative;
+	border: 0;
+	padding: .5em 1em;
+	background: none;
+	overflow: auto;
+	font-size: 12px !important;
+}
+
+.ui-widget-overlay {
+	background: #aaaaaa url(../imgs/ui-bg-flat.png) 50% 50% repeat-x;
+	opacity: .30;
+	filter: Alpha(Opacity = 30);
 }

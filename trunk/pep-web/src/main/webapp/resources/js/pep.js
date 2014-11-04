@@ -9,3 +9,12 @@ function phoneMaskHandler(target) {
 		element.mask("(99) 9999-9999?9");
 	}
 }
+
+/*
+ * Verifica se pode fechar o dialog modal 
+ */
+function handleModalDialogSubmit(dialogObject, status, args) {
+    if (!args.validationFailed && !args.error) {
+        dialogObject.hide();
+    }
+}
