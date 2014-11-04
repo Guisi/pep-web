@@ -57,6 +57,9 @@ public class Usuario extends BaseEntity {
         inverseJoinColumns=@JoinColumn(name="id_perfil"))
 	private Set<Perfil> perfisUsuario;
 	
+	@Column(name="qt_acessos_errados", length=2)
+	private Short qtdeAcessosErrados;
+	
 	@Transient
 	public String getTelefoneFormatado() {
 		return FormatUtils.getFormattedPhoneNumber(telefone);
@@ -121,6 +124,14 @@ public class Usuario extends BaseEntity {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Short getQtdeAcessosErrados() {
+		return qtdeAcessosErrados;
+	}
+
+	public void setQtdeAcessosErrados(Short qtdeAcessosErrados) {
+		this.qtdeAcessosErrados = qtdeAcessosErrados;
 	}
 	
 }
