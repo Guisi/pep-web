@@ -17,6 +17,7 @@ import javax.persistence.NoResultException;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.ContentType;
 import br.edu.utfpr.constants.MessageName;
@@ -29,6 +30,7 @@ import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.TokenCadastro;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.utils.PasswordHandler;
+import br.edu.utfpr.utils.UserThreadLocal;
 
 @Named
 @Stateless
@@ -43,8 +45,8 @@ public class UsuarioService {
 	@Resource(lookup = "java:jboss/mail/pep")
 	private Session session;
 
-	public List<Usuario> retornarUsuarios() {
-		return usuarioDao.retornarUsuarios();
+	public List<Usuario> retornarUsuarios(Boolean chkAtivo) {
+		return usuarioDao.retornarUsuarios(chkAtivo);
 	}
 	
 	public Usuario retornarUsuario(Long id) {
@@ -53,8 +55,11 @@ public class UsuarioService {
 		return usuario;
 	}
 	
-	public void removerUsuario(Usuario usuario) {
-		usuarioDao.removeById(usuario.getId());
+	public void inativarUsuario(PepUser usuarioLogado, Usuario usuario) {
+		UserThreadLocal.getThreadLocal().set(usuarioLogado.getUsername());
+		
+		usuario.setChkAtivo(Boolean.FALSE);
+		usuarioDao.save(usuario);
 	}
 	
 	public Usuario retornarUsuarioPorEmail(String email) {
@@ -65,7 +70,9 @@ public class UsuarioService {
 		}
 	}
 	
-	public void salvarUsuario(Usuario usuario) throws AppException {
+	public void salvarUsuario(PepUser usuarioLogado, Usuario usuario) throws AppException {
+		UserThreadLocal.getThreadLocal().set(usuarioLogado.getUsername());
+		
 		String email = StringUtils.trimToNull(usuario.getEmail());
 		usuario.setEmail(email);
 		
@@ -85,12 +92,17 @@ public class UsuarioService {
 			
 			//inicializa a qtde de acessos errados com 0
 			usuario.setQtdeAcessosErrados((short)0);
+			
+			//inicializa como ativo
+			usuario.setChkAtivo(Boolean.TRUE);
 		}
 		
 		usuarioDao.save(usuario);
 	}
 	
 	public Usuario autenticarUsuario(String username, String password) throws AppException {
+		UserThreadLocal.getThreadLocal().set(username);
+		
 		try {
 			Usuario usuario = usuarioDao.retornarUsuarioPorEmail(username);
 			

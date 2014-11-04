@@ -16,11 +16,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.utils.FormatUtils;
 
 @Entity
 @Table(name=Constantes.PEP_OWNER + "tb_usuario")
+@Audited
 public class Usuario extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -51,6 +55,7 @@ public class Usuario extends BaseEntity {
 	@Size(max=20)
 	private String telefone;
 	
+	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
         joinColumns=@JoinColumn(name="id_usuario"),
@@ -59,6 +64,9 @@ public class Usuario extends BaseEntity {
 	
 	@Column(name="qt_acessos_errados", length=2)
 	private Short qtdeAcessosErrados;
+	
+	@Column(name="chk_ativo")
+	private Boolean chkAtivo;
 	
 	@Transient
 	public String getTelefoneFormatado() {
@@ -132,6 +140,14 @@ public class Usuario extends BaseEntity {
 
 	public void setQtdeAcessosErrados(Short qtdeAcessosErrados) {
 		this.qtdeAcessosErrados = qtdeAcessosErrados;
+	}
+
+	public Boolean getChkAtivo() {
+		return chkAtivo;
+	}
+
+	public void setChkAtivo(Boolean chkAtivo) {
+		this.chkAtivo = chkAtivo;
 	}
 	
 }

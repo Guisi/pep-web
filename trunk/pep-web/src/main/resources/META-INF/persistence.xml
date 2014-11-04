@@ -6,6 +6,8 @@
 	<persistence-unit name="pepPU" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/PepDS</jta-data-source>
+		<!-- Definicao para tratar erro da TB_REVISAO estar sem PK -->
+		<class>org.hibernate.envers.DefaultRevisionEntity</class>
 		<properties>
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />
