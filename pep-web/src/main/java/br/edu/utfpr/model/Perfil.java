@@ -37,6 +37,12 @@ public class Perfil extends BaseEntity {
 	@Size(max=500)
 	private String descricao;
 	
+	@Column(name="chk_possui_especialidades")
+	private Boolean possuiEspecialidades;
+	
+	@Column(name="chk_possui_convenios")
+	private Boolean possuiConvenios;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_perfil_autorizacao",
         joinColumns=@JoinColumn(name="id_perfil"),
@@ -86,5 +92,20 @@ public class Perfil extends BaseEntity {
 		this.usuarios = usuarios;
 	}
 
+	public Boolean getPossuiEspecialidades() {
+		return possuiEspecialidades;
+	}
+
+	public void setPossuiEspecialidades(Boolean possuiEspecialidades) {
+		this.possuiEspecialidades = possuiEspecialidades;
+	}
+
+	public Boolean getPossuiConvenios() {
+		return possuiConvenios;
+	}
+
+	public void setPossuiConvenios(Boolean possuiConvenios) {
+		this.possuiConvenios = possuiConvenios;
+	}
 	
 }

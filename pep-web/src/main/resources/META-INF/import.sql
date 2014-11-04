@@ -5,10 +5,10 @@ INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome, telefone) 
 ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
 
 --cria perfis
-INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao) VALUES (1, 'Administrador', 'Perfil com autorização para todas as funcionalidades do sistema.');
-INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao) VALUES (2, 'Recepcionista', 'Perfil com autorização para funcionalidades necessárias para atendimento na recepção do estabelecimento médico.');
-INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao) VALUES (3, 'Paciente', 'Perfil com autorização para funcionalidades disponíveis para pacientes.');
-INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao) VALUES (4, 'Profissional Médico', 'Perfil com autorização para funcionalidades disponíveis para os profissionais médicos.');
+INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios) VALUES (1, 'Administrador', 'Perfil com autorização para todas as funcionalidades do sistema.', false, false);
+INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios) VALUES (2, 'Recepcionista', 'Perfil com autorização para funcionalidades necessárias para atendimento na recepção do estabelecimento médico.', false, false);
+INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios) VALUES (3, 'Paciente', 'Perfil com autorização para funcionalidades disponíveis para pacientes.', false, true);
+INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios) VALUES (4, 'Profissional Médico', 'Perfil com autorização para funcionalidades disponíveis para os profissionais médicos.', true, true);
 ALTER SEQUENCE pep_owner.perfil_sequence RESTART WITH 5;
 
 --cria autorizacoes

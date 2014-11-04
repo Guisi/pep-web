@@ -90,6 +90,16 @@ public class UsuarioMBean extends BaseMBean {
 	}
 	
 	public String salvar() {
+		String telefone = usuarioSelecionado.getTelefone();
+		telefone = telefone.replaceAll("[^\\d.]", "");
+		
+		if (telefone.length() < 10 || telefone.length() > 11) {
+			addErrorMessage(getMsgs().getString("usuario.salvar.erro.telefoneinvalido"));
+			return null;
+		} else {
+			usuarioSelecionado.setTelefone(telefone);
+		}
+		
 		boolean isNew = usuarioSelecionado.isNew();
 		usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(perfisPickList.getTarget()));
 		try {
