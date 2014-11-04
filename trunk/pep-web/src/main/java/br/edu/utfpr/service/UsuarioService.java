@@ -13,6 +13,7 @@ import br.edu.utfpr.dao.UsuarioDao;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.utils.PasswordHandler;
 
 @Named
 @Stateless
@@ -52,10 +53,14 @@ public class UsuarioService {
 			throw new AppException("usuario.salvar.erro.emailexistente", email);
 		}
 		
-		String telefone = usuario.getTelefone();
-		telefone = telefone.replaceAll("[^\\d.]", "");
-		usuario.setTelefone(telefone);
-
+		//se eh novo, define senha e envia por email
+		if (usuario.isNew()) {
+			String senha = PasswordHandler.generateRandomPassword();
+			System.out.println(senha);
+			senha = PasswordHandler.encryptPassword(senha);
+			usuario.setSenha(senha);
+		}
+		
 		usuarioDao.save(usuario);
 	}
 	

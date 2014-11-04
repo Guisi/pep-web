@@ -11,7 +11,7 @@
 		<p:panel>
 			<h:outputText value="#{perfilMBean.emptyStr}"/>
 		
-			<p:messages autoUpdate="true" globalOnly="true"/>
+			<p:messages autoUpdate="true"/>
 		
 			<h:form id="frmPerfis">
 				<div align="right">
@@ -25,13 +25,23 @@
 					<f:facet name="header">
 				        <h:outputText value="#{msg['perfil.lista.header']}"/>
 				    </f:facet>
-					<p:column headerText="#{msg['perfil.nome']}">
+					
+					<p:column headerText="#{msg['perfil.nome']}" width="20%">
 						<h:outputText value="#{perfil.nome}" />
 					</p:column>
 					
 					<p:column headerText="#{msg['perfil.descricao']}" styleClass="leftAligned">
 						<h:outputText value="#{perfil.descricao}" />
 					</p:column>
+					
+					<p:column headerText="#{msg['perfil.possuiespecialidades']}">
+						<h:selectBooleanCheckbox value="#{perfil.possuiEspecialidades}" disabled="true"/>
+					</p:column>
+					
+					<p:column headerText="#{msg['perfil.possuiconvenios']}">
+						<h:selectBooleanCheckbox value="#{perfil.possuiConvenios}" disabled="true"/>
+					</p:column>
+					
 					<p:column width="70px;">
 						<p:commandButton value="" actionListener="#{perfilMBean.editarPerfil(perfil)}" icon="ui-icon-pencil" styleClass="datatable-button"
 							update=":frmPerfis:editPerfilPanel"/>
@@ -42,7 +52,7 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['perfil.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{perfilMBean.removerPerfil}" update="perfilTable" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{perfilMBean.removerPerfil}" update="perfilTable, editPerfilPanel" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			    
@@ -55,12 +65,18 @@
 								<p:focus for="nomeInput"/>
 								<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
 									<h:outputLabel for="nomeInput" value="#{msg['perfil.nome']}: "/>
-									<p:inputText id="nomeInput" value="#{perfilMBean.perfilSelecionado.nome}" maxlength="100" style="width: 520px;" required="true"
+									<p:inputText id="nomeInput" value="#{perfilMBean.perfilSelecionado.nome}" maxlength="100" style="width: 505px;" required="true"
 										requiredMessage="#{msg['perfil.campoobrigatorio.nome']}"/>
 	
 									<h:outputLabel for="descricaoInput" value="#{msg['perfil.descricao']}: "/>
-									<p:inputText id="descricaoInput" value="#{perfilMBean.perfilSelecionado.descricao}" maxlength="500" style="width: 520px;" required="true"
+									<p:inputText id="descricaoInput" value="#{perfilMBean.perfilSelecionado.descricao}" maxlength="500" style="width: 505px;" required="true"
 										requiredMessage="#{msg['perfil.campoobrigatorio.descricao']}"/>
+										
+									<h:outputLabel for="sbcPossuiEspecialidades" value="#{msg['perfil.possuiespecialidades']}: "/>
+									<h:selectBooleanCheckbox id="sbcPossuiEspecialidades" value="#{perfilMBean.perfilSelecionado.possuiEspecialidades}"/>
+									
+									<h:outputLabel for="sbcPossuiConvenios" value="#{msg['perfil.possuiconvenios']}: "/>
+									<h:selectBooleanCheckbox id="sbcPossuiConvenios" value="#{perfilMBean.perfilSelecionado.possuiConvenios}"/>
 								</p:panelGrid>
 							
 								<div align="center" style="padding-top: 10px;">

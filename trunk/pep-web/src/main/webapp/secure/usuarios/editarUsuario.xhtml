@@ -38,26 +38,24 @@
 						<p:inputText id="telefoneInput" value="#{usuarioMBean.usuarioSelecionado.telefone}" maxlength="20" style="width: 443px;"
 							onfocus="phoneMaskHandler(this);" onblur="phoneMaskHandler(this);"/>
 
+
 					</p:panelGrid>
 					
-					<div align="center" style="padding-top: 10px;">
-						<fieldset style="width: 904px;">
-						    <legend>#{msg['usuario.perfis']}</legend>
-							<div align="center">
-								<p:pickList id="perfilPickList" value="#{usuarioMBean.perfisPickList}" 
-									var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"
-									styleClass="picklist-large"
-									converter="pickListConverter"
-									addAllLabel="#{msg['picklist.addall']}"
-					               	addLabel="#{msg['picklist.add']}"
-					               	removeAllLabel="#{msg['picklist.removeall']}"
-					               	removeLabel="#{msg['picklist.remove']}">
-					               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
-		       						<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
-								</p:pickList>
-							</div>
-						</fieldset>
-					</div>
+					<p:panelGrid columns="1" styleClass="noborder" columnClasses="labelColumn" style="margin-top: 10px; width: 100%;">
+						<h:outputText value="#{msg['usuario.perfis']}:"/>
+						<p:pickList id="perfilPickList" value="#{usuarioMBean.perfisPickList}"
+							var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"
+							styleClass="picklist-nopadding"
+							converter="pickListConverter"
+							addAllLabel="#{msg['picklist.addall']}"
+			               	addLabel="#{msg['picklist.add']}"
+			               	removeAllLabel="#{msg['picklist.removeall']}"
+			               	removeLabel="#{msg['picklist.remove']}">
+			               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
+	      					<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
+						</p:pickList>
+					</p:panelGrid>
+					
 					
 					<div class="divBotoesEdicao">
 						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarUsuarios" icon="ui-icon-close" immediate="true"/>

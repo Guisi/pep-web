@@ -142,3 +142,7 @@ fieldset {
 .picklist-large tbody tr td ul {
 	width: 300px !important;
 }
+
+.picklist-nopadding tbody tr td {
+	padding: 0px;
+}
