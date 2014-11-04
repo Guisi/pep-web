@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.GenericValidator;
 import org.primefaces.model.DualListModel;
 
 import br.edu.utfpr.exception.AppException;
@@ -92,30 +93,38 @@ public class UsuarioMBean extends BaseMBean {
 	public String salvar() {
 		String telefone = usuarioSelecionado.getTelefone();
 		telefone = telefone.replaceAll("[^\\d.]", "");
+		usuarioSelecionado.setTelefone(telefone);
 		
-		if (telefone.length() < 10 || telefone.length() > 11) {
-			addErrorMessage(getMsgs().getString("usuario.salvar.erro.telefoneinvalido"));
-			return null;
-		} else {
-			usuarioSelecionado.setTelefone(telefone);
-		}
-		
-		boolean isNew = usuarioSelecionado.isNew();
-		usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(perfisPickList.getTarget()));
-		try {
-			usuarioService.salvarUsuario(usuarioSelecionado);
-
-			if (isNew) {
-				addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
-			} else {
-				addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+		if (validarCampos()) {
+			boolean isNew = usuarioSelecionado.isNew();
+			usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(perfisPickList.getTarget()));
+			try {
+				usuarioService.salvarUsuario(usuarioSelecionado);
+	
+				if (isNew) {
+					addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
+				} else {
+					addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+				}
+				
+				return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
+			} catch (AppException e) {
+				addressException(e);
 			}
-			
-			return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
-		} catch (AppException e) {
-			addressException(e);
-			return null;
 		}
+		return null;
+	}
+	
+	private boolean validarCampos() {
+		boolean valido = true;
+		
+		String txTelefone = usuarioSelecionado.getTelefone();
+		if (StringUtils.isNotBlank(txTelefone) && !GenericValidator.isInRange(txTelefone.length(), 10, 11)) {
+			addErrorMessage(getMsgs().getString("usuario.salvar.erro.telefoneinvalido"));
+			valido = false;
+		}
+		
+		return valido;
 	}
 	
 	public List<Usuario> getUsuarioList() {

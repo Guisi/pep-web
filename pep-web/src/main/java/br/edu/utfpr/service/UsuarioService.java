@@ -95,8 +95,12 @@ public class UsuarioService {
 			String senhaBase = usuario.getSenha();
 			if (!senhaBase.equals(password)) {
 				usuario.setQtdeAcessosErrados((short)(usuario.getQtdeAcessosErrados() + 1));
+				usuarioDao.save(usuario);
 				throw new AppException("login.error.usuariosenhainvalido");
 			}
+			
+			usuario.setQtdeAcessosErrados((short)0);
+			usuarioDao.save(usuario);
 			
 			//se autenticou com sucesso, faz o fetch dos perfis e autorizacoes
 			for (Perfil perfil : usuario.getPerfisUsuario()) {

@@ -19,7 +19,12 @@
 	<h:body>
 		<div id="fullPageDiv">
 			<div id="centerPageDiv">
-				<utils:ajaxStatusDialog />
+				<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+
+				<!--Status Dialog para demonstrar estado de processamento -->
+				<p:dialog widgetVar="statusDialog" modal="false" closable="false" resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">
+					<h:graphicImage library="imgs" name="ajaxloadingbar.gif"/>
+				</p:dialog>
 			
 				<ui:insert name="header">
 					<div id="headerBox">

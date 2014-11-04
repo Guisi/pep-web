@@ -31,7 +31,7 @@
 				            <h:outputText value="#{loginMBean.viewBean.mensagem}" escape="false"/>
 				        </h:panelGroup>
 
-						<p:messages id="msgLogin"/>
+						<p:messages id="msgLogin" showDetail="false" showSummary="true" globalOnly="false"/>
 					</div>
 		            
 					<p:focus for="j_username"/>
@@ -58,7 +58,7 @@
 		
 		<p:dialog widgetVar="dlgSolicitarAltSenha" modal="true" closable="true" resizable="false" draggable="false" header="#{msg['login.solicitaralteracaosenha.header']}" width="500">
 			<h:form id="frmSolicitarAltSenha">
-				<p:messages id="msgSolicitarAltSenha"/>
+				<p:messages id="msgSolicitarAltSenha" showDetail="false" showSummary="true" globalOnly="false"/>
 			
 				<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, valueColumn" style="width: 100%;">
 					<h:outputLabel for="itEmail" value="#{msg['login.campo.email']}: "/>
@@ -67,10 +67,10 @@
 				</p:panelGrid>
 				
 				<div class="divBotoesEdicao">
-						<p:commandButton value="#{msg['botao.cancelar']}" onclick="dlgSolicitarAltSenha.hide();" icon="ui-icon-close"/>
-						<p:commandButton value="#{msg['botao.solicitar']}" update="msgSolicitarAltSenha" action="#{loginMBean.solicitarAlteracaoSenha}"
-							icon="ui-icon-check" styleClass="botaoSalvar" oncomplete="handleModalDialogSubmit(dlgSolicitarAltSenha, status, args);"/>
-					</div>
+					<p:commandButton value="#{msg['botao.cancelar']}" onclick="dlgSolicitarAltSenha.hide();" icon="ui-icon-close"/>
+					<p:commandButton value="#{msg['botao.solicitar']}" update="msgSolicitarAltSenha" action="#{loginMBean.solicitarAlteracaoSenha}"
+						icon="ui-icon-check" styleClass="botaoSalvar" oncomplete="handleModalDialogSubmit(dlgSolicitarAltSenha, status, args);"/>
+				</div>
 			</h:form>
 		</p:dialog>
 	</h:body>
