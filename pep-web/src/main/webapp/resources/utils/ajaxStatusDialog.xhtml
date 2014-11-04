@@ -7,13 +7,11 @@
 
 	<!-- INTERFACE -->
 	<cc:interface>
-		<cc:attribute name="sessionTimeout" required="true" type="boolean"/>
 	</cc:interface>
 	
 	<!-- IMPLEMENTATION -->
 	<cc:implementation>
-		<p:ajaxStatus onstart="statusDialog.show(); resetSessionTimeout();" onsuccess="statusDialog.hide();" rendered="#{cc.attrs.sessionTimeout}"/>
-		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" rendered="#{!cc.attrs.sessionTimeout}"/>
+		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
 
 		<!--Status Dialog para demonstrar estado de processamento -->
 		<p:dialog widgetVar="statusDialog" modal="false" closable="false"

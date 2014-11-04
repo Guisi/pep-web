@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.context.RequestContext;
 import org.springframework.security.core.AuthenticationException;
 
 import br.edu.utfpr.mbean.BaseMBean;
@@ -33,6 +34,7 @@ public class LoginMBean extends BaseMBean implements Serializable {
 	
 	private String login;
 	private String mensagem;
+	private String loginAlteracao;
 
 	/**
 	 * Metodo a ser executado depois da construcao do objeto. Este tem a finalidade de remover a mensagem de erro da sessao para que o usuario nao veja o erro anterior.
@@ -67,7 +69,6 @@ public class LoginMBean extends BaseMBean implements Serializable {
 		for (Iterator<FacesMessage> iterator = FacesContext.getCurrentInstance().getMessageList().iterator(); iterator.hasNext();) {
 			iterator.remove();
 		}
-		
 	}
 	
 	/**
@@ -89,6 +90,10 @@ public class LoginMBean extends BaseMBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void solicitarAlteracaoSenha() {
+		RequestContext.getCurrentInstance().addCallbackParam("error", true);
+	}
 
 	public String getLogin() {
 		return login;
@@ -104,6 +109,14 @@ public class LoginMBean extends BaseMBean implements Serializable {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+
+	public String getLoginAlteracao() {
+		return loginAlteracao;
+	}
+
+	public void setLoginAlteracao(String loginAlteracao) {
+		this.loginAlteracao = loginAlteracao;
 	}
 	
 }

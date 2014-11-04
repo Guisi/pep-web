@@ -25,11 +25,14 @@
 					</span>
 				</div>				
 				<h:form prependId="false">
-					<center style="color: red;">
+					
+					<div style="width: 360px;">
 		                <h:panelGroup layout="block" rendered="#{not empty loginMBean.mensagem}">
 				            <h:outputText value="#{loginMBean.viewBean.mensagem}" escape="false"/>
 				        </h:panelGroup>
-		            </center>
+
+						<p:messages id="msgLogin"/>
+					</div>
 		            
 					<p:focus for="j_username"/>
 					<p:watermark for="j_username" value="#{msg['login.campo.email']}" />
@@ -43,14 +46,32 @@
 							required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.senha']}"/>
 						<p:commandButton id="btEntrar" value="#{msg['login.botao.entrar']}" action="#{loginMBean.processLogin}" 
 	                				 ajax="false" process="@this, j_username, j_password" update="@form" style="width: 360px; margin-top: 10px; margin-left: 1px;"/>
-						
 					</div>
 					
-					<div style="width: 360px;">
-						<p:messages id="msgLogin"/>
-					</div>
+					<!-- Esqueci minha senha -->
+			        <div align="left" style="width: 360px; margin-top: 20px;">
+			        	<p:commandLink value="#{msg['login.esqueceusenha']}" onclick="dlgSolicitarAltSenha.show();" actionListener="#{loginMBean.limparMessages}" process="@this"/>
+			        </div>
 				</h:form>
-			</p:panel>	
+			</p:panel>
 		</div>
+		
+		<p:dialog widgetVar="dlgSolicitarAltSenha" modal="true" closable="true" resizable="false" draggable="false" header="#{msg['login.solicitaralteracaosenha.header']}" width="500">
+			<h:form id="frmSolicitarAltSenha">
+				<p:messages id="msgSolicitarAltSenha"/>
+			
+				<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, valueColumn" style="width: 100%;">
+					<h:outputLabel for="itEmail" value="#{msg['login.campo.email']}: "/>
+					<p:inputText id="itEmail" value="#{loginMBean.loginAlteracao}" maxlength="50" 
+								required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.email']}" style="width: 350px;"/>
+				</p:panelGrid>
+				
+				<div class="divBotoesEdicao">
+						<p:commandButton value="#{msg['botao.cancelar']}" onclick="dlgSolicitarAltSenha.hide();" icon="ui-icon-close"/>
+						<p:commandButton value="#{msg['botao.solicitar']}" update="msgSolicitarAltSenha" action="#{loginMBean.solicitarAlteracaoSenha}"
+							icon="ui-icon-check" styleClass="botaoSalvar" oncomplete="handleModalDialogSubmit(dlgSolicitarAltSenha, status, args);"/>
+					</div>
+			</h:form>
+		</p:dialog>
 	</h:body>
 </html>
