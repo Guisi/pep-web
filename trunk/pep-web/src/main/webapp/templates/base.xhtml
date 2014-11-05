@@ -27,7 +27,7 @@
 			
 				<ui:insert name="header">
 					<h:form>
-						<div id="headerBox">
+						<p:panel id="headerBox" styleClass="headerBox">
 							<table>
 								<tr>
 									<td style="width: 100%;">
@@ -36,11 +36,18 @@
 										</span>
 									</td>
 									<td>
+										<p:themeSwitcher id="basic" style="width:165px; margin-top: 5px;" value="#{themeSwitcherView.theme}">
+								            <f:selectItem itemLabel="Escolha o tema" itemValue="" />
+								            <f:selectItems value="#{themeSwitcherView.themes}"/>
+								            <p:ajax listener="#{themeSwitcherView.saveTheme}" />
+								        </p:themeSwitcher>
+									</td>
+									<td>
 										<p:commandButton action="pretty:logout" icon="ui-icon-power" value="#{msg['menu.logout']}" style="margin-right: 15px;"/>
 									</td>
 								</tr>
 							</table>
-						</div>
+						</p:panel>
 					</h:form>
 					<ui:include src="menu.xhtml"/>
 				</ui:insert>
