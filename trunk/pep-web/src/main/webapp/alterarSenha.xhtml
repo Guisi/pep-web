@@ -9,33 +9,40 @@
 	
     <ui:define name="content">
     	<div id="logindiv" align="center">
-	        <h:form id="frmAlterarSenha" prependId="false">
-	        	<h:outputText value="#{alterarSenhaMBean.emptyStr}"/>
-			
-				<p:panel header="#{msg['alterarsenha.header']}">
-					<p:messages id="msgs"/>
-	
+    		<p:panel style="width: 100%;">
+    			<div id="headerBoxLogin">
+					<span>
+						<h:outputText value="#{msg['general.app.title']}"/>
+					</span>
+				</div>
+		        <h:form id="frmAlterarSenha" prependId="false" style="padding: 10px;">
+		        	<h:outputText value="#{alterarSenhaMBean.emptyStr}"/>
+				
+					<span class="header-title">#{msg['alterarsenha.header']}</span>
+
 					<p:focus for="senhaInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, leftAligned" style="width: 100%;">
+					<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, leftAligned" style="width: 100%; margin-top: 15px;">
 						<h:outputLabel for="emailOutput" value="#{msg['alterarsenha.campo.email']}: "/>
 						<h:outputText id="emailOutput" value="#{alterarSenhaMBean.email}"/>
 					
 						<h:outputLabel for="senhaInput" value="#{msg['alterarsenha.campo.senha']}: "/>
 						<p:inputText id="senhaInput" value="#{alterarSenhaMBean.senha}" maxlength="8" style="width: 200px;" required="true"
-							requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{empty alterarSenhaMBean.email}"/>
+							requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
 	
 						<h:outputLabel for="confirmacaoSenhaInput" value="#{msg['alterarsenha.campo.confirmacaosenha']}: "/>
 						<p:inputText id="confirmacaoSenhaInput" value="#{alterarSenhaMBean.confirmacaoSenha}" maxlength="8" style="width: 200px;" required="true"
-							requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{empty alterarSenhaMBean.email}"/>
+							requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
 					</p:panelGrid>
+					
+					<p:messages id="msgs"/>
 					
 					<div align="center" style="margin-top: 10px;">
 						<p:commandButton value="#{msg['alterarsenha.botao.alterarsenha']}" update="@form" action="#{alterarSenhaMBean.alterarSenha}"
-							icon="ui-icon-check" styleClass="botaoSalvar" disabled="#{empty alterarSenhaMBean.email}"/>
+							icon="ui-icon-check" styleClass="botaoSalvar" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
 					</div>
-				</p:panel>
-	        </h:form>
-	       </div>
-    </ui:define>
+		        </h:form>
+			</p:panel>
+		</div>
+	</ui:define>
     
 </ui:composition>

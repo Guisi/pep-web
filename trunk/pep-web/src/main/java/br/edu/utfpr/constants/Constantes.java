@@ -11,4 +11,8 @@ public interface Constantes {
 	final Short QTDE_MAXIMA_ERROS_ACESSO = 5;
 	
 	final Locale LOCALE_PT_BR = new Locale("pt_BR");
+	
+	final Integer PASSWD_MIN_LENGHT = 6;
+
+	final Integer PASSWD_MAX_LENGHT = 8;
 }

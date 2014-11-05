@@ -14,7 +14,7 @@ body {
 	margin: 0px 0px 0px 0px;
 	background-size: 100% 100%;
 	text-align: left;
-	font-size: 19px !important;
+	font-size: 18px !important;
 	font-family: Verdana !important;
 	font-weight: bold !important;
 	padding-top: 10px !important;
@@ -22,13 +22,19 @@ body {
 }
 
 #headerBoxLogin {
-	height: 50px;
+	height: 40px;
 	margin: 0px 0px 0px 0px;
 	text-align: center;
 	color: #000;
-	font-size: 19px;
+	font-size: 18px;
 	font-family: Verdana;
 	font-weight: bold;
+}
+
+.header-title {
+	font-size: 12px !important;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-weight: bold !important;
 }
 
 #fullPageDiv {
@@ -49,11 +55,11 @@ body {
 
 #logindiv {
 	width: 500px;
-	height: 200px;
+	height: 222px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	margin-top: -100px;
+	margin-top: -111px;
 	margin-left: -250px;
 }
 

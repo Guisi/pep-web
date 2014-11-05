@@ -14,6 +14,7 @@ import javax.mail.Session;
 import javax.persistence.NoResultException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.GenericValidator;
 
 import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.constants.Constantes;
@@ -93,6 +94,27 @@ public class UsuarioService {
 			//inicializa como ativo
 			usuario.setChkAtivo(Boolean.TRUE);
 		}
+		
+		usuarioDao.save(usuario);
+	}
+	
+	public void alterarSenhaUsuario(String username, String senha) throws AppException {
+		
+		//valida forca da senha
+		if (StringUtils.isBlank(senha)
+				|| GenericValidator.isInRange(senha.length(), Constantes.PASSWD_MIN_LENGHT, Constantes.PASSWD_MAX_LENGHT)
+				|| !PasswordHandler.validatePasswordStrength(senha)) {
+			throw new AppException("alterarsenha.msg.info.complexidadesenha");
+		}
+		
+		Usuario usuario = this.retornarUsuarioPorEmail(username, Boolean.TRUE);
+		
+		//criptografa a senha para guardar na base
+		senha = PasswordHandler.encryptPassword(senha);
+		usuario.setSenha(senha);
+		
+		//volta a qtde de acessos errados para 0
+		usuario.setQtdeAcessosErrados((short)0);
 		
 		usuarioDao.save(usuario);
 	}
