@@ -140,44 +140,36 @@
 
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
-					<compilerArgument>-proc:none</compilerArgument>
+					<compilerArguments>
+						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+					</compilerArguments>
 				</configuration>
 			</plugin>
-
+			
+			<!-- Inclusao do diretorio dos Metamodels como source-folder -->			
 			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<version>2.0.5</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
 				<executions>
 					<execution>
-						<id>process</id>
+						<id>add-sources</id>
+						<phase>process-sources</phase>
 						<goals>
-							<goal>process</goal>
+							<goal>add-source</goal>
 						</goals>
-						<phase>generate-sources</phase>
 						<configuration>
-							<compilerArgument>-proc:only</compilerArgument>
-							<outputDirectory>${project.build.directory}/generated-sources/annotations</outputDirectory>
-							<processors>
-								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-							</processors>
+							<sources>
+								<source>${project.build.directory}/generated-sources/annotations</source>
+							</sources>
 						</configuration>
 					</execution>
 				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>4.3.6.Final</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<plugin>
