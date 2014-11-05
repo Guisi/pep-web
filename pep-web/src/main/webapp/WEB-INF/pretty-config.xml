@@ -5,7 +5,12 @@
 
 	<url-mapping id="login">
 		<pattern value="/login" />
-		<view-id value="/login.xhtml?faces-redirect=true" />
+		<view-id value="/login.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="alterarSenha">
+		<pattern value="/alterarSenha" />
+		<view-id value="/alterarSenha.xhtml" />
 	</url-mapping>
 	
 	<url-mapping id="logout"> 

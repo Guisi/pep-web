@@ -8,6 +8,7 @@
 		<jta-data-source>java:jboss/datasources/PepDS</jta-data-source>
 		<!-- Definicao para tratar erro da TB_REVISAO estar sem PK -->
 		<class>org.hibernate.envers.DefaultRevisionEntity</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="false" />

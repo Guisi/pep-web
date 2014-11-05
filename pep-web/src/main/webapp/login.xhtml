@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/publicBase.xhtml">
 	
-	<h:head>
-		<title>#{msg['general.app.title']}</title>
-	</h:head>
-	
-	<h:outputStylesheet library="css" name="estilos.css"  />
-	<h:outputScript library="js" name="pep.js"/>
-	<h:outputScript library="js" name="locales.js"/>
-	
-	<h:body>
+    <ui:define name="content">
 		<div id="logindiv" align="center">
 			<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
 
@@ -84,5 +76,5 @@
 				</h:panelGroup>
 			</p:dialog>
 		</h:form>
-	</h:body>
-</html>
+	</ui:define>
+</ui:composition>

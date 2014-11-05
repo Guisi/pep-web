@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.edu.utfpr.model.Usuario;
@@ -27,12 +28,17 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 		return entityManager.createQuery(q).getResultList();
 	}
 	
-	public Usuario retornarUsuarioPorEmail(String email) {
+	public Usuario retornarUsuarioPorEmail(String email, Boolean chkAtivo) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
 		Root<Usuario> root = q.from(Usuario.class);
 
-		q.where(qb.equal(root.get(Usuario_.email), email));
+		Predicate predicate = qb.equal(root.get(Usuario_.email), email);
+		if (chkAtivo != null) {
+			predicate = qb.and(predicate, qb.equal(root.get(Usuario_.chkAtivo), chkAtivo));
+		}
+		
+		q.where(predicate);
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}

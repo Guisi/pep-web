@@ -47,8 +47,8 @@ public class Usuario extends BaseEntity {
 	@Size(max=100)
 	private String email;
 	
-	@Column(name="senha", length=100)
-	@Size(max=100)
+	@Column(name="senha", length=50)
+	@Size(max=50)
 	private String senha;
 	
 	@Column(name="telefone", length=20)

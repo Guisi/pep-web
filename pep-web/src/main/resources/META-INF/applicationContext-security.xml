@@ -6,6 +6,9 @@
                            http://www.springframework.org/schema/security
                            http://www.springframework.org/schema/security/spring-security.xsd">
 
+	<security:http pattern="/alterarSenha.xhtml" security="none"/>
+	<security:http pattern="/404.xhtml" security="none"/>
+
 	<security:http auto-config="false" use-expressions="true" entry-point-ref="loginUrlAuthenticationEntryPoint">
 		<!-- Intercepts -->
 		<security:intercept-url pattern="/secure/perfil/**" access="hasRole('EDITAR_PERFIS')" />

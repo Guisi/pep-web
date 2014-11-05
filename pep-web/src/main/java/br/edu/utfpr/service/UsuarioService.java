@@ -3,10 +3,8 @@ package br.edu.utfpr.service;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -21,7 +19,6 @@ import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.ContentType;
 import br.edu.utfpr.constants.MessageName;
-import br.edu.utfpr.dao.TokenCadastroDao;
 import br.edu.utfpr.dao.UsuarioDao;
 import br.edu.utfpr.email.Email;
 import br.edu.utfpr.email.EmailHandler;
@@ -40,7 +37,7 @@ public class UsuarioService {
 	private UsuarioDao usuarioDao;
 	
 	@Inject
-	private TokenCadastroDao tokenCadastroDao;
+	private TokenCadastroService tokenCadastroService;
 	
 	@Resource(lookup = "java:jboss/mail/pep")
 	private Session session;
@@ -62,9 +59,9 @@ public class UsuarioService {
 		usuarioDao.save(usuario);
 	}
 	
-	public Usuario retornarUsuarioPorEmail(String email) {
+	public Usuario retornarUsuarioPorEmail(String email, Boolean chkAtivo) {
 		try {
-			return usuarioDao.retornarUsuarioPorEmail(email);
+			return usuarioDao.retornarUsuarioPorEmail(email, chkAtivo);
 		} catch (NoResultException e) {
 			return null;
 		}
@@ -76,7 +73,7 @@ public class UsuarioService {
 		String email = StringUtils.trimToNull(usuario.getEmail());
 		usuario.setEmail(email);
 		
-		Usuario usuarioBase = this.retornarUsuarioPorEmail(email);
+		Usuario usuarioBase = this.retornarUsuarioPorEmail(email, null);
 		if (usuarioBase != null && !usuarioBase.getId().equals(usuario.getId())) {
 			throw new AppException("usuario.salvar.erro.emailexistente", email);
 		}
@@ -104,7 +101,7 @@ public class UsuarioService {
 		UserThreadLocal.getThreadLocal().set(username);
 		
 		try {
-			Usuario usuario = usuarioDao.retornarUsuarioPorEmail(username);
+			Usuario usuario = usuarioDao.retornarUsuarioPorEmail(username, Boolean.TRUE);
 			
 			if (Constantes.QTDE_MAXIMA_ERROS_ACESSO <= usuario.getQtdeAcessosErrados()) {
 				throw new AppException("login.error.bloqueadoporquantidade");
@@ -163,32 +160,13 @@ public class UsuarioService {
 	public void reiniciarSenha(String username) throws AppException {
 		Usuario usuario = null;
 		try {
-			usuario = usuarioDao.retornarUsuarioPorEmail(username);
+			usuario = usuarioDao.retornarUsuarioPorEmail(username, Boolean.TRUE);
 		} catch (NoResultException e) {
 			throw new AppException("login.solicitaralteracaosenha.error.usuarionaoexiste", username);
 		}
 		
-		//validade do token eh de 01 dia
-		Calendar dataValidade = Calendar.getInstance();
-		dataValidade.add(Calendar.DAY_OF_MONTH, -1);
-
-		//inativa token anterior se existe
-		try {
-			TokenCadastro tokenCadastro = tokenCadastroDao.retornarTokenAtivoPorUsuario(username, dataValidade.getTime());
-			tokenCadastro.setChkAtivo(Boolean.FALSE);
-			tokenCadastroDao.save(tokenCadastro);
-		} catch (NoResultException e) {}
-		
-		/* Criacao do Hash - Unique Identifier */
-		UUID hashUUID = UUID.randomUUID();
-		String token = hashUUID.toString().replaceAll("-", "").trim();
-		
-		TokenCadastro tokenCadastro = new TokenCadastro();
-		tokenCadastro.setTxEmailUsuario(username);
-		tokenCadastro.setChkAtivo(Boolean.TRUE);
-		tokenCadastro.setTxTokenValue(token);
-		tokenCadastro.setDtGeracao(new Date());
-		tokenCadastroDao.save(tokenCadastro);
+		//Cria o token para o usuario
+		TokenCadastro tokenCadastro = tokenCadastroService.criarTokenUsuario(username);
 		
 		//Envia email com link do token
 		ResourceBundle bundle = ResourceBundle.getBundle(MessageName.MESSAGES.value(), Constantes.LOCALE_PT_BR);
@@ -213,7 +191,7 @@ public class UsuarioService {
 		// Mensagem Solicitacao de Cadastro
 		String msg = MessageFormat.format(bundle.getString("solicitaralteracaosenha.email.mensagem"),
 				usuario.getNome(),
-				bundle.getString("solicitaralteracaosenha.email.link.solicitacaocadastro"), token);
+				bundle.getString("solicitaralteracaosenha.email.link.solicitacaocadastro"), tokenCadastro.getTxTokenValue());
 
 		email.setMensagem(msg);
 
