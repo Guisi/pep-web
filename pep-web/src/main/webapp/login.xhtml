@@ -9,21 +9,14 @@
 	
     <ui:define name="content">
 		<div id="logindiv" align="center">
-			<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
-
-			<!--Status Dialog para demonstrar estado de processamento -->
-			<p:dialog widgetVar="statusDialog" modal="false" closable="false" resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">
-				<h:graphicImage library="imgs" name="ajaxloadingbar.gif"/>
-			</p:dialog>
-
-			<p:panel style="width: 100%; padding: 15px 0px 25px 0px">
+			<p:panel style="width: 100%; padding: 15px;">
 				<div id="headerBoxLogin">
 					<span>
 						<h:outputText value="#{msg['general.app.title']}"/>
 					</span>
 				</div>
 				
-				<h:form prependId="false">
+				<h:form prependId="false" style="margin-top: 10px;">
 					<div style="width: 360px;">
 		                <h:panelGroup layout="block" rendered="#{not empty loginMBean.mensagem}">
 				            <h:outputText value="#{loginMBean.viewBean.mensagem}" escape="false"/>
