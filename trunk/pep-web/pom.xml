@@ -107,13 +107,14 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-envers</artifactId>
-			<version>4.3.7.Final</version>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.2.8.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.3.7.Final</version>
+			<artifactId>hibernate-envers</artifactId>
+			<version>4.2.8.Final</version>
 		</dependency>
 
 		<dependency>

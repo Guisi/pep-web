@@ -36,4 +36,25 @@ public class TokenCadastroDao extends GenericDao<TokenCadastro, Long> implements
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}
+	
+	public TokenCadastro retornarTokenAtivoPorValor(String tokenValue, Date dataValidade) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TokenCadastro> q = qb.createQuery(TokenCadastro.class);
+		Root<TokenCadastro> root = q.from(TokenCadastro.class);
+
+		//se esta ativo
+		Predicate predicate = qb.equal(root.get(TokenCadastro_.chkAtivo), true);
+		
+		//filtra pelo valor do token
+		predicate = qb.and(predicate, qb.equal(root.get(TokenCadastro_.txTokenValue), tokenValue));
+		
+		//se estah valido
+		if (dataValidade != null) {
+			predicate = qb.and(predicate, qb.greaterThanOrEqualTo(root.get(TokenCadastro_.dtGeracao), dataValidade));
+		}
+		
+		q.where(predicate);
+		
+		return entityManager.createQuery(q).getSingleResult();
+	}
 }

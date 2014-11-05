@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/publicBase.xhtml">
+	
+    <ui:define name="content">
+    	<div id="logindiv" align="center">
+	        <h:form id="frmAlterarSenha" prependId="false">
+	        	<h:outputText value="#{alterarSenhaMBean.emptyStr}"/>
+			
+				<p:panel header="#{msg['alterarsenha.header']}">
+					<p:messages id="msgs"/>
+	
+					<p:focus for="senhaInput"/>
+					<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, leftAligned" style="width: 100%;">
+						<h:outputLabel for="emailOutput" value="#{msg['alterarsenha.campo.email']}: "/>
+						<h:outputText id="emailOutput" value="#{alterarSenhaMBean.email}"/>
+					
+						<h:outputLabel for="senhaInput" value="#{msg['alterarsenha.campo.senha']}: "/>
+						<p:inputText id="senhaInput" value="#{alterarSenhaMBean.senha}" maxlength="8" style="width: 200px;" required="true"
+							requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{empty alterarSenhaMBean.email}"/>
+	
+						<h:outputLabel for="confirmacaoSenhaInput" value="#{msg['alterarsenha.campo.confirmacaosenha']}: "/>
+						<p:inputText id="confirmacaoSenhaInput" value="#{alterarSenhaMBean.confirmacaoSenha}" maxlength="8" style="width: 200px;" required="true"
+							requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{empty alterarSenhaMBean.email}"/>
+					</p:panelGrid>
+					
+					<div align="center" style="margin-top: 10px;">
+						<p:commandButton value="#{msg['alterarsenha.botao.alterarsenha']}" update="@form" action="#{alterarSenhaMBean.alterarSenha}"
+							icon="ui-icon-check" styleClass="botaoSalvar" disabled="#{empty alterarSenhaMBean.email}"/>
+					</div>
+				</p:panel>
+	        </h:form>
+	       </div>
+    </ui:define>
+    
+</ui:composition>
