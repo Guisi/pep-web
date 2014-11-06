@@ -102,7 +102,7 @@ public class UsuarioService {
 		
 		//valida forca da senha
 		if (StringUtils.isBlank(senha)
-				|| GenericValidator.isInRange(senha.length(), Constantes.PASSWD_MIN_LENGHT, Constantes.PASSWD_MAX_LENGHT)
+				|| !GenericValidator.isInRange(senha.length(), Constantes.PASSWD_MIN_LENGHT, Constantes.PASSWD_MAX_LENGHT)
 				|| !PasswordHandler.validatePasswordStrength(senha)) {
 			throw new AppException("alterarsenha.msg.info.complexidadesenha");
 		}
@@ -117,6 +117,9 @@ public class UsuarioService {
 		usuario.setQtdeAcessosErrados((short)0);
 		
 		usuarioDao.save(usuario);
+		
+		//inativa o token
+		tokenCadastroService.inativarTokensUsuario(username);
 	}
 	
 	public Usuario autenticarUsuario(String username, String password) throws AppException {

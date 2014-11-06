@@ -2,6 +2,7 @@ package br.edu.utfpr.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.ejb.Stateless;
@@ -24,12 +25,8 @@ public class TokenCadastroService {
 		Calendar dataValidade = Calendar.getInstance();
 		dataValidade.add(Calendar.DAY_OF_MONTH, -1);
 		
-		//inativa token anterior se existe
-		try {
-			TokenCadastro tokenCadastro = tokenCadastroDao.retornarTokenAtivoPorUsuario(username, dataValidade.getTime());
-			tokenCadastro.setChkAtivo(Boolean.FALSE);
-			tokenCadastroDao.save(tokenCadastro);
-		} catch (NoResultException e) {}
+		//inativa tokens ativos se existirem
+		this.inativarTokensUsuario(username);
 		
 		/* Criacao do Hash - Unique Identifier */
 		UUID hashUUID = UUID.randomUUID();
@@ -54,6 +51,15 @@ public class TokenCadastroService {
 			return tokenCadastroDao.retornarTokenAtivoPorValor(tokenValue, dataValidade.getTime());
 		} catch (NoResultException e) {
 			return null;
+		}
+	}
+	
+	public void inativarTokensUsuario(String username) {
+		//inativa token anterior se existe
+		List<TokenCadastro> tokens = tokenCadastroDao.retornarTokensAtivosPorUsuario(username);
+		for (TokenCadastro token : tokens) {
+			token.setChkAtivo(Boolean.FALSE);
+			tokenCadastroDao.save(token);
 		}
 	}
 }
