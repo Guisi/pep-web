@@ -39,7 +39,7 @@
 							<p:password id="j_password" maxlength="20" style="width: 350px; margin-top: 10px;"
 								required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.senha']}"/>
 							<p:commandButton id="btEntrar" value="#{msg['login.botao.entrar']}" action="#{loginMBean.processLogin}" 
-		                				 ajax="false" process="@this, j_username, j_password" update="@form" style="width: 360px; margin-top: 10px; margin-left: 1px;"/>
+		                				 ajax="false" process="@this, j_username, j_password" style="width: 360px; margin-top: 10px; margin-left: 1px;"/>
 						</div>
 						
 						<!-- Esqueci minha senha -->
@@ -50,6 +50,15 @@
 				</div>
 			</p:panel>
 		</div>
+
+		<f:event listener="#{alterarSenhaMBean.inicializarUsuarioSenhaProvisoria}" type="preRenderView"/>		
+		<p:dialog widgetVar="dlgAlterarSenha" modal="true" closable="false" resizable="false"
+			draggable="false" header="#{msg['alterarsenha.header']}" width="500" visible="#{loginMBean.mostrarModalAlteracaoSenha}">
+			<div align="center">
+				<span class="header-title">#{msg['login.senhaprovisoria.header']}</span>
+				<ui:include src="secure/usuarios/alterarSenhaInclude.xhtml" />
+			</div>
+		</p:dialog>
 		
 		<h:form id="frmSolicitarAltSenha">
 			<p:dialog widgetVar="dlgSolicitarAltSenha" modal="true" closable="true" resizable="false" draggable="false" header="#{msg['login.solicitaralteracaosenha.header']}" width="500">

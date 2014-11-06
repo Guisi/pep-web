@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.MessageName;
 import br.edu.utfpr.exception.AppException;
+import br.edu.utfpr.exception.SenhaProvisoriaException;
 import br.edu.utfpr.model.Autorizacao;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
@@ -46,6 +47,10 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 			usuario = usuarioService.autenticarUsuario(username, password);
 		} catch (AppException e) {
 			throw new AuthenticationServiceException(getExceptionMessage(e));
+		}
+		
+		if (usuario.getChkSenhaProvisoria()) {
+			throw new SenhaProvisoriaException("");
 		}
 		
 		// Carrega as Authorities do Usuario
