@@ -3,6 +3,7 @@ br.edu.utfpr.dao;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,7 +17,7 @@ public class TokenCadastroDao extends GenericDao<TokenCadastro, Long> implements
 
 	private static final long serialVersionUID = 1L;
 
-	public TokenCadastro retornarTokenAtivoPorUsuario(String username, Date dataValidade) {
+	public List<TokenCadastro> retornarTokensAtivosPorUsuario(String username) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TokenCadastro> q = qb.createQuery(TokenCadastro.class);
 		Root<TokenCadastro> root = q.from(TokenCadastro.class);
@@ -27,14 +28,9 @@ public class TokenCadastroDao extends GenericDao<TokenCadastro, Long> implements
 		//se esta ativo
 		predicate = qb.and(predicate, qb.equal(root.get(TokenCadastro_.chkAtivo), true));
 		
-		//se estah valido
-		if (dataValidade != null) {
-			predicate = qb.and(predicate, qb.greaterThanOrEqualTo(root.get(TokenCadastro_.dtGeracao), dataValidade));
-		}
-		
 		q.where(predicate);
 		
-		return entityManager.createQuery(q).getSingleResult();
+		return entityManager.createQuery(q).getResultList();
 	}
 	
 	public TokenCadastro retornarTokenAtivoPorValor(String tokenValue, Date dataValidade) {

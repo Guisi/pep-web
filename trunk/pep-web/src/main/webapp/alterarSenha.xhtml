@@ -8,39 +8,45 @@
 	template="/templates/publicBase.xhtml">
 	
     <ui:define name="content">
-    	<div id="logindiv" align="center">
-    		<p:panel style="width: 100%;">
+    	<div id="alterarsenhadiv" align="center">
+    		<p:panel style="width: 100%; padding: 0px;">
     			<div id="headerBoxLogin">
 					<span>
 						<h:outputText value="#{msg['general.app.title']}"/>
 					</span>
 				</div>
-		        <h:form id="frmAlterarSenha" prependId="false" style="padding: 10px;">
-		        	<h:outputText value="#{alterarSenhaMBean.emptyStr}"/>
 				
-					<span class="header-title">#{msg['alterarsenha.header']}</span>
-
-					<p:focus for="senhaInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned, leftAligned" style="width: 100%; margin-top: 15px;">
-						<h:outputLabel for="emailOutput" value="#{msg['alterarsenha.campo.email']}: "/>
-						<h:outputText id="emailOutput" value="#{alterarSenhaMBean.email}"/>
+				<div align="center">
+			        <h:form id="frmAlterarSenha" prependId="false" style="margin: 10px;">
+			        	<h:outputText value="#{alterarSenhaMBean.emptyStr}"/>
 					
-						<h:outputLabel for="senhaInput" value="#{msg['alterarsenha.campo.senha']}: "/>
-						<p:inputText id="senhaInput" value="#{alterarSenhaMBean.senha}" maxlength="8" style="width: 200px;" required="true"
-							requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
+						<span class="header-title">#{msg['alterarsenha.header']}</span>
 	
-						<h:outputLabel for="confirmacaoSenhaInput" value="#{msg['alterarsenha.campo.confirmacaosenha']}: "/>
-						<p:inputText id="confirmacaoSenhaInput" value="#{alterarSenhaMBean.confirmacaoSenha}" maxlength="8" style="width: 200px;" required="true"
-							requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
-					</p:panelGrid>
-					
-					<p:messages id="msgs"/>
-					
-					<div align="center" style="margin-top: 10px;">
-						<p:commandButton value="#{msg['alterarsenha.botao.alterarsenha']}" update="@form" action="#{alterarSenhaMBean.alterarSenha}"
-							icon="ui-icon-check" styleClass="botaoSalvar" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
-					</div>
-		        </h:form>
+						<p:focus for="senhaInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="leftAligned, leftAligned" style="margin-top: 15px;">
+							<h:outputLabel for="emailOutput" value="#{msg['alterarsenha.campo.email']}: "/>
+							<h:outputText id="emailOutput" value="#{alterarSenhaMBean.email}"/>
+						
+							<h:outputLabel for="senhaInput" value="#{msg['alterarsenha.campo.senha']}: "/>
+							<p:password id="senhaInput" value="#{alterarSenhaMBean.senha}" maxlength="8" style="width: 220px;" required="true"
+								requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"
+								match="confirmacaoSenhaInput" validatorMessage="#{msg['alterarsenha.campoobrigatorio.senhasiguais']}"/>
+		
+							<h:outputLabel for="confirmacaoSenhaInput" value="#{msg['alterarsenha.campo.confirmacaosenha']}: "/>
+							<p:password id="confirmacaoSenhaInput" value="#{alterarSenhaMBean.confirmacaoSenha}" maxlength="8" style="width: 220px;" required="true"
+								requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
+						</p:panelGrid>
+						
+						<div style="width: 360px;">
+							<p:messages id="msgs" escape="false"/>
+						</div>
+						
+						<div align="center" style="margin-top: 10px;">
+							<p:commandButton value="#{msg['alterarsenha.botao.alterarsenha']}" update="@form" action="#{alterarSenhaMBean.alterarSenha}"
+								icon="ui-icon-check" styleClass="botaoSalvar" disabled="#{alterarSenhaMBean.bloquearCampos}"/>
+						</div>
+			        </h:form>
+				</div>
 			</p:panel>
 		</div>
 	</ui:define>

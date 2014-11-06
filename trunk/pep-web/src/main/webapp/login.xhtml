@@ -9,43 +9,45 @@
 	
     <ui:define name="content">
 		<div id="logindiv" align="center">
-			<p:panel style="width: 100%; padding: 15px;">
+			<p:panel style="width: 100%; padding: 0px;">
 				<div id="headerBoxLogin">
 					<span>
 						<h:outputText value="#{msg['general.app.title']}"/>
 					</span>
 				</div>
 				
-				<h:form prependId="false" style="margin-top: 10px;">
-					<div style="width: 360px;">
-		                <h:panelGroup layout="block" rendered="#{not empty loginMBean.mensagem}">
-				            <h:outputText value="#{loginMBean.viewBean.mensagem}" escape="false"/>
-				        </h:panelGroup>
-
-						<p:messages id="msgLogin" showDetail="false" showSummary="true" globalOnly="false"/>
-					</div>
-		            
-					<p:focus for="j_username"/>
-					<p:watermark for="j_username" value="#{msg['login.campo.email']}" />
-					<p:watermark for="j_password" value="#{msg['login.campo.senha']}" />
-					
-					<div align="center">
-						<p:inputText id="j_username" value="#{loginMBean.login}" maxlength="50" style="width: 350px;"
-							required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.email']}" validatorMessage="#{msg['login.erro.campoinvalido.email']}">
-							<f:validateRegex pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-						</p:inputText>
-		
-						<p:password id="j_password" maxlength="20" style="width: 350px; margin-top: 10px;"
-							required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.senha']}"/>
-						<p:commandButton id="btEntrar" value="#{msg['login.botao.entrar']}" action="#{loginMBean.processLogin}" 
-	                				 ajax="false" process="@this, j_username, j_password" update="@form" style="width: 360px; margin-top: 10px; margin-left: 1px;"/>
-					</div>
-					
-					<!-- Esqueci minha senha -->
-			        <div align="left" style="width: 360px; margin-top: 20px;">
-			        	<p:commandLink value="#{msg['login.esqueceusenha']}" onclick="dlgSolicitarAltSenha.show();" update=":frmSolicitarAltSenha:pngSolicitarAltSenha" actionListener="#{loginMBean.limparMessages}" process="@this"/>
-			        </div>
-				</h:form>
+				<div align="center">
+					<h:form prependId="false" style="margin-top: 10px; margin-bottom: 10px;">
+						<div style="width: 360px;">
+			                <h:panelGroup layout="block" rendered="#{not empty loginMBean.mensagem}">
+					            <h:outputText value="#{loginMBean.viewBean.mensagem}" escape="false"/>
+					        </h:panelGroup>
+	
+							<p:messages id="msgLogin" showDetail="false" showSummary="true" globalOnly="false"/>
+						</div>
+			            
+						<p:focus for="j_username"/>
+						<p:watermark for="j_username" value="#{msg['login.campo.email']}" />
+						<p:watermark for="j_password" value="#{msg['login.campo.senha']}" />
+						
+						<div align="center">
+							<p:inputText id="j_username" value="#{loginMBean.login}" maxlength="50" style="width: 350px;"
+								required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.email']}" validatorMessage="#{msg['login.erro.campoinvalido.email']}">
+								<f:validateRegex pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
+			
+							<p:password id="j_password" maxlength="20" style="width: 350px; margin-top: 10px;"
+								required="true" requiredMessage="#{msg['login.erro.campoobrigatorio.senha']}"/>
+							<p:commandButton id="btEntrar" value="#{msg['login.botao.entrar']}" action="#{loginMBean.processLogin}" 
+		                				 ajax="false" process="@this, j_username, j_password" update="@form" style="width: 360px; margin-top: 10px; margin-left: 1px;"/>
+						</div>
+						
+						<!-- Esqueci minha senha -->
+				        <div align="left" style="width: 360px; margin-top: 20px;">
+				        	<p:commandLink value="#{msg['login.esqueceusenha']}" onclick="dlgSolicitarAltSenha.show();" update=":frmSolicitarAltSenha:pngSolicitarAltSenha" actionListener="#{loginMBean.limparMessages}" process="@this"/>
+				        </div>
+					</h:form>
+				</div>
 			</p:panel>
 		</div>
 		
