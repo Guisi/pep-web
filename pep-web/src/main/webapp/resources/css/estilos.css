@@ -10,7 +10,7 @@ body {
 
 .headerBox {
 	width: 980px;
-	height: 70px;
+	height: 60px;
 	margin: 0px 0px 0px 0px;
 	background-size: 100% 100%;
 	text-align: left;
@@ -72,6 +72,10 @@ body {
 	left: 50%;
 	margin-top: -125px;
 	margin-left: -250px;
+}
+
+.nopadding {
+	padding: 0px !important;
 }
 
 .noborder {

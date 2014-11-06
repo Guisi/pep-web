@@ -175,7 +175,7 @@ public class UsuarioService {
 
 		// Mensagem Solicitacao de Cadastro
 		String msg = MessageFormat.format(bundle.getString("usuario.emailsenhaprovisoria.mensagem"),
-				usuario.getNome(), usuario.getEmail(), senha);
+				usuario.getNomeFantasia(), usuario.getEmail(), senha);
 
 		email.setMensagem(msg);
 
@@ -215,7 +215,7 @@ public class UsuarioService {
 
 		// Mensagem Solicitacao de Cadastro
 		String msg = MessageFormat.format(bundle.getString("solicitaralteracaosenha.email.mensagem"),
-				usuario.getNome(),
+				usuario.getNomeFantasia(),
 				bundle.getString("solicitaralteracaosenha.email.link.solicitacaocadastro"), tokenCadastro.getTxTokenValue());
 
 		email.setMensagem(msg);

@@ -20,6 +20,17 @@
 					</sec:ifAnyGranted>
 				</p:submenu>
 			</sec:ifAnyGranted>
+			
+			<f:facet name="options">
+				<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned nopadding, leftAligned nopadding">
+					<h:outputText value="Tema: " style="vertical-align: middle;"/>
+					<p:themeSwitcher id="basic" style="width:165px; margin-left: 5px; margin-right: 5px; margin-top: 2px;" value="#{themeSwitcherView.theme}">
+			            <f:selectItem itemLabel="Escolha o tema" itemValue="" />
+			            <f:selectItems value="#{themeSwitcherView.themes}"/>
+			            <p:ajax listener="#{themeSwitcherView.saveTheme}" />
+			        </p:themeSwitcher>
+				</p:panelGrid>
+			</f:facet>
 		</p:menubar>
 	</h:form>
 

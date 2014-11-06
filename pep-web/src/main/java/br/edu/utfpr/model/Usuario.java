@@ -35,9 +35,13 @@ public class Usuario extends BaseEntity {
 	@Column(name="id_usuario")
 	private Long id;
 	
-	@Column(name="nome", length=100)
+	@Column(name="nome_completo", length=100)
 	@Size(max=100)
-	private String nome;
+	private String nomeCompleto;
+	
+	@Column(name="nome_fantasia", length=50)
+	@Size(max=50)
+	private String nomeFantasia;
 	
 	@Column(name="cpf", length=11)
 	@Size(max=11)
@@ -86,12 +90,24 @@ public class Usuario extends BaseEntity {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeCompleto() {
+		return nomeCompleto;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getNomeFantasia() {
+		if (nomeFantasia == null) {
+			return nomeCompleto;
+		}
+		
+		return nomeFantasia;
+	}
+
+	public void setNomeFantasia(String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
 	}
 
 	public String getCpf() {

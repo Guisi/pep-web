@@ -2,9 +2,9 @@ package br.edu.utfpr.mbean.login;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,34 +30,42 @@ public class AlterarSenhaMBean extends BaseMBean {
 	private String email;
 	private String senha;
 	private String confirmacaoSenha;
-	
 	private boolean bloquearCampos;
 	
-	@PostConstruct
-	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		String token = request.getParameter("token");
-		
-		this.bloquearCampos = true;
-		TokenCadastro tokenCadastro = tokenCadastroService.retornarTokenAtivo(token);
-		if (tokenCadastro != null) {
-			Usuario usuario = usuarioService.retornarUsuarioPorEmail(tokenCadastro.getTxEmailUsuario(), Boolean.TRUE);
+	public void verificarToken() {
+		if (!FacesContext.getCurrentInstance().isPostback()) {
+			this.bloquearCampos = true;
+	
+			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
+			String token = request.getParameter("token");
 			
-			if (usuario != null) {
-				this.email = usuario.getEmail();
-				this.bloquearCampos = false;
+			TokenCadastro tokenCadastro = tokenCadastroService.retornarTokenAtivo(token);
+			if (tokenCadastro != null) {
+				Usuario usuario = usuarioService.retornarUsuarioPorEmail(tokenCadastro.getTxEmailUsuario(), Boolean.TRUE);
+				
+				if (usuario != null) {
+					this.email = usuario.getEmail();
+					this.bloquearCampos = false;
+				} else {
+					addErrorMessage(getMsgs().getString("alterarsenha.msg.erro.usuarionaolocalizado"));
+				}
 			} else {
-				addErrorMessage(getMsgs().getString("alterarsenha.msg.erro.usuarionaolocalizado"));
+				addErrorMessage(getMsgs().getString("alterarsenha.msg.erro.tokeninvalido"));
 			}
-		} else {
-			addErrorMessage(getMsgs().getString("alterarsenha.msg.erro.tokeninvalido"));
 		}
+	}
+	
+	public void inicializarUsuarioLogado() {
+		this.email = getUsuarioLogado().getUsername();
+		this.bloquearCampos = false;
 	}
 	
 	public void alterarSenha() {
 		try {
 			usuarioService.alterarSenhaUsuario(email, senha);
-			addInfoMessage(getMsgs().getString("alterarsenha.msg.info.sucesso"));
+			
+			String msgKey = isAuthenticated() ? "alterarsenha.msg.info.autenticado.sucesso" : "alterarsenha.msg.info.token.sucesso";
+			addInfoMessage(getMsgs().getString(msgKey));
 			this.bloquearCampos = true;
 		} catch (AppException e) {
 			addressException(e);

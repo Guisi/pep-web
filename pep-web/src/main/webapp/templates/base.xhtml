@@ -36,20 +36,23 @@
 										</span>
 									</td>
 									<td>
-										<p:themeSwitcher id="basic" style="width:165px; margin-top: 5px;" value="#{themeSwitcherView.theme}">
-								            <f:selectItem itemLabel="Escolha o tema" itemValue="" />
-								            <f:selectItems value="#{themeSwitcherView.themes}"/>
-								            <p:ajax listener="#{themeSwitcherView.saveTheme}" />
-								        </p:themeSwitcher>
-									</td>
-									<td>
-										<p:commandButton action="pretty:logout" icon="ui-icon-power" value="#{msg['menu.logout']}" style="margin-right: 15px;"/>
+										<p:menuButton value="#{headerMBean.usuarioLogado.nomeUsuario}" style="white-space: nowrap;">
+											<p:menuitem value="#{msg['alterarsenha.header']}" actionListener="#{alterarSenhaMBean.inicializarUsuarioLogado}"
+												oncomplete="dlgAlterarSenha.show();" update=":frmAlterarSenha"/>
+											<p:separator/>
+											<p:menuitem url="/logout" icon="ui-icon-power" value="#{msg['menu.logout']}"/>
+										</p:menuButton>
 									</td>
 								</tr>
 							</table>
 						</p:panel>
 					</h:form>
 					<ui:include src="menu.xhtml"/>
+					
+					<p:dialog widgetVar="dlgAlterarSenha" modal="true" closable="true" resizable="false"
+						draggable="false" header="#{msg['alterarsenha.header']}" width="500">
+						<ui:include src="../secure/usuarios/alterarSenhaInclude.xhtml" />
+					</p:dialog>
 				</ui:insert>
 			
 				<ui:insert name="content"/>
