@@ -51,9 +51,14 @@ public class Usuario extends BaseEntity {
 	@Size(max=100)
 	private String email;
 	
+	@NotAudited
 	@Column(name="senha", length=50)
 	@Size(max=50)
 	private String senha;
+	
+	@NotAudited
+	@Column(name="chk_senha_provisoria")
+	private Boolean chkSenhaProvisoria;
 	
 	@Column(name="telefone", length=20)
 	@Size(max=20)
@@ -66,6 +71,7 @@ public class Usuario extends BaseEntity {
         inverseJoinColumns=@JoinColumn(name="id_perfil"))
 	private Set<Perfil> perfisUsuario;
 	
+	@NotAudited
 	@Column(name="qt_acessos_errados", length=2)
 	private Short qtdeAcessosErrados;
 	
@@ -164,6 +170,14 @@ public class Usuario extends BaseEntity {
 
 	public void setChkAtivo(Boolean chkAtivo) {
 		this.chkAtivo = chkAtivo;
+	}
+
+	public Boolean getChkSenhaProvisoria() {
+		return chkSenhaProvisoria;
+	}
+
+	public void setChkSenhaProvisoria(Boolean chkSenhaProvisoria) {
+		this.chkSenhaProvisoria = chkSenhaProvisoria;
 	}
 	
 }

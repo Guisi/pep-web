@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.AuthenticationException;
 
 import br.edu.utfpr.exception.AppException;
+import br.edu.utfpr.exception.SenhaProvisoriaException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -42,6 +43,7 @@ public class LoginMBean extends BaseMBean implements Serializable {
 	private String mensagem;
 	private String loginAlteracao;
 	private boolean sucessoSolicitacaoAlteracao;
+	private boolean mostrarModalAlteracaoSenha;
 
 	/**
 	 * Metodo a ser executado depois da construcao do objeto. Este tem a finalidade de remover a mensagem de erro da sessao para que o usuario nao veja o erro anterior.
@@ -58,12 +60,19 @@ public class LoginMBean extends BaseMBean implements Serializable {
 		// Trata se ocorreu uma excecao na ultima execucao
 		AuthenticationException ex = (AuthenticationException) sessionMap.get("SPRING_SECURITY_LAST_EXCEPTION");
 		if (ex != null) {
-
-			if (ex.getMessage() != null) {
-				addErrorMessage(ex.getMessage());
+			
+			//se a excecao eh de senha provisoria, exibe modal para trocar senha
+			if (ex instanceof SenhaProvisoriaException) {
+	            mostrarModalAlteracaoSenha = true;
 			} else {
-				addErrorMessage(getMsgs().getString("login.error.usuariosenhainvalido"));
+				//senao, exibe mensagem de erro
+				if (ex.getMessage() != null) {
+					addErrorMessage(ex.getMessage());
+				} else {
+					addErrorMessage(getMsgs().getString("login.error.usuariosenhainvalido"));
+				}
 			}
+			
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 			session.invalidate();
 		}
@@ -140,6 +149,14 @@ public class LoginMBean extends BaseMBean implements Serializable {
 
 	public void setSucessoSolicitacaoAlteracao(boolean sucessoSolicitacaoAlteracao) {
 		this.sucessoSolicitacaoAlteracao = sucessoSolicitacaoAlteracao;
+	}
+
+	public boolean isMostrarModalAlteracaoSenha() {
+		return mostrarModalAlteracaoSenha;
+	}
+
+	public void setMostrarModalAlteracaoSenha(boolean mostrarModalAlteracaoSenha) {
+		this.mostrarModalAlteracaoSenha = mostrarModalAlteracaoSenha;
 	}
 	
 }

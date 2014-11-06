@@ -87,6 +87,7 @@ public class UsuarioService {
 			//criptografa a senha para guardar na base
 			senha = PasswordHandler.encryptPassword(senha);
 			usuario.setSenha(senha);
+			usuario.setChkSenhaProvisoria(Boolean.TRUE);
 			
 			//inicializa a qtde de acessos errados com 0
 			usuario.setQtdeAcessosErrados((short)0);
@@ -99,7 +100,6 @@ public class UsuarioService {
 	}
 	
 	public void alterarSenhaUsuario(String username, String senha) throws AppException {
-		
 		//valida forca da senha
 		if (StringUtils.isBlank(senha)
 				|| !GenericValidator.isInRange(senha.length(), Constantes.PASSWD_MIN_LENGHT, Constantes.PASSWD_MAX_LENGHT)
@@ -112,6 +112,7 @@ public class UsuarioService {
 		//criptografa a senha para guardar na base
 		senha = PasswordHandler.encryptPassword(senha);
 		usuario.setSenha(senha);
+		usuario.setChkSenhaProvisoria(Boolean.FALSE);
 		
 		//volta a qtde de acessos errados para 0
 		usuario.setQtdeAcessosErrados((short)0);

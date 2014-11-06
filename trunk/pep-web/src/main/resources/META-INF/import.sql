@@ -1,7 +1,7 @@
 --cria usuarios
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (1, '05009090935', 'guisiagudos@gmail.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', 'Douglas Maciel Guisi', 'Douglas', '4192669662', 0, true);
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (2, '12345678901', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', 'Usuário de Testes', 'Teste', '4199998888', 0, true);
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (3, '98765432101', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', 'Usuário Sem Perfil', null, '4199998888', 0, true);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (1, '05009090935', 'guisiagudos@gmail.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Douglas Maciel Guisi', 'Douglas', '4192669662', 0, true);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (2, '12345678901', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário de Testes', 'Teste', '4199998888', 0, true);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, telefone, qt_acessos_errados, chk_ativo) VALUES (3, '98765432101', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário Sem Perfil', null, '4199998888', 0, true);
 ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
 
 --cria perfis
