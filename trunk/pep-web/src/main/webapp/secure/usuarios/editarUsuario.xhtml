@@ -26,7 +26,7 @@
 						<h:outputLabel for="nomeInput" value="#{msg['usuario.nome']}: "/>
 						<h:outputLabel for="cpfInput" value="#{msg['usuario.cpf']}: "/>
 
-						<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nome}" maxlength="100" style="width: 443px;" required="true"
+						<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" style="width: 443px;" required="true"
 							requiredMessage="#{msg['usuario.campoobrigatorio.nome']}"/>
 						<p:inputText id="cpfInput" value="#{editarUsuarioMBean.usuarioSelecionado.cpf}" maxlength="11" style="width: 443px;" required="true"
 							requiredMessage="#{msg['usuario.campoobrigatorio.cpf']}"/>
