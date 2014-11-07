@@ -12,9 +12,9 @@
 		<p:panel>
 			<h:outputText value="#{usuarioMBean.emptyStr}"/>
 		
-			<p:messages autoUpdate="true"/>
-		
 			<h:form id="frmUsuarios">
+				<p:messages id="msgUsuarios"/>
+				
 				<sec:ifAnyGranted roles="EDITAR_USUARIOS">
 					<div align="right">
 						<p:commandButton value="#{msg['usuario.botao.novo']}" action="#{usuarioMBean.novoUsuario}"
@@ -55,7 +55,7 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable, msgUsuarios" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>
