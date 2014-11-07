@@ -11,12 +11,12 @@
 		<p:panel>
 			<h:outputText value="#{perfilMBean.emptyStr}"/>
 		
-			<p:messages autoUpdate="true"/>
-		
 			<h:form id="frmPerfis">
+				<p:messages id="msgPerfis"/>
+				
 				<div align="right">
 					<p:commandButton value="#{msg['perfil.botao.novo']}" action="#{perfilMBean.novoPerfil}"
-						icon="ui-icon-document" styleClass="botaoNovo" update=":frmPerfis:editPerfilPanel"/>
+						icon="ui-icon-document" styleClass="botaoNovo" update=":frmPerfis:editPerfilPanel, msgPerfis"/>
 				</div>
 				
 				<p:dataTable id="perfilTable" var="perfil" value="#{perfilMBean.perfilList}" emptyMessage="#{msg['perfil.lista.empty']}"
@@ -44,7 +44,7 @@
 					
 					<p:column width="70px;">
 						<p:commandButton value="" actionListener="#{perfilMBean.editarPerfil(perfil)}" icon="ui-icon-pencil" styleClass="datatable-button"
-							update=":frmPerfis:editPerfilPanel"/>
+							update=":frmPerfis:editPerfilPanel :frmPerfis:msgPerfis"/>
 						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
 							<f:setPropertyActionListener target="#{perfilMBean.perfilSelecionado}" value="#{perfil}"/>
 						</p:commandButton>
@@ -52,7 +52,7 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['perfil.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{perfilMBean.removerPerfil}" update="perfilTable, editPerfilPanel" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{perfilMBean.removerPerfil}" update="perfilTable, editPerfilPanel, msgPerfis" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			    
@@ -100,7 +100,7 @@
 								
 								<div class="divBotoesEdicao">
 									<p:commandButton value="#{msg['botao.cancelaralteracoes']}" actionListener="#{perfilMBean.cancelarEdicao}"
-										icon="ui-icon-close" immediate="true" update=":frmPerfis:editPerfilPanel"/>
+										icon="ui-icon-close" immediate="true" update=":frmPerfis:editPerfilPanel, msgPerfis"/>
 									<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{perfilMBean.salvarPerfil}" icon="ui-icon-check"
 										update=":frmPerfis" styleClass="botaoSalvar"/>
 								</div>
