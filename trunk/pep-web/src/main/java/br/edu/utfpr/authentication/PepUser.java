@@ -29,6 +29,7 @@ public class PepUser implements UserDetails {
 	private final boolean enabled;
 	private final boolean isCredentialsNonExpired;
 	private final Set<GrantedAuthority> autorizacoes;
+	private boolean deveAlterarSenha;
 
 	/**
 	 * Construtor de OvdUser
@@ -44,13 +45,14 @@ public class PepUser implements UserDetails {
 	 * @param acessos
 	 * @param autorizacoes
 	 */
-	public PepUser(String username, String nomeUsuario, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes) {
+	public PepUser(String username, String nomeUsuario, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes, boolean deveAlterarSenha) {
 		this.username = username;
 		this.nomeUsuario = nomeUsuario;
 		this.cpf = cpf;
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 		this.enabled = enabled;
 		this.autorizacoes = Collections.unmodifiableSet(sortAuthorities(autorizacoes));
+		this.deveAlterarSenha = deveAlterarSenha;
 	}
 
 	/*
@@ -194,6 +196,14 @@ public class PepUser implements UserDetails {
 
 	public Set<GrantedAuthority> getAutorizacoes() {
 		return autorizacoes;
+	}
+
+	public boolean isDeveAlterarSenha() {
+		return deveAlterarSenha;
+	}
+
+	public void setDeveAlterarSenha(boolean deveAlterarSenha) {
+		this.deveAlterarSenha = deveAlterarSenha;
 	}
 
 	/**

@@ -8,12 +8,6 @@
 	template="/templates/base.xhtml">
 
 	<ui:define name="content">
-		<script type="text/javascript">
-			$(document).ready(function() {
-				phoneMaskHandler($('#frmUsuarios\\:telefoneInput')[0]);
-			});	
-		</script>
-	
 		<p:panel>
 			<h:form id="frmUsuarios">
 				<p:messages id="msgs"/>
@@ -21,41 +15,27 @@
 				<fieldset>
 					<legend>#{msg['usuario.editar.header']}</legend>
 					
-					<p:focus for="nomeInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
-						<h:outputLabel for="nomeInput" value="#{msg['usuario.nome']}: "/>
-						<h:outputLabel for="cpfInput" value="#{msg['usuario.cpf']}: "/>
-
-						<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" style="width: 443px;" required="true"
-							requiredMessage="#{msg['usuario.campoobrigatorio.nome']}"/>
-						<p:inputText id="cpfInput" value="#{editarUsuarioMBean.usuarioSelecionado.cpf}" maxlength="11" style="width: 443px;" required="true"
-							requiredMessage="#{msg['usuario.campoobrigatorio.cpf']}"/>
-							
-						<h:outputLabel for="emailInput" value="#{msg['usuario.email']}: "/>
-						<h:outputLabel for="telefoneInput" value="#{msg['usuario.telefone']}: "/>
-
-						<p:inputText id="emailInput" value="#{editarUsuarioMBean.usuarioSelecionado.email}" maxlength="100" style="width: 443px;"/>
-						<p:inputText id="telefoneInput" value="#{editarUsuarioMBean.usuarioSelecionado.telefone}" maxlength="20" style="width: 443px;"
-							onfocus="phoneMaskHandler(this);" onblur="phoneMaskHandler(this);"/>
-
-
+					<p:panelGrid columns="2" styleClass="noborder" columnClasses="leftMenu nopadding" style="width: 100%;">
+						<p:column style="width: 150px;">
+							<p:menu>
+					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude">
+					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="dadosPrincipaisInclude.xhtml"/>
+					            </p:menuitem>
+						    </p:menu>
+						    
+						    <p:menu style="margin-top: 5px;">
+					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude">
+					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="perfisUsuarioInclude.xhtml"/>
+					            </p:menuitem>
+						    </p:menu>
+						</p:column>
+						
+						<p:column>
+							<p:panel id="panelUsuarioInclude">
+								<ui:include src="#{editarUsuarioMBean.menuInclude != null ? editarUsuarioMBean.menuInclude : 'dadosPrincipaisInclude.xhtml'}" />
+							</p:panel>
+						</p:column>
 					</p:panelGrid>
-					
-					<p:panelGrid columns="1" styleClass="noborder" columnClasses="labelColumn" style="margin-top: 10px; width: 100%;">
-						<h:outputText value="#{msg['usuario.perfis']}:"/>
-						<p:pickList id="perfilPickList" value="#{editarUsuarioMBean.perfisPickList}"
-							var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"
-							styleClass="picklist-nopadding"
-							converter="pickListConverter"
-							addAllLabel="#{msg['picklist.addall']}"
-			               	addLabel="#{msg['picklist.add']}"
-			               	removeAllLabel="#{msg['picklist.removeall']}"
-			               	removeLabel="#{msg['picklist.remove']}">
-			               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
-	      					<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
-						</p:pickList>
-					</p:panelGrid>
-					
 					
 					<div class="divBotoesEdicao">
 						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarUsuarios" icon="ui-icon-close" immediate="true"/>

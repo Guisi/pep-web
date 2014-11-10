@@ -37,7 +37,7 @@
 									</td>
 									<td>
 										<p:menuButton value="#{headerMBean.usuarioLogado.nomeUsuario}" style="white-space: nowrap;">
-											<p:menuitem value="#{msg['alterarsenha.header']}" actionListener="#{alterarSenhaMBean.inicializarUsuarioLogado}"
+											<p:menuitem value="#{msg['alterarsenha.header']}" actionListener="#{headerMBean.inicializarUsuarioLogado}"
 												oncomplete="dlgAlterarSenha.show();" update=":frmAlterarSenha"/>
 											<p:separator/>
 											<p:menuitem url="/logout" icon="ui-icon-power" value="#{msg['menu.logout']}"/>
@@ -49,9 +49,43 @@
 					</h:form>
 					<ui:include src="menu.xhtml"/>
 					
-					<p:dialog widgetVar="dlgAlterarSenha" modal="true" closable="true" resizable="false"
-						draggable="false" header="#{msg['alterarsenha.header']}" width="500">
-						<ui:include src="../secure/usuarios/alterarSenhaInclude.xhtml" />
+					<p:dialog widgetVar="dlgAlterarSenha" modal="true" closable="#{not headerMBean.mostrarModalAlteracaoSenha}" resizable="false"
+						draggable="false" header="#{msg['alterarsenha.header']}" width="500" visible="#{headerMBean.mostrarModalAlteracaoSenha}">
+						<div align="center">
+							<p:outputPanel rendered="#{headerMBean.mostrarModalAlteracaoSenha}">
+								<span class="header-title">#{msg['login.senhaprovisoria.header']}</span>
+							</p:outputPanel>
+							<h:form id="frmAlterarSenha" prependId="false">
+						      	<h:outputText value="#{headerMBean.emptyStr}"/>
+						
+								<p:focus for="senhaInput"/>
+								<p:panelGrid columns="2" styleClass="noborder" columnClasses="leftAligned, leftAligned" style="margin-top: 15px;">
+									<h:outputLabel for="emailOutput" value="#{msg['alterarsenha.campo.email']}: "/>
+									<h:outputText id="emailOutput" value="#{headerMBean.email}"/>
+								
+									<h:outputLabel for="senhaInput" value="#{msg['alterarsenha.campo.senha']}: "/>
+									<p:password id="senhaInput" value="#{headerMBean.senha}" maxlength="8" style="width: 220px;" required="true"
+										requiredMessage="#{msg['alterarsenha.campoobrigatorio.senha']}" disabled="#{headerMBean.bloquearCampos}"
+										match="confirmacaoSenhaInput" validatorMessage="#{msg['alterarsenha.campoobrigatorio.senhasiguais']}"/>
+							
+									<h:outputLabel for="confirmacaoSenhaInput" value="#{msg['alterarsenha.campo.confirmacaosenha']}: "/>
+									<p:password id="confirmacaoSenhaInput" value="#{headerMBean.confirmacaoSenha}" maxlength="8" style="width: 220px;" required="true"
+										requiredMessage="#{msg['alterarsenha.campoobrigatorio.confirmacaosenha']}" disabled="#{headerMBean.bloquearCampos}"/>
+								</p:panelGrid>
+							
+								<div style="width: 360px;">
+									<p:messages id="msgs" escape="false"/>
+								</div>
+								
+								<div align="center" style="margin-top: 10px;">
+									<p:commandButton value="#{msg['alterarsenha.botao.alterarsenha']}" update="@form" action="#{headerMBean.alterarSenha}"
+										rendered="#{not headerMBean.bloquearCampos}"/>
+										
+									<p:commandButton value="#{msg['botao.fechar']}" rendered="#{headerMBean.bloquearCampos}"
+										onclick="dlgAlterarSenha.hide();"/>
+								</div>
+							</h:form>
+						</div>
 					</p:dialog>
 				</ui:insert>
 			
