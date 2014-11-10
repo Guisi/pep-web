@@ -94,6 +94,12 @@ body {
 	border: 0px !important;
 }
 
+.leftMenu {
+	vertical-align: top;
+	width: 150px;
+	padding-top: 4px !important;
+}
+
 .labelColumn {
 	text-align: left;
 }

@@ -38,6 +38,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 	
 	private Usuario usuarioSelecionado;
 	private DualListModel<Perfil> perfisPickList;
+	private String menuInclude;
 	
 	@PostConstruct
 	public void init() {
@@ -116,5 +117,13 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setPerfisPickList(DualListModel<Perfil> perfisPickList) {
 		this.perfisPickList = perfisPickList;
+	}
+
+	public String getMenuInclude() {
+		return menuInclude;
+	}
+
+	public void setMenuInclude(String menuInclude) {
+		this.menuInclude = menuInclude;
 	}
 }

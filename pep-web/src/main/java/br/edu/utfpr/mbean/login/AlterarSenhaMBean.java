@@ -2,8 +2,6 @@ package br.edu.utfpr.mbean.login;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
-import java.util.Map;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -53,23 +51,6 @@ public class AlterarSenhaMBean extends BaseMBean {
 				}
 			} else {
 				addErrorMessage(getMsgs().getString("alterarsenha.msg.erro.tokeninvalido"));
-			}
-		}
-	}
-	
-	public void inicializarUsuarioLogado() {
-		this.email = getUsuarioLogado().getUsername();
-		this.bloquearCampos = false;
-	}
-	
-	public void inicializarUsuarioSenhaProvisoria() {
-		if (!FacesContext.getCurrentInstance().isPostback()) {
-			Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-			// Recupera o ultimo login do usuario se na sessao
-			if (sessionMap.get("SPRING_SECURITY_LAST_USERNAME") != null) {
-				this.email = sessionMap.get("SPRING_SECURITY_LAST_USERNAME").toString();
-				this.bloquearCampos = false;
 			}
 		}
 	}

@@ -51,15 +51,6 @@
 			</p:panel>
 		</div>
 
-		<f:event listener="#{alterarSenhaMBean.inicializarUsuarioSenhaProvisoria}" type="preRenderView"/>		
-		<p:dialog widgetVar="dlgAlterarSenha" modal="true" closable="false" resizable="false"
-			draggable="false" header="#{msg['alterarsenha.header']}" width="500" visible="#{loginMBean.mostrarModalAlteracaoSenha}">
-			<div align="center">
-				<span class="header-title">#{msg['login.senhaprovisoria.header']}</span>
-				<ui:include src="secure/usuarios/alterarSenhaInclude.xhtml" />
-			</div>
-		</p:dialog>
-		
 		<h:form id="frmSolicitarAltSenha">
 			<p:dialog widgetVar="dlgSolicitarAltSenha" modal="true" closable="true" resizable="false" draggable="false" header="#{msg['login.solicitaralteracaosenha.header']}" width="500">
 				<h:panelGroup id="pngSolicitarAltSenha" layout="block">

@@ -47,6 +47,10 @@ public class Usuario extends BaseEntity {
 	@Size(max=11)
 	private String cpf;
 	
+	@Column(name="rg", length=30)
+	@Size(max=30)
+	private String rg;
+	
 	@Column(name="email", length=100, unique = true)
 	@Size(max=100)
 	private String email;
@@ -64,6 +68,10 @@ public class Usuario extends BaseEntity {
 	@Size(max=20)
 	private String telefone;
 	
+	@Column(name="celular", length=20)
+	@Size(max=20)
+	private String celular;
+	
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
@@ -77,6 +85,13 @@ public class Usuario extends BaseEntity {
 	
 	@Column(name="chk_ativo")
 	private Boolean chkAtivo;
+	
+	@NotAudited
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_especialidade",
+        joinColumns=@JoinColumn(name="id_usuario"),
+        inverseJoinColumns=@JoinColumn(name="id_especialidade"))
+	private Set<Especialidade> especialidades;
 	
 	@Transient
 	public String getTelefoneFormatado() {
@@ -178,6 +193,30 @@ public class Usuario extends BaseEntity {
 
 	public void setChkSenhaProvisoria(Boolean chkSenhaProvisoria) {
 		this.chkSenhaProvisoria = chkSenhaProvisoria;
+	}
+
+	public Set<Especialidade> getEspecialidades() {
+		return especialidades;
+	}
+
+	public void setEspecialidades(Set<Especialidade> especialidades) {
+		this.especialidades = especialidades;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
 	}
 	
 }
