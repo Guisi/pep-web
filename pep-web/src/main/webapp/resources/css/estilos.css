@@ -112,6 +112,14 @@ body {
 	text-align: left;
 }
 
+.inputFull {
+	width: 700px;
+}
+
+.inputHalf {
+	width: 334px;
+}
+
 .datatable-button {
 	width: 28px;
 	height: 28px;

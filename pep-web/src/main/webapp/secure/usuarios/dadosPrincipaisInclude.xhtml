@@ -23,7 +23,7 @@
 		
 		<p:row>
 			<p:column colspan="2" styleClass="leftAligned">
-				<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" style="width: 700px;" required="true"
+				<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" styleClass="inputFull" required="true"
 					requiredMessage="#{msg['usuario.campoobrigatorio.nome']}"/>
 			</p:column>
 		</p:row>
@@ -38,12 +38,12 @@
 		</p:row>
 		<p:row>
 			<p:column styleClass="leftAligned">
-				<p:inputMask id="cpfInput" value="#{editarUsuarioMBean.usuarioSelecionado.cpf}" style="width: 334px;" required="true"
+				<p:inputMask id="cpfInput" value="#{editarUsuarioMBean.usuarioSelecionado.cpf}" styleClass="inputHalf" required="true"
 					requiredMessage="#{msg['usuario.campoobrigatorio.cpf']}" validator="cpfValidator" converter="cpfConverter" mask="999.999.999-99">
 				</p:inputMask>
 			</p:column>
 			<p:column styleClass="leftAligned">
-				<p:inputText id="rgInput" value="#{editarUsuarioMBean.usuarioSelecionado.rg}" maxlength="30" style="width: 334px;"/>
+				<p:inputText id="rgInput" value="#{editarUsuarioMBean.usuarioSelecionado.rg}" maxlength="30" styleClass="inputHalf"/>
 			</p:column>
 		</p:row>
 
@@ -54,8 +54,8 @@
 		</p:row>
 		<p:row>
 			<p:column colspan="2" styleClass="leftAligned">
-				<p:inputText id="emailInput" value="#{editarUsuarioMBean.usuarioSelecionado.email}" maxlength="100" style="width: 700px;"
-					validatorMessage="#{msg['usuario.erro.emailinvalido']}">
+				<p:inputText id="emailInput" value="#{editarUsuarioMBean.usuarioSelecionado.email}" maxlength="100" styleClass="inputFull"
+					validatorMessage="#{msg['usuario.erro.emailinvalido']}" required="true" requiredMessage="#{msg['usuario.campoobrigatorio.email']}">
 					<f:validateRegex pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 				</p:inputText>
 			</p:column>
@@ -71,12 +71,25 @@
 		</p:row>
 		<p:row>
 			<p:column styleClass="leftAligned">
-				<p:inputText id="telefoneInput" value="#{editarUsuarioMBean.usuarioSelecionado.telefone}" maxlength="20" style="width: 334px;"
+				<p:inputText id="telefoneInput" value="#{editarUsuarioMBean.usuarioSelecionado.telefone}" maxlength="20" styleClass="inputHalf"
 					onfocus="phoneMaskHandler(this);" onblur="phoneMaskHandler(this);"/>
 			</p:column>
 			<p:column styleClass="leftAligned">
-				<p:inputText id="celularInput" value="#{editarUsuarioMBean.usuarioSelecionado.celular}" maxlength="20" style="width: 334px;"
+				<p:inputText id="celularInput" value="#{editarUsuarioMBean.usuarioSelecionado.celular}" maxlength="20" styleClass="inputHalf"
 					onfocus="phoneMaskHandler(this);" onblur="phoneMaskHandler(this);"/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="dataNascimentoInput" value="#{msg['usuario.datanascimento']}: "/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<p:inputMask id="dataNascimentoInput" value="#{editarUsuarioMBean.usuarioSelecionado.dataNascimento}" styleClass="inputHalf"
+					mask="99/99/9999" required="true" requiredMessage="#{msg['usuario.campoobrigatorio.datanascimento']}">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</p:inputMask>
 			</p:column>
 		</p:row>
 	</p:panelGrid>
