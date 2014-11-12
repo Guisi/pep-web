@@ -78,6 +78,10 @@ body {
 	padding: 0px !important;
 }
 
+.panelgrid-nopadding td {
+	padding: 0px !important;
+}
+
 .noborder {
 	border: 0px;
 }

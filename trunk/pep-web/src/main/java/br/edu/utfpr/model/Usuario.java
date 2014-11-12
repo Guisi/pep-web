@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
@@ -34,6 +35,10 @@ public class Usuario extends BaseEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="usuario_sequence")
 	@Column(name="id_usuario")
 	private Long id;
+	
+	@Version
+    @Column(name = "optlock", nullable = false)
+    private Long version = 0L;
 	
 	@Column(name="nome_completo", length=100)
 	@Size(max=100)
@@ -96,6 +101,11 @@ public class Usuario extends BaseEntity {
 	@Transient
 	public String getTelefoneFormatado() {
 		return FormatUtils.getFormattedPhoneNumber(telefone);
+	}
+	
+	@Transient
+	public String getCelularFormatado() {
+		return FormatUtils.getFormattedPhoneNumber(celular);
 	}
 	
 	@Transient
@@ -217,6 +227,14 @@ public class Usuario extends BaseEntity {
 
 	public void setRg(String rg) {
 		this.rg = rg;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 }

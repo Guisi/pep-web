@@ -18,4 +18,11 @@ public class FormatUtils {
 		}
 		return cpf;
 	}
+	
+	public static String somenteDigitos(String string) {
+		if (StringUtils.isNotEmpty(string)) {
+			string = string.replaceAll("[^0-9]", "");
+		}
+		return string;
+	}
 }

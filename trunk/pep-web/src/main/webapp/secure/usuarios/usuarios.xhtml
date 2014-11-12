@@ -16,10 +16,15 @@
 				<p:messages id="msgUsuarios"/>
 				
 				<sec:ifAnyGranted roles="EDITAR_USUARIOS">
-					<div align="right">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{usuarioMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['usuario.botao.procurar']}" action="#{usuarioMBean.listarUsuarios}" 
+								icon="ui-icon-search" update="usuarioTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
 						<p:commandButton value="#{msg['usuario.botao.novo']}" action="#{usuarioMBean.novoUsuario}"
 							icon="ui-icon-document" styleClass="botaoNovo"/>
-					</div>
+					</p:panelGrid>
 				</sec:ifAnyGranted>
 			
 				<p:dataTable id="usuarioTable" var="usuario" value="#{usuarioMBean.usuarioList}" emptyMessage="#{msg['usuario.lista.empty']}"
@@ -40,8 +45,8 @@
 						<h:outputText value="#{usuario.email}" />
 					</p:column>
 					
-					<p:column headerText="#{msg['usuario.telefone']}">
-						<h:outputText value="#{usuario.telefoneFormatado}" />
+					<p:column headerText="#{msg['usuario.celular']}">
+						<h:outputText value="#{usuario.celularFormatado}" />
 					</p:column>
 					
 					<sec:ifAnyGranted roles="EDITAR_USUARIOS">

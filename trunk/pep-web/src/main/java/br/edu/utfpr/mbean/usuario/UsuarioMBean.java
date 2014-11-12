@@ -22,14 +22,16 @@ public class UsuarioMBean extends BaseMBean {
 	
 	private List<Usuario> usuarioList;
 	private Usuario usuarioSelecionado;
+	private String pesquisa;
 	
 	@PostConstruct
 	public void init() {
+		this.pesquisa = null;
 		this.listarUsuarios();
 	}
 	
-	private void listarUsuarios() {
-		this.usuarioList = usuarioService.retornarUsuarios(Boolean.TRUE);
+	public void listarUsuarios() {
+		this.usuarioList = usuarioService.retornarUsuarios(pesquisa, Boolean.TRUE);
 	}
 	
 	public String onEditUsuarioClick(Long idUsuario) {
@@ -58,5 +60,13 @@ public class UsuarioMBean extends BaseMBean {
 
 	public void setUsuarioSelecionado(Usuario usuarioSelecionado) {
 		this.usuarioSelecionado = usuarioSelecionado;
+	}
+
+	public String getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
 }

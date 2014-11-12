@@ -2,6 +2,7 @@ package
 br.edu.utfpr.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,18 +13,29 @@ import javax.persistence.criteria.Root;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.model.Usuario_;
 
+import com.ocpsoft.pretty.faces.util.StringUtils;
+
 public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Usuario> retornarUsuarios(Boolean chkAtivo) {
+	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
 		Root<Usuario> root = q.from(Usuario.class);
 
-		if (chkAtivo != null) {
-			q.where(qb.equal(root.get(Usuario_.chkAtivo), chkAtivo));
+		List<Predicate> predicados = new ArrayList<>();
+		if (StringUtils.isNotBlank(textoPesquisa)) {
+			predicados.add(qb.like(qb.lower(root.get(Usuario_.nomeCompleto)), "%" + textoPesquisa.toLowerCase() + "%"));
 		}
+		
+		if (chkAtivo != null) {
+			predicados.add(qb.equal(root.get(Usuario_.chkAtivo), chkAtivo));
+		}
+		
+		q.where(predicados.toArray(new Predicate[predicados.size()]));
+		
+		q.orderBy(qb.asc(root.get(Usuario_.nomeCompleto)));
 		
 		return entityManager.createQuery(q).getResultList();
 	}

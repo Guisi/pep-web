@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.Session;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
@@ -43,8 +44,8 @@ public class UsuarioService {
 	@Resource(lookup = "java:jboss/mail/pep")
 	private Session session;
 
-	public List<Usuario> retornarUsuarios(Boolean chkAtivo) {
-		return usuarioDao.retornarUsuarios(chkAtivo);
+	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo) {
+		return usuarioDao.retornarUsuarios(textoPesquisa, chkAtivo);
 	}
 	
 	public Usuario retornarUsuario(Long id) {
@@ -96,7 +97,11 @@ public class UsuarioService {
 			usuario.setChkAtivo(Boolean.TRUE);
 		}
 		
-		usuarioDao.save(usuario);
+		try {
+			usuarioDao.save(usuario);
+		} catch (PersistenceException e) {
+			throw new AppException(e);
+		}
 	}
 	
 	public void alterarSenhaUsuario(String username, String senha) throws AppException {

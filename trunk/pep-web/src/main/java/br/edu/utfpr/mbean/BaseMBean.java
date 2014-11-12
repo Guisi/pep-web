@@ -113,7 +113,7 @@ public abstract class BaseMBean implements Serializable {
 				addErrorMessage(getErrs().getString(errorCode));
 			}
 		} else {
-			throw new RuntimeException(exception);
+			addErrorMessage(exception.getMessage());
 		}
 	}
 	
