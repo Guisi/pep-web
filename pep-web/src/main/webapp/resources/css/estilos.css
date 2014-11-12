@@ -112,12 +112,16 @@ body {
 	text-align: left;
 }
 
-.inputFull {
-	width: 700px;
+.inputInteiro {
+	width: 700px !important;
 }
 
-.inputHalf {
-	width: 334px;
+.inputMeio {
+	width: 334px !important;
+}
+
+.inputUmQuarto {
+	width: 156px !important;
 }
 
 .datatable-button {

@@ -87,6 +87,10 @@ public class Usuario extends BaseEntity {
 	
 	@Column(name = "data_nascimento")
 	private Date dataNascimento;
+	
+	@Column(name="estado_civil", length=20)
+	@Size(max=20)
+	private String estadoCivil;
 
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -247,6 +251,14 @@ public class Usuario extends BaseEntity {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
 	}
 	
 }
