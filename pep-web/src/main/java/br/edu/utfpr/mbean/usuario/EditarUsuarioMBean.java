@@ -24,6 +24,7 @@ import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.PerfilService;
 import br.edu.utfpr.service.UsuarioService;
+import br.edu.utfpr.utils.FormatUtils;
 
 @ManagedBean
 @ViewScoped
@@ -67,9 +68,9 @@ public class EditarUsuarioMBean extends BaseMBean {
 	}
 	
 	public String salvar() {
-		String telefone = usuarioSelecionado.getTelefone();
-		telefone = telefone.replaceAll("[^\\d.]", "");
-		usuarioSelecionado.setTelefone(telefone);
+		usuarioSelecionado.setTelefone( FormatUtils.somenteDigitos(usuarioSelecionado.getTelefone()) );
+		usuarioSelecionado.setCelular( FormatUtils.somenteDigitos(usuarioSelecionado.getCelular()) );
+		usuarioSelecionado.setCpf( FormatUtils.somenteDigitos(usuarioSelecionado.getCpf()) );
 		
 		if (validarCampos()) {
 			boolean isNew = usuarioSelecionado.isNew();
@@ -97,6 +98,12 @@ public class EditarUsuarioMBean extends BaseMBean {
 		String txTelefone = usuarioSelecionado.getTelefone();
 		if (StringUtils.isNotBlank(txTelefone) && !GenericValidator.isInRange(txTelefone.length(), 10, 11)) {
 			addErrorMessage(getMsgs().getString("usuario.salvar.erro.telefoneinvalido"));
+			valido = false;
+		}
+		
+		String txCelular = usuarioSelecionado.getCelular();
+		if (StringUtils.isNotBlank(txCelular) && !GenericValidator.isInRange(txCelular.length(), 10, 11)) {
+			addErrorMessage(getMsgs().getString("usuario.salvar.erro.celularinvalido"));
 			valido = false;
 		}
 		
