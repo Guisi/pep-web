@@ -1,5 +1,6 @@
 package br.edu.utfpr.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -78,18 +79,21 @@ public class Usuario extends BaseEntity {
 	private String celular;
 	
 	@NotAudited
-	@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
-        joinColumns=@JoinColumn(name="id_usuario"),
-        inverseJoinColumns=@JoinColumn(name="id_perfil"))
-	private Set<Perfil> perfisUsuario;
-	
-	@NotAudited
 	@Column(name="qt_acessos_errados", length=2)
 	private Short qtdeAcessosErrados;
 	
 	@Column(name="chk_ativo")
 	private Boolean chkAtivo;
+	
+	@Column(name = "data_nascimento")
+	private Date dataNascimento;
+
+	@NotAudited
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
+        joinColumns=@JoinColumn(name="id_usuario"),
+        inverseJoinColumns=@JoinColumn(name="id_perfil"))
+	private Set<Perfil> perfisUsuario;
 	
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -235,6 +239,14 @@ public class Usuario extends BaseEntity {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	
 }
