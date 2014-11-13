@@ -6,19 +6,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:panelGrid columns="1" styleClass="noborder" columnClasses="labelColumn" style="margin-top: 10px; width: 100%;">
-		<h:outputText value="#{msg['usuario.perfis']}:"/>
-		<p:pickList id="perfilPickList" value="#{editarUsuarioMBean.perfisPickList}"
-			var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"
-			styleClass="picklist-nopadding"
-			converter="pickListConverter"
-			addAllLabel="#{msg['picklist.addall']}"
-	             	addLabel="#{msg['picklist.add']}"
-	             	removeAllLabel="#{msg['picklist.removeall']}"
-	             	removeLabel="#{msg['picklist.remove']}">
-	             	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
-	  					<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
-		</p:pickList>
-	</p:panelGrid>
+	<div align="left" style="display: block;">
+		<p:selectOneMenu id="perfilAddInput" value="#{editarUsuarioMBean.perfilSelecionado}" converter="genericEntityConverter" style="width: 300px;">
+			<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+			<f:selectItems value="#{editarUsuarioMBean.perfisDisponiveis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"/>
+			<p:ajax event="change" update="addPerfilBtn"/>
+		</p:selectOneMenu>
+		<p:commandButton id="addPerfilBtn" action="#{editarUsuarioMBean.adicionarPerfil}" icon="ui-icon-plusthick" update="perfisUsuarioTable, perfilAddInput, :frmUsuarios:msgs"
+			disabled="#{empty editarUsuarioMBean.perfilSelecionado}" styleClass="botaoSalvar"/>
+	</div>
+
+	<p:dataTable id="perfisUsuarioTable" var="perfil" value="#{editarUsuarioMBean.perfisUsuario}" emptyMessage="#{msg['usuario.perfil.lista.empty']}"
+		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+		<p:column headerText="#{msg['usuario.perfil.nome']}">
+			<h:outputText value="#{perfil.nome}" />
+		</p:column>
+		<p:column width="30px;">
+			<p:commandButton action="#{editarUsuarioMBean.removerPerfil(perfil)}" icon="ui-icon-closethick" styleClass="datatable-button"
+				update="perfisUsuarioTable, :frmUsuarios:perfilAddInput :frmUsuarios:msgs"/>
+		</p:column>
+	</p:dataTable>
 
 </h:html>
