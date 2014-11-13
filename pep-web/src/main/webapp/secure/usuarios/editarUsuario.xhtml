@@ -18,13 +18,13 @@
 					<p:panelGrid columns="2" styleClass="noborder" columnClasses="leftMenu nopadding" style="width: 100%;">
 						<p:column style="width: 150px;">
 							<p:menu>
-					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude">
+					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="dadosPrincipaisInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
 						    
 						    <p:menu style="margin-top: 5px;">
-					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude">
+					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="perfisUsuarioInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
