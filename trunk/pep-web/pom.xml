@@ -124,12 +124,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-			<version>4.3.6.Final</version>
-		</dependency>
-
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
@@ -145,22 +139,44 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>${project.build.directory}/generated-sources/annotations</directory>
-			</resource>
 		</resources>
 
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
-					<compilerArguments>
-						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-					</compilerArguments>
+					<compilerArgument>-proc:none</compilerArgument>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>2.2.4</version>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}/generated-sources/annotations</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-jpamodelgen</artifactId>
+						<version>4.3.6.Final</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<!-- Inclusao do diretorio dos Metamodels como source-folder -->
@@ -170,14 +186,14 @@
 				<version>1.8</version>
 				<executions>
 					<execution>
-						<id>add-sources</id>
-						<phase>process-sources</phase>
+						<id>add-source</id>
+						<phase>process-classes</phase>
 						<goals>
 							<goal>add-source</goal>
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.build.directory}/generated-sources/annotations</source>
+								<source>${project.build.directory}/generated-sources/annotations/</source>
 							</sources>
 						</configuration>
 					</execution>

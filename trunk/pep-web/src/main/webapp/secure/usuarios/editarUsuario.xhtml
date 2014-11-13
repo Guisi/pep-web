@@ -15,16 +15,16 @@
 				<fieldset>
 					<legend>#{msg['usuario.editar.header']}</legend>
 					
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="leftMenu nopadding" style="width: 100%;">
+					<h:panelGrid columns="2" columnClasses="leftMenu" style="width: 100%;">
 						<p:column style="width: 150px;">
 							<p:menu>
-					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude msgs">
+					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude, msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="dadosPrincipaisInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
 						    
 						    <p:menu style="margin-top: 5px;">
-					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude msgs">
+					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude, msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="perfisUsuarioInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
@@ -35,7 +35,7 @@
 								<ui:include src="#{editarUsuarioMBean.menuInclude != null ? editarUsuarioMBean.menuInclude : 'dadosPrincipaisInclude.xhtml'}" />
 							</p:panel>
 						</p:column>
-					</p:panelGrid>
+					</h:panelGrid>
 					
 					<div class="divBotoesEdicao">
 						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarUsuarios" icon="ui-icon-close" immediate="true"/>

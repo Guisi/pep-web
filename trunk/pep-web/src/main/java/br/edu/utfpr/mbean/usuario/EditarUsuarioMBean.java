@@ -3,10 +3,10 @@ package br.edu.utfpr.mbean.usuario;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
-import org.primefaces.model.DualListModel;
 
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
@@ -38,7 +37,10 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private PerfilService perfilService;
 	
 	private Usuario usuarioSelecionado;
-	private DualListModel<Perfil> perfisPickList;
+	private List<Perfil> perfisDisponiveis;
+	private List<Perfil> perfisUsuario;
+	private Perfil perfilSelecionado;
+	
 	private String menuInclude;
 	
 	@PostConstruct
@@ -48,23 +50,20 @@ public class EditarUsuarioMBean extends BaseMBean {
 		
 		if (StringUtils.isNotEmpty(idUsuario) && StringUtils.isNumeric(idUsuario)) {
 			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
+			this.perfisUsuario = new ArrayList<>(this.usuarioSelecionado.getPerfisUsuario());
 		} else {
 			this.usuarioSelecionado = new Usuario();
+			this.perfisUsuario = new ArrayList<>();
 		}
-		this.listarPerfis();
+		this.listarPerfisDisponiveis();
 	}
 	
-	private void listarPerfis() {
-		List<Perfil> perfis = perfilService.retornarPerfis();
-		Set<Perfil> perfisUsuario = usuarioSelecionado.getPerfisUsuario();
-		if (perfisUsuario != null) {
-			for (Perfil perfil : perfisUsuario) {
-				perfis.remove(perfil);
-			}
-		} else {
-			perfisUsuario = new HashSet<>();
+	private void listarPerfisDisponiveis() {
+		this.perfisDisponiveis = perfilService.retornarPerfis();
+		
+		for (Perfil p : this.usuarioSelecionado.getPerfisUsuario()) {
+			this.perfisDisponiveis.remove(p);
 		}
-		perfisPickList = new DualListModel<Perfil>(perfis, new ArrayList<>(perfisUsuario));
 	}
 	
 	public String salvar() {
@@ -73,9 +72,9 @@ public class EditarUsuarioMBean extends BaseMBean {
 		usuarioSelecionado.setCpf( FormatUtils.somenteDigitos(usuarioSelecionado.getCpf()) );
 		
 		if (validarCampos()) {
-			boolean isNew = usuarioSelecionado.isNew();
-			usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(perfisPickList.getTarget()));
 			try {
+				boolean isNew = usuarioSelecionado.isNew();
+				usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(this.perfisUsuario));
 				usuarioService.salvarUsuario(getUsuarioLogado(), usuarioSelecionado);
 	
 				if (isNew) {
@@ -109,6 +108,32 @@ public class EditarUsuarioMBean extends BaseMBean {
 		
 		return valido;
 	}
+	
+	public void removerPerfil(Perfil perfil) {
+		this.perfisUsuario.remove(perfil);
+		this.perfisDisponiveis.add(perfil);
+		this.ordenaListasPerfis();
+	}
+	
+	public void adicionarPerfil() {
+		if (this.perfilSelecionado != null) {
+			this.perfisDisponiveis.remove(this.perfilSelecionado);
+			this.perfisUsuario.add(this.perfilSelecionado);
+			this.ordenaListasPerfis();
+		}
+	}
+	
+	private void ordenaListasPerfis() {
+		Comparator<Perfil> comparator = new Comparator<Perfil>() {
+			@Override
+			public int compare(Perfil o1, Perfil o2) {
+				return o1.getNome().compareTo(o2.getNome());
+			}
+		};
+		
+		Collections.sort(this.perfisDisponiveis, comparator);
+		Collections.sort(this.perfisUsuario, comparator);
+	}
 
 	public Usuario getUsuarioSelecionado() {
 		return usuarioSelecionado;
@@ -118,14 +143,6 @@ public class EditarUsuarioMBean extends BaseMBean {
 		this.usuarioSelecionado = usuarioSelecionado;
 	}
 
-	public DualListModel<Perfil> getPerfisPickList() {
-		return perfisPickList;
-	}
-
-	public void setPerfisPickList(DualListModel<Perfil> perfisPickList) {
-		this.perfisPickList = perfisPickList;
-	}
-
 	public String getMenuInclude() {
 		return menuInclude;
 	}
@@ -133,4 +150,29 @@ public class EditarUsuarioMBean extends BaseMBean {
 	public void setMenuInclude(String menuInclude) {
 		this.menuInclude = menuInclude;
 	}
+
+	public List<Perfil> getPerfisUsuario() {
+		return perfisUsuario;
+	}
+
+	public void setPerfisUsuario(List<Perfil> perfisUsuario) {
+		this.perfisUsuario = perfisUsuario;
+	}
+
+	public Perfil getPerfilSelecionado() {
+		return perfilSelecionado;
+	}
+
+	public void setPerfilSelecionado(Perfil perfilSelecionado) {
+		this.perfilSelecionado = perfilSelecionado;
+	}
+
+	public List<Perfil> getPerfisDisponiveis() {
+		return perfisDisponiveis;
+	}
+
+	public void setPerfisDisponiveis(List<Perfil> perfisDisponiveis) {
+		this.perfisDisponiveis = perfisDisponiveis;
+	}
+	
 }
