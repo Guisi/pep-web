@@ -12,7 +12,7 @@
 			<f:selectItems value="#{editarUsuarioMBean.perfisDisponiveis}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}"/>
 			<p:ajax event="change" update="addPerfilBtn"/>
 		</p:selectOneMenu>
-		<p:commandButton id="addPerfilBtn" action="#{editarUsuarioMBean.adicionarPerfil}" icon="ui-icon-plusthick" update="@this, perfisUsuarioTable, perfilAddInput, :frmUsuarios:msgs"
+		<p:commandButton id="addPerfilBtn" action="#{editarUsuarioMBean.adicionarPerfil}" icon="ui-icon-plusthick" update="@this, perfisUsuarioTable, perfilAddInput, :frmUsuarios:msgs, :frmUsuarios:pngMenuLateral"
 			disabled="#{empty editarUsuarioMBean.perfilSelecionado}" styleClass="botaoSalvar"/>
 	</h:panelGrid>
 
@@ -25,7 +25,7 @@
 			</p:column>
 			<p:column width="30px;">
 				<p:commandButton action="#{editarUsuarioMBean.removerPerfil(perfil)}" icon="ui-icon-closethick" styleClass="datatable-button"
-					update="perfisUsuarioTable, :frmUsuarios:perfilAddInput :frmUsuarios:msgs"/>
+					update="perfisUsuarioTable, :frmUsuarios:perfilAddInput :frmUsuarios:msgs, :frmUsuarios:pngMenuLateral"/>
 			</p:column>
 		</p:dataTable>
 	</div>

@@ -91,6 +91,17 @@ public class EditarUsuarioMBean extends BaseMBean {
 		return null;
 	}
 	
+	public boolean getPossuiEspecialidades() {
+		if (perfisUsuario != null) {
+			for (Perfil perfil : perfisUsuario) {
+				if (perfil.getPossuiEspecialidades()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	private boolean validarCampos() {
 		boolean valido = true;
 		

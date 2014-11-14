@@ -15,7 +15,7 @@
 				<fieldset>
 					<legend>#{msg['usuario.editar.header']}</legend>
 					
-					<h:panelGrid columns="2" columnClasses="leftMenu" style="width: 100%;">
+					<h:panelGrid id="pngMenuLateral" columns="2" columnClasses="leftMenu" style="width: 100%;">
 						<p:column style="width: 150px;">
 							<p:menu>
 					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude, msgs">
@@ -26,6 +26,12 @@
 						    <p:menu style="margin-top: 5px;">
 					            <p:menuitem value="#{msg['usuario.editar.perfis']}" update="panelUsuarioInclude, msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="perfisUsuarioInclude.xhtml"/>
+					            </p:menuitem>
+						    </p:menu>
+						    
+						    <p:menu style="margin-top: 5px;" rendered="#{editarUsuarioMBean.possuiEspecialidades}">
+					            <p:menuitem value="#{msg['usuario.editar.especialidades']}" update="panelUsuarioInclude, msgs">
+					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="especialidadesUsuarioInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
 						</p:column>

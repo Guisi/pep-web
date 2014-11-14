@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.StringUtils;
 
 /**
@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
  * 
  * @author douglas.guisi
  */
-public class PepDynamicParamAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class PepDynamicParamAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 	/**
 	 * Map para armazenar os nomes das roles e as respectivas urls para redirecionamento.
