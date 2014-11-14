@@ -120,6 +120,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.perfisDisponiveis.remove(this.perfilSelecionado);
 			this.perfisUsuario.add(this.perfilSelecionado);
 			this.ordenaListasPerfis();
+			this.perfilSelecionado = null;
 		}
 	}
 	
