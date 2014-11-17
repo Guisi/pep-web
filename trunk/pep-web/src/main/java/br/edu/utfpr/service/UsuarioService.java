@@ -51,6 +51,7 @@ public class UsuarioService {
 	public Usuario retornarUsuario(Long id) {
 		Usuario usuario = usuarioDao.getById(id);
 		usuario.getPerfisUsuario().size();
+		usuario.getEspecialidades().size();
 		return usuario;
 	}
 	
