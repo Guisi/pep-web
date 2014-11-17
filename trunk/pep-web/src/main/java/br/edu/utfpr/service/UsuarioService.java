@@ -49,10 +49,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario retornarUsuario(Long id) {
-		Usuario usuario = usuarioDao.getById(id);
-		usuario.getPerfisUsuario().size();
-		usuario.getEspecialidades().size();
-		return usuario;
+		return usuarioDao.retornarUsuarioPorId(id);
 	}
 	
 	public void inativarUsuario(PepUser usuarioLogado, Usuario usuario) {

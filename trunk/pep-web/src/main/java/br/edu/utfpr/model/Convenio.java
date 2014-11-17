@@ -16,22 +16,22 @@ import javax.validation.constraints.Size;
 import br.edu.utfpr.constants.Constantes;
 
 @Entity
-@Table(name=Constantes.PEP_OWNER + "tb_especialidade")
-public class Especialidade extends BaseEntity {
+@Table(name=Constantes.PEP_OWNER + "tb_convenio")
+public class Convenio extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="especialidade_sequence", sequenceName=Constantes.PEP_OWNER + "especialidade_sequence", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="especialidade_sequence")
-	@Column(name="id_especialidade")
+	@SequenceGenerator(name="convenio_sequence", sequenceName=Constantes.PEP_OWNER + "convenio_sequence", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="convenio_sequence")
+	@Column(name="id_convenio")
 	private Long id;
 	
 	@Column(name="descricao", length=100)
 	@Size(max=100)
 	private String descricao;
 	
-	@ManyToMany(mappedBy="especialidades", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy="convenios", fetch = FetchType.LAZY)
 	private Set<Usuario> usuarios;
 
 	@Override

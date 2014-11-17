@@ -106,6 +106,13 @@ public class Usuario extends BaseEntity {
         inverseJoinColumns=@JoinColumn(name="id_especialidade"))
 	private Set<Especialidade> especialidades;
 	
+	@NotAudited
+	@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_convenio",
+        joinColumns=@JoinColumn(name="id_usuario"),
+        inverseJoinColumns=@JoinColumn(name="id_convenio"))
+	private Set<Convenio> convenios;
+	
 	@Transient
 	public String getTelefoneFormatado() {
 		return FormatUtils.getFormattedPhoneNumber(telefone);
@@ -259,6 +266,14 @@ public class Usuario extends BaseEntity {
 
 	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
+	}
+
+	public Set<Convenio> getConvenios() {
+		return convenios;
+	}
+
+	public void setConvenios(Set<Convenio> convenios) {
+		this.convenios = convenios;
 	}
 	
 }

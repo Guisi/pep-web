@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -51,6 +52,17 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 		}
 		
 		q.where(predicate);
+		
+		return entityManager.createQuery(q).getSingleResult();
+	}
+	
+	public Usuario retornarUsuarioPorId(Long id) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
+		Root<Usuario> root = q.from(Usuario.class);
+		root.fetch(Usuario_.perfisUsuario, JoinType.LEFT);
+		root.fetch(Usuario_.especialidades, JoinType.LEFT);
+		root.fetch(Usuario_.convenios, JoinType.LEFT);
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}
