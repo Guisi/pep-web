@@ -6,4 +6,28 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<h:panelGrid columns="2">
+		<p:selectOneMenu id="especialidadeAddInput" value="#{editarUsuarioMBean.especialidadeSelecionada}" converter="genericEntityConverter" style="width: 300px; margin-top: 2px;">
+			<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+			<f:selectItems value="#{editarUsuarioMBean.especialidadesDisponiveis}" var="especialidade" itemLabel="#{especialidade.descricao}" itemValue="#{especialidade}"/>
+			<p:ajax event="change" update="addEspecialidadeBtn"/>
+		</p:selectOneMenu>
+		<p:commandButton id="addEspecialidadeBtn" action="#{editarUsuarioMBean.adicionarEspecialidade}" icon="ui-icon-plusthick" update="@this, especialidadesUsuarioTable, especialidadeAddInput, :frmUsuarios:msgs"
+			disabled="#{empty editarUsuarioMBean.especialidadeSelecionada}" styleClass="botaoSalvar"/>
+	</h:panelGrid>
+
+	<div>
+		<p:dataTable id="especialidadesUsuarioTable" var="especialidade" value="#{editarUsuarioMBean.especialidadesUsuario}" emptyMessage="#{msg['usuario.especialidades.lista.empty']}"
+			paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+			<p:column headerText="#{msg['usuario.especialidade.descricao']}">
+				<h:outputText value="#{especialidade.descricao}" />
+			</p:column>
+			<p:column width="30px;">
+				<p:commandButton action="#{editarUsuarioMBean.removerEspecialidade(especialidade)}" icon="ui-icon-closethick" styleClass="datatable-button"
+					update="especialidadesUsuarioTable, :frmUsuarios:especialidadeAddInput, :frmUsuarios:msgs"/>
+			</p:column>
+		</p:dataTable>
+	</div>
+
 </h:html>

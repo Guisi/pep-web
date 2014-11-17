@@ -103,6 +103,10 @@ body {
 	width: 150px;
 }
 
+.rightContent {
+	vertical-align: top;
+}
+
 .labelColumn {
 	text-align: left;
 }

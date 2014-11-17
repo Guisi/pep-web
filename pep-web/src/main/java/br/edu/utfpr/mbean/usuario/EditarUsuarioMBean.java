@@ -19,8 +19,10 @@ import org.apache.commons.validator.GenericValidator;
 
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.model.Especialidade;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.service.EspecialidadeService;
 import br.edu.utfpr.service.PerfilService;
 import br.edu.utfpr.service.UsuarioService;
 import br.edu.utfpr.utils.FormatUtils;
@@ -35,11 +37,18 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private UsuarioService usuarioService;
 	@Inject
 	private PerfilService perfilService;
+	@Inject
+	private EspecialidadeService especialidadeService;
 	
 	private Usuario usuarioSelecionado;
+	
 	private List<Perfil> perfisDisponiveis;
 	private List<Perfil> perfisUsuario;
 	private Perfil perfilSelecionado;
+	
+	private List<Especialidade> especialidadesUsuario;
+	private List<Especialidade> especialidadesDisponiveis;
+	private Especialidade especialidadeSelecionada;
 	
 	private String menuInclude;
 	
@@ -51,19 +60,28 @@ public class EditarUsuarioMBean extends BaseMBean {
 		if (StringUtils.isNotEmpty(idUsuario) && StringUtils.isNumeric(idUsuario)) {
 			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
 			this.perfisUsuario = new ArrayList<>(this.usuarioSelecionado.getPerfisUsuario());
+			this.especialidadesUsuario = new ArrayList<>(this.usuarioSelecionado.getEspecialidades());
 		} else {
 			this.usuarioSelecionado = new Usuario();
 			this.perfisUsuario = new ArrayList<>();
+			this.especialidadesUsuario = new ArrayList<>();
 		}
-		this.listarPerfisDisponiveis();
 	}
 	
-	private void listarPerfisDisponiveis() {
+	public void listarPerfisDisponiveis() {
 		this.perfisDisponiveis = perfilService.retornarPerfis();
-		
 		for (Perfil p : this.usuarioSelecionado.getPerfisUsuario()) {
 			this.perfisDisponiveis.remove(p);
 		}
+		this.ordenaListasPerfis();
+	}
+	
+	public void listarEspecialidadesDisponiveis() {
+		this.especialidadesDisponiveis = especialidadeService.retornarEspecialidades();
+		for (Especialidade e : this.usuarioSelecionado.getEspecialidades()) {
+			this.especialidadesDisponiveis.remove(e);
+		}
+		this.ordenaListasEspecialidades();
 	}
 	
 	public String salvar() {
@@ -75,6 +93,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 			try {
 				boolean isNew = usuarioSelecionado.isNew();
 				usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(this.perfisUsuario));
+				usuarioSelecionado.setEspecialidades(getPossuiEspecialidades() 
+						? new LinkedHashSet<>(this.especialidadesUsuario) : new LinkedHashSet<Especialidade>());
 				usuarioService.salvarUsuario(getUsuarioLogado(), usuarioSelecionado);
 	
 				if (isNew) {
@@ -95,6 +115,17 @@ public class EditarUsuarioMBean extends BaseMBean {
 		if (perfisUsuario != null) {
 			for (Perfil perfil : perfisUsuario) {
 				if (perfil.getPossuiEspecialidades()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean getPossuiConvenios() {
+		if (perfisUsuario != null) {
+			for (Perfil perfil : perfisUsuario) {
+				if (perfil.getPossuiConvenios()) {
 					return true;
 				}
 			}
@@ -135,6 +166,15 @@ public class EditarUsuarioMBean extends BaseMBean {
 		}
 	}
 	
+	public void adicionarEspecialidade() {
+		if (this.especialidadeSelecionada != null) {
+			this.especialidadesDisponiveis.remove(this.especialidadeSelecionada);
+			this.especialidadesUsuario.add(this.especialidadeSelecionada);
+			this.ordenaListasEspecialidades();
+			this.especialidadeSelecionada = null;
+		}
+	}
+	
 	private void ordenaListasPerfis() {
 		Comparator<Perfil> comparator = new Comparator<Perfil>() {
 			@Override
@@ -145,6 +185,24 @@ public class EditarUsuarioMBean extends BaseMBean {
 		
 		Collections.sort(this.perfisDisponiveis, comparator);
 		Collections.sort(this.perfisUsuario, comparator);
+	}
+	
+	public void removerEspecialidade(Especialidade especialidade) {
+		this.especialidadesUsuario.remove(especialidade);
+		this.especialidadesDisponiveis.add(especialidade);
+		this.ordenaListasEspecialidades();
+	}
+	
+	private void ordenaListasEspecialidades() {
+		Comparator<Especialidade> comparator = new Comparator<Especialidade>() {
+			@Override
+			public int compare(Especialidade o1, Especialidade o2) {
+				return o1.getDescricao().compareTo(o2.getDescricao());
+			}
+		};
+		
+		Collections.sort(this.especialidadesDisponiveis, comparator);
+		Collections.sort(this.especialidadesUsuario, comparator);
 	}
 
 	public Usuario getUsuarioSelecionado() {
@@ -185,6 +243,30 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setPerfisDisponiveis(List<Perfil> perfisDisponiveis) {
 		this.perfisDisponiveis = perfisDisponiveis;
+	}
+
+	public List<Especialidade> getEspecialidadesUsuario() {
+		return especialidadesUsuario;
+	}
+
+	public void setEspecialidadesUsuario(List<Especialidade> especialidadesUsuario) {
+		this.especialidadesUsuario = especialidadesUsuario;
+	}
+
+	public List<Especialidade> getEspecialidadesDisponiveis() {
+		return especialidadesDisponiveis;
+	}
+
+	public void setEspecialidadesDisponiveis(List<Especialidade> especialidadesDisponiveis) {
+		this.especialidadesDisponiveis = especialidadesDisponiveis;
+	}
+
+	public Especialidade getEspecialidadeSelecionada() {
+		return especialidadeSelecionada;
+	}
+
+	public void setEspecialidadeSelecionada(Especialidade especialidadeSelecionada) {
+		this.especialidadeSelecionada = especialidadeSelecionada;
 	}
 	
 }
