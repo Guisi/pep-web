@@ -113,6 +113,9 @@ public class EditarUsuarioMBean extends BaseMBean {
 				usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(this.perfisUsuario));
 				usuarioSelecionado.setEspecialidades(getPossuiEspecialidades() 
 						? new LinkedHashSet<>(this.especialidadesUsuario) : new LinkedHashSet<Especialidade>());
+				usuarioSelecionado.setConvenios(getPossuiConvenios() 
+						? new LinkedHashSet<>(this.conveniosUsuario) : new LinkedHashSet<Convenio>());
+
 				usuarioService.salvarUsuario(getUsuarioLogado(), usuarioSelecionado);
 	
 				if (isNew) {

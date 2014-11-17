@@ -36,7 +36,7 @@
 						    </p:menu>
 						    
 						    <p:menu style="margin-top: 5px;" rendered="#{editarUsuarioMBean.possuiConvenios}">
-					            <p:menuitem value="#{msg['usuario.editar.convenios']}" update="panelUsuarioInclude, msgs">
+					            <p:menuitem value="#{msg['usuario.editar.convenios']}" actionListener="#{editarUsuarioMBean.listarConveniosDisponiveis}" update="panelUsuarioInclude, msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="conveniosUsuarioInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>

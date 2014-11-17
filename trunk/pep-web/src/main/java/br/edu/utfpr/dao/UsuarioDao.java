@@ -64,6 +64,8 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 		root.fetch(Usuario_.especialidades, JoinType.LEFT);
 		root.fetch(Usuario_.convenios, JoinType.LEFT);
 		
+		q.where(qb.equal(root.get(Usuario_.id), id));
+		
 		return entityManager.createQuery(q).getSingleResult();
 	}
 }
