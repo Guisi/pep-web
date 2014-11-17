@@ -19,9 +19,11 @@ import org.apache.commons.validator.GenericValidator;
 
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.model.Convenio;
 import br.edu.utfpr.model.Especialidade;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.service.ConvenioService;
 import br.edu.utfpr.service.EspecialidadeService;
 import br.edu.utfpr.service.PerfilService;
 import br.edu.utfpr.service.UsuarioService;
@@ -39,6 +41,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private PerfilService perfilService;
 	@Inject
 	private EspecialidadeService especialidadeService;
+	@Inject
+	private ConvenioService convenioService;
 	
 	private Usuario usuarioSelecionado;
 	
@@ -50,6 +54,10 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private List<Especialidade> especialidadesDisponiveis;
 	private Especialidade especialidadeSelecionada;
 	
+	private List<Convenio> conveniosUsuario;
+	private List<Convenio> conveniosDisponiveis;
+	private Convenio convenioSelecionado;
+
 	private String menuInclude;
 	
 	@PostConstruct
@@ -61,10 +69,12 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
 			this.perfisUsuario = new ArrayList<>(this.usuarioSelecionado.getPerfisUsuario());
 			this.especialidadesUsuario = new ArrayList<>(this.usuarioSelecionado.getEspecialidades());
+			this.conveniosUsuario = new ArrayList<>(this.usuarioSelecionado.getConvenios());
 		} else {
 			this.usuarioSelecionado = new Usuario();
 			this.perfisUsuario = new ArrayList<>();
 			this.especialidadesUsuario = new ArrayList<>();
+			this.conveniosUsuario = new ArrayList<>();
 		}
 	}
 	
@@ -82,6 +92,14 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.especialidadesDisponiveis.remove(e);
 		}
 		this.ordenaListasEspecialidades();
+	}
+	
+	public void listarConveniosDisponiveis() {
+		this.conveniosDisponiveis = convenioService.retornarConvenios();
+		for (Convenio c : this.usuarioSelecionado.getConvenios()) {
+			this.conveniosDisponiveis.remove(c);
+		}
+		this.ordenaListasConvenios();
 	}
 	
 	public String salvar() {
@@ -175,6 +193,27 @@ public class EditarUsuarioMBean extends BaseMBean {
 		}
 	}
 	
+	public void removerEspecialidade(Especialidade especialidade) {
+		this.especialidadesUsuario.remove(especialidade);
+		this.especialidadesDisponiveis.add(especialidade);
+		this.ordenaListasEspecialidades();
+	}
+	
+	public void adicionarConvenio() {
+		if (this.convenioSelecionado != null) {
+			this.conveniosDisponiveis.remove(this.convenioSelecionado);
+			this.conveniosUsuario.add(this.convenioSelecionado);
+			this.ordenaListasConvenios();
+			this.convenioSelecionado = null;
+		}
+	}
+	
+	public void removerConvenio(Convenio convenio) {
+		this.conveniosUsuario.remove(convenio);
+		this.conveniosDisponiveis.add(convenio);
+		this.ordenaListasConvenios();
+	}
+	
 	private void ordenaListasPerfis() {
 		Comparator<Perfil> comparator = new Comparator<Perfil>() {
 			@Override
@@ -186,13 +225,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 		Collections.sort(this.perfisDisponiveis, comparator);
 		Collections.sort(this.perfisUsuario, comparator);
 	}
-	
-	public void removerEspecialidade(Especialidade especialidade) {
-		this.especialidadesUsuario.remove(especialidade);
-		this.especialidadesDisponiveis.add(especialidade);
-		this.ordenaListasEspecialidades();
-	}
-	
+
 	private void ordenaListasEspecialidades() {
 		Comparator<Especialidade> comparator = new Comparator<Especialidade>() {
 			@Override
@@ -203,6 +236,18 @@ public class EditarUsuarioMBean extends BaseMBean {
 		
 		Collections.sort(this.especialidadesDisponiveis, comparator);
 		Collections.sort(this.especialidadesUsuario, comparator);
+	}
+	
+	private void ordenaListasConvenios() {
+		Comparator<Convenio> comparator = new Comparator<Convenio>() {
+			@Override
+			public int compare(Convenio o1, Convenio o2) {
+				return o1.getDescricao().compareTo(o2.getDescricao());
+			}
+		};
+		
+		Collections.sort(this.conveniosDisponiveis, comparator);
+		Collections.sort(this.conveniosUsuario, comparator);
 	}
 
 	public Usuario getUsuarioSelecionado() {
@@ -267,6 +312,30 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setEspecialidadeSelecionada(Especialidade especialidadeSelecionada) {
 		this.especialidadeSelecionada = especialidadeSelecionada;
+	}
+
+	public List<Convenio> getConveniosUsuario() {
+		return conveniosUsuario;
+	}
+
+	public void setConveniosUsuario(List<Convenio> conveniosUsuario) {
+		this.conveniosUsuario = conveniosUsuario;
+	}
+
+	public List<Convenio> getConveniosDisponiveis() {
+		return conveniosDisponiveis;
+	}
+
+	public void setConveniosDisponiveis(List<Convenio> conveniosDisponiveis) {
+		this.conveniosDisponiveis = conveniosDisponiveis;
+	}
+
+	public Convenio getConvenioSelecionado() {
+		return convenioSelecionado;
+	}
+
+	public void setConvenioSelecionado(Convenio convenioSelecionado) {
+		this.convenioSelecionado = convenioSelecionado;
 	}
 	
 }

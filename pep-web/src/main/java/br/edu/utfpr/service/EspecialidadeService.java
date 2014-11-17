@@ -24,7 +24,7 @@ public class EspecialidadeService {
 	public void removerEspecialidade(Especialidade especialidade) throws AppException {
 		especialidade = especialidadeDao.getById(especialidade.getId());
 		
-		//se possui usuarios vinculados, nao permite excluir perfil
+		//se possui usuarios vinculados, nao permite excluir especialidade
 		if (!especialidade.getUsuarios().isEmpty()) {
 			throw new AppException("especialidade.remover.erro.usuariosvinculados");
 		}
