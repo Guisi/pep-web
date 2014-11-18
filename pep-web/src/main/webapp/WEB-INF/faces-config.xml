@@ -5,6 +5,7 @@
 	
 	<!-- Config. Aplicacao - Resource Bundle -->
 	<application>
+		<message-bundle>messages</message-bundle>
 		<resource-bundle>
 			<base-name>messages</base-name>
 			<var>msg</var>

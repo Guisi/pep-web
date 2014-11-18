@@ -85,21 +85,36 @@
 			<p:column styleClass="leftAligned">
 				<h:outputLabel for="estadoCivilInput" value="#{msg['usuario.estadocivil']}: "/>
 			</p:column>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="sexoInput" value="#{msg['usuario.sexo']}: "/>
+			</p:column>
 		</p:row>
 		<p:row>
 			<p:column styleClass="leftAligned">
 				<p:inputMask id="dataNascimentoInput" value="#{editarUsuarioMBean.usuarioSelecionado.dataNascimento}" styleClass="inputUmQuarto"
-					mask="99/99/9999" required="true" requiredMessage="#{msg['usuario.campoobrigatorio.datanascimento']}">
-					<f:convertDateTime pattern="dd/MM/yyyy"/>
+					mask="99/99/9999" required="true" requiredMessage="#{msg['usuario.campoobrigatorio.datanascimento']}" converterMessage="#{msg['usuario.campoinvalido.datanascimento']}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</p:inputMask>
 			</p:column>
 			
 			<p:column styleClass="leftAligned">
 				<p:selectOneMenu id="estadoCivilInput" value="#{editarUsuarioMBean.usuarioSelecionado.estadoCivil}" styleClass="inputUmQuarto">
 					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-					<f:selectItem itemLabel="Solteiro" itemValue="Solteiro"/>
-					<f:selectItem itemLabel="Casado" itemValue="Casado"/>
-					<f:selectItem itemLabel="Divorciado" itemValue="Divorciado"/>
+					<f:selectItem itemLabel="Não informado" itemValue="Não informado"/>
+					<f:selectItem itemLabel="Solteiro(a)" itemValue="Solteiro(a)"/>
+					<f:selectItem itemLabel="Casado(a)" itemValue="Casado(a)"/>
+					<f:selectItem itemLabel="Divorciado(a)" itemValue="Divorciado(a)"/>
+					<f:selectItem itemLabel="Viúvo(a)" itemValue="Viúvo(a)"/>
+					<f:selectItem itemLabel="União estável" itemValue="União estável"/>
+				</p:selectOneMenu>
+			</p:column>
+			
+			<p:column styleClass="leftAligned">
+				<p:selectOneMenu id="sexoInput" value="#{editarUsuarioMBean.usuarioSelecionado.sexo}" styleClass="inputUmQuarto">
+					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+					<f:selectItem itemLabel="Não informado" itemValue="N"/>
+					<f:selectItem itemLabel="Masculino" itemValue="M"/>
+					<f:selectItem itemLabel="Feminino" itemValue="F"/>
 				</p:selectOneMenu>
 			</p:column>
 		</p:row>
