@@ -1,7 +1,7 @@
 --cria usuarios
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, optlock) VALUES (1, '05009490935', 'guisiagudos@gmail.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Douglas Maciel Guisi', 'Douglas', '4192669662', 0, true, '1984-10-05', 0);
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, optlock) VALUES (2, '72228163481', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário de Testes', 'Teste', '4199998888', 0, true, '1990-01-01', 0);
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, optlock) VALUES (3, '58857525759', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário Sem Perfil', null, '4199998888', 0, true, '1990-01-01', 0);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock) VALUES (1, '05009490935', 'guisiagudos@gmail.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Douglas Maciel Guisi', 'Douglas', '4192669662', 0, true, '1984-10-05', 'M', 0);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock) VALUES (2, '72228163481', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário de Testes', 'Teste', '4199998888', 0, true, '1990-01-01', 'F', 0);
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock) VALUES (3, '58857525759', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário Sem Perfil', null, '4199998888', 0, true, '1990-01-01', 'N', 0);
 ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
 
 --cria perfis

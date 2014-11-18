@@ -91,6 +91,10 @@ public class Usuario extends BaseEntity {
 	@Column(name="estado_civil", length=20)
 	@Size(max=20)
 	private String estadoCivil;
+	
+	@Column(name="sexo", length=1)
+	@Size(max=1)
+	private String sexo;
 
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -274,6 +278,14 @@ public class Usuario extends BaseEntity {
 
 	public void setConvenios(Set<Convenio> convenios) {
 		this.convenios = convenios;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 	
 }
