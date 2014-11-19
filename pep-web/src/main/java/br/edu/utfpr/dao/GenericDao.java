@@ -1,18 +1,21 @@
 package br.edu.utfpr.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 import br.edu.utfpr.model.BaseEntity;
 
 @SuppressWarnings("unchecked")
-public class GenericDao<T extends BaseEntity, PK> {
+public abstract class GenericDao<T extends BaseEntity, PK> {
 	
 	@PersistenceContext(unitName = "pepPU")
 	protected EntityManager entityManager;
@@ -46,24 +49,19 @@ public class GenericDao<T extends BaseEntity, PK> {
 		return entityManager.find(getTypeClass(), id);
 	}
 
-	public List<T> findAll() {
-		return findAll(new String[] {"id"});
-	}
-	
-	public List<T> findAll(String orderBy) {
-		return findAll(new String[] {orderBy});
-	}
-	
-	public List<T> findAll(String[] orderBy) {
+	@SuppressWarnings("rawtypes")
+	public List<T> findAll(SingularAttribute... orderBy) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> q = qb.createQuery(getTypeClass());
 		Root<T> root = q.from(getTypeClass());
 		q.select(root);
 		
-		if (orderBy != null) {
-			for (String order : orderBy) {
-				q.orderBy(qb.asc(root.get(order)));
+		if (orderBy != null && orderBy.length > 0) {
+			List<Order> orders = new ArrayList<>();
+			for (SingularAttribute<? super T, ?> singularAttribute : orderBy) {
+				orders.add(qb.asc(root.get(singularAttribute)));
 			}
+			q.orderBy(orders);
 		}
 		return entityManager.createQuery(q).getResultList();
 	}

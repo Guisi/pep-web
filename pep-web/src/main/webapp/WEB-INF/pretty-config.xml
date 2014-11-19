@@ -47,5 +47,15 @@
 		<pattern value="/listarPerfis" />
 		<view-id value="/secure/perfil/perfis.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="novoPerfil">
+		<pattern value="/novoPerfil" />
+		<view-id value="/secure/perfil/editarPerfil.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarPerfil">
+		<pattern value="/editarPerfil/#{idPerfil}" />
+		<view-id value="/secure/perfil/editarPerfil.xhtml" />
+	</url-mapping>
 
 </pretty-config>
