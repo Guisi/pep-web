@@ -99,6 +99,14 @@ public class Usuario extends BaseEntity {
 	@Column(name="profissao", length=100)
 	@Size(max=100)
 	private String profissao;
+	
+	@Column(name="cep", length=8)
+	@Size(max=8)
+	private String cep;
+	
+	@Column(name="logradouro", length=100)
+	@Size(max=100)
+	private String logradouro;
 
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -298,6 +306,22 @@ public class Usuario extends BaseEntity {
 
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 	
 }

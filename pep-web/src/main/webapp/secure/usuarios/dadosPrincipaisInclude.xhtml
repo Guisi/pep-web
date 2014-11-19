@@ -67,7 +67,7 @@
 		<p:row>
 			<p:column styleClass="leftAligned">
 				<p:inputMask id="cpfInput" value="#{editarUsuarioMBean.usuarioSelecionado.cpf}" styleClass="inputUmQuarto" required="true"
-					requiredMessage="#{msg['usuario.campoobrigatorio.cpf']}" validator="cpfValidator" converter="cpfConverter" mask="999.999.999-99">
+					requiredMessage="#{msg['usuario.campoobrigatorio.cpf']}" validator="cpfValidator" converter="numericConverter" mask="999.999.999-99">
 				</p:inputMask>
 			</p:column>
 			<p:column styleClass="leftAligned">
@@ -116,6 +116,28 @@
 			</p:column>
 			<p:column colspan="2" styleClass="leftAligned">
 				<p:inputText id="profissaoInput" value="#{editarUsuarioMBean.usuarioSelecionado.profissao}" maxlength="100" styleClass="inputMeio"/>
+			</p:column>
+		</p:row>
+		
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="cepInput" value="#{msg['usuario.cep']}: "/>
+			</p:column>
+			<p:column colspan="3" styleClass="leftAligned">
+				<h:outputLabel for="logradouroInput" value="#{msg['usuario.logradouro']}: "/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<p:inputMask id="cepInput" value="#{editarUsuarioMBean.usuarioSelecionado.cep}" styleClass="inputUmQuarto" required="true"
+					requiredMessage="#{msg['usuario.campoobrigatorio.cep']}" converter="numericConverter" mask="99999-999">
+					<p:ajax event="change" listener="#{editarUsuarioMBean.onCepAlterado}" process="cepInput" update="logradouroInput"/>
+				</p:inputMask>
+			</p:column>
+			<p:column colspan="3" styleClass="leftAligned">
+				<p:inputText id="logradouroInput" value="#{editarUsuarioMBean.usuarioSelecionado.logradouro}" styleClass="inputTresQuartos"
+					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.logradouro']}" maxlength="200">
+				</p:inputText>
 			</p:column>
 		</p:row>
 		

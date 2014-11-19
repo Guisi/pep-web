@@ -11,19 +11,19 @@ import org.apache.commons.lang.StringUtils;
 import br.edu.utfpr.utils.FormatUtils;
 
 /**
- * Conversor de CPF.
+ * Conversor para campos somente digitos
  * 
  * @author Douglas Guisi
  */
-@FacesConverter(value = "cpfConverter")
-public class CpfConverter implements Converter {
+@FacesConverter(value = "numericConverter")
+public class NumericConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) throws ConverterException {
-		String cpf = value;
-		if (StringUtils.isNotBlank(cpf)) {
-			cpf = FormatUtils.somenteDigitos(cpf);
+		String valor = value;
+		if (StringUtils.isNotBlank(valor)) {
+			valor = FormatUtils.somenteDigitos(valor);
 		}
-		return cpf;
+		return valor;
 	}
 
 	public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
