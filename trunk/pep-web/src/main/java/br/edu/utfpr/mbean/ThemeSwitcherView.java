@@ -20,7 +20,7 @@ public class ThemeSwitcherView implements Serializable {
 	@PostConstruct
 	public void init() {
 		themes = new ArrayList<>();
-		theme = "afterwork";
+		theme = "cupertino";
 
         themes.add("afternoon");
         themes.add("afterwork");

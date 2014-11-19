@@ -15,7 +15,7 @@ public class PerfilDao extends GenericDao<Perfil, Long> implements Serializable 
 	private static final long serialVersionUID = 1L;
 
 	public List<Perfil> retornarPerfis() {
-		return findAll();
+		return findAll(Perfil_.nome);
 	}
 	
 	public Perfil retornarPerfilPorNome(String nome) {
