@@ -27,6 +27,8 @@ import br.edu.utfpr.service.ConvenioService;
 import br.edu.utfpr.service.EspecialidadeService;
 import br.edu.utfpr.service.PerfilService;
 import br.edu.utfpr.service.UsuarioService;
+import br.edu.utfpr.utils.CepUtil;
+import br.edu.utfpr.utils.EnderecoCorreios;
 import br.edu.utfpr.utils.FormatUtils;
 
 @ManagedBean
@@ -100,6 +102,14 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.conveniosDisponiveis.remove(c);
 		}
 		this.ordenaListasConvenios();
+	}
+	
+	public void onCepAlterado() {
+		EnderecoCorreios endereco = CepUtil.buscarEnderecoPorCep(this.usuarioSelecionado.getCep());
+		
+		if (endereco.isRetornoOk()) {
+			this.usuarioSelecionado.setLogradouro(endereco.getLogradouro());
+		}
 	}
 	
 	public String salvar() {
