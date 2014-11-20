@@ -5,10 +5,11 @@ import java.io.InputStreamReader;
 import java.text.MessageFormat;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 public class CepUtil {
 	
@@ -19,9 +20,10 @@ public class CepUtil {
 		if (StringUtils.isNotEmpty(cep)) {
 			cep = FormatUtils.somenteDigitos(cep);
 			
-			CloseableHttpClient httpclient = HttpClients.createDefault();
+			RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(3000).build();
+			CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 			HttpGet httpGet = new HttpGet(MessageFormat.format(URL_BUSCAR_CEP, cep));
-			try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+			try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "ISO-8859-1"));
 				String linhaEndereco = in.readLine();
 				
