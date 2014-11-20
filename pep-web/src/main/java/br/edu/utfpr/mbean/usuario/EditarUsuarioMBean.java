@@ -3,6 +3,7 @@ package br.edu.utfpr.mbean.usuario;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
 
+import br.edu.utfpr.constants.EstadoEnum;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Convenio;
@@ -59,6 +61,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private List<Convenio> conveniosUsuario;
 	private List<Convenio> conveniosDisponiveis;
 	private Convenio convenioSelecionado;
+	
+	private List<EstadoEnum> estados;
 
 	private String menuInclude;
 	
@@ -78,6 +82,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.especialidadesUsuario = new ArrayList<>();
 			this.conveniosUsuario = new ArrayList<>();
 		}
+		
+		this.estados = Arrays.asList(EstadoEnum.values());
 	}
 	
 	public void listarPerfisDisponiveis() {
@@ -109,6 +115,9 @@ public class EditarUsuarioMBean extends BaseMBean {
 		
 		if (endereco.isRetornoOk()) {
 			this.usuarioSelecionado.setLogradouro(endereco.getLogradouro());
+			this.usuarioSelecionado.setBairro(endereco.getBairro());
+			this.usuarioSelecionado.setCidade(endereco.getCidade());
+			this.usuarioSelecionado.setUf(endereco.getUf());
 		}
 	}
 	
@@ -349,6 +358,14 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setConvenioSelecionado(Convenio convenioSelecionado) {
 		this.convenioSelecionado = convenioSelecionado;
+	}
+
+	public List<EstadoEnum> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<EstadoEnum> estados) {
+		this.estados = estados;
 	}
 	
 }

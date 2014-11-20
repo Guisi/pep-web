@@ -131,13 +131,65 @@
 			<p:column styleClass="leftAligned">
 				<p:inputMask id="cepInput" value="#{editarUsuarioMBean.usuarioSelecionado.cep}" styleClass="inputUmQuarto" required="true"
 					requiredMessage="#{msg['usuario.campoobrigatorio.cep']}" converter="numericConverter" mask="99999-999">
-					<p:ajax event="change" listener="#{editarUsuarioMBean.onCepAlterado}" process="cepInput" update="logradouroInput"/>
+					<p:ajax event="change" listener="#{editarUsuarioMBean.onCepAlterado}" process="cepInput" update="logradouroInput, bairroInput, cidadeInput, estadoInput"/>
 				</p:inputMask>
 			</p:column>
 			<p:column colspan="3" styleClass="leftAligned">
 				<p:inputText id="logradouroInput" value="#{editarUsuarioMBean.usuarioSelecionado.logradouro}" styleClass="inputTresQuartos"
 					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.logradouro']}" maxlength="200">
 				</p:inputText>
+			</p:column>
+		</p:row>
+		
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="numeroInput" value="#{msg['usuario.numero']}: "/>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="complementoInput" value="#{msg['usuario.complemento']}: "/>
+			</p:column>
+			<p:column colspan="2" styleClass="leftAligned">
+				<h:outputLabel for="bairroInput" value="#{msg['usuario.bairro']}: "/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="leftAligned">
+				<p:inputText id="numeroInput" value="#{editarUsuarioMBean.usuarioSelecionado.numero}" styleClass="inputUmQuarto"
+					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.numero']}" maxlength="30">
+				</p:inputText>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<p:inputText id="complementoInput" value="#{editarUsuarioMBean.usuarioSelecionado.complemento}" styleClass="inputUmQuarto"
+					maxlength="50">
+				</p:inputText>
+			</p:column>
+			<p:column colspan="2" styleClass="leftAligned">
+				<p:inputText id="bairroInput" value="#{editarUsuarioMBean.usuarioSelecionado.bairro}" styleClass="inputMeio"
+					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.bairro']}" maxlength="100">
+				</p:inputText>
+			</p:column>
+		</p:row>
+		
+		<p:row>
+			<p:column colspan="3" styleClass="leftAligned">
+				<h:outputLabel for="cidadeInput" value="#{msg['usuario.cidade']}: "/>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="estadoInput" value="#{msg['usuario.estado']}: "/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="3" styleClass="leftAligned">
+				<p:inputText id="cidadeInput" value="#{editarUsuarioMBean.usuarioSelecionado.cidade}" styleClass="inputTresQuartos"
+					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.cidade']}" maxlength="100">
+				</p:inputText>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<p:selectOneMenu id="estadoInput" value="#{editarUsuarioMBean.usuarioSelecionado.uf}" styleClass="inputUmQuarto"
+					required="true" requiredMessage="#{msg['usuario.campoobrigatorio.estado']}">
+					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+					<f:selectItems value="#{editarUsuarioMBean.estados}" var="estado" itemLabel="#{estado.nomeEstado}" itemValue="#{estado.uf}"/>
+				</p:selectOneMenu>
 			</p:column>
 		</p:row>
 		

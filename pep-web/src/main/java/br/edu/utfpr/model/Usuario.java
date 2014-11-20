@@ -107,7 +107,31 @@ public class Usuario extends BaseEntity {
 	@Column(name="logradouro", length=100)
 	@Size(max=100)
 	private String logradouro;
-
+	
+	@Column(name="numero", length=30)
+	@Size(max=30)
+	private String numero;
+	
+	@Column(name="complemento", length=50)
+	@Size(max=50)
+	private String complemento;
+	
+	@Column(name="bairro", length=100)
+	@Size(max=100)
+	private String bairro;
+	
+	@Column(name="cidade", length=100)
+	@Size(max=100)
+	private String cidade;
+	
+	@Column(name="uf", length=2)
+	@Size(max=2)
+	private String uf;
+	
+	@Column(name="observacoes", length=1000)
+	@Size(max=1000)
+	private String observacoes;
+	
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
@@ -322,6 +346,54 @@ public class Usuario extends BaseEntity {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 	
 }
