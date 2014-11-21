@@ -2,6 +2,8 @@ package br.edu.utfpr.mbean.usuario;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import br.edu.utfpr.constants.EstadoEnum;
 import br.edu.utfpr.exception.AppException;
@@ -63,6 +68,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private Convenio convenioSelecionado;
 	
 	private List<EstadoEnum> estados;
+	private UploadedFile imagemFotoFileUpload;
+	private StreamedContent imagemFoto;
 
 	private String menuInclude;
 	
@@ -118,6 +125,16 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.usuarioSelecionado.setBairro(endereco.getBairro());
 			this.usuarioSelecionado.setCidade(endereco.getCidade());
 			this.usuarioSelecionado.setUf(endereco.getUf());
+		}
+	}
+	
+	public void onImagemFotoSelecionada() {
+		try {
+			InputStream inputStream = imagemFotoFileUpload.getInputstream();
+			
+			imagemFoto = new DefaultStreamedContent(inputStream, "image/png");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -367,5 +384,21 @@ public class EditarUsuarioMBean extends BaseMBean {
 	public void setEstados(List<EstadoEnum> estados) {
 		this.estados = estados;
 	}
-	
+
+	public UploadedFile getImagemFotoFileUpload() {
+		return imagemFotoFileUpload;
+	}
+
+	public void setImagemFotoFileUpload(UploadedFile imagemFotoFileUpload) {
+		this.imagemFotoFileUpload = imagemFotoFileUpload;
+	}
+
+	public StreamedContent getImagemFoto() {
+		return imagemFoto;
+	}
+
+	public void setImagemFoto(StreamedContent imagemFoto) {
+		this.imagemFoto = imagemFoto;
+	}
+
 }
