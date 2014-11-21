@@ -193,5 +193,17 @@
 			</p:column>
 		</p:row>
 		
+		<p:row>
+			<p:column colspan="4" styleClass="leftAligned">
+				<h:outputLabel for="observacoesInput" value="#{msg['usuario.observacao']}: "/>
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column colspan="4" styleClass="leftAligned">
+				<p:inputTextarea id="observacoesInput" value="#{editarUsuarioMBean.usuarioSelecionado.observacoes}" styleClass="inputInteiro"
+					maxlength="1000" autoResize="false" rows="5">
+				</p:inputTextarea>
+			</p:column>
+		</p:row>
 	</p:panelGrid>
 </h:html>

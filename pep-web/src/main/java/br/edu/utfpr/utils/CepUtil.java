@@ -20,7 +20,7 @@ public class CepUtil {
 		if (StringUtils.isNotEmpty(cep)) {
 			cep = FormatUtils.somenteDigitos(cep);
 			
-			RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(3000).build();
+			RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).build();
 			CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 			HttpGet httpGet = new HttpGet(MessageFormat.format(URL_BUSCAR_CEP, cep));
 			try (CloseableHttpResponse response = httpClient.execute(httpGet)) {

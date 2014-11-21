@@ -132,6 +132,9 @@ public class Usuario extends BaseEntity {
 	@Size(max=1000)
 	private String observacoes;
 	
+	@Column(name="imagemFoto")
+	private byte[] imagemFoto;
+	
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_usuario_perfil",
@@ -395,5 +398,12 @@ public class Usuario extends BaseEntity {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	
+
+	public byte[] getImagemFoto() {
+		return imagemFoto;
+	}
+
+	public void setImagemFoto(byte[] imagemFoto) {
+		this.imagemFoto = imagemFoto;
+	}
 }
