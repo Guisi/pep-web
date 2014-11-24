@@ -2,8 +2,6 @@ package br.edu.utfpr.mbean.usuario;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,10 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 
+import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.EstadoEnum;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
@@ -37,6 +33,8 @@ import br.edu.utfpr.service.UsuarioService;
 import br.edu.utfpr.utils.CepUtil;
 import br.edu.utfpr.utils.EnderecoCorreios;
 import br.edu.utfpr.utils.FormatUtils;
+
+import com.ocpsoft.pretty.PrettyContext;
 
 @ManagedBean
 @ViewScoped
@@ -68,16 +66,23 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private Convenio convenioSelecionado;
 	
 	private List<EstadoEnum> estados;
-	private UploadedFile imagemFotoFileUpload;
-	private StreamedContent imagemFoto;
 
 	private String menuInclude;
+	private boolean editarInfoPessoal;
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		String idUsuario = request.getParameter("idUsuario");
-		
+		String url = PrettyContext.getCurrentInstance().getRequestURL().toURL();
+		String idUsuario;
+		//se url eh de edicao de informacoes pessoais, vai editar usuario logado
+		if (StringUtils.contains(url, Constantes.EDITAR_INFO_PESSOAL_URL)) {
+			idUsuario = getUsuarioLogado().getIdUsuario().toString();
+			editarInfoPessoal = true;
+		} else {
+			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
+			idUsuario = request.getParameter("idUsuario");
+		}
+			
 		if (StringUtils.isNotEmpty(idUsuario) && StringUtils.isNumeric(idUsuario)) {
 			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
 			this.perfisUsuario = new ArrayList<>(this.usuarioSelecionado.getPerfisUsuario());
@@ -128,16 +133,6 @@ public class EditarUsuarioMBean extends BaseMBean {
 		}
 	}
 	
-	public void onImagemFotoSelecionada() {
-		try {
-			InputStream inputStream = imagemFotoFileUpload.getInputstream();
-			
-			imagemFoto = new DefaultStreamedContent(inputStream, "image/png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public String salvar() {
 		usuarioSelecionado.setTelefone( FormatUtils.somenteDigitos(usuarioSelecionado.getTelefone()) );
 		usuarioSelecionado.setCelular( FormatUtils.somenteDigitos(usuarioSelecionado.getCelular()) );
@@ -160,12 +155,18 @@ public class EditarUsuarioMBean extends BaseMBean {
 					addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
 				}
 				
-				return "/secure/usuarios/usuarios.xhtml?faces-redirect=true";
+				return (editarInfoPessoal ? "/secure/home.xhtml"
+						: "/secure/usuarios/usuarios.xhtml") + "?faces-redirect=true";
 			} catch (AppException e) {
 				addressException(e);
 			}
 		}
 		return null;
+	}
+	
+	public String cancelar() {
+		return (editarInfoPessoal ? "/secure/home.xhtml"
+				: "/secure/usuarios/usuarios.xhtml") + "?faces-redirect=true";
 	}
 	
 	public boolean getPossuiEspecialidades() {
@@ -385,20 +386,11 @@ public class EditarUsuarioMBean extends BaseMBean {
 		this.estados = estados;
 	}
 
-	public UploadedFile getImagemFotoFileUpload() {
-		return imagemFotoFileUpload;
+	public boolean isEditarInfoPessoal() {
+		return editarInfoPessoal;
 	}
 
-	public void setImagemFotoFileUpload(UploadedFile imagemFotoFileUpload) {
-		this.imagemFotoFileUpload = imagemFotoFileUpload;
+	public void setEditarInfoPessoal(boolean editarInfoPessoal) {
+		this.editarInfoPessoal = editarInfoPessoal;
 	}
-
-	public StreamedContent getImagemFoto() {
-		return imagemFoto;
-	}
-
-	public void setImagemFoto(StreamedContent imagemFoto) {
-		this.imagemFoto = imagemFoto;
-	}
-
 }

@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags">
 	
 	<h:head>
 		<title>#{msg['general.app.title']}</title>
@@ -37,6 +38,9 @@
 									</td>
 									<td>
 										<p:menuButton value="#{headerMBean.usuarioLogado.nomeUsuario}" style="white-space: nowrap;">
+											<sec:ifAnyGranted roles="EDITAR_INFORMACOES_PESSOAIS">
+												<p:menuitem value="#{msg['informacoespessoais.editar.header']}" outcome="pretty:editarInformacoesPessoais"/>
+											</sec:ifAnyGranted>
 											<p:menuitem value="#{msg['alterarsenha.header']}" actionListener="#{headerMBean.inicializarUsuarioLogado}"
 												oncomplete="dlgAlterarSenha.show();" update=":frmAlterarSenha"/>
 											<p:separator/>

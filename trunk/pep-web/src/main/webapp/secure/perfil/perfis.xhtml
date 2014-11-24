@@ -42,9 +42,10 @@
 						<h:selectBooleanCheckbox value="#{perfil.possuiConvenios}" disabled="true"/>
 					</p:column>
 					
-					<p:column width="70px;">
+					<p:column width="65px;" style="text-align: left;">
 						<p:commandButton value="" action="#{perfilMBean.editarPerfil(perfil.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" 
+							styleClass="datatable-button datatable-button-right" rendered="#{not perfil.perfilPreDefinido}">
 							<f:setPropertyActionListener target="#{perfilMBean.perfilSelecionado}" value="#{perfil}"/>
 						</p:commandButton>
 					</p:column>
