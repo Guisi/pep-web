@@ -62,5 +62,20 @@
 		<pattern value="/editarPerfil/#{idPerfil}" />
 		<view-id value="/secure/perfil/editarPerfil.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarEspecialidades">
+		<pattern value="/listarEspecialidades" />
+		<view-id value="/secure/especialidade/especialidades.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaEspecialidade">
+		<pattern value="/novaEspecialidade" />
+		<view-id value="/secure/especialidade/editarEspecialidade.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarEspecialidade">
+		<pattern value="/editarEspecialidade/#{idEspecialidade}" />
+		<view-id value="/secure/especialidade/editarEspecialidade.xhtml" />
+	</url-mapping>
 
 </pretty-config>

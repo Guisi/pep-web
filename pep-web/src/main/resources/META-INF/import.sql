@@ -1,8 +1,7 @@
 --cria usuarios
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (1, '05009490935', 'guisiagudos@gmail.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Douglas Maciel Guisi', 'Douglas', '4192669662', 0, true, '1984-10-05', 'M', 0, '80240060', 'Rua Brasílio Itiberê', '4148', 'Ap. 502', 'Água Verde', 'Curitiba', 'PR');
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock) VALUES (2, '72228163481', 'teste@gmail.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário de Testes', 'Teste', '4199998888', 0, true, '1990-01-01', 'F', 0);
-INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock) VALUES (3, '58857525759', 'semperfil@email.com', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Usuário Sem Perfil', null, '4199998888', 0, true, '1990-01-01', 'N', 0);
-ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (1, '76217092786', 'administrador@pepweb.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Administrador do PEP', 'Administrador', '4188889999', 0, true, '1980-01-01', 'M', 0, '80230000', 'Avenida Silva Jardim', '1194', 'Casa', 'Rebouças', 'Curitiba', 'PR');
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (2, '72228163481', 'recepcionista@pepweb.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Recepcionista do PEP', 'Recepcionista', '4199998888', 0, true, '1990-01-01', 'F', 0, '80230000', 'Avenida Silva Jardim', '1194', 'Casa', 'Rebouças', 'Curitiba', 'PR');
+ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 3;
 
 --cria perfis
 INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios, chk_perfil_predefinido) VALUES (1, 'Administrador', 'Perfil com autorização para todas as funcionalidades do sistema.', false, false, false);
@@ -16,16 +15,18 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (1,
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (2, 'EDITAR_USUARIOS', 'Autorização para visualizar, criar, editar e excluir usuários.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (3, 'VISUALIZAR_USUARIOS', 'Autorização para visualizar usuários.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (4, 'EDITAR_INFORMACOES_PESSOAIS', 'Autorização para editar informações pessoais.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 5;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (5, 'EDITAR_ESPECIALIDADES', 'Autorização para funcionalidade de manutenção de especialidades.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 6;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (2, 2);
-INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (2, 4);
 
 --vincula autorizacoes de edicao ao perfil Administrador
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 1);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 2);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 5);
+
 --vincula autorizacao EDITAR_INFORMACOES_PESSOAIS a todos os perfis
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 4);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 4);
