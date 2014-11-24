@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -72,8 +73,12 @@ public abstract class BaseMBean implements Serializable {
 	}
 	
 	public PepUser getUsuarioLogado() {
-		PepUser userDetails = (PepUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		return userDetails;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			PepUser userDetails = (PepUser) authentication.getPrincipal();
+			return userDetails;
+		}
+		return null;
 	}
 	
 	public boolean isAuthenticated() {

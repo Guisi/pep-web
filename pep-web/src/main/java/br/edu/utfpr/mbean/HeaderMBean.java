@@ -25,10 +25,12 @@ public class HeaderMBean extends BaseMBean {
 	
 	@PostConstruct
 	public void init() {
-		this.mostrarModalAlteracaoSenha = getUsuarioLogado().isDeveAlterarSenha();
-		
-		if (this.mostrarModalAlteracaoSenha) {
-			this.inicializarUsuarioLogado();
+		if (isAuthenticated()) {
+			this.mostrarModalAlteracaoSenha = getUsuarioLogado().isDeveAlterarSenha();
+			
+			if (this.mostrarModalAlteracaoSenha) {
+				this.inicializarUsuarioLogado();
+			}
 		}
 	}
 	
@@ -50,7 +52,7 @@ public class HeaderMBean extends BaseMBean {
 			addressException(e);
 		}
 	}
-
+	
 	public boolean isMostrarModalAlteracaoSenha() {
 		return mostrarModalAlteracaoSenha;
 	}

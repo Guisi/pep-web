@@ -12,6 +12,7 @@
 	<security:http auto-config="false" use-expressions="true" entry-point-ref="loginUrlAuthenticationEntryPoint">
 		<!-- Intercepts -->
 		<security:intercept-url pattern="/secure/perfil/**" access="hasRole('EDITAR_PERFIS')" />
+		<security:intercept-url pattern="/secure/usuarios/editarInformacoesPessoais**" access="hasRole('EDITAR_INFORMACOES_PESSOAIS')" />
 		<security:intercept-url pattern="/secure/usuarios/editarUsuario**" access="hasRole('EDITAR_USUARIOS')" />
 		<security:intercept-url pattern="/secure/usuarios/usuarios**" access="hasAnyRole('EDITAR_USUARIOS', 'VISUALIZAR_USUARIOS')" />
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />

@@ -2,7 +2,7 @@
 <pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
-
+	
 	<url-mapping id="login">
 		<pattern value="/login" />
 		<view-id value="/login.xhtml" />
@@ -41,6 +41,11 @@
 	<url-mapping id="editarUsuario">
 		<pattern value="/editarUsuario/#{idUsuario}" />
 		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="editarInformacoesPessoais">
+		<pattern value="/editarInformacoesPessoais" />
+		<view-id value="/secure/usuarios/editarInformacoesPessoais.xhtml" />
 	</url-mapping>
 
 	<url-mapping id="listarPerfis">

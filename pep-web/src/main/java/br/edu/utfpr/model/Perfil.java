@@ -43,6 +43,9 @@ public class Perfil extends BaseEntity {
 	@Column(name="chk_possui_convenios")
 	private Boolean possuiConvenios;
 	
+	@Column(name="chk_perfil_predefinido")
+	private Boolean perfilPreDefinido;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name=Constantes.PEP_OWNER + "tb_perfil_autorizacao",
         joinColumns=@JoinColumn(name="id_perfil"),
@@ -106,6 +109,14 @@ public class Perfil extends BaseEntity {
 
 	public void setPossuiConvenios(Boolean possuiConvenios) {
 		this.possuiConvenios = possuiConvenios;
+	}
+
+	public Boolean getPerfilPreDefinido() {
+		return perfilPreDefinido;
+	}
+
+	public void setPerfilPreDefinido(Boolean perfilPreDefinido) {
+		this.perfilPreDefinido = perfilPreDefinido;
 	}
 	
 }

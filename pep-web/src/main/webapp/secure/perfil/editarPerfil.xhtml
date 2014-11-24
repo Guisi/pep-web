@@ -21,17 +21,19 @@
 					<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
 						<h:outputLabel for="nomeInput" value="#{msg['perfil.nome']}: "/>
 						<p:inputText id="nomeInput" value="#{editarPerfilMBean.perfilSelecionado.nome}" maxlength="100" style="width: 505px;" required="true"
-							requiredMessage="#{msg['perfil.campoobrigatorio.nome']}"/>
+							requiredMessage="#{msg['perfil.campoobrigatorio.nome']}" readonly="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
 
 						<h:outputLabel for="descricaoInput" value="#{msg['perfil.descricao']}: "/>
 						<p:inputText id="descricaoInput" value="#{editarPerfilMBean.perfilSelecionado.descricao}" maxlength="500" style="width: 505px;" required="true"
 							requiredMessage="#{msg['perfil.campoobrigatorio.descricao']}"/>
 							
 						<h:outputLabel for="sbcPossuiEspecialidades" value="#{msg['perfil.possuiespecialidades']}: "/>
-						<h:selectBooleanCheckbox id="sbcPossuiEspecialidades" value="#{editarPerfilMBean.perfilSelecionado.possuiEspecialidades}"/>
+						<h:selectBooleanCheckbox id="sbcPossuiEspecialidades" value="#{editarPerfilMBean.perfilSelecionado.possuiEspecialidades}"
+							disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
 						
 						<h:outputLabel for="sbcPossuiConvenios" value="#{msg['perfil.possuiconvenios']}: "/>
-						<h:selectBooleanCheckbox id="sbcPossuiConvenios" value="#{editarPerfilMBean.perfilSelecionado.possuiConvenios}"/>
+						<h:selectBooleanCheckbox id="sbcPossuiConvenios" value="#{editarPerfilMBean.perfilSelecionado.possuiConvenios}"
+							disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
 					</p:panelGrid>
 				
 					<div align="center" style="padding-top: 10px;">

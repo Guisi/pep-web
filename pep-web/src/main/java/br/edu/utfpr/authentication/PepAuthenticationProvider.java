@@ -65,7 +65,8 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 		}
 		
 		// Cria usuario Spring Autenticado
-		PepUser user = new PepUser(usuario.getEmail(), 
+		PepUser user = new PepUser(usuario.getEmail(),
+								   usuario.getId(),
 								   usuario.getNomeFantasia(), 
 								   usuario.getCpf(), 
 								   false, 
