@@ -10,13 +10,16 @@
       
 	<h:form id="formMenu">
 		<p:menubar>
-			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS">
+			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS, EDITAR_ESPECIALIDADES">
 				<p:submenu label="#{msg['menu.administracao']}">
 					<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS">
 						<p:menuitem outcome="pretty:listarUsuarios" value="#{msg['menu.administracao.usuarios']}"/>
 					</sec:ifAnyGranted>
 					<sec:ifAnyGranted roles="EDITAR_PERFIS">
 						<p:menuitem outcome="pretty:listarPerfis" value="#{msg['menu.administracao.perfilusuario']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
+						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
 					</sec:ifAnyGranted>
 				</p:submenu>
 			</sec:ifAnyGranted>
