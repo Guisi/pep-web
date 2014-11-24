@@ -17,36 +17,31 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
+	<!-- Primefaces FileUpload -->
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+      	<dispatcher>REQUEST</dispatcher>
+      	<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>commons</param-value>
+	</context-param>
+	<!-- Primefaces FileUpload -->
 	
-	<welcome-file-list>
-		<welcome-file>/index.xhtml</welcome-file>
-	</welcome-file-list>
-	<context-param>
-		<param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
-		<param-value>false</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.xhtml</param-value>
-	</context-param>
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>#{themeSwitcherView.theme}</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
-
 	<!-- Spring Security -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -61,10 +56,41 @@
 		<dispatcher>FORWARD</dispatcher>
    		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 	<!-- Spring Security -->
+	
+	<!-- JSF -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>#{themeSwitcherView.theme}</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	<!-- JSF -->
+	
+	<welcome-file-list>
+		<welcome-file>/index.xhtml</welcome-file>
+	</welcome-file-list>
 
 	<!-- Tratamento de Erros HTTP -->
 	<error-page>
