@@ -1,7 +1,8 @@
 --cria usuarios
 INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (1, '76217092786', 'administrador@pepweb.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Administrador do PEP', 'Administrador', '4188889999', 0, true, '1980-01-01', 'M', 0, '80230000', 'Avenida Silva Jardim', '1194', 'Casa', 'Rebouças', 'Curitiba', 'PR');
 INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (2, '72228163481', 'recepcionista@pepweb.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Recepcionista do PEP', 'Recepcionista', '4199998888', 0, true, '1990-01-01', 'F', 0, '80230000', 'Avenida Silva Jardim', '1194', 'Casa', 'Rebouças', 'Curitiba', 'PR');
-ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 3;
+INSERT INTO pep_owner.tb_usuario(id_usuario, cpf, email, senha, chk_senha_provisoria, nome_completo, nome_fantasia, celular, qt_acessos_errados, chk_ativo, data_nascimento, sexo, optlock, cep, logradouro, numero, complemento, bairro, cidade, uf) VALUES (3, '40424527103', 'paciente@pepweb.com.br', 'sclHl/b+xwu+/b86PIYl+Q==', false, 'Paciente do PEP', 'Paciente', '4198765432', 0, true, '1990-01-01', 'M', 0, '80230000', 'Avenida Silva Jardim', '1194', 'Casa', 'Rebouças', 'Curitiba', 'PR');
+ALTER SEQUENCE pep_owner.usuario_sequence RESTART WITH 4;
 
 --cria perfis
 INSERT INTO pep_owner.tb_perfil(id_perfil, nome, descricao, chk_possui_especialidades, chk_possui_convenios, chk_perfil_predefinido) VALUES (1, 'Administrador', 'Perfil com autorização para todas as funcionalidades do sistema.', false, false, false);
@@ -17,17 +18,24 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (3,
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (4, 'EDITAR_INFORMACOES_PESSOAIS', 'Autorização para editar informações pessoais.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (5, 'EDITAR_ESPECIALIDADES', 'Autorização para funcionalidade de manutenção de especialidades.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (6, 'EDITAR_CONVENIOS', 'Autorização para funcionalidade de manutenção de convênios.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 7;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (7, 'EDITAR_PACIENTES', 'Autorização para visualizar, criar, editar e excluir pacientes.');
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (8, 'VISUALIZAR_PACIENTES', 'Autorização para visualizar pacientes.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 9;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (2, 2);
+INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (3, 3);
 
 --vincula autorizacoes de edicao ao perfil Administrador
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 1);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 2);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 5);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 6);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 7);
+
+--vincula autorizacoes de edicao de paciente ao perfil Recepcionista
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
 
 --vincula autorizacao EDITAR_INFORMACOES_PESSOAIS a todos os perfis
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 4);

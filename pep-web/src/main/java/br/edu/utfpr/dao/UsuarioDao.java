@@ -10,7 +10,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.SetJoin;
 
+import br.edu.utfpr.constants.PerfilEnum;
+import br.edu.utfpr.model.Perfil;
+import br.edu.utfpr.model.Perfil_;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.model.Usuario_;
 
@@ -20,7 +24,7 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo) {
+	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo, PerfilEnum perfil) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
 		Root<Usuario> root = q.from(Usuario.class);
@@ -28,6 +32,11 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 		List<Predicate> predicados = new ArrayList<>();
 		if (StringUtils.isNotBlank(textoPesquisa)) {
 			predicados.add(qb.like(qb.lower(root.get(Usuario_.nomeCompleto)), "%" + textoPesquisa.toLowerCase() + "%"));
+		}
+		
+		if (perfil != null) {
+			SetJoin<Usuario, Perfil> perfilJoin = root.join(Usuario_.perfisUsuario);
+			predicados.add(qb.equal(perfilJoin.get(Perfil_.nome), perfil.getNomePerfil()));
 		}
 		
 		if (chkAtivo != null) {

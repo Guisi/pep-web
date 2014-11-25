@@ -17,4 +17,6 @@ public interface Constantes {
 	final Integer PASSWD_MAX_LENGHT = 8;
 	
 	final String EDITAR_INFO_PESSOAL_URL = "editarInformacoesPessoais";
+	
+	final String EDITAR_PACIENTE_URL = "editarPaciente";
 }

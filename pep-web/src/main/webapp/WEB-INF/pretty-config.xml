@@ -92,5 +92,19 @@
 		<pattern value="/editarConvenio/#{idConvenio}" />
 		<view-id value="/secure/convenio/editarConvenio.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarPacientes">
+		<pattern value="/listarPacientes" />
+		<view-id value="/secure/paciente/pacientes.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoPaciente">
+		<pattern value="/novoPaciente" />
+		<view-id value="/secure/paciente/editarPaciente.xhtml" />
+	</url-mapping>
 
+	<url-mapping id="editarPaciente">
+		<pattern value="/editarPaciente/#{idUsuario}" />
+		<view-id value="/secure/paciente/editarPaciente.xhtml" />
+	</url-mapping>
 </pretty-config>

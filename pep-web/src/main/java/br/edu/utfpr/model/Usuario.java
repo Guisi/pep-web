@@ -171,6 +171,19 @@ public class Usuario extends BaseEntity {
 		return FormatUtils.getFormattedCpf(cpf);
 	}
 	
+	@Transient
+	public boolean isPaciente() {
+		if (perfisUsuario != null) {
+			for (Perfil perfil : perfisUsuario) {
+				if (perfil.isPerfilPaciente()) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	public Long getId() {
 		return id;
 	}

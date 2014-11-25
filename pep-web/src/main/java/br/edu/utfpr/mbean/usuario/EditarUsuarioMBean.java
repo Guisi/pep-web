@@ -2,12 +2,14 @@ package br.edu.utfpr.mbean.usuario;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -69,22 +71,38 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	private String menuInclude;
 	private boolean editarInfoPessoal;
+	private boolean editarPaciente;
 	
 	@PostConstruct
 	public void init() {
 		String url = PrettyContext.getCurrentInstance().getRequestURL().toURL();
 		String idUsuario;
+		
 		//se url eh de edicao de informacoes pessoais, vai editar usuario logado
 		if (StringUtils.contains(url, Constantes.EDITAR_INFO_PESSOAL_URL)) {
 			idUsuario = getUsuarioLogado().getIdUsuario().toString();
 			editarInfoPessoal = true;
-		} else {
+		} else { 
+			editarPaciente = StringUtils.contains(url, Constantes.EDITAR_PACIENTE_URL);
+
 			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
 			idUsuario = request.getParameter("idUsuario");
 		}
+
+		if (StringUtils.isNotEmpty(idUsuario)) {
 			
-		if (StringUtils.isNotEmpty(idUsuario) && StringUtils.isNumeric(idUsuario)) {
-			this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
+			if (new Scanner(idUsuario).hasNextLong()) {
+				this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
+			}
+			
+			//se nao achou usuario ou quer editar paciente e usuario nao eh paciente, retorna msg de erro
+			if (this.usuarioSelecionado == null || (this.editarPaciente && !this.usuarioSelecionado.isPaciente())) {
+				String msg = this.editarPaciente ? getMsgs().getString("paciente.erro.naoencontrado") : getMsgs().getString("usuario.erro.naoencontrado");
+				addErrorMessage(MessageFormat.format(msg, idUsuario));
+				this.usuarioSelecionado = null;
+				return;
+			}
+			
 			this.perfisUsuario = new ArrayList<>(this.usuarioSelecionado.getPerfisUsuario());
 			this.especialidadesUsuario = new ArrayList<>(this.usuarioSelecionado.getEspecialidades());
 			this.conveniosUsuario = new ArrayList<>(this.usuarioSelecionado.getConvenios());
@@ -157,8 +175,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 					addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
 				}
 				
-				return (editarInfoPessoal ? "/secure/home.xhtml"
-						: "/secure/usuarios/usuarios.xhtml") + "?faces-redirect=true";
+				return getCaminhoRetorno();
 			} catch (AppException e) {
 				addressException(e);
 			}
@@ -167,8 +184,19 @@ public class EditarUsuarioMBean extends BaseMBean {
 	}
 	
 	public String cancelar() {
-		return (editarInfoPessoal ? "/secure/home.xhtml"
-				: "/secure/usuarios/usuarios.xhtml") + "?faces-redirect=true";
+		return getCaminhoRetorno();
+	}
+	
+	private String getCaminhoRetorno() {
+		String retorno;
+		if (editarInfoPessoal) { 
+			retorno = "/secure/home.xhtml";
+		} else if (editarPaciente) {
+			retorno = "/secure/paciente/pacientes.xhtml";
+		} else {
+			retorno = "/secure/usuarios/usuarios.xhtml";
+		}
+		return retorno + "?faces-redirect=true";
 	}
 	
 	public boolean getPossuiEspecialidades() {
@@ -394,5 +422,13 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setEditarInfoPessoal(boolean editarInfoPessoal) {
 		this.editarInfoPessoal = editarInfoPessoal;
+	}
+
+	public boolean isEditarPaciente() {
+		return editarPaciente;
+	}
+
+	public void setEditarPaciente(boolean editarPaciente) {
+		this.editarPaciente = editarPaciente;
 	}
 }
