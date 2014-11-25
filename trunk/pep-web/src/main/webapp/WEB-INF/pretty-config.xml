@@ -77,5 +77,20 @@
 		<pattern value="/editarEspecialidade/#{idEspecialidade}" />
 		<view-id value="/secure/especialidade/editarEspecialidade.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarConvenios">
+		<pattern value="/listarConvenios" />
+		<view-id value="/secure/convenio/convenios.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoConvenio">
+		<pattern value="/novoConvenio" />
+		<view-id value="/secure/convenio/editarConvenio.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarConvenio">
+		<pattern value="/editarConvenio/#{idConvenio}" />
+		<view-id value="/secure/convenio/editarConvenio.xhtml" />
+	</url-mapping>
 
 </pretty-config>

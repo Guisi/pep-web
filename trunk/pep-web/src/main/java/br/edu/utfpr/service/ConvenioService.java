@@ -5,6 +5,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
+
+import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.dao.ConvenioDao;
 import br.edu.utfpr.exception.AppException;
@@ -19,6 +22,31 @@ public class ConvenioService {
 
 	public List<Convenio> retornarConvenios() {
 		return convenioDao.retornarConvenios();
+	}
+	
+	public Convenio retornarConvenio(Long id) {
+		return convenioDao.getById(id);
+	}
+	
+	public Convenio retornarConvenioPorDescricao(String descricao) {
+		try {
+			return convenioDao.retornarConvenioPorDescricao(descricao);
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	public void salvarConvenio(Convenio convenio) throws AppException {
+		String descricao = StringUtils.trimToNull(convenio.getDescricao());
+		convenio.setDescricao(descricao);
+		
+		//valida se nao esta duplicando
+		Convenio convenioBase = this.retornarConvenioPorDescricao(descricao);
+		if (convenioBase != null && !convenioBase.getId().equals(convenio.getId())) {
+			throw new AppException("convenio.salvar.erro.descricaoexistente", descricao);
+		}
+		
+		convenioDao.save(convenio);
 	}
 	
 	public void removerConvenio(Convenio convenio) throws AppException {

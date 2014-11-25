@@ -11,8 +11,8 @@
 		<p:panel>
 			<h:outputText value="#{especialidadeMBean.emptyStr}"/>
 		
-			<h:form id="frmPerfis">
-				<p:messages id="msgPerfis"/>
+			<h:form id="frmEspecialidades">
+				<p:messages id="msgEspecialidades"/>
 				
 				<div align="right">
 					<p:commandButton value="#{msg['especialidade.botao.novo']}" action="#{especialidadeMBean.novaEspecialidade}"
@@ -40,7 +40,7 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['especialidade.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{especialidadeMBean.removerEspecialidade}" update="especialidadeTable, msgPerfis" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{especialidadeMBean.removerEspecialidade}" update="especialidadeTable, msgEspecialidades" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>

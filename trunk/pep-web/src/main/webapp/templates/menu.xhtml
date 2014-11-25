@@ -21,6 +21,9 @@
 					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
 						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
 					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_CONVENIOS">
+						<p:menuitem outcome="pretty:listarConvenios" value="#{msg['menu.administracao.convenios']}"/>
+					</sec:ifAnyGranted>
 				</p:submenu>
 			</sec:ifAnyGranted>
 			

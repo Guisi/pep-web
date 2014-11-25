@@ -16,7 +16,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (2,
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (3, 'VISUALIZAR_USUARIOS', 'Autorização para visualizar usuários.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (4, 'EDITAR_INFORMACOES_PESSOAIS', 'Autorização para editar informações pessoais.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (5, 'EDITAR_ESPECIALIDADES', 'Autorização para funcionalidade de manutenção de especialidades.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 6;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (6, 'EDITAR_CONVENIOS', 'Autorização para funcionalidade de manutenção de convênios.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 7;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -26,6 +27,7 @@ INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (2, 2);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 1);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 2);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 5);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 6);
 
 --vincula autorizacao EDITAR_INFORMACOES_PESSOAIS a todos os perfis
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 4);
