@@ -26,4 +26,14 @@ public class PerfilDao extends GenericDao<Perfil, Long> implements Serializable 
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}
+	
+	public Perfil retornarPerfilPorId(Long id) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Perfil> q = qb.createQuery(Perfil.class);
+		Root<Perfil> root = q.from(Perfil.class);
+		root.fetch(Perfil_.autorizacoes);
+		q.where(qb.equal(root.get(Perfil_.id), id));
+		
+		return entityManager.createQuery(q).getSingleResult();
+	}
 }

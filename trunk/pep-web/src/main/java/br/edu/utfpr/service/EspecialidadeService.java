@@ -25,7 +25,11 @@ public class EspecialidadeService {
 	}
 	
 	public Especialidade retornarEspecialidade(Long id) {
-		return especialidadeDao.getById(id);
+		try {
+			return especialidadeDao.getById(id);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 	
 	public Especialidade retornarEspecialidadePorDescricao(String descricao) {

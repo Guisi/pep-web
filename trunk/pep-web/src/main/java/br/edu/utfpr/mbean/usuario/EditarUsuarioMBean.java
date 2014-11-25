@@ -90,7 +90,6 @@ public class EditarUsuarioMBean extends BaseMBean {
 		}
 
 		if (StringUtils.isNotEmpty(idUsuario)) {
-			
 			if (new Scanner(idUsuario).hasNextLong()) {
 				this.usuarioSelecionado = usuarioService.retornarUsuario(Long.parseLong(idUsuario));
 			}
@@ -169,10 +168,19 @@ public class EditarUsuarioMBean extends BaseMBean {
 				
 				getUsuarioLogado().setNomeExibicao(usuarioSelecionado.getNomeFantasia());
 	
-				if (isNew) {
-					addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);
+				String tipo;
+				if (editarInfoPessoal) {
+					tipo = "informacoespessoais";
+				} else if (editarPaciente) {
+					tipo = "paciente";
 				} else {
-					addInfoMessage(getMsgs().getString("usuario.editar.sucesso"), true);
+					tipo = "usuario";
+				}
+				
+				if (isNew) {
+					addInfoMessage(getMsgs().getString(tipo + ".criar.sucesso"), true);
+				} else {
+					addInfoMessage(getMsgs().getString(tipo + ".editar.sucesso"), true);
 				}
 				
 				return getCaminhoRetorno();

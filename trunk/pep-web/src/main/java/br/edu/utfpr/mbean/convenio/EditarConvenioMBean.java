@@ -2,6 +2,9 @@ package br.edu.utfpr.mbean.convenio;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.text.MessageFormat;
+import java.util.Scanner;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -31,8 +34,15 @@ public class EditarConvenioMBean extends BaseMBean {
 		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
 		String idConvenio = request.getParameter("idConvenio");
 		
-		if (StringUtils.isNotEmpty(idConvenio) && StringUtils.isNumeric(idConvenio)) {
-			this.convenioSelecionado = convenioService.retornarConvenio(Long.parseLong(idConvenio));
+		if (StringUtils.isNotEmpty(idConvenio)) {
+			if (new Scanner(idConvenio).hasNextLong()) {
+				this.convenioSelecionado = convenioService.retornarConvenio(Long.parseLong(idConvenio));
+			}
+			
+			if (this.convenioSelecionado == null) {
+				addErrorMessage(MessageFormat.format(getMsgs().getString("convenio.erro.naoencontrado"), idConvenio));
+				return;
+			}
 		} else {
 			this.convenioSelecionado = new Convenio();
 		}

@@ -14,22 +14,24 @@
 			<h:form id="frmEditarEspecialidade">
 				<p:messages id="msgEspecialidades"/>
 				
-			    <fieldset>
-			    	<legend>#{msg['especialidade.editar.header']}</legend>
-			    	
-					<p:focus for="descricaoInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
-						<h:outputLabel for="descricaoInput" value="#{msg['especialidade.descricao']}: "/>
-						<p:inputText id="descricaoInput" value="#{editarEspecialidadeMBean.especialidadeSelecionada.descricao}" maxlength="100" style="width: 809px;" required="true"
-							requiredMessage="#{msg['especialidade.campoobrigatorio.descricao']}"/>
-					</p:panelGrid>
-				
-					<div class="divBotoesEdicao">
-						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarEspecialidades" icon="ui-icon-close" immediate="true"/>
-						<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarEspecialidadeMBean.salvarEspecialidade}" icon="ui-icon-check"
-							update="msgEspecialidades" styleClass="botaoSalvar"/>
-					</div>
-				</fieldset>
+				<p:outputPanel rendered="#{not empty editarEspecialidadeMBean.especialidadeSelecionada}">
+				    <fieldset>
+				    	<legend>#{msg['especialidade.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['especialidade.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarEspecialidadeMBean.especialidadeSelecionada.descricao}" maxlength="100" style="width: 809px;" required="true"
+								requiredMessage="#{msg['especialidade.campoobrigatorio.descricao']}"/>
+						</p:panelGrid>
+					
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarEspecialidades" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarEspecialidadeMBean.salvarEspecialidade}" icon="ui-icon-check"
+								update="msgEspecialidades" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
 			</h:form>
 		</p:panel>
 	</ui:define>

@@ -14,53 +14,55 @@
 			<h:form id="frmEditarPerfil">
 				<p:messages id="msgPerfis"/>
 				
-			    <fieldset>
-			    	<legend>#{msg['perfil.editar.header']}</legend>
-			    	
-					<p:focus for="nomeInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
-						<h:outputLabel for="nomeInput" value="#{msg['perfil.nome']}: "/>
-						<p:inputText id="nomeInput" value="#{editarPerfilMBean.perfilSelecionado.nome}" maxlength="100" style="width: 505px;" required="true"
-							requiredMessage="#{msg['perfil.campoobrigatorio.nome']}" readonly="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
-
-						<h:outputLabel for="descricaoInput" value="#{msg['perfil.descricao']}: "/>
-						<p:inputText id="descricaoInput" value="#{editarPerfilMBean.perfilSelecionado.descricao}" maxlength="500" style="width: 505px;" required="true"
-							requiredMessage="#{msg['perfil.campoobrigatorio.descricao']}"/>
+				<p:outputPanel rendered="#{not empty editarPerfilMBean.perfilSelecionado}">
+				    <fieldset>
+				    	<legend>#{msg['perfil.editar.header']}</legend>
+				    	
+						<p:focus for="nomeInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="nomeInput" value="#{msg['perfil.nome']}: "/>
+							<p:inputText id="nomeInput" value="#{editarPerfilMBean.perfilSelecionado.nome}" maxlength="100" style="width: 505px;" required="true"
+								requiredMessage="#{msg['perfil.campoobrigatorio.nome']}" readonly="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
+	
+							<h:outputLabel for="descricaoInput" value="#{msg['perfil.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarPerfilMBean.perfilSelecionado.descricao}" maxlength="500" style="width: 505px;" required="true"
+								requiredMessage="#{msg['perfil.campoobrigatorio.descricao']}"/>
+								
+							<h:outputLabel for="sbcPossuiEspecialidades" value="#{msg['perfil.possuiespecialidades']}: "/>
+							<h:selectBooleanCheckbox id="sbcPossuiEspecialidades" value="#{editarPerfilMBean.perfilSelecionado.possuiEspecialidades}"
+								disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
 							
-						<h:outputLabel for="sbcPossuiEspecialidades" value="#{msg['perfil.possuiespecialidades']}: "/>
-						<h:selectBooleanCheckbox id="sbcPossuiEspecialidades" value="#{editarPerfilMBean.perfilSelecionado.possuiEspecialidades}"
-							disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
-						
-						<h:outputLabel for="sbcPossuiConvenios" value="#{msg['perfil.possuiconvenios']}: "/>
-						<h:selectBooleanCheckbox id="sbcPossuiConvenios" value="#{editarPerfilMBean.perfilSelecionado.possuiConvenios}"
-							disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
-					</p:panelGrid>
-				
-					<div align="center" style="padding-top: 10px;">
-						<fieldset>
-						    <legend>#{msg['perfil.autorizacoes']}</legend>
-							<div align="center">
-								<p:pickList id="autorizacaoPickList" value="#{editarPerfilMBean.autorizacoesPickList}" 
-									var="autorizacao" itemLabel="#{autorizacao.nome}" itemValue="#{autorizacao}"
-									styleClass="picklist-large"
-									converter="pickListConverter"
-									addAllLabel="#{msg['picklist.addall']}"
-					               	addLabel="#{msg['picklist.add']}"
-					               	removeAllLabel="#{msg['picklist.removeall']}"
-					               	removeLabel="#{msg['picklist.remove']}">
-					               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
-	        						<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
-								</p:pickList>
-							</div>
-						</fieldset>
-					</div>
+							<h:outputLabel for="sbcPossuiConvenios" value="#{msg['perfil.possuiconvenios']}: "/>
+							<h:selectBooleanCheckbox id="sbcPossuiConvenios" value="#{editarPerfilMBean.perfilSelecionado.possuiConvenios}"
+								disabled="#{editarPerfilMBean.perfilSelecionado.perfilPreDefinido}"/>
+						</p:panelGrid>
 					
-					<div class="divBotoesEdicao">
-						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarPerfis" icon="ui-icon-close" immediate="true"/>
-						<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarPerfilMBean.salvarPerfil}" icon="ui-icon-check"
-							update="msgPerfis" styleClass="botaoSalvar"/>
-					</div>
-				</fieldset>
+						<div align="center" style="padding-top: 10px;">
+							<fieldset>
+							    <legend>#{msg['perfil.autorizacoes']}</legend>
+								<div align="center">
+									<p:pickList id="autorizacaoPickList" value="#{editarPerfilMBean.autorizacoesPickList}" 
+										var="autorizacao" itemLabel="#{autorizacao.nome}" itemValue="#{autorizacao}"
+										styleClass="picklist-large"
+										converter="pickListConverter"
+										addAllLabel="#{msg['picklist.addall']}"
+						               	addLabel="#{msg['picklist.add']}"
+						               	removeAllLabel="#{msg['picklist.removeall']}"
+						               	removeLabel="#{msg['picklist.remove']}">
+						               	<f:facet name="sourceCaption">#{msg['picklist.available']}</f:facet>  
+		        						<f:facet name="targetCaption">#{msg['picklist.selected']}</f:facet>
+									</p:pickList>
+								</div>
+							</fieldset>
+						</div>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarPerfis" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarPerfilMBean.salvarPerfil}" icon="ui-icon-check"
+								update="msgPerfis" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
 			</h:form>
 		</p:panel>
 	</ui:define>

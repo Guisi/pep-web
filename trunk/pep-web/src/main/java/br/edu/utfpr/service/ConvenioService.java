@@ -25,7 +25,11 @@ public class ConvenioService {
 	}
 	
 	public Convenio retornarConvenio(Long id) {
-		return convenioDao.getById(id);
+		try {
+			return convenioDao.getById(id);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 	
 	public Convenio retornarConvenioPorDescricao(String descricao) {

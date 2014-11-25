@@ -2,6 +2,9 @@ package br.edu.utfpr.mbean.especialidade;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.text.MessageFormat;
+import java.util.Scanner;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -31,8 +34,15 @@ public class EditarEspecialidadeMBean extends BaseMBean {
 		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
 		String idEspecialidade = request.getParameter("idEspecialidade");
 		
-		if (StringUtils.isNotEmpty(idEspecialidade) && StringUtils.isNumeric(idEspecialidade)) {
-			this.especialidadeSelecionada = especialidadeService.retornarEspecialidade(Long.parseLong(idEspecialidade));
+		if (StringUtils.isNotEmpty(idEspecialidade)) {
+			if (new Scanner(idEspecialidade).hasNextLong()) {
+				this.especialidadeSelecionada = especialidadeService.retornarEspecialidade(Long.parseLong(idEspecialidade));
+			}
+			
+			if (this.especialidadeSelecionada == null) {
+				addErrorMessage(MessageFormat.format(getMsgs().getString("especialidade.erro.naoencontrada"), idEspecialidade));
+				return;
+			}
 		} else {
 			this.especialidadeSelecionada = new Especialidade();
 		}
