@@ -14,22 +14,24 @@
 			<h:form id="frmEditarConvenio">
 				<p:messages id="msgConvenios"/>
 				
-			    <fieldset>
-			    	<legend>#{msg['convenio.editar.header']}</legend>
-			    	
-					<p:focus for="descricaoInput"/>
-					<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
-						<h:outputLabel for="descricaoInput" value="#{msg['convenio.descricao']}: "/>
-						<p:inputText id="descricaoInput" value="#{editarConvenioMBean.convenioSelecionado.descricao}" maxlength="100" style="width: 809px;" required="true"
-							requiredMessage="#{msg['convenio.campoobrigatorio.descricao']}"/>
-					</p:panelGrid>
-				
-					<div class="divBotoesEdicao">
-						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarConvenios" icon="ui-icon-close" immediate="true"/>
-						<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarConvenioMBean.salvarConvenio}" icon="ui-icon-check"
-							update="msgConvenios" styleClass="botaoSalvar"/>
-					</div>
-				</fieldset>
+				<p:outputPanel rendered="#{not empty editarConvenioMBean.convenioSelecionado}">
+				    <fieldset>
+				    	<legend>#{msg['convenio.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['convenio.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarConvenioMBean.convenioSelecionado.descricao}" maxlength="100" style="width: 809px;" required="true"
+								requiredMessage="#{msg['convenio.campoobrigatorio.descricao']}"/>
+						</p:panelGrid>
+					
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarConvenios" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarConvenioMBean.salvarConvenio}" icon="ui-icon-check"
+								update="msgConvenios" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
 			</h:form>
 		</p:panel>
 	</ui:define>

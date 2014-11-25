@@ -2,9 +2,11 @@ package br.edu.utfpr.mbean.perfil;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -42,8 +44,15 @@ public class EditarPerfilMBean extends BaseMBean {
 		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
 		String idPerfil = request.getParameter("idPerfil");
 		
-		if (StringUtils.isNotEmpty(idPerfil) && StringUtils.isNumeric(idPerfil)) {
-			this.perfilSelecionado = perfilService.retornarPerfil(Long.parseLong(idPerfil));
+		if (StringUtils.isNotEmpty(idPerfil)) {
+			if (new Scanner(idPerfil).hasNextLong()) {
+				this.perfilSelecionado = perfilService.retornarPerfil(Long.parseLong(idPerfil));
+			}
+			
+			if (this.perfilSelecionado == null) {
+				addErrorMessage(MessageFormat.format(getMsgs().getString("perfil.erro.naoencontrado"), idPerfil));
+				return;
+			}
 		} else {
 			this.perfilSelecionado = new Perfil();
 		}

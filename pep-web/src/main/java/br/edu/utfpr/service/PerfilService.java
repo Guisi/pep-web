@@ -49,9 +49,11 @@ public class PerfilService {
 	}
 	
 	public Perfil retornarPerfil(Long id) {
-		Perfil perfil = perfilDao.getById(id);
-		perfil.getAutorizacoes().size();
-		return perfil;
+		try{
+			return perfilDao.retornarPerfilPorId(id);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 	
 	public Perfil retornarPerfilPorNome(String nome) {
