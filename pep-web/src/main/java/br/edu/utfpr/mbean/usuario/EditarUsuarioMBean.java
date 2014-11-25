@@ -148,6 +148,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 						? new LinkedHashSet<>(this.conveniosUsuario) : new LinkedHashSet<Convenio>());
 
 				usuarioService.salvarUsuario(getUsuarioLogado(), usuarioSelecionado);
+				
+				getUsuarioLogado().setNomeExibicao(usuarioSelecionado.getNomeFantasia());
 	
 				if (isNew) {
 					addInfoMessage(getMsgs().getString("usuario.criar.sucesso"), true);

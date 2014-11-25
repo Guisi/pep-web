@@ -37,7 +37,7 @@
 										</span>
 									</td>
 									<td>
-										<p:menuButton value="#{headerMBean.usuarioLogado.nomeUsuario}" style="white-space: nowrap;">
+										<p:menuButton id="mbApelido" value="#{headerMBean.usuarioLogado.nomeExibicao}" style="white-space: nowrap;">
 											<sec:ifAnyGranted roles="EDITAR_INFORMACOES_PESSOAIS">
 												<p:menuitem value="#{msg['informacoespessoais.editar.header']}" outcome="pretty:editarInformacoesPessoais"/>
 											</sec:ifAnyGranted>

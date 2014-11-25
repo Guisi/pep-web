@@ -15,15 +15,21 @@
 
 	<p:panelGrid styleClass="noborder">
 		<p:row>
-			<p:column colspan="4" styleClass="leftAligned">
+			<p:column colspan="3" styleClass="leftAligned">
 				<h:outputLabel for="nomeInput" value="#{msg['usuario.nome']}: "/>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<h:outputLabel for="apelidoInput" value="#{msg['usuario.apelido']}: "/>
 			</p:column>
 		</p:row>
 		
 		<p:row>
-			<p:column colspan="4" styleClass="leftAligned">
-				<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" styleClass="inputInteiro" required="true"
+			<p:column colspan="3" styleClass="leftAligned">
+				<p:inputText id="nomeInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeCompleto}" maxlength="100" styleClass="inputTresQuartos" required="true"
 					requiredMessage="#{msg['usuario.campoobrigatorio.nome']}"/>
+			</p:column>
+			<p:column styleClass="leftAligned">
+				<p:inputText id="apelidoInput" value="#{editarUsuarioMBean.usuarioSelecionado.nomeFantasia}" maxlength="50" styleClass="inputUmQuarto"/>
 			</p:column>
 		</p:row>
 

@@ -26,6 +26,7 @@ public class PepUser implements UserDetails {
 	private String credentials;
 	private final Long idUsuario;
 	private final String nomeUsuario;
+	private String nomeExibicao;
 	private final String cpf;
 	private final boolean enabled;
 	private final boolean isCredentialsNonExpired;
@@ -46,10 +47,11 @@ public class PepUser implements UserDetails {
 	 * @param acessos
 	 * @param autorizacoes
 	 */
-	public PepUser(String username, Long idUsuario, String nomeUsuario, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes, boolean deveAlterarSenha) {
+	public PepUser(String username, Long idUsuario, String nomeUsuario, String nomeExibicao, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes, boolean deveAlterarSenha) {
 		this.username = username;
 		this.idUsuario = idUsuario;
 		this.nomeUsuario = nomeUsuario;
+		this.nomeExibicao = nomeExibicao;
 		this.cpf = cpf;
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 		this.enabled = enabled;
@@ -212,6 +214,14 @@ public class PepUser implements UserDetails {
 		return idUsuario;
 	}
 	
+	public String getNomeExibicao() {
+		return nomeExibicao;
+	}
+
+	public void setNomeExibicao(String nomeExibicao) {
+		this.nomeExibicao = nomeExibicao;
+	}
+
 	/**
 	 * Retorna true se os usernames forem iguais, pois campos login e UNIQUE.
 	 * <p>
