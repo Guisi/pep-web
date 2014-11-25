@@ -13,9 +13,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import br.edu.utfpr.constants.Constantes;
+import br.edu.utfpr.constants.PerfilEnum;
 
 @Entity
 @Table(name=Constantes.PEP_OWNER + "tb_perfil")
@@ -54,6 +56,11 @@ public class Perfil extends BaseEntity {
 	
 	@ManyToMany(mappedBy="perfisUsuario", fetch = FetchType.LAZY)
 	private Set<Usuario> usuarios;
+	
+	@Transient
+	public boolean isPerfilPaciente() {
+		return PerfilEnum.PACIENTE.getNomePerfil().equals(getNome());
+	}
 
 	public Long getId() {
 		return id;

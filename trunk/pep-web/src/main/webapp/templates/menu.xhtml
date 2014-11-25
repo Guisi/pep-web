@@ -10,6 +10,9 @@
       
 	<h:form id="formMenu">
 		<p:menubar>
+			<sec:ifAnyGranted roles="EDITAR_PACIENTES, VISUALIZAR_PACIENTES">
+				<p:menuitem outcome="pretty:listarPacientes" value="#{msg['menu.pacientes']}"/>
+			</sec:ifAnyGranted>
 			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS, EDITAR_ESPECIALIDADES">
 				<p:submenu label="#{msg['menu.administracao']}">
 					<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS">

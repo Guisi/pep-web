@@ -21,6 +21,7 @@ import br.edu.utfpr.authentication.PepUser;
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.ContentType;
 import br.edu.utfpr.constants.MessageName;
+import br.edu.utfpr.constants.PerfilEnum;
 import br.edu.utfpr.dao.UsuarioDao;
 import br.edu.utfpr.email.Email;
 import br.edu.utfpr.email.EmailHandler;
@@ -45,11 +46,19 @@ public class UsuarioService {
 	private Session session;
 
 	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo) {
-		return usuarioDao.retornarUsuarios(textoPesquisa, chkAtivo);
+		return this.retornarUsuarios(textoPesquisa, chkAtivo, null);
+	}
+	
+	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo, PerfilEnum perfil) {
+		return usuarioDao.retornarUsuarios(textoPesquisa, chkAtivo, perfil);
 	}
 	
 	public Usuario retornarUsuario(Long id) {
-		return usuarioDao.retornarUsuarioPorId(id);
+		try {
+			return usuarioDao.retornarUsuarioPorId(id);
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 	
 	public void inativarUsuario(PepUser usuarioLogado, Usuario usuario) {

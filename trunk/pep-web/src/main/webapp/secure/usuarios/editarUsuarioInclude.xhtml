@@ -8,18 +8,19 @@
 	xmlns:p="http://primefaces.org/ui">
 		
 	<p:panel>
-		<h:form id="frmUsuarios">
+		<h:form id="frmUsuarios" enctype="multipart/form-data">
 			<p:messages id="msgs"/>
 
-			<fieldset>
-				<legend>
-					<h:outputText value="#{msg['informacoespessoais.editar.header']}" rendered="#{editarUsuarioMBean.editarInfoPessoal}"/>
-					<h:outputText value="#{msg['usuario.editar.header']}" rendered="#{not editarUsuarioMBean.editarInfoPessoal}"/>
-				</legend>
-				
-				<h:panelGrid id="pngMenuLateral" columns="2" columnClasses="leftMenu, rightContent" style="width: 100%;">
-					<p:column style="width: 150px;">
-						<div>
+			<p:outputPanel rendered="#{not empty editarUsuarioMBean.usuarioSelecionado}">
+				<fieldset>
+					<legend>
+						<h:outputText value="#{msg['informacoespessoais.editar.header']}" rendered="#{editarUsuarioMBean.editarInfoPessoal}"/>
+						<h:outputText value="#{msg['paciente.editar.header']}" rendered="#{editarUsuarioMBean.editarPaciente}"/>
+						<h:outputText value="#{msg['usuario.editar.header']}" rendered="#{not editarUsuarioMBean.editarInfoPessoal and not editarUsuarioMBean.editarPaciente}"/>
+					</legend>
+					
+					<h:panelGrid id="pngMenuLateral" columns="2" columnClasses="leftMenu, rightContent" style="width: 100%;">
+						<p:column style="width: 150px;">
 							<p:menu>
 					            <p:menuitem value="#{msg['usuario.editar.dadosprincipais']}" update="panelUsuarioInclude, msgs">
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="dadosPrincipaisInclude.xhtml"/>
@@ -27,7 +28,7 @@
 						    </p:menu>
 						    
 						    <sec:ifAnyGranted roles="EDITAR_PERFIS">
-							    <p:menu style="margin-top: 5px;">
+							    <p:menu style="margin-top: 5px;" rendered="#{not editarUsuarioMBean.editarPaciente and not editarUsuarioMBean.editarInfoPessoal}">
 						            <p:menuitem value="#{msg['usuario.editar.perfis']}" actionListener="#{editarUsuarioMBean.listarPerfisDisponiveis}" update="panelUsuarioInclude, msgs">
 						            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="perfisUsuarioInclude.xhtml"/>
 						            </p:menuitem>
@@ -45,22 +46,22 @@
 					            	 <f:setPropertyActionListener target="#{editarUsuarioMBean.menuInclude}" value="conveniosUsuarioInclude.xhtml"/>
 					            </p:menuitem>
 						    </p:menu>
-						</div>
-					</p:column>
+						</p:column>
+						
+						<p:column>
+							<p:panel id="panelUsuarioInclude">
+								<ui:include src="#{editarUsuarioMBean.menuInclude != null ? editarUsuarioMBean.menuInclude : 'dadosPrincipaisInclude.xhtml'}" />
+							</p:panel>
+						</p:column>
+					</h:panelGrid>
 					
-					<p:column>
-						<p:panel id="panelUsuarioInclude">
-							<ui:include src="#{editarUsuarioMBean.menuInclude != null ? editarUsuarioMBean.menuInclude : 'dadosPrincipaisInclude.xhtml'}" />
-						</p:panel>
-					</p:column>
-				</h:panelGrid>
-				
-				<div class="divBotoesEdicao">
-					<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="#{editarUsuarioMBean.cancelar}" icon="ui-icon-close" immediate="true"/>
-					<p:commandButton value="#{msg['botao.salvaralteracoes']}" update="msgs" action="#{editarUsuarioMBean.salvar}" 
-						icon="ui-icon-check" styleClass="botaoSalvar"/>
-				</div>
-			</fieldset>
+					<div class="divBotoesEdicao">
+						<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="#{editarUsuarioMBean.cancelar}" icon="ui-icon-close" immediate="true"/>
+						<p:commandButton value="#{msg['botao.salvaralteracoes']}" update="msgs" action="#{editarUsuarioMBean.salvar}" 
+							icon="ui-icon-check" styleClass="botaoSalvar"/>
+					</div>
+				</fieldset>
+			</p:outputPanel>
 		</h:form>
 	</p:panel>
 </h:html>
