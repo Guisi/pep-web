@@ -22,12 +22,11 @@ import org.springframework.util.Assert;
 public class PepUser implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	private final String username;
+	private String username;
 	private String credentials;
 	private final Long idUsuario;
 	private final String nomeUsuario;
 	private String nomeExibicao;
-	private final String cpf;
 	private final boolean enabled;
 	private final boolean isCredentialsNonExpired;
 	private final Set<GrantedAuthority> autorizacoes;
@@ -47,12 +46,11 @@ public class PepUser implements UserDetails {
 	 * @param acessos
 	 * @param autorizacoes
 	 */
-	public PepUser(String username, Long idUsuario, String nomeUsuario, String nomeExibicao, String cpf, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes, boolean deveAlterarSenha) {
+	public PepUser(String username, Long idUsuario, String nomeUsuario, String nomeExibicao, boolean isCredentialsNonExpired, boolean enabled, Set<? extends GrantedAuthority> autorizacoes, boolean deveAlterarSenha) {
 		this.username = username;
 		this.idUsuario = idUsuario;
 		this.nomeUsuario = nomeUsuario;
 		this.nomeExibicao = nomeExibicao;
-		this.cpf = cpf;
 		this.isCredentialsNonExpired = isCredentialsNonExpired;
 		this.enabled = enabled;
 		this.autorizacoes = Collections.unmodifiableSet(sortAuthorities(autorizacoes));
@@ -79,6 +77,10 @@ public class PepUser implements UserDetails {
 	public String getUsername() {
 
 		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/*
@@ -192,10 +194,6 @@ public class PepUser implements UserDetails {
 
 	public String getNomeUsuario() {
 		return nomeUsuario;
-	}
-
-	public String getCpf() {
-		return cpf;
 	}
 
 	public Set<GrantedAuthority> getAutorizacoes() {

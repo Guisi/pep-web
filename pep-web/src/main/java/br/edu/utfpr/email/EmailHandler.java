@@ -58,9 +58,6 @@ public class EmailHandler {
 	 *             </p>
 	 */
 	public boolean sendEmail(Email email) throws EmailException {
-		
-		if (true) return true;
-		
 		Message msg;
 		Address remetente;
 		Multipart multiPart;

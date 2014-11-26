@@ -5,9 +5,9 @@ package br.edu.utfpr.utils;
  */
 public class UserThreadLocal {
 
-	private static ThreadLocal<String> threadLocal = new ThreadLocal<>();
+	private static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
-	public static ThreadLocal<String> getThreadLocal() {
+	public static ThreadLocal<Long> getThreadLocal() {
 		return threadLocal;
 	}
 }

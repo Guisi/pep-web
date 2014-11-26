@@ -12,8 +12,8 @@ public class RevisaoListener implements RevisionListener {
 
 	@Override
 	public void newRevision(Object revisionEntity) {
-		String username = UserThreadLocal.getThreadLocal().get();
+		Long idUsuario = UserThreadLocal.getThreadLocal().get();
 		Revisao revisao = (Revisao) revisionEntity;
-		revisao.setUsername(username);
+		revisao.setIdUsuario(idUsuario);
 	}
 }

@@ -62,7 +62,7 @@ public class UsuarioService {
 	}
 	
 	public void inativarUsuario(PepUser usuarioLogado, Usuario usuario) {
-		UserThreadLocal.getThreadLocal().set(usuarioLogado.getUsername());
+		UserThreadLocal.getThreadLocal().set(usuarioLogado.getIdUsuario());
 		
 		usuario.setChkAtivo(Boolean.FALSE);
 		usuarioDao.save(usuario);
@@ -77,7 +77,7 @@ public class UsuarioService {
 	}
 	
 	public void salvarUsuario(PepUser usuarioLogado, Usuario usuario) throws AppException {
-		UserThreadLocal.getThreadLocal().set(usuarioLogado.getUsername());
+		UserThreadLocal.getThreadLocal().set(usuarioLogado.getIdUsuario());
 		
 		String email = StringUtils.trimToNull(usuario.getEmail());
 		usuario.setEmail(email);
@@ -136,8 +136,6 @@ public class UsuarioService {
 	}
 	
 	public Usuario autenticarUsuario(String username, String password) throws AppException {
-		UserThreadLocal.getThreadLocal().set(username);
-		
 		try {
 			Usuario usuario = usuarioDao.retornarUsuarioPorEmail(username, Boolean.TRUE);
 			

@@ -19,4 +19,6 @@ public interface Constantes {
 	final String EDITAR_INFO_PESSOAL_URL = "editarInformacoesPessoais";
 	
 	final String EDITAR_PACIENTE_URL = "editarPaciente";
+	
+	final String NOVO_PACIENTE_URL = "novoPaciente";
 }
