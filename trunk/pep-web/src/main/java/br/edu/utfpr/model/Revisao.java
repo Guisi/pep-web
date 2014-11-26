@@ -17,14 +17,14 @@ public class Revisao extends DefaultRevisionEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "username")
-	private String username;
+	@Column(name = "id_usuario")
+	private Long idUsuario;
 
-	public String getUsername() {
-		return username;
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 }

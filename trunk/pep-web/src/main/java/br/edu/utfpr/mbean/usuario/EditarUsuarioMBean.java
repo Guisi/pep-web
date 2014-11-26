@@ -22,6 +22,7 @@ import org.apache.commons.validator.GenericValidator;
 
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.constants.EstadoEnum;
+import br.edu.utfpr.constants.PerfilEnum;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Convenio;
@@ -83,7 +84,8 @@ public class EditarUsuarioMBean extends BaseMBean {
 			idUsuario = getUsuarioLogado().getIdUsuario().toString();
 			editarInfoPessoal = true;
 		} else { 
-			editarPaciente = StringUtils.contains(url, Constantes.EDITAR_PACIENTE_URL);
+			editarPaciente = StringUtils.contains(url, Constantes.EDITAR_PACIENTE_URL)
+								|| StringUtils.contains(url, Constantes.NOVO_PACIENTE_URL);
 
 			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
 			idUsuario = request.getParameter("idUsuario");
@@ -110,6 +112,12 @@ public class EditarUsuarioMBean extends BaseMBean {
 			this.perfisUsuario = new ArrayList<>();
 			this.especialidadesUsuario = new ArrayList<>();
 			this.conveniosUsuario = new ArrayList<>();
+			
+			//se esta cadastrando um novo paciente, adiciona perfil
+			if (editarPaciente) {
+				Perfil perfilPaciente = perfilService.retornarPerfilPorNome(PerfilEnum.PACIENTE.getNomePerfil());
+				this.perfisUsuario.add(perfilPaciente);
+			}
 		}
 		
 		this.estados = Arrays.asList(EstadoEnum.values());
@@ -117,7 +125,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 	
 	public void listarPerfisDisponiveis() {
 		this.perfisDisponiveis = perfilService.retornarPerfis();
-		for (Perfil p : this.usuarioSelecionado.getPerfisUsuario()) {
+		for (Perfil p : this.perfisUsuario) {
 			this.perfisDisponiveis.remove(p);
 		}
 		this.ordenaListasPerfis();
@@ -125,7 +133,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 	
 	public void listarEspecialidadesDisponiveis() {
 		this.especialidadesDisponiveis = especialidadeService.retornarEspecialidades();
-		for (Especialidade e : this.usuarioSelecionado.getEspecialidades()) {
+		for (Especialidade e : this.especialidadesUsuario) {
 			this.especialidadesDisponiveis.remove(e);
 		}
 		this.ordenaListasEspecialidades();
@@ -133,7 +141,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 	
 	public void listarConveniosDisponiveis() {
 		this.conveniosDisponiveis = convenioService.retornarConvenios();
-		for (Convenio c : this.usuarioSelecionado.getConvenios()) {
+		for (Convenio c : this.conveniosUsuario) {
 			this.conveniosDisponiveis.remove(c);
 		}
 		this.ordenaListasConvenios();
@@ -163,10 +171,14 @@ public class EditarUsuarioMBean extends BaseMBean {
 						? new LinkedHashSet<>(this.especialidadesUsuario) : new LinkedHashSet<Especialidade>());
 				usuarioSelecionado.setConvenios(getPossuiConvenios() 
 						? new LinkedHashSet<>(this.conveniosUsuario) : new LinkedHashSet<Convenio>());
-
+				
 				usuarioService.salvarUsuario(getUsuarioLogado(), usuarioSelecionado);
 				
-				getUsuarioLogado().setNomeExibicao(usuarioSelecionado.getNomeFantasia());
+				//se alterou informacoes pessoais, atualiza objeto de usuario logado
+				if (editarInfoPessoal) {
+					getUsuarioLogado().setUsername(usuarioSelecionado.getEmail());
+					getUsuarioLogado().setNomeExibicao(usuarioSelecionado.getNomeFantasia());
+				}
 	
 				String tipo;
 				if (editarInfoPessoal) {

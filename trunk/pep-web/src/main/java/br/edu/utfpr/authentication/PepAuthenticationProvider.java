@@ -69,7 +69,6 @@ public class PepAuthenticationProvider implements AuthenticationProvider {
 								   usuario.getId(),
 								   usuario.getNomeCompleto(),
 								   usuario.getNomeFantasia(),
-								   usuario.getCpf(), 
 								   false, 
 								   true, 
 								   authorities,
