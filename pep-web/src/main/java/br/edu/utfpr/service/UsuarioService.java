@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +41,7 @@ public class UsuarioService {
 	@Inject
 	private TokenCadastroService tokenCadastroService;
 	
-	@Resource(lookup = "java:jboss/mail/pep")
+	//@Resource(lookup = "java:jboss/mail/pep")
 	private Session session;
 
 	public List<Usuario> retornarUsuarios(String textoPesquisa, Boolean chkAtivo) {
