@@ -117,6 +117,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 			if (editarPaciente) {
 				Perfil perfilPaciente = perfilService.retornarPerfilPorNome(PerfilEnum.PACIENTE.getNomePerfil());
 				this.perfisUsuario.add(perfilPaciente);
+				this.usuarioSelecionado.setPerfisUsuario(new LinkedHashSet<>(this.perfisUsuario));
 			}
 		}
 		

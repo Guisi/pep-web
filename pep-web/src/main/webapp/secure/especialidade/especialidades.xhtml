@@ -20,7 +20,7 @@
 				</div>
 				
 				<p:dataTable id="especialidadeTable" var="especialidade" value="#{especialidadeMBean.especialidadeList}" emptyMessage="#{msg['especialidade.lista.empty']}"
-					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="5"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 					<f:facet name="header">
 				        <h:outputText value="#{msg['especialidade.lista.header']}"/>

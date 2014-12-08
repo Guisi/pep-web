@@ -51,6 +51,11 @@ public abstract class GenericDao<T extends BaseEntity, PK> {
 
 	@SuppressWarnings("rawtypes")
 	public List<T> findAll(SingularAttribute... orderBy) {
+		return findAll(false, orderBy);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<T> findAll(boolean orderDesc, SingularAttribute... orderBy) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> q = qb.createQuery(getTypeClass());
 		Root<T> root = q.from(getTypeClass());
@@ -59,7 +64,11 @@ public abstract class GenericDao<T extends BaseEntity, PK> {
 		if (orderBy != null && orderBy.length > 0) {
 			List<Order> orders = new ArrayList<>();
 			for (SingularAttribute<? super T, ?> singularAttribute : orderBy) {
-				orders.add(qb.asc(root.get(singularAttribute)));
+				if (orderDesc) {
+					orders.add(qb.desc(root.get(singularAttribute)));
+				} else {
+					orders.add(qb.asc(root.get(singularAttribute)));
+				}
 			}
 			q.orderBy(orders);
 		}

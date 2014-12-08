@@ -3,6 +3,7 @@ package br.edu.utfpr.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -132,8 +134,8 @@ public class Usuario extends BaseEntity {
 	@Size(max=1000)
 	private String observacoes;
 	
-	@Column(name="imagemFoto")
-	private byte[] imagemFoto;
+	@Column(name="nr_prontuario")
+	private Integer numeroProntuario;
 	
 	@NotAudited
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -155,6 +157,10 @@ public class Usuario extends BaseEntity {
         joinColumns=@JoinColumn(name="id_usuario"),
         inverseJoinColumns=@JoinColumn(name="id_convenio"))
 	private Set<Convenio> convenios;
+	
+	@NotAudited
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "paciente")
+	private Set<Atendimento> atendimentos;
 	
 	@Transient
 	public String getTelefoneFormatado() {
@@ -412,11 +418,20 @@ public class Usuario extends BaseEntity {
 		this.observacoes = observacoes;
 	}
 
-	public byte[] getImagemFoto() {
-		return imagemFoto;
+	public Integer getNumeroProntuario() {
+		return numeroProntuario;
 	}
 
-	public void setImagemFoto(byte[] imagemFoto) {
-		this.imagemFoto = imagemFoto;
+	public void setNumeroProntuario(Integer numeroProntuario) {
+		this.numeroProntuario = numeroProntuario;
 	}
+
+	public Set<Atendimento> getAtendimentos() {
+		return atendimentos;
+	}
+
+	public void setAtendimentos(Set<Atendimento> atendimentos) {
+		this.atendimentos = atendimentos;
+	}
+	
 }
