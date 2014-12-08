@@ -39,6 +39,10 @@ public class PacienteMBean extends BaseMBean {
 		return "/secure/paciente/editarPaciente.xhtml?faces-redirect=true&idUsuario=" + idUsuario;
 	}
 	
+	public String verProntuario(Long idPaciente) {
+		return "/secure/atendimento/atendimentos.xhtml?faces-redirect=true&idPaciente=" + idPaciente;
+	}
+	
 	public String novoPaciente() {
 		return "/secure/paciente/editarPaciente.xhtml?faces-redirect=true";
 	}

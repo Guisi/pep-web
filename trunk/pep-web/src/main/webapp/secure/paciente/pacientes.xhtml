@@ -33,6 +33,12 @@
 					<f:facet name="header">
 				        <h:outputText value="#{msg['paciente.lista.header']}"/>
 				    </f:facet>
+				    <p:column headerText="#{msg['paciente.numeroprontuario']}">
+						<h:commandLink action="#{pacienteMBean.verProntuario(paciente.id)}">
+							<h:outputText value="#{paciente.numeroProntuario}" />
+						</h:commandLink>
+					</p:column>
+				    
 					<p:column headerText="#{msg['paciente.cpf']}">
 						<h:outputText value="#{paciente.cpfFormatado}" />
 					</p:column>
@@ -50,8 +56,9 @@
 					</p:column>
 					
 					<sec:ifAnyGranted roles="EDITAR_PACIENTES">
-						<p:column width="70px;">
-							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+						<p:column width="100px;">
+							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-search" styleClass="datatable-button"/>
+							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right"/>
 							<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
 								<f:setPropertyActionListener target="#{pacienteMBean.pacienteSelecionado}" value="#{paciente}"/>
 							</p:commandButton>

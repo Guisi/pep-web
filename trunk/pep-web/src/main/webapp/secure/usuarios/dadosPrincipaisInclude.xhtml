@@ -14,6 +14,18 @@
 	</script>
 
 	<p:panelGrid styleClass="noborder">
+		<p:row rendered="#{editarUsuarioMBean.usuarioSelecionado.paciente}">
+			<p:column colspan="4" styleClass="leftAligned">
+				<h:outputLabel for="nrProntuarioInput" value="#{msg['usuario.numeroprontuario']}: "/>
+			</p:column>
+		</p:row>
+		<p:row rendered="#{editarUsuarioMBean.usuarioSelecionado.paciente}">
+			<p:column colspan="4" styleClass="leftAligned">
+				<p:inputMask id="nrProntuarioInput" value="#{editarUsuarioMBean.usuarioSelecionado.numeroProntuario}" 
+					mask="9?999999999" maxlength="10" styleClass="inputUmQuarto" placeHolder=" "/>
+			</p:column>
+		</p:row>
+	
 		<p:row>
 			<p:column colspan="3" styleClass="leftAligned">
 				<h:outputLabel for="nomeInput" value="#{msg['usuario.nome']}: "/>

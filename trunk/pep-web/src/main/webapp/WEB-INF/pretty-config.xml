@@ -107,4 +107,9 @@
 		<pattern value="/editarPaciente/#{idUsuario}" />
 		<view-id value="/secure/paciente/editarPaciente.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="atendimentos">
+		<pattern value="/atendimentos/#{idPaciente}" />
+		<view-id value="/secure/atendimento/atendimentos.xhtml" />
+	</url-mapping>
 </pretty-config>
