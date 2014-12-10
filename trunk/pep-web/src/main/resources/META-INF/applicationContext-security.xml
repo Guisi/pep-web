@@ -19,6 +19,7 @@
 		<security:intercept-url pattern="/secure/usuarios/usuarios**" access="hasAnyRole('EDITAR_USUARIOS', 'VISUALIZAR_USUARIOS')" />
 		<security:intercept-url pattern="/secure/paciente/pacientes**" access="hasAnyRole('EDITAR_PACIENTES', 'VISUALIZAR_PACIENTES')" />
 		<security:intercept-url pattern="/secure/paciente/editarPaciente**" access="hasRole('EDITAR_PACIENTES')" />
+		<security:intercept-url pattern="/secure/medicamento/**" access="hasRole('EDITAR_MEDICAMENTOS')" />
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/*" access="permitAll" />
 

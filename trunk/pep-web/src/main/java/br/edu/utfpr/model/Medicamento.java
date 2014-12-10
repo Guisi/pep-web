@@ -23,13 +23,13 @@ public class Medicamento extends BaseEntity {
 	@Column(name="id_medicamento")
 	private Long id;
 	
-	@Column(name="nome", length=200)
-	@Size(max=200)
-	private String nome;
+	@Column(name="principio_ativo", length=500)
+	@Size(max=300)
+	private String principioAtivo;
 	
-	@Column(name="descricao", length=1000)
-	@Size(max=1000)
-	private String descricao;
+	@Column(name="apresentacao", length=500)
+	@Size(max=500)
+	private String apresentacao;
 	
 	@Override
 	public Long getId() {
@@ -40,20 +40,20 @@ public class Medicamento extends BaseEntity {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getPrincipioAtivo() {
+		return principioAtivo;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setPrincipioAtivo(String principioAtivo) {
+		this.principioAtivo = principioAtivo;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getApresentacao() {
+		return apresentacao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setApresentacao(String apresentacao) {
+		this.apresentacao = apresentacao;
 	}
 
 }
