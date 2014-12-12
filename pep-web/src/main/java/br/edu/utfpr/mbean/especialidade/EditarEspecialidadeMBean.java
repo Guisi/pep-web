@@ -1,7 +1,5 @@
 package br.edu.utfpr.mbean.especialidade;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
-
 import java.text.MessageFormat;
 import java.util.Scanner;
 
@@ -9,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -31,8 +28,7 @@ public class EditarEspecialidadeMBean extends BaseMBean {
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		String idEspecialidade = request.getParameter("idEspecialidade");
+		String idEspecialidade = getRequest().getParameter("idEspecialidade");
 		
 		if (StringUtils.isNotEmpty(idEspecialidade)) {
 			if (new Scanner(idEspecialidade).hasNextLong()) {

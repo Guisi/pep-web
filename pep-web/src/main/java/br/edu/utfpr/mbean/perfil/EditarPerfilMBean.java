@@ -1,7 +1,5 @@
 package br.edu.utfpr.mbean.perfil;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -13,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.model.DualListModel;
@@ -41,8 +38,7 @@ public class EditarPerfilMBean extends BaseMBean {
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		String idPerfil = request.getParameter("idPerfil");
+		String idPerfil = getRequest().getParameter("idPerfil");
 		
 		if (StringUtils.isNotEmpty(idPerfil)) {
 			if (new Scanner(idPerfil).hasNextLong()) {

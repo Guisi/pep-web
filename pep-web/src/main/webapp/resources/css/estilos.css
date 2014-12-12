@@ -176,6 +176,10 @@ fieldset {
 	text-align: right;
 }
 
+.centerAligned {
+	text-align: center;
+}
+
 .divBotoesEdicao {
 	margin-top: 10px;
 	margin-right: 10px;

@@ -14,9 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.AuthenticationException;
 
@@ -65,8 +62,7 @@ public class LoginMBean extends BaseMBean implements Serializable {
 				addErrorMessage(getMsgs().getString("login.error.usuariosenhainvalido"));
 			}
 			
-			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-			session.invalidate();
+			getSession().invalidate();
 		}
 	}
 
@@ -87,12 +83,9 @@ public class LoginMBean extends BaseMBean implements Serializable {
 	 * @return
 	 */
 	public void processLogin() {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		
 		try {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/j_spring_security_check");
-			dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = getRequest().getRequestDispatcher("/j_spring_security_check");
+			dispatcher.forward(getRequest(), getResponse());
 			FacesContext.getCurrentInstance().responseComplete();
 		} catch (ServletException e) {
 			e.printStackTrace();

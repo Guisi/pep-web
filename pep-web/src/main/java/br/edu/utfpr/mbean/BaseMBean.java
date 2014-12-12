@@ -1,5 +1,7 @@
 package br.edu.utfpr.mbean;
 
+import static javax.faces.context.FacesContext.getCurrentInstance;
+
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -12,6 +14,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -124,5 +129,17 @@ public abstract class BaseMBean implements Serializable {
 	
 	public String getEmptyStr() {
 		return "";
+	}
+	
+	public HttpServletRequest getRequest() {
+		return (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
+	}
+	
+	public HttpServletResponse getResponse() {
+		return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+	}
+	
+	public HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 	}
 }

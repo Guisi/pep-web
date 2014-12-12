@@ -7,7 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
-import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Medicamento;
 import br.edu.utfpr.service.MedicamentoService;
@@ -22,15 +21,15 @@ public class MedicamentoMBean extends BaseMBean {
 	private MedicamentoService medicamentoService;
 	
 	private List<Medicamento> medicamentoList;
-	private Medicamento medicamentoSelecionado;
+	private String pesquisa;
 	
 	@PostConstruct
 	public void init() {
 		this.listarMedicamentos();
 	}
 	
-	private void listarMedicamentos() {
-		this.medicamentoList = medicamentoService.retornarMedicamentos();
+	public void listarMedicamentos() {
+		this.medicamentoList = medicamentoService.retornarMedicamentos(pesquisa);
 	}
 	
 	public String novoMedicamento() {
@@ -41,18 +40,6 @@ public class MedicamentoMBean extends BaseMBean {
 		return "/secure/medicamento/editarMedicamento.xhtml?faces-redirect=true&idMedicamento=" + idMedicamento;
 	}
 	
-	public void removerMedicamento() {
-		try {
-			medicamentoService.removerMedicamento(medicamentoSelecionado);
-			medicamentoSelecionado = null;
-			
-			this.listarMedicamentos();
-			addInfoMessage(getMsgs().getString("medicamento.remover.sucesso"));
-		} catch (AppException e) {
-			addressException(e);
-		}
-	}
-
 	public List<Medicamento> getMedicamentoList() {
 		return medicamentoList;
 	}
@@ -61,12 +48,11 @@ public class MedicamentoMBean extends BaseMBean {
 		this.medicamentoList = medicamentoList;
 	}
 
-	public Medicamento getMedicamentoSelecionado() {
-		return medicamentoSelecionado;
+	public String getPesquisa() {
+		return pesquisa;
 	}
 
-	public void setMedicamentoSelecionado(Medicamento medicamentoSelecionado) {
-		this.medicamentoSelecionado = medicamentoSelecionado;
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
-
 }

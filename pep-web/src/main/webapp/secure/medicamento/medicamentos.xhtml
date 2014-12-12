@@ -15,8 +15,15 @@
 				<p:messages id="msgMedicamentos"/>
 				
 				<div align="right">
-					<p:commandButton value="#{msg['medicamento.botao.novo']}" action="#{medicamentoMBean.novoMedicamento}"
-						icon="ui-icon-document" styleClass="botaoNovo"/>
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{medicamentoMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['medicamento.botao.procurar']}" action="#{medicamentoMBean.listarMedicamentos}" 
+								icon="ui-icon-search" update="medicamentoTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['medicamento.botao.novo']}" action="#{medicamentoMBean.novoMedicamento}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
 				</div>
 				
 				<p:dataTable id="medicamentoTable" var="medicamento" value="#{medicamentoMBean.medicamentoList}" emptyMessage="#{msg['medicamento.lista.empty']}"
@@ -26,27 +33,22 @@
 				        <h:outputText value="#{msg['medicamento.lista.header']}"/>
 				    </f:facet>
 					
-					<p:column headerText="#{msg['medicamento.principioAtivo']}" styleClass="leftAligned" width="45%">
+					<p:column headerText="#{msg['medicamento.principioativo']}" styleClass="leftAligned" width="42%" sortBy="#{medicamento.principioAtivo}">
 						<h:outputText value="#{medicamento.principioAtivo}" />
 					</p:column>
 					
-					<p:column headerText="#{msg['medicamento.apresentacao']}" styleClass="leftAligned" width="45%">
+					<p:column headerText="#{msg['medicamento.apresentacao']}" styleClass="leftAligned" width="42%" sortBy="#{medicamento.apresentacao}">
 						<h:outputText value="#{medicamento.apresentacao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['medicamento.chkativo']}" styleClass="centerAligned" width="4%" sortBy="#{medicamento.chkAtivo}">
+						<h:selectBooleanCheckbox value="#{medicamento.chkAtivo}" disabled="true"/>
 					</p:column>
 					
 					<p:column width="70px;" style="text-align: center;">
 						<p:commandButton value="" action="#{medicamentoMBean.editarMedicamento(medicamento.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" 
-							styleClass="datatable-button datatable-button-right">
-							<f:setPropertyActionListener target="#{medicamentoMBean.medicamentoSelecionado}" value="#{medicamento}"/>
-						</p:commandButton>
 					</p:column>
 				</p:dataTable>
-				
-				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['medicamento.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{medicamentoMBean.removerMedicamento}" update="medicamentoTable, msgMedicamentos" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			    </p:confirmDialog>
 			</h:form>
 		</p:panel>
 	</ui:define>

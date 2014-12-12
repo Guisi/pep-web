@@ -1,7 +1,5 @@
 package br.edu.utfpr.mbean.atendimento;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
-
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -36,8 +33,7 @@ public class AtendimentoMBean extends BaseMBean {
 	
 	@PostConstruct
 	public void init() {
-		HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-		String idPaciente = request.getParameter("idPaciente");
+		String idPaciente = getRequest().getParameter("idPaciente");
 		
 		if (StringUtils.isNotEmpty(idPaciente) && new Scanner(idPaciente).hasNextLong()) {
 			this.pacienteSelecionado = usuarioService.retornarUsuario(Long.parseLong(idPaciente));
