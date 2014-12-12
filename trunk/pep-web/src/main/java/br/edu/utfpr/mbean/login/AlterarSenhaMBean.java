@@ -1,12 +1,9 @@
 package br.edu.utfpr.mbean.login;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.mbean.BaseMBean;
@@ -36,8 +33,7 @@ public class AlterarSenhaMBean extends BaseMBean {
 		if (!FacesContext.getCurrentInstance().isPostback()) {
 			this.bloquearCampos = true;
 	
-			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-			String token = request.getParameter("token");
+			String token = getRequest().getParameter("token");
 			
 			TokenCadastro tokenCadastro = tokenCadastroService.retornarTokenAtivo(token);
 			if (tokenCadastro != null) {

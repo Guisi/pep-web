@@ -31,6 +31,9 @@ public class Medicamento extends BaseEntity {
 	@Size(max=500)
 	private String apresentacao;
 	
+	@Column(name="chk_ativo")
+	private Boolean chkAtivo;
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -54,6 +57,14 @@ public class Medicamento extends BaseEntity {
 
 	public void setApresentacao(String apresentacao) {
 		this.apresentacao = apresentacao;
+	}
+
+	public Boolean getChkAtivo() {
+		return chkAtivo;
+	}
+
+	public void setChkAtivo(Boolean chkAtivo) {
+		this.chkAtivo = chkAtivo;
 	}
 
 }

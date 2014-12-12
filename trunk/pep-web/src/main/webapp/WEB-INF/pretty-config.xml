@@ -113,8 +113,19 @@
 		<view-id value="/secure/medicamento/medicamentos.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="novoMedicamento">
+		<pattern value="/novoMedicamento" />
+		<view-id value="/secure/medicamento/editarMedicamento.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarMedicamento">
+		<pattern value="/editarMedicamento/#{idMedicamento}" />
+		<view-id value="/secure/medicamento/editarMedicamento.xhtml" />
+	</url-mapping>
+	
 	<url-mapping id="atendimentos">
 		<pattern value="/atendimentos/#{idPaciente}" />
 		<view-id value="/secure/atendimento/atendimentos.xhtml" />
 	</url-mapping>
+	
 </pretty-config>

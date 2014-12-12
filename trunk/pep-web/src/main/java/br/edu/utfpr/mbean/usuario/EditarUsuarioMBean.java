@@ -1,7 +1,5 @@
 package br.edu.utfpr.mbean.usuario;
 
-import static javax.faces.context.FacesContext.getCurrentInstance;
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
@@ -87,8 +84,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 			editarPaciente = StringUtils.contains(url, Constantes.EDITAR_PACIENTE_URL)
 								|| StringUtils.contains(url, Constantes.NOVO_PACIENTE_URL);
 
-			HttpServletRequest request = (HttpServletRequest) getCurrentInstance().getExternalContext().getRequest();
-			idUsuario = request.getParameter("idUsuario");
+			idUsuario = getRequest().getParameter("idUsuario");
 		}
 
 		if (StringUtils.isNotEmpty(idUsuario)) {
