@@ -11,15 +11,13 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.edu.utfpr.mbean.BaseMBean;
 import br.edu.utfpr.model.Atendimento;
-import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
 @ViewScoped
-public class AtendimentoMBean extends BaseMBean {
+public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +26,6 @@ public class AtendimentoMBean extends BaseMBean {
 	@Inject
 	private UsuarioService usuarioService;
 	
-	private Usuario pacienteSelecionado;
 	private List<Atendimento> atendimentoList;
 	
 	@PostConstruct
@@ -52,20 +49,16 @@ public class AtendimentoMBean extends BaseMBean {
 	public void listarAtendimentos() {
 		this.atendimentoList = atendimentoService.retornarAtendimentosPaciente(this.pacienteSelecionado.getId());
 	}
-
+	
+	public String novoAtendimento() {
+		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idPaciente=" + this.pacienteSelecionado.getId();
+	}
+	
 	public List<Atendimento> getAtendimentoList() {
 		return atendimentoList;
 	}
 
 	public void setAtendimentoList(List<Atendimento> atendimentoList) {
 		this.atendimentoList = atendimentoList;
-	}
-
-	public Usuario getPacienteSelecionado() {
-		return pacienteSelecionado;
-	}
-
-	public void setPacienteSelecionado(Usuario pacienteSelecionado) {
-		this.pacienteSelecionado = pacienteSelecionado;
 	}
 }

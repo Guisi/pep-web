@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarAtendimentoMBean.emptyStr}"/>
+			
+			<h:form id="frmEditarAtendimento">
+			
+				<p:messages id="msgAtendimentos"/>
+				
+				<p:outputPanel rendered="#{not empty editarAtendimentoMBean.pacienteSelecionado}">
+
+					<p:panel>
+						<h:panelGrid columns="2" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+							<h:panelGroup>
+								<h:commandLink action="#{editarAtendimentoMBean.editarPaciente}">
+									<h:outputText value="#{editarAtendimentoMBean.pacienteSelecionado.nomeCompleto}" style="font-size: 16px; font-weight: bold;"/>
+								</h:commandLink>
+								<br/>
+								<div style="margin-top: 7px;">
+									<h:outputText value="#{editarAtendimentoMBean.idadePaciente}"/>
+									<h:outputText value=" #{editarAtendimentoMBean.estadoCivilPaciente}"/>
+									<h:outputText value=" #{editarAtendimentoMBean.cidadePaciente}"/>
+								</div>
+							</h:panelGroup>
+						</h:panelGrid>
+					</p:panel>
+
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

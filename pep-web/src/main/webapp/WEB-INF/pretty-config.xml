@@ -128,4 +128,9 @@
 		<view-id value="/secure/atendimento/atendimentos.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="novoAtendimento">
+		<pattern value="/novoAtendimento/#{idPaciente}" />
+		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
+	</url-mapping>
+	
 </pretty-config>
