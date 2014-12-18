@@ -15,10 +15,29 @@
 				<p:messages id="msgs"/>
 			
 				<p:outputPanel rendered="#{not empty atendimentoMBean.pacienteSelecionado}">
+				
+					<p:panel>
+						<h:panelGrid columns="2" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+							<h:panelGroup>
+								<h:commandLink action="#{atendimentoMBean.editarPaciente}">
+									<h:outputText value="#{atendimentoMBean.pacienteSelecionado.nomeCompleto}" style="font-size: 16px; font-weight: bold;"/>
+								</h:commandLink>
+								<br/>
+								<div style="margin-top: 7px;">
+									<h:outputText value="#{atendimentoMBean.idadePaciente}"/>
+									<h:outputText value=" #{atendimentoMBean.estadoCivilPaciente}"/>
+									<h:outputText value=" #{atendimentoMBean.cidadePaciente}"/>
+								</div>
+							</h:panelGroup>
+							<p:commandButton value="#{msg['atendimento.botao.novo']}" action="#{atendimentoMBean.novoAtendimento}"
+								icon="ui-icon-document" styleClass="botaoNovo" style="margin-top: 7px;"/>
+						</h:panelGrid>
+					</p:panel>
 		
 					<p:dataTable id="atendimentoTable" var="atendimento" value="#{atendimentoMBean.atendimentoList}" emptyMessage="#{msg['atendimento.lista.empty']}"
 						paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-	                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+	                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                    style="margin-top: 5px;">
 						<f:facet name="header">
 					        <h:outputText value="#{msg['atendimento.lista.header']}"/>
 					    </f:facet>

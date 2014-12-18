@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.GenericValidator;
 
 import br.edu.utfpr.constants.Constantes;
+import br.edu.utfpr.constants.EstadoCivilEnum;
 import br.edu.utfpr.constants.EstadoEnum;
 import br.edu.utfpr.constants.PerfilEnum;
 import br.edu.utfpr.exception.AppException;
@@ -66,6 +67,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 	private Convenio convenioSelecionado;
 	
 	private List<EstadoEnum> estados;
+	private List<EstadoCivilEnum> estadosCivis;
 
 	private String menuInclude;
 	private boolean editarInfoPessoal;
@@ -118,6 +120,7 @@ public class EditarUsuarioMBean extends BaseMBean {
 		}
 		
 		this.estados = Arrays.asList(EstadoEnum.values());
+		this.estadosCivis = Arrays.asList(EstadoCivilEnum.values());
 	}
 	
 	public void listarPerfisDisponiveis() {
@@ -447,5 +450,13 @@ public class EditarUsuarioMBean extends BaseMBean {
 
 	public void setEditarPaciente(boolean editarPaciente) {
 		this.editarPaciente = editarPaciente;
+	}
+
+	public List<EstadoCivilEnum> getEstadosCivis() {
+		return estadosCivis;
+	}
+
+	public void setEstadosCivis(List<EstadoCivilEnum> estadosCivis) {
+		this.estadosCivis = estadosCivis;
 	}
 }

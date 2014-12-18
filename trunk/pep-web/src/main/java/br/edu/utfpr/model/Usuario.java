@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.utils.FormatUtils;
@@ -188,6 +190,15 @@ public class Usuario extends BaseEntity {
 		}
 		
 		return false;
+	}
+	
+	@Transient
+	public int getIdade() {
+		if (dataNascimento != null) {
+			Years years = Years.yearsBetween(new LocalDate(dataNascimento), new LocalDate());
+			return years.getYears();
+		}
+		return 0;
 	}
 	
 	public Long getId() {

@@ -94,18 +94,12 @@
 			<p:column styleClass="leftAligned">
 				<p:selectOneMenu id="estadoCivilInput" value="#{editarUsuarioMBean.usuarioSelecionado.estadoCivil}" styleClass="inputUmQuarto">
 					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-					<f:selectItem itemLabel="Não informado" itemValue="Não informado"/>
-					<f:selectItem itemLabel="Solteiro(a)" itemValue="Solteiro(a)"/>
-					<f:selectItem itemLabel="Casado(a)" itemValue="Casado(a)"/>
-					<f:selectItem itemLabel="Divorciado(a)" itemValue="Divorciado(a)"/>
-					<f:selectItem itemLabel="Viúvo(a)" itemValue="Viúvo(a)"/>
-					<f:selectItem itemLabel="União estável" itemValue="União estável"/>
+					<f:selectItems value="#{editarUsuarioMBean.estadosCivis}" var="estadoCivil" itemLabel="#{estadoCivil.estadoCivil}" itemValue="#{estadoCivil.estadoCivil}"/>
 				</p:selectOneMenu>
 			</p:column>
 			<p:column styleClass="leftAligned">
 				<p:selectOneMenu id="sexoInput" value="#{editarUsuarioMBean.usuarioSelecionado.sexo}" styleClass="inputUmQuarto">
 					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-					<f:selectItem itemLabel="Não informado" itemValue="N"/>
 					<f:selectItem itemLabel="Masculino" itemValue="M"/>
 					<f:selectItem itemLabel="Feminino" itemValue="F"/>
 				</p:selectOneMenu>
