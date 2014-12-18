@@ -58,6 +58,11 @@ public class EmailHandler {
 	 *             </p>
 	 */
 	public boolean sendEmail(Email email) throws EmailException {
+		//TODO remover
+		if (true) {
+			return true;
+		}
+		
 		Message msg;
 		Address remetente;
 		Multipart multiPart;
