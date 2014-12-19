@@ -1,6 +1,7 @@
 package br.edu.utfpr.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,14 +18,21 @@ public class MedicamentoDao extends GenericDao<Medicamento, Long> implements Ser
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Medicamento> retornarMedicamentos(String textoPesquisa) {
+	public List<Medicamento> retornarMedicamentos(String textoPesquisa, Boolean chkAtivo) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Medicamento> q = qb.createQuery(Medicamento.class);
 		Root<Medicamento> root = q.from(Medicamento.class);
 
+		List<Predicate> predicados = new ArrayList<>();
 		if (StringUtils.isNotBlank(textoPesquisa)) {
-			q.where(qb.like(qb.lower(root.get(Medicamento_.principioAtivo)), "%" + textoPesquisa.toLowerCase() + "%"));
+			predicados.add(qb.like(qb.lower(root.get(Medicamento_.principioAtivo)), "%" + textoPesquisa.toLowerCase() + "%"));
 		}
+		
+		if (chkAtivo != null) {
+			predicados.add(qb.equal(root.get(Medicamento_.chkAtivo), chkAtivo));
+		}
+		
+		q.where(predicados.toArray(new Predicate[predicados.size()]));
 		
 		q.orderBy(qb.asc(root.get(Medicamento_.principioAtivo)));
 		

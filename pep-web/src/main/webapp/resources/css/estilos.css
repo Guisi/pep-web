@@ -251,20 +251,6 @@ fieldset {
 	filter: Alpha(Opacity = 30);
 }
 
-.ui-fileupload-buttonbar {
-	border-bottom-right-radius: 6px;
-	border-top-left-radius: 6px;
-	border-bottom-left-radius: 6px;
-}
-
-#frmUsuarios\3a fuImagemUsuario > div.ui-fileupload-buttonbar.ui-widget-header.ui-corner-top > button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-state-disabled.ui-fileupload-upload {
-	display: none;
-}
-
-#frmUsuarios\3a fuImagemUsuario > div.ui-fileupload-buttonbar.ui-widget-header.ui-corner-top > button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-state-disabled.ui-fileupload-cancel {
-	display: none;
-}
-
-#frmUsuarios\3a fuImagemUsuario > div.ui-fileupload-content.ui-widget-content.ui-corner-bottom {
-	display: none;
+.moduloAtendimentoPanel {
+	margin-top: 5px;
 }
