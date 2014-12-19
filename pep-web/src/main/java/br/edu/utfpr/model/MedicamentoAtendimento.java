@@ -32,7 +32,7 @@ public class MedicamentoAtendimento extends BaseEntity {
 	private Medicamento medicamento;
 	
 	@Column(name="descricao", length=600)
-	@Size(max=300)
+	@Size(max=600)
 	private String descricao;
 	
 	@Column(name="apresentacao", length=300)

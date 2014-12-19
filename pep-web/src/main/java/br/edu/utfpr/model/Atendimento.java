@@ -1,7 +1,7 @@
 package br.edu.utfpr.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class Atendimento extends BaseEntity {
 	private Usuario paciente;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "atendimento")
-	private Set<MedicamentoAtendimento> medicamentos;
+	private List<MedicamentoAtendimento> medicamentos;
 
 	public Long getId() {
 		return id;
@@ -64,11 +64,11 @@ public class Atendimento extends BaseEntity {
 		this.paciente = paciente;
 	}
 
-	public Set<MedicamentoAtendimento> getMedicamentos() {
+	public List<MedicamentoAtendimento> getMedicamentos() {
 		return medicamentos;
 	}
 
-	public void setMedicamentos(Set<MedicamentoAtendimento> medicamentos) {
+	public void setMedicamentos(List<MedicamentoAtendimento> medicamentos) {
 		this.medicamentos = medicamentos;
 	}
 	
