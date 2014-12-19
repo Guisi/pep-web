@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,14 +47,15 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		if (StringUtils.isNotEmpty(idAtendimento)) {
 			if (new Scanner(idAtendimento).hasNextLong()) {
 				this.atendimentoSelecionado = atendimentoService.retornarAtendimento(Long.parseLong(idAtendimento));
-				this.pacienteSelecionado = this.atendimentoSelecionado.getPaciente();
-				this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>(this.atendimentoSelecionado.getMedicamentos());
 			}
 			
 			if (this.atendimentoSelecionado == null) {
 				addErrorMessage(MessageFormat.format(getMsgs().getString("atendimento.erro.naoencontrado"), idAtendimento));
 				return;
 			}
+			
+			this.pacienteSelecionado = this.atendimentoSelecionado.getPaciente();
+			this.medicamentosAtendimento = this.atendimentoSelecionado.getMedicamentos();
 		} else {
 			this.atendimentoSelecionado = new Atendimento();
 			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
@@ -96,7 +96,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	}
 	
 	private void salvarAtendimento() {
-		this.atendimentoSelecionado.setMedicamentos(new LinkedHashSet<MedicamentoAtendimento>(this.medicamentosAtendimento));
+		this.atendimentoSelecionado.setMedicamentos(this.medicamentosAtendimento);
 		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado);
 	}
 	
@@ -120,6 +120,11 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 			this.medicamentoSelecionado = null;
 		}
+	}
+	
+	public void adicionarOutroMedicamento() {
+		MedicamentoAtendimento medicamentoAtendimento = new MedicamentoAtendimento();
+		this.medicamentosAtendimento.add(medicamentoAtendimento);
 	}
 	
 	private void ordenaListaMedicamentos() {

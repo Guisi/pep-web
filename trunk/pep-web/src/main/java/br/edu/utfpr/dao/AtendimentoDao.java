@@ -38,7 +38,7 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		root.fetch(Atendimento_.paciente);
 
 		Fetch<Atendimento, MedicamentoAtendimento> medicamentosFetch = root.fetch(Atendimento_.medicamentos, JoinType.LEFT);
-		medicamentosFetch.fetch(MedicamentoAtendimento_.medicamento);
+		medicamentosFetch.fetch(MedicamentoAtendimento_.medicamento, JoinType.LEFT);
 		
 		q.where(qb.equal(root.get(Atendimento_.id), id));
 		
