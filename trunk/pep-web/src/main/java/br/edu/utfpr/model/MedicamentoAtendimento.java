@@ -31,14 +31,29 @@ public class MedicamentoAtendimento extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Medicamento medicamento;
 	
-	@Column(name="principio_ativo", length=500)
+	@Column(name="descricao", length=600)
 	@Size(max=300)
-	private String principioAtivo;
+	private String descricao;
 	
-	@Column(name="apresentacao", length=500)
-	@Size(max=500)
-	private String apresentacao;
+	@Column(name="apresentacao", length=300)
+	@Size(max=300)
+	private String posologia;
 	
+	public String getDescricao() {
+		if (medicamento != null) {
+			return medicamento.getPrincipioAtivo() + " - " + medicamento.getApresentacao();
+		} else {
+			return descricao;
+		}
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -63,20 +78,12 @@ public class MedicamentoAtendimento extends BaseEntity {
 		this.medicamento = medicamento;
 	}
 
-	public String getPrincipioAtivo() {
-		return principioAtivo;
+	public String getPosologia() {
+		return posologia;
 	}
 
-	public void setPrincipioAtivo(String principioAtivo) {
-		this.principioAtivo = principioAtivo;
-	}
-
-	public String getApresentacao() {
-		return apresentacao;
-	}
-
-	public void setApresentacao(String apresentacao) {
-		this.apresentacao = apresentacao;
+	public void setPosologia(String posologia) {
+		this.posologia = posologia;
 	}
 	
 }
