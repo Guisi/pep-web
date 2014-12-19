@@ -46,6 +46,10 @@
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 							</h:outputText>
 						</p:column>
+						
+						<p:column width="65px;" style="text-align: left;">
+							<p:commandButton value="" action="#{atendimentoMBean.editarAtendimento(atendimento.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+						</p:column>
 					</p:dataTable>
 					
 				</p:outputPanel>

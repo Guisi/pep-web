@@ -20,12 +20,12 @@ public class MedicamentoService {
 	@Inject
 	private MedicamentoDao medicamentoDao;
 
-	public List<Medicamento> retornarMedicamentos() {
-		return retornarMedicamentos(null);
+	public List<Medicamento> retornarMedicamentos(Boolean chkAtivo) {
+		return retornarMedicamentos(null, chkAtivo);
 	}
 	
-	public List<Medicamento> retornarMedicamentos(String textoPesquisa) {
-		return medicamentoDao.retornarMedicamentos(textoPesquisa);
+	public List<Medicamento> retornarMedicamentos(String textoPesquisa, Boolean chkAtivo) {
+		return medicamentoDao.retornarMedicamentos(textoPesquisa, chkAtivo);
 	}
 	
 	public Medicamento retornarMedicamento(Long id) {

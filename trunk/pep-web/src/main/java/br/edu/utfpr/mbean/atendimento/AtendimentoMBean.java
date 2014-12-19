@@ -54,6 +54,10 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idPaciente=" + this.pacienteSelecionado.getId();
 	}
 	
+	public String editarAtendimento(Long idAtendimento) {
+		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idAtendimento=" + idAtendimento;
+	}
+	
 	public List<Atendimento> getAtendimentoList() {
 		return atendimentoList;
 	}

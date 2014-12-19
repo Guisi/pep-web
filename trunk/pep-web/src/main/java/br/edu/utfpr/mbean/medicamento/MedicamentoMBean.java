@@ -29,7 +29,7 @@ public class MedicamentoMBean extends BaseMBean {
 	}
 	
 	public void listarMedicamentos() {
-		this.medicamentoList = medicamentoService.retornarMedicamentos(pesquisa);
+		this.medicamentoList = medicamentoService.retornarMedicamentos(pesquisa, null);
 	}
 	
 	public String novoMedicamento() {
