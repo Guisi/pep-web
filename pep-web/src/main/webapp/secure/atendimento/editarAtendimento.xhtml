@@ -35,7 +35,7 @@
 					
 					<p:panel header="#{msg['atendimento.tratamentos.header']}" toggleable="true" styleClass="moduloAtendimentoPanel">
 						<h:panelGrid columns="2">
-							<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 895px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+							<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 500px; margin-top: 2px;" filter="true" filterMatchMode="contains">
 								<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
 								<f:selectItems value="#{editarAtendimentoMBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
 								<p:ajax event="change" update="addMedicamentoBtn"/>
@@ -48,11 +48,12 @@
 							<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{editarAtendimentoMBean.medicamentosAtendimento}" emptyMessage="#{msg['atendimento.tratamentos.medicamentos.lista.empty']}"
 								paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
 								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-								<p:column headerText="#{msg['medicamento.principioativo']}">
-									<h:outputText value="#{medicamentoAtendimento.medicamento.principioAtivo}"/>
+								<p:column headerText="#{msg['atendimento.tratamentos.medicamento']}">
+									<h:outputText value="#{medicamentoAtendimento.descricao}"/>
 								</p:column>
-								<p:column headerText="#{msg['medicamento.apresentacao']}">
-									<h:outputText value="#{medicamentoAtendimento.medicamento.apresentacao}" />
+								<p:column headerText="#{msg['atendimento.tratamentos.posologia']}">
+									<p:inputTextarea value="#{medicamentoAtendimento.posologia}" autoResize="false" maxlength="300"
+										rows="2" style="width: 500px;"/>
 								</p:column>
 							</p:dataTable>
 						</div>
