@@ -133,4 +133,9 @@
 		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="editarAtendimento">
+		<pattern value="/editarAtendimento/#{idAtendimento}" />
+		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
+	</url-mapping>
+	
 </pretty-config>
