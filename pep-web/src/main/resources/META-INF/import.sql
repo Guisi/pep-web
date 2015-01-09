@@ -126,3 +126,12 @@ INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentac
 INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentacao, chk_ativo) VALUES (16, 'ACETATO DE CIPROTERONA', '50 MG', true);
 INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentacao, chk_ativo) VALUES (17, 'ACETATO DE CIPROTERONA - ETINILESTRADIOL', '(0,035 + 2) MG', true);
 ALTER SEQUENCE pep_owner.medicamento_sequence RESTART WITH 18;
+
+--atendimento
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, now(), 3);
+ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
+
+--tratamentos
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento) VALUES (1, '', 'a cada 8 horas', 1, 1);
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento) VALUES (2, 'Paracetamol', 'a cada 4 horas', 1);
+ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 2;

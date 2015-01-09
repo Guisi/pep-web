@@ -33,37 +33,7 @@
 						</h:panelGrid>
 					</p:panel>
 					
-					<p:panel header="#{msg['atendimento.tratamentos.header']}" toggleable="true" styleClass="moduloAtendimentoPanel">
-						<h:panelGrid columns="2">
-							<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 500px; margin-top: 2px;" filter="true" filterMatchMode="contains">
-								<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-								<f:selectItems value="#{editarAtendimentoMBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
-								<p:ajax event="change" update="addMedicamentoBtn"/>
-							</p:selectOneMenu>
-							<p:columnGroup>
-								<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
-									disabled="#{empty editarAtendimentoMBean.medicamentoSelecionado}" styleClass="botaoSalvar"/>
-								<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarOutroMedicamento}" 
-									value="#{msg['atendimento.botao.outrotratamento']}" update="medicamentosTable" styleClass="botaoSalvar"/>
-							</p:columnGroup>
-						</h:panelGrid>
-						
-						<div>
-							<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{editarAtendimentoMBean.medicamentosAtendimento}" emptyMessage="#{msg['atendimento.tratamentos.medicamentos.lista.empty']}"
-								paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-								<p:column headerText="#{msg['atendimento.tratamentos.medicamento']}">
-									<p:inputText id="nomeInput" value="#{medicamentoAtendimento.descricao}" maxlength="600" rendered="#{empty medicamentoAtendimento.medicamento}"
-										style="width: 300px;"/>
-									<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
-								</p:column>
-								<p:column headerText="#{msg['atendimento.tratamentos.posologia']}">
-									<p:inputTextarea value="#{medicamentoAtendimento.posologia}" autoResize="false" maxlength="300"
-										rows="2" style="width: 500px;"/>
-								</p:column>
-							</p:dataTable>
-						</div>
-					</p:panel>
+					<ui:include src="tratamentosInclude.xhtml" />
 					
 					<div class="divBotoesEdicao">
 						<p:commandButton value="#{msg['botao.cancelar']}" action="#{editarAtendimentoMBean.cancelar}" icon="ui-icon-close" immediate="true"/>
