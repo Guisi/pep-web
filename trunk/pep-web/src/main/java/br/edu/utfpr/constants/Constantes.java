@@ -12,6 +12,8 @@ public interface Constantes {
 	
 	final Locale LOCALE_PT_BR = new Locale("pt_BR");
 	
+	final String FORMATO_DATA_HORA_DIA_SEMANA = "dd/MM/yyyy HH:mm - EEEE";
+	
 	final Integer PASSWD_MIN_LENGHT = 6;
 
 	final Integer PASSWD_MAX_LENGHT = 8;

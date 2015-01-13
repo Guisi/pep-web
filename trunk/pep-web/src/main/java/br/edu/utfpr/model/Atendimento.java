@@ -1,5 +1,6 @@
 package br.edu.utfpr.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -58,6 +59,10 @@ public class Atendimento extends BaseEntity {
 
 	public Usuario getPaciente() {
 		return paciente;
+	}
+	
+	public String getDataFormatada() {
+		return new SimpleDateFormat(Constantes.FORMATO_DATA_HORA_DIA_SEMANA).format(data);
 	}
 
 	public void setPaciente(Usuario paciente) {
