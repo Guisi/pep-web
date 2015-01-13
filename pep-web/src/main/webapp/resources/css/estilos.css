@@ -254,3 +254,20 @@ fieldset {
 .moduloAtendimentoPanel {
 	margin-top: 5px;
 }
+
+.atendimentosPanel > .ui-panel-titlebar {
+	text-align: left;
+	padding: 0px 0px 0px 15px !important;
+}
+
+.atendimentosPanel > .ui-panel-content {
+	padding: 5px !important;
+}
+
+.resumoAtendimentoPanel > .ui-panel-content {
+	padding: 0px !important;
+}
+
+.datatable-no-header table thead tr {
+    display: none;
+}

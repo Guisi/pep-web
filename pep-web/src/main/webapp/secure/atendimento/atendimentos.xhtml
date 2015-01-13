@@ -34,24 +34,32 @@
 						</h:panelGrid>
 					</p:panel>
 		
-					<p:dataTable id="atendimentoTable" var="atendimento" value="#{atendimentoMBean.atendimentoList}" emptyMessage="#{msg['atendimento.lista.empty']}"
-						paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-	                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-	                    style="margin-top: 5px;">
+					<p:panel styleClass="atendimentosPanel">
 						<f:facet name="header">
-					        <h:outputText value="#{msg['atendimento.lista.header']}"/>
-					    </f:facet>
-					    <p:column headerText="#{msg['atendimento.data']}">
-							<h:outputText value="#{atendimento.data}">
-								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-							</h:outputText>
-						</p:column>
-						
-						<p:column width="65px;" style="text-align: left;">
-							<p:commandButton value="" action="#{atendimentoMBean.editarAtendimento(atendimento.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-						</p:column>
-					</p:dataTable>
-					
+							<h:panelGrid columns="3">
+								<h:outputText value="#{msg['atendimento.lista.header']}: "/>
+								<p:selectOneMenu id="atendimentoSom" value="#{atendimentoMBean.atendimentoSelecionado}" converter="genericEntityConverter" style="width: 300px; margin-left: 5px;">
+									<f:selectItems value="#{atendimentoMBean.atendimentoList}" var="atendimento" itemLabel="#{atendimento.dataFormatada}" itemValue="#{atendimento}"/>
+									<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="medicamentosTable"/>
+								</p:selectOneMenu>
+								<p:commandButton value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
+									process="atendimentoSom, @this" style="margin-top: -3px;"/>
+							</h:panelGrid>
+						</f:facet>
+
+						<div style="width: 50%">						
+							<p:panel toggleable="true" header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%">
+								<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
+									<p:column style="text-align: left;">
+										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
+										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+										<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</div>
+					</p:panel>
 				</p:outputPanel>
 			</h:form>
 		</p:panel>

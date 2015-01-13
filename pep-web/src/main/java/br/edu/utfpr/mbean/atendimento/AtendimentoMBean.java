@@ -27,6 +27,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private UsuarioService usuarioService;
 	
 	private List<Atendimento> atendimentoList;
+	private Atendimento atendimentoSelecionado;
 	
 	@PostConstruct
 	public void init() {
@@ -48,14 +49,23 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	
 	public void listarAtendimentos() {
 		this.atendimentoList = atendimentoService.retornarAtendimentosPaciente(this.pacienteSelecionado.getId());
+		
+		if (!this.atendimentoList.isEmpty()) {
+			this.atendimentoSelecionado = this.atendimentoList.get(0);
+			this.onAtendimentoSelecionado();
+		}
+	}
+	
+	public void onAtendimentoSelecionado() {
+		this.atendimentoSelecionado = atendimentoService.retornarAtendimento(this.atendimentoSelecionado.getId());
 	}
 	
 	public String novoAtendimento() {
 		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idPaciente=" + this.pacienteSelecionado.getId();
 	}
 	
-	public String editarAtendimento(Long idAtendimento) {
-		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idAtendimento=" + idAtendimento;
+	public String editarAtendimento() {
+		return "/secure/atendimento/editarAtendimento.xhtml?faces-redirect=true&idAtendimento=" + this.atendimentoSelecionado.getId();
 	}
 	
 	public List<Atendimento> getAtendimentoList() {
@@ -64,5 +74,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setAtendimentoList(List<Atendimento> atendimentoList) {
 		this.atendimentoList = atendimentoList;
+	}
+
+	public Atendimento getAtendimentoSelecionado() {
+		return atendimentoSelecionado;
+	}
+
+	public void setAtendimentoSelecionado(Atendimento atendimentoSelecionado) {
+		this.atendimentoSelecionado = atendimentoSelecionado;
 	}
 }
