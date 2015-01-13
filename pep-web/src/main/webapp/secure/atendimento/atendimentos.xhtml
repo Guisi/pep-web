@@ -30,7 +30,7 @@
 								</div>
 							</h:panelGroup>
 							<p:commandButton value="#{msg['atendimento.botao.novo']}" action="#{atendimentoMBean.novoAtendimento}"
-								icon="ui-icon-document" styleClass="botaoNovo" style="margin-top: 7px;"/>
+								icon="ui-icon-document" styleClass="botaoNovo" process="@this" style="margin-top: 7px;"/>
 						</h:panelGrid>
 					</p:panel>
 		
