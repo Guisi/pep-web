@@ -34,7 +34,7 @@
 				        <h:outputText value="#{msg['paciente.lista.header']}"/>
 				    </f:facet>
 				    <p:column headerText="#{msg['paciente.numeroprontuario']}">
-						<h:commandLink action="#{pacienteMBean.verProntuario(paciente.id)}">
+						<h:commandLink id="verProntuarioLink" action="#{pacienteMBean.verProntuario(paciente.id)}">
 							<h:outputText value="#{paciente.numeroProntuario}" />
 						</h:commandLink>
 					</p:column>
