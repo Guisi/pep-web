@@ -59,7 +59,7 @@
 						<p:column width="100px;">
 							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-search" styleClass="datatable-button"/>
 							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right"/>
-							<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
 								<f:setPropertyActionListener target="#{pacienteMBean.pacienteSelecionado}" value="#{paciente}"/>
 							</p:commandButton>
 						</p:column>
@@ -67,8 +67,8 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['paciente.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{pacienteMBean.removerPaciente}" update="pacienteTable, msgPacientes" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{pacienteMBean.removerPaciente}" update="pacienteTable, msgPacientes" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>
 		</p:panel>

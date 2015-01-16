@@ -52,7 +52,7 @@
 					<sec:ifAnyGranted roles="EDITAR_USUARIOS">
 						<p:column width="70px;">
 							<p:commandButton action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-							<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
 								<f:setPropertyActionListener target="#{usuarioMBean.usuarioSelecionado}" value="#{usuario}"/>
 							</p:commandButton>
 						</p:column>
@@ -60,8 +60,8 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable, msgUsuarios" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable, msgUsuarios" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>
 		</p:panel>

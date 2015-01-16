@@ -21,6 +21,8 @@ public class AtendimentoService {
 	private AtendimentoDao atendimentoDao;
 	@Inject
 	private MedicamentoAtendimentoDao medicamentoAtendimentoDao;
+	@Inject
+	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -34,7 +36,7 @@ public class AtendimentoService {
 		}
 	}
 	
-	public Atendimento salvarAtendimento(Atendimento atendimento) {
+	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentosAnteriores) {
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
 		} else {
@@ -61,6 +63,9 @@ public class AtendimentoService {
 		}
 
 		atendimentoDao.save(atendimento);
+		
+		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentosAnteriores);
+
 		return atendimento;
 	}
 }

@@ -40,24 +40,29 @@
 								<h:outputText value="#{msg['atendimento.lista.header']}: "/>
 								<p:selectOneMenu id="atendimentoSom" value="#{atendimentoMBean.atendimentoSelecionado}" converter="genericEntityConverter" style="width: 300px; margin-left: 5px;">
 									<f:selectItems value="#{atendimentoMBean.atendimentoList}" var="atendimento" itemLabel="#{atendimento.dataFormatada}" itemValue="#{atendimento}"/>
-									<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="medicamentosTable"/>
+									<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pnMedicamentosTable, pnBtnReabrirAtendimento"/>
 								</p:selectOneMenu>
-								<p:commandButton value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
-									process="atendimentoSom, @this" style="margin-top: -3px;"/>
+								<p:outputPanel id="pnBtnReabrirAtendimento">
+									<p:commandButton id="btnReabrirAtendimento" value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
+										rendered="#{atendimentoMBean.mostrarReabrirAtendimento}" process="atendimentoSom, @this" style="margin-top: -3px;"/>
+								</p:outputPanel>
 							</h:panelGrid>
 						</f:facet>
 
-						<div style="width: 50%">						
-							<p:panel toggleable="true" header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%">
-								<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
-									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
-									<p:column style="text-align: left;">
-										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
-										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
-										<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
-									</p:column>
-								</p:dataTable>
-							</p:panel>
+						<div style="width: 50%">
+							<p:outputPanel id="pnMedicamentosTable">
+								<p:panel toggleable="true" header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}">
+									<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
+											<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+											<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</p:outputPanel>
 						</div>
 					</p:panel>
 				</p:outputPanel>

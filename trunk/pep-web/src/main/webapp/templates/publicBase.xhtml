@@ -20,7 +20,7 @@
 	<ui:include src="analytics.xhtml" />
 	
 	<h:body>
-		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
 
 		<!--Status Dialog para demonstrar estado de processamento -->
 		<p:dialog widgetVar="statusDialog" modal="false" closable="false" resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">

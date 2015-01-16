@@ -44,7 +44,7 @@
 						
 						<!-- Esqueci minha senha -->
 				        <div align="left" style="width: 360px; margin-top: 20px;">
-				        	<p:commandLink value="#{msg['login.esqueceusenha']}" onclick="dlgSolicitarAltSenha.show();" update=":frmSolicitarAltSenha:pngSolicitarAltSenha" actionListener="#{loginMBean.limparMessages}" process="@this"/>
+				        	<p:commandLink value="#{msg['login.esqueceusenha']}" onclick="PF('dlgSolicitarAltSenha').show();" update=":frmSolicitarAltSenha:pngSolicitarAltSenha" actionListener="#{loginMBean.limparMessages}" process="@this"/>
 				        </div>
 					</h:form>
 				</div>
@@ -65,7 +65,7 @@
 					</p:panelGrid>
 					
 					<div class="divBotoesEdicao">
-						<p:commandButton value="#{loginMBean.sucessoSolicitacaoAlteracao ? msg['botao.fechar'] : msg['botao.cancelar']}" onclick="dlgSolicitarAltSenha.hide();" icon="ui-icon-close"/>
+						<p:commandButton value="#{loginMBean.sucessoSolicitacaoAlteracao ? msg['botao.fechar'] : msg['botao.cancelar']}" onclick="PF('dlgSolicitarAltSenha').hide();" icon="ui-icon-close"/>
 						<p:commandButton value="#{msg['botao.solicitar']}" update="pngSolicitarAltSenha" action="#{loginMBean.solicitarAlteracaoSenha}" icon="ui-icon-check" styleClass="botaoSalvar" rendered="#{not loginMBean.sucessoSolicitacaoAlteracao}"/>
 					</div>
 				</h:panelGroup>

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import br.edu.utfpr.constants.Constantes;
@@ -42,6 +43,12 @@ public class MedicamentoAtendimento extends BaseEntity {
 	@Size(max=300)
 	private String posologia;
 	
+	@Column(name="chk_em_uso")
+	private Boolean emUso;
+	
+	@Transient
+	private boolean atendimentoAnterior;
+	
 	public String getDescricao() {
 		if (medicamento != null) {
 			return medicamento.getPrincipioAtivo() + " - " + medicamento.getApresentacao();
@@ -53,8 +60,6 @@ public class MedicamentoAtendimento extends BaseEntity {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-
 
 	@Override
 	public Long getId() {
@@ -87,6 +92,22 @@ public class MedicamentoAtendimento extends BaseEntity {
 
 	public void setPosologia(String posologia) {
 		this.posologia = posologia;
+	}
+
+	public Boolean getEmUso() {
+		return emUso;
+	}
+
+	public void setEmUso(Boolean emUso) {
+		this.emUso = emUso;
+	}
+
+	public boolean isAtendimentoAnterior() {
+		return atendimentoAnterior;
+	}
+
+	public void setAtendimentoAnterior(boolean atendimentoAnterior) {
+		this.atendimentoAnterior = atendimentoAnterior;
 	}
 	
 }

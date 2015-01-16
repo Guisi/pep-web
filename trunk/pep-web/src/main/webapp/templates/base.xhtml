@@ -23,10 +23,10 @@
 	<h:body>
 		<div id="fullPageDiv">
 			<div id="centerPageDiv">
-				<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+				<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
 
 				<!--Status Dialog para demonstrar estado de processamento -->
-				<p:dialog widgetVar="statusDialog" modal="false" closable="false" resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">
+				<p:dialog widgetVar="statusDialog" id="statusDialog" modal="false" closable="false" resizable="false" header="#{bundle['statusdialog.title']}" draggable="false">
 					<h:graphicImage library="imgs" name="ajaxloadingbar.gif"/>
 				</p:dialog>
 			
@@ -46,7 +46,7 @@
 												<p:menuitem value="#{msg['informacoespessoais.editar.header']}" outcome="pretty:editarInformacoesPessoais"/>
 											</sec:ifAnyGranted>
 											<p:menuitem value="#{msg['alterarsenha.header']}" actionListener="#{headerMBean.inicializarUsuarioLogado}"
-												oncomplete="dlgAlterarSenha.show();" update=":frmAlterarSenha"/>
+												oncomplete="PF('dlgAlterarSenha').show();" update=":frmAlterarSenha"/>
 											<p:separator/>
 											<p:menuitem url="/logout" icon="ui-icon-power" value="#{msg['menu.logout']}"/>
 										</p:menuButton>
@@ -90,7 +90,7 @@
 										rendered="#{not headerMBean.bloquearCampos}"/>
 										
 									<p:commandButton value="#{msg['botao.fechar']}" rendered="#{headerMBean.bloquearCampos}"
-										onclick="dlgAlterarSenha.hide();"/>
+										onclick="PF('dlgAlterarSenha').hide();"/>
 								</div>
 							</h:form>
 						</div>

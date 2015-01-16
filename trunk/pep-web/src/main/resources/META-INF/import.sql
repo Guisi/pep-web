@@ -132,6 +132,6 @@ INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos
-INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento) VALUES (1, '', 'a cada 8 horas', 1, 1);
-INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento) VALUES (2, 'Paracetamol', 'a cada 4 horas', 1);
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (1, '', 'a cada 8 horas', 1, 1, true);
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (2, 'Paracetamol', 'a cada 4 horas', 1, true);
 ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 3;
