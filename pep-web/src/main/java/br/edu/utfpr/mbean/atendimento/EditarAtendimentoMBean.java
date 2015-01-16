@@ -18,6 +18,7 @@ import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Medicamento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
+import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.MedicamentoService;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -33,12 +34,15 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private MedicamentoService medicamentoService;
 	@Inject
 	private AtendimentoService atendimentoService;
+	@Inject
+	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 	
 	private Atendimento atendimentoSelecionado;
 
 	private Medicamento medicamentoSelecionado;
 	private List<Medicamento> medicamentosDisponiveis;
 	private List<MedicamentoAtendimento> medicamentosAtendimento;
+	private List<MedicamentoAtendimento> medicamentosAtendimentosAnteriores;
 
 	@PostConstruct
 	public void init() {
@@ -55,7 +59,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			}
 			
 			this.pacienteSelecionado = this.atendimentoSelecionado.getPaciente();
-			this.medicamentosAtendimento = this.atendimentoSelecionado.getMedicamentos();
+			this.medicamentosAtendimento = new ArrayList<>(this.atendimentoSelecionado.getMedicamentos());
 		} else {
 			this.atendimentoSelecionado = new Atendimento();
 			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
@@ -76,6 +80,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
 		}
 		
+		this.listarMedicamentosAtendimentosAnteriores();
 		this.listarMedicamentosDisponiveis();
 	}
 	
@@ -97,16 +102,25 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	private void salvarAtendimento() {
 		this.atendimentoSelecionado.setMedicamentos(this.medicamentosAtendimento);
-		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado);
+		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, this.medicamentosAtendimentosAnteriores);
 	}
 	
 	private void listarMedicamentosDisponiveis() {
 		this.medicamentosDisponiveis = medicamentoService.retornarMedicamentos(Boolean.TRUE);
 		
-		for (MedicamentoAtendimento medicamentoAtendimento : this.medicamentosAtendimento) {
+		List<MedicamentoAtendimento> medicamentosAgrupado = this.getMedicamentosAtendimentoAgrupado();
+		for (MedicamentoAtendimento medicamentoAtendimento : medicamentosAgrupado) {
 			if (medicamentoAtendimento.getMedicamento() != null) {
 				this.medicamentosDisponiveis.remove(medicamentoAtendimento.getMedicamento());
 			}
+		}
+	}
+	
+	private void listarMedicamentosAtendimentosAnteriores() {
+		this.medicamentosAtendimentosAnteriores = medicamentoAtendimentoService
+				.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), this.atendimentoSelecionado.getId());
+		for (MedicamentoAtendimento medicamentoAtendimento : this.medicamentosAtendimentosAnteriores) {
+			medicamentoAtendimento.setAtendimentoAnterior(true);
 		}
 	}
 	
@@ -116,6 +130,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			
 			MedicamentoAtendimento medicamentoAtendimento = new MedicamentoAtendimento();
 			medicamentoAtendimento.setMedicamento(this.medicamentoSelecionado);
+			medicamentoAtendimento.setEmUso(Boolean.TRUE);
 			this.medicamentosAtendimento.add(medicamentoAtendimento);
 
 			this.medicamentoSelecionado = null;
@@ -124,17 +139,38 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	public void adicionarOutroMedicamento() {
 		MedicamentoAtendimento medicamentoAtendimento = new MedicamentoAtendimento();
+		medicamentoAtendimento.setEmUso(Boolean.TRUE);
 		this.medicamentosAtendimento.add(medicamentoAtendimento);
 	}
 	
-	private void ordenaListaMedicamentos() {
+	public void removerMedicamento(int indice) {
+		MedicamentoAtendimento medicamento = this.medicamentosAtendimento.get(indice);
+		this.medicamentosAtendimento.remove(indice);
+		if (medicamento.getMedicamento() != null) {
+			this.medicamentosDisponiveis.add(medicamento.getMedicamento());
+			this.ordenaListasMedicamentos();
+		}
+	}
+	
+	private void ordenaListasMedicamentos() {
 		Comparator<Medicamento> comparator = new Comparator<Medicamento>() {
 			@Override
 			public int compare(Medicamento o1, Medicamento o2) {
-				return o1.getPrincipioAtivo().compareTo(o2.getPrincipioAtivo());
+				int c = o1.getPrincipioAtivo().compareTo(o2.getPrincipioAtivo());
+				if (c == 0) {
+					c = o1.getApresentacao().compareTo(o2.getApresentacao());
+				}
+				return c;
 			}
 		};
+		
 		Collections.sort(this.medicamentosDisponiveis, comparator);
+	}
+	
+	public List<MedicamentoAtendimento> getMedicamentosAtendimentoAgrupado() {
+		List<MedicamentoAtendimento> l = new ArrayList<>(this.medicamentosAtendimento);
+		l.addAll(this.medicamentosAtendimentosAnteriores);
+		return l;
 	}
 	
 	public Atendimento getAtendimentoSelecionado() {
@@ -167,6 +203,14 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setMedicamentosAtendimento(List<MedicamentoAtendimento> medicamentosAtendimento) {
 		this.medicamentosAtendimento = medicamentosAtendimento;
+	}
+
+	public List<MedicamentoAtendimento> getMedicamentosAtendimentosAnteriores() {
+		return medicamentosAtendimentosAnteriores;
+	}
+
+	public void setMedicamentosAtendimentosAnteriores(List<MedicamentoAtendimento> medicamentosAtendimentosAnteriores) {
+		this.medicamentosAtendimentosAnteriores = medicamentosAtendimentosAnteriores;
 	}
 	
 }

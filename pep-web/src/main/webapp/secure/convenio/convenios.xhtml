@@ -32,7 +32,7 @@
 					
 					<p:column width="65px;" style="text-align: left;">
 						<p:commandButton value="" action="#{convenioMBean.editarConvenio(convenio.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-						<p:commandButton value="" oncomplete="excluirDlg.show();" icon="ui-icon-closethick" 
+						<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" 
 							styleClass="datatable-button datatable-button-right">
 							<f:setPropertyActionListener target="#{convenioMBean.convenioSelecionado}" value="#{convenio}"/>
 						</p:commandButton>
@@ -40,8 +40,8 @@
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['convenio.remover.confirmacao']}">
-			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{convenioMBean.removerConvenio}" update="convenioTable, msgConvenios" oncomplete="excluirDlg.hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-			        <p:commandButton value="#{msg['botao.nao']}" onclick="excluirDlg.hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{convenioMBean.removerConvenio}" update="convenioTable, msgConvenios" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
 			</h:form>
 		</p:panel>

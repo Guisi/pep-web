@@ -29,6 +29,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
 	
+	private boolean mostrarReabrirAtendimento;
+	
 	@PostConstruct
 	public void init() {
 		String idPaciente = getRequest().getParameter("idPaciente");
@@ -58,6 +60,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	
 	public void onAtendimentoSelecionado() {
 		this.atendimentoSelecionado = atendimentoService.retornarAtendimento(this.atendimentoSelecionado.getId());
+		this.mostrarReabrirAtendimento = this.atendimentoList.get(0).equals(this.atendimentoSelecionado);
 	}
 	
 	public String novoAtendimento() {
@@ -82,5 +85,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setAtendimentoSelecionado(Atendimento atendimentoSelecionado) {
 		this.atendimentoSelecionado = atendimentoSelecionado;
+	}
+
+	public boolean isMostrarReabrirAtendimento() {
+		return mostrarReabrirAtendimento;
+	}
+
+	public void setMostrarReabrirAtendimento(boolean mostrarReabrirAtendimento) {
+		this.mostrarReabrirAtendimento = mostrarReabrirAtendimento;
 	}
 }
