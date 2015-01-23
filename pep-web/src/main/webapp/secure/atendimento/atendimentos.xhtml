@@ -34,7 +34,11 @@
 						</h:panelGrid>
 					</p:panel>
 		
-					<p:panel styleClass="atendimentosPanel">
+					<p:panel rendered="#{empty atendimentoMBean.atendimentoList}">
+						<h:outputText value="#{msg['atendimento.lista.empty']}" />
+					</p:panel>
+		
+					<p:panel styleClass="atendimentosPanel" rendered="#{not empty atendimentoMBean.atendimentoList}">
 						<f:facet name="header">
 							<h:panelGrid columns="3">
 								<h:outputText value="#{msg['atendimento.lista.header']}: "/>
