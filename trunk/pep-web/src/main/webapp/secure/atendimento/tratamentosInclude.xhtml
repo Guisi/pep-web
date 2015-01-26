@@ -8,18 +8,23 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<p:panel header="#{msg['atendimento.tratamentos.header']}" toggleable="true" styleClass="moduloAtendimentoPanel">
-		<h:panelGrid columns="2">
-			<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 500px; margin-top: 2px;" filter="true" filterMatchMode="contains">
-				<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-				<f:selectItems value="#{editarAtendimentoMBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
-				<p:ajax event="change" update="addMedicamentoBtn" process="@this"/>
-			</p:selectOneMenu>
-			<p:columnGroup>
-				<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
-					disabled="#{empty editarAtendimentoMBean.medicamentoSelecionado}" styleClass="botaoSalvar" process="medicamentoAddInput, @this"/>
-				<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarOutroMedicamento}" process="@this"
-					value="#{msg['atendimento.botao.outrotratamento']}" update="medicamentosTable" styleClass="botaoSalvar"/>
-			</p:columnGroup>
+		<h:panelGrid columns="2" width="100%">
+			<h:panelGrid columns="2">
+				<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 500px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+					<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+					<f:selectItems value="#{editarAtendimentoMBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
+					<p:ajax event="change" update="addMedicamentoBtn" process="@this"/>
+				</p:selectOneMenu>
+				<p:columnGroup>
+					<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
+						disabled="#{empty editarAtendimentoMBean.medicamentoSelecionado}" styleClass="botaoSalvar"/>
+					<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarOutroMedicamento}"
+						value="#{msg['atendimento.botao.outrotratamento']}" update="medicamentosTable" styleClass="botaoSalvar"/>
+				</p:columnGroup>
+			</h:panelGrid>
+			<p:column style="text-align: right;">
+				<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;"/>
+			</p:column>
 		</h:panelGrid>
 		
 		<div>
@@ -50,4 +55,7 @@
 			</p:dataTable>
 		</div>
 	</p:panel>
+	
+	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" draggable="true" header="#{msg['atendimento.tratamentos.modal.header']}" width="500">
+	</p:dialog>
 </h:html>
