@@ -38,6 +38,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 	
 	private Atendimento atendimentoSelecionado;
+	private List<Atendimento> atendimentosAnteriores;
 
 	private Medicamento medicamentoSelecionado;
 	private List<Medicamento> medicamentosDisponiveis;
@@ -80,6 +81,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
 		}
 		
+		this.listarAtendimentosAnteriores();
 		this.listarMedicamentosAtendimentosAnteriores();
 		this.listarMedicamentosDisponiveis();
 	}
@@ -114,6 +116,10 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.medicamentosDisponiveis.remove(medicamentoAtendimento.getMedicamento());
 			}
 		}
+	}
+	
+	private void listarAtendimentosAnteriores() {
+		this.atendimentosAnteriores = atendimentoService.retornarAtendimentosAnterioresPaciente(this.pacienteSelecionado.getId(), this.atendimentoSelecionado.getId());
 	}
 	
 	private void listarMedicamentosAtendimentosAnteriores() {
@@ -211,6 +217,14 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setMedicamentosAtendimentosAnteriores(List<MedicamentoAtendimento> medicamentosAtendimentosAnteriores) {
 		this.medicamentosAtendimentosAnteriores = medicamentosAtendimentosAnteriores;
+	}
+
+	public List<Atendimento> getAtendimentosAnteriores() {
+		return atendimentosAnteriores;
+	}
+
+	public void setAtendimentosAnteriores(List<Atendimento> atendimentosAnteriores) {
+		this.atendimentosAnteriores = atendimentosAnteriores;
 	}
 	
 }
