@@ -28,6 +28,10 @@ public class AtendimentoService {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
 	}
 	
+	public List<Atendimento> retornarAtendimentosAnterioresPaciente(Long idPaciente, Long idAtendimentoAtual) {
+		return atendimentoDao.retornarAtendimentosAnterioresPaciente(idPaciente, idAtendimentoAtual);
+	}
+	
 	public Atendimento retornarAtendimento(Long id) {
 		try {
 			return atendimentoDao.retornarAtendimentoPorId(id);

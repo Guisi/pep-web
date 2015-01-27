@@ -23,7 +23,7 @@
 				</p:columnGroup>
 			</h:panelGrid>
 			<p:column style="text-align: right;">
-				<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;"/>
+				<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}"/>
 			</p:column>
 		</h:panelGrid>
 		
@@ -56,6 +56,22 @@
 		</div>
 	</p:panel>
 	
-	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" draggable="true" header="#{msg['atendimento.tratamentos.modal.header']}" width="500">
+	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.tratamentos.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}" width="800">
+	
+		<ui:repeat var="atendimento" value="#{editarAtendimentoMBean.atendimentosAnteriores}">
+			<p:panel header="#{msg['atendimento.tratamentos.anteriores.atendimento.header']} #{atendimento.dataFormatada}" toggleable="true"
+				rendered="#{not empty atendimento.medicamentos}" style="margin-top: 5px;">
+				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}"
+					styleClass="datatable-no-header">
+					<p:column style="text-align: left;">
+						<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
+						<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+						<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</ui:repeat>
 	</p:dialog>
 </h:html>
