@@ -5,6 +5,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	template="/templates/base.xhtml">
 
 	<ui:define name="content">
@@ -38,37 +39,53 @@
 						<h:outputText value="#{msg['atendimento.lista.empty']}" />
 					</p:panel>
 		
-					<p:panel styleClass="atendimentosPanel" rendered="#{not empty atendimentoMBean.atendimentoList}">
-						<f:facet name="header">
-							<h:panelGrid columns="3">
-								<h:outputText value="#{msg['atendimento.lista.header']}: "/>
-								<p:selectOneMenu id="atendimentoSom" value="#{atendimentoMBean.atendimentoSelecionado}" converter="genericEntityConverter" style="width: 300px; margin-left: 5px;">
-									<f:selectItems value="#{atendimentoMBean.atendimentoList}" var="atendimento" itemLabel="#{atendimento.dataFormatada}" itemValue="#{atendimento}"/>
-									<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pnMedicamentosTable, pnBtnReabrirAtendimento"/>
-								</p:selectOneMenu>
-								<p:outputPanel id="pnBtnReabrirAtendimento">
-									<p:commandButton id="btnReabrirAtendimento" value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
-										rendered="#{atendimentoMBean.mostrarReabrirAtendimento}" process="atendimentoSom, @this" style="margin-top: -3px;"/>
+					<h:panelGrid columns="2" rendered="#{not empty atendimentoMBean.atendimentoList}" columnClasses="rightContent,rightContent">
+						<p:panel styleClass="atendimentosPanel">
+							<f:facet name="header">
+								<h:panelGrid columns="3">
+									<h:outputText value="#{msg['atendimento.lista.header']}: "/>
+									<p:selectOneMenu id="atendimentoSom" value="#{atendimentoMBean.atendimentoSelecionado}" converter="genericEntityConverter" style="width: 300px; margin-left: 5px;">
+										<f:selectItems value="#{atendimentoMBean.atendimentoList}" var="atendimento" itemLabel="#{atendimento.dataFormatada}" itemValue="#{atendimento}"/>
+										<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pnMedicamentosTable, pnBtnReabrirAtendimento"/>
+									</p:selectOneMenu>
+									<p:outputPanel id="pnBtnReabrirAtendimento">
+										<p:commandButton id="btnReabrirAtendimento" value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
+											rendered="#{atendimentoMBean.mostrarReabrirAtendimento}" process="atendimentoSom, @this" style="margin-top: -3px;"/>
+									</p:outputPanel>
+								</h:panelGrid>
+							</f:facet>
+	
+							<div style="width: 50%">
+								<p:outputPanel id="pnMedicamentosTable">
+									<p:panel toggleable="true" header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}">
+										<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
+											rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
+											<p:column style="text-align: left;">
+												<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
+												<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+												<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+											</p:column>
+										</p:dataTable>
+									</p:panel>
 								</p:outputPanel>
-							</h:panelGrid>
-						</f:facet>
-
-						<div style="width: 50%">
-							<p:outputPanel id="pnMedicamentosTable">
-								<p:panel toggleable="true" header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}">
-									<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
-										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
-										<p:column style="text-align: left;">
-											<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
-											<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
-											<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
-										</p:column>
-									</p:dataTable>
-								</p:panel>
-							</p:outputPanel>
-						</div>
-					</p:panel>
+							</div>
+						</p:panel>
+						
+						<p:panel header="#{msg['atendimento.resumo.header']}" style="width: 350px;">
+							<p:accordionPanel multiple="true" activeIndex="">
+								<p:tab title="#{msg['atendimento.tratamentos.header']} (#{fn:length(atendimentoMBean.medicamentosEmUso)})">
+									<p:dataList value="#{atendimentoMBean.medicamentosEmUso}" var="medicamentoAtendimento"
+										emptyMessage="#{msg['atendimento.tratamentos.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
+										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+										<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+								    </p:dataList>
+								</p:tab>
+							</p:accordionPanel>
+						</p:panel>
+					</h:panelGrid>
+						
 				</p:outputPanel>
 			</h:form>
 		</p:panel>

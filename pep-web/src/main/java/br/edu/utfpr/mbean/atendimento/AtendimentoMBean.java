@@ -12,7 +12,9 @@ import javax.inject.Inject;
 import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
+import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
@@ -25,11 +27,16 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private AtendimentoService atendimentoService;
 	@Inject
 	private UsuarioService usuarioService;
+	@Inject
+	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
 	
 	private boolean mostrarReabrirAtendimento;
+	
+	/* Resumo prontuario */
+	private List<MedicamentoAtendimento> medicamentosEmUso;
 	
 	@PostConstruct
 	public void init() {
@@ -47,6 +54,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		}
 
 		this.listarAtendimentos();
+		this.listarResumoProntuario();
 	}
 	
 	public void listarAtendimentos() {
@@ -56,6 +64,10 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 			this.atendimentoSelecionado = this.atendimentoList.get(0);
 			this.onAtendimentoSelecionado();
 		}
+	}
+	
+	public void listarResumoProntuario() {
+		this.medicamentosEmUso = medicamentoAtendimentoService.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), null);
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -93,5 +105,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setMostrarReabrirAtendimento(boolean mostrarReabrirAtendimento) {
 		this.mostrarReabrirAtendimento = mostrarReabrirAtendimento;
+	}
+
+	public List<MedicamentoAtendimento> getMedicamentosEmUso() {
+		return medicamentosEmUso;
+	}
+
+	public void setMedicamentosEmUso(List<MedicamentoAtendimento> medicamentosEmUso) {
+		this.medicamentosEmUso = medicamentosEmUso;
 	}
 }
