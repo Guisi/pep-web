@@ -15,7 +15,7 @@
 			
 				<p:messages id="msgAtendimentos"/>
 				
-				<p:outputPanel rendered="#{not empty editarAtendimentoMBean.atendimentoSelecionado}">
+				<p:outputPanel rendered="#{not empty editarAtendimentoMBean.atendimentoSelecionado and not empty editarAtendimentoMBean.pacienteSelecionado}">
 
 					<p:panel>
 						<h:panelGrid columns="2" columnClasses="leftAligned, rightAligned" style="width: 100%;">

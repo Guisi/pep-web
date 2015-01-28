@@ -271,3 +271,13 @@ fieldset {
 .datatable-no-header table thead tr {
     display: none;
 }
+
+.ui-accordion .ui-accordion-content {
+	padding: 0px !important;
+	text-align: left;
+}
+
+.datalist-item {
+	border-bottom: 1px solid #dddddd;
+	margin: 0px 10px 10px 10px;
+}
