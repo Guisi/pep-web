@@ -11,9 +11,9 @@
 		<project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
 
 		<wildfly-hostname>localhost</wildfly-hostname>
-		<wildfly-port>9990</wildfly-port>
-		<wildfly-username>jboss</wildfly-username>
-		<wildfly-password>jboss</wildfly-password>
+		<wildfly-port>9980</wildfly-port>
+		<wildfly-username>admin</wildfly-username>
+		<wildfly-password>a123456*</wildfly-password>
 	</properties>
 
 	<repositories>
@@ -247,7 +247,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>install</phase>
+						<phase>deploy</phase>
 						<goals>
 							<goal>deploy</goal>
 						</goals>
