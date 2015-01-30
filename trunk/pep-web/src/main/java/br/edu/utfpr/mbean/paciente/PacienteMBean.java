@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import br.edu.utfpr.constants.PerfilEnum;
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.model.AlteracaoAtributo;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -24,6 +25,8 @@ public class PacienteMBean extends BaseMBean {
 	private List<Usuario> pacienteList;
 	private Usuario pacienteSelecionado;
 	private String pesquisa;
+	
+	private List<AlteracaoAtributo> historicoAlteracoes;
 	
 	@PostConstruct
 	public void init() {
@@ -54,6 +57,10 @@ public class PacienteMBean extends BaseMBean {
 		
 		addInfoMessage(getMsgs().getString("paciente.remover.sucesso"));
 	}
+	
+	public void listarHistoricoPaciente(Long idPaciente) {
+		this.historicoAlteracoes = usuarioService.retornarHistoricoAlteracaoUsuario(idPaciente);
+	}
 
 	public List<Usuario> getPacienteList() {
 		return pacienteList;
@@ -77,5 +84,13 @@ public class PacienteMBean extends BaseMBean {
 
 	public void setPesquisa(String pesquisa) {
 		this.pesquisa = pesquisa;
+	}
+
+	public List<AlteracaoAtributo> getHistoricoAlteracoes() {
+		return historicoAlteracoes;
+	}
+
+	public void setHistoricoAlteracoes(List<AlteracaoAtributo> historicoAlteracoes) {
+		this.historicoAlteracoes = historicoAlteracoes;
 	}
 }

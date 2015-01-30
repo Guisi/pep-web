@@ -3,7 +3,9 @@ package br.edu.utfpr.service;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.ejb.Stateless;
@@ -25,9 +27,13 @@ import br.edu.utfpr.dao.UsuarioDao;
 import br.edu.utfpr.email.Email;
 import br.edu.utfpr.email.EmailHandler;
 import br.edu.utfpr.exception.AppException;
+import br.edu.utfpr.model.AlteracaoAtributo;
+import br.edu.utfpr.model.Auditoria;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.TokenCadastro;
 import br.edu.utfpr.model.Usuario;
+import br.edu.utfpr.utils.AtributoAuditoria;
+import br.edu.utfpr.utils.AuditoriaUtils;
 import br.edu.utfpr.utils.PasswordHandler;
 import br.edu.utfpr.utils.UserThreadLocal;
 
@@ -231,5 +237,40 @@ public class UsuarioService {
 		email.setMensagem(msg);
 
 		emailHandler.sendEmail(email);
+	}
+	
+	public List<AlteracaoAtributo> retornarHistoricoAlteracaoUsuario(Long idUsuario) {
+		List<Auditoria> list = usuarioDao.retornarHistoricoAlteracaoUsuario(Usuario.class, idUsuario);
+		
+		ResourceBundle bundle = ResourceBundle.getBundle(MessageName.MESSAGES.value(), Constantes.LOCALE_PT_BR);
+		
+		List<AtributoAuditoria> atributos = new ArrayList<>();
+		atributos.add(new AtributoAuditoria("numeroProntuario", bundle.getString("usuario.numeroprontuario")));
+		atributos.add(new AtributoAuditoria("nomeCompleto", bundle.getString("usuario.nome")));
+		atributos.add(new AtributoAuditoria("nomeFantasia", bundle.getString("usuario.apelido")));
+		atributos.add(new AtributoAuditoria("cpf", bundle.getString("usuario.cpf")));
+		atributos.add(new AtributoAuditoria("rg", bundle.getString("usuario.rg")));
+		atributos.add(new AtributoAuditoria("email", bundle.getString("usuario.email")));
+		atributos.add(new AtributoAuditoria("telefone", bundle.getString("usuario.telefone")));
+		atributos.add(new AtributoAuditoria("celular", bundle.getString("usuario.celular")));
+		atributos.add(new AtributoAuditoria("dataNascimento", bundle.getString("usuario.datanascimento"), Constantes.FORMATO_DATA));
+		atributos.add(new AtributoAuditoria("estadoCivil", bundle.getString("usuario.estadocivil")));
+		
+		Map<String, String> dominiosSexo = new HashMap<String, String>();
+		dominiosSexo.put("M", "Masculino");
+		dominiosSexo.put("F", "Feminino");
+		atributos.add(new AtributoAuditoria("sexo", bundle.getString("usuario.sexo"), dominiosSexo));
+		
+		atributos.add(new AtributoAuditoria("profissao", bundle.getString("usuario.profissao")));
+		String endereco = bundle.getString("usuario.endereco") + " - ";
+		atributos.add(new AtributoAuditoria("cep", endereco + bundle.getString("usuario.cep")));
+		atributos.add(new AtributoAuditoria("logradouro", endereco + bundle.getString("usuario.logradouro")));
+		atributos.add(new AtributoAuditoria("numero", endereco + bundle.getString("usuario.numero")));
+		atributos.add(new AtributoAuditoria("complemento", endereco + bundle.getString("usuario.complemento")));
+		atributos.add(new AtributoAuditoria("bairro", endereco + bundle.getString("usuario.bairro")));
+		atributos.add(new AtributoAuditoria("cidade", endereco + bundle.getString("usuario.cidade")));
+		atributos.add(new AtributoAuditoria("uf", endereco + bundle.getString("usuario.estado")));
+		
+		return AuditoriaUtils.montarListaAlteracoesAtributos(atributos, list);
 	}
 }

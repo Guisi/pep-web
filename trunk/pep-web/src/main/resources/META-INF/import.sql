@@ -21,7 +21,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (6,
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (7, 'EDITAR_PACIENTES', 'Autorização para visualizar, criar, editar e excluir pacientes.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (8, 'VISUALIZAR_PACIENTES', 'Autorização para visualizar pacientes.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (9, 'EDITAR_MEDICAMENTOS', 'Autorização para editar medicamentos.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 10;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (10, 'ALTERAR_EMAIL_USUARIO', 'Autorização para modificar e-mail do usuário.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 11;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -35,6 +36,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 6);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 7);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 9);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 10);
 
 --vincula autorizacoes de edicao de paciente ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
@@ -128,7 +130,10 @@ INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentac
 ALTER SEQUENCE pep_owner.medicamento_sequence RESTART WITH 18;
 
 --atendimento
+--postgres
 INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+--h2
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos

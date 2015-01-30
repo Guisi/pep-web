@@ -2,6 +2,9 @@ package br.edu.utfpr.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.DefaultRevisionEntity;
@@ -19,6 +22,10 @@ public class Revisao extends DefaultRevisionEntity {
 
 	@Column(name = "id_usuario")
 	private Long idUsuario;
+	
+	@JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Usuario usuario;
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -27,4 +34,13 @@ public class Revisao extends DefaultRevisionEntity {
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }

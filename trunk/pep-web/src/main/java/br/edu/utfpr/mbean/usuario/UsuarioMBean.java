@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
 import br.edu.utfpr.mbean.BaseMBean;
+import br.edu.utfpr.model.AlteracaoAtributo;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -23,6 +24,8 @@ public class UsuarioMBean extends BaseMBean {
 	private List<Usuario> usuarioList;
 	private Usuario usuarioSelecionado;
 	private String pesquisa;
+	
+	private List<AlteracaoAtributo> historicoAlteracoes;
 	
 	@PostConstruct
 	public void init() {
@@ -50,6 +53,10 @@ public class UsuarioMBean extends BaseMBean {
 		addInfoMessage(getMsgs().getString("usuario.remover.sucesso"));
 	}
 	
+	public void listarHistoricoUsuario(Long idUsuario) {
+		this.historicoAlteracoes = usuarioService.retornarHistoricoAlteracaoUsuario(idUsuario);
+	}
+	
 	public List<Usuario> getUsuarioList() {
 		return usuarioList;
 	}
@@ -68,5 +75,13 @@ public class UsuarioMBean extends BaseMBean {
 
 	public void setPesquisa(String pesquisa) {
 		this.pesquisa = pesquisa;
+	}
+
+	public List<AlteracaoAtributo> getHistoricoAlteracoes() {
+		return historicoAlteracoes;
+	}
+
+	public void setHistoricoAlteracoes(List<AlteracaoAtributo> historicoAlteracoes) {
+		this.historicoAlteracoes = historicoAlteracoes;
 	}
 }

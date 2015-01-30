@@ -49,20 +49,26 @@
 						<h:outputText value="#{usuario.celularFormatado}" />
 					</p:column>
 					
-					<sec:ifAnyGranted roles="EDITAR_USUARIOS">
-						<p:column width="70px;">
-							<p:commandButton action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
-							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+					<p:column width="100px;">
+						<sec:ifAnyGranted roles="EDITAR_USUARIOS">
+							<p:commandButton action="#{usuarioMBean.onEditUsuarioClick(usuario.id)}" icon="ui-icon-pencil" styleClass="datatable-button" title="#{msg['botao.editar']}"/>
+							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right" title="#{msg['botao.inativar']}">
 								<f:setPropertyActionListener target="#{usuarioMBean.usuarioSelecionado}" value="#{usuario}"/>
 							</p:commandButton>
-						</p:column>
-					</sec:ifAnyGranted>
+						</sec:ifAnyGranted>
+						<p:commandButton action="#{usuarioMBean.listarHistoricoUsuario(usuario.id)}" icon="ui-icon-search" styleClass="datatable-button datatable-button-right"
+							update=":frmUsuarios:historicoAlteracoesTable" oncomplete="PF('dlgHistoricoAlteracoes').show();" title="#{msg['botao.historicoalteracoes']}"/>
+					</p:column>
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['usuario.remover.confirmacao']}">
 			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{usuarioMBean.removerUsuario}" update="usuarioTable, msgUsuarios" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
+			    
+			    <ui:include src="../auditoria/auditoria.xhtml">
+			    	<ui:param name="mbean" value="#{usuarioMBean}" />
+			    </ui:include>
 			</h:form>
 		</p:panel>
 	</ui:define>
