@@ -14,6 +14,10 @@ public interface Constantes {
 	
 	final String FORMATO_DATA_HORA_DIA_SEMANA = "dd/MM/yyyy HH:mm - EEEE";
 	
+	final String FORMATO_DATA_HORA = "dd/MM/yyyy HH:mm";
+	
+	final String FORMATO_DATA = "dd/MM/yyyy";
+	
 	final Integer PASSWD_MIN_LENGHT = 6;
 
 	final Integer PASSWD_MAX_LENGHT = 8;

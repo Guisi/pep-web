@@ -1,5 +1,4 @@
-package 
-br.edu.utfpr.dao;
+package br.edu.utfpr.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;

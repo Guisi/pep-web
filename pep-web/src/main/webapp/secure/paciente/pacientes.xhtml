@@ -55,21 +55,28 @@
 						<h:outputText value="#{paciente.celularFormatado}" />
 					</p:column>
 					
-					<sec:ifAnyGranted roles="EDITAR_PACIENTES">
-						<p:column width="100px;">
-							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-search" styleClass="datatable-button"/>
-							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right"/>
-							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right">
+					<p:column width="140px;">
+						<sec:ifAnyGranted roles="EDITAR_PACIENTES">
+							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-clipboard" styleClass="datatable-button" title="#{msg['botao.prontuario']}"/>
+							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right" title="#{msg['botao.editar']}"/>
+							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right" title="#{msg['botao.inativar']}">
 								<f:setPropertyActionListener target="#{pacienteMBean.pacienteSelecionado}" value="#{paciente}"/>
 							</p:commandButton>
-						</p:column>
-					</sec:ifAnyGranted>
+						</sec:ifAnyGranted>
+
+						<p:commandButton action="#{pacienteMBean.listarHistoricoPaciente(paciente.id)}" icon="ui-icon-search" styleClass="datatable-button datatable-button-right"
+							update=":frmPacientes:historicoAlteracoesTable" oncomplete="PF('dlgHistoricoAlteracoes').show();" title="#{msg['botao.historicoalteracoes']}"/>
+					</p:column>
 				</p:dataTable>
 				
 				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['paciente.remover.confirmacao']}">
 			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{pacienteMBean.removerPaciente}" update="pacienteTable, msgPacientes" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			    </p:confirmDialog>
+			    
+			    <ui:include src="../auditoria/auditoria.xhtml">
+			    	<ui:param name="mbean" value="#{pacienteMBean}" />
+			    </ui:include>
 			</h:form>
 		</p:panel>
 	</ui:define>

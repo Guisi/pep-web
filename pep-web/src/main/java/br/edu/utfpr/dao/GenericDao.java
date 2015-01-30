@@ -12,7 +12,14 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+
+import br.edu.utfpr.model.Auditoria;
 import br.edu.utfpr.model.BaseEntity;
+import br.edu.utfpr.model.Revisao;
 
 @SuppressWarnings("unchecked")
 public abstract class GenericDao<T extends BaseEntity, PK> {
@@ -77,6 +84,30 @@ public abstract class GenericDao<T extends BaseEntity, PK> {
 	
 	private Class<T> getTypeClass() {
 		return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	}
+	
+	public List<Auditoria> retornarHistoricoAlteracaoUsuario(Class<T> clazz, Long id) {
+		AuditReader reader = AuditReaderFactory.get(entityManager);
+		
+		AuditQuery query = reader.createQuery().forRevisionsOfEntity(clazz, false, true);
+		query.add(AuditEntity.id().eq(id));
+		query.addOrder(AuditEntity.revisionNumber().desc());
+		
+		List<Object[]> auditResult = query.getResultList();
+		
+		List<Auditoria> auditoriaList = new ArrayList<>();
+		for (Object[] objects : auditResult) {
+			BaseEntity entidade = (BaseEntity) objects[0];
+			Revisao revisao = (Revisao) objects[1];
+			
+			Auditoria auditoria = new Auditoria();
+			auditoria.setEntidade(entidade);
+			auditoria.setRevisao(revisao);
+			
+			auditoriaList.add(auditoria);
+		}
+		
+		return auditoriaList;
 	}
 	
 }
