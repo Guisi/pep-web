@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.model.Convenio;
 import br.edu.utfpr.model.Convenio_;
 
@@ -22,7 +24,7 @@ public class ConvenioDao extends GenericDao<Convenio, Long> implements Serializa
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Convenio> q = qb.createQuery(Convenio.class);
 		Root<Convenio> root = q.from(Convenio.class);
-		q.where(qb.equal(root.get(Convenio_.descricao), descricao));
+		q.where(qb.equal(qb.lower(root.get(Convenio_.descricao)), StringUtils.lowerCase(descricao)));
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}

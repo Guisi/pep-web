@@ -122,6 +122,12 @@
 			<artifactId>hibernate-envers</artifactId>
 			<version>4.3.7.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>3.0b5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>br.com.caelum.stella</groupId>

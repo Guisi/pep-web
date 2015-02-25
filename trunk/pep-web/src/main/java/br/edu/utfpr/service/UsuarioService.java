@@ -184,11 +184,6 @@ public class UsuarioService {
 		destinatariosEmail.add(usuario.getEmail());
 		email.setDestinatarios(destinatariosEmail);
 
-		// Remetente Email
-		/*List<String> remetentesEmail = new ArrayList<>();
-		remetentesEmail.add(bundle.getString("usuariobean.reiniciarsenha.email.sender"));
-		email.setRemetentes(remetentesEmail);*/
-
 		// Mensagem Solicitacao de Cadastro
 		String msg = MessageFormat.format(bundle.getString("usuario.emailsenhaprovisoria.mensagem"),
 				usuario.getNomeFantasia(), usuario.getEmail(), senha);
@@ -223,11 +218,6 @@ public class UsuarioService {
 		List<String> destinatariosEmail = new ArrayList<>();
 		destinatariosEmail.add(usuario.getEmail());
 		email.setDestinatarios(destinatariosEmail);
-
-		// Remetente Email
-		/*List<String> remetentesEmail = new ArrayList<>();
-		remetentesEmail.add(bundle.getString("usuariobean.reiniciarsenha.email.sender"));
-		email.setRemetentes(remetentesEmail);*/
 
 		// Mensagem Solicitacao de Cadastro
 		String msg = MessageFormat.format(bundle.getString("solicitaralteracaosenha.email.mensagem"),

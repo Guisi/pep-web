@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -52,6 +53,7 @@ public class Perfil extends BaseEntity {
     @JoinTable(name=Constantes.PEP_OWNER + "tb_perfil_autorizacao",
         joinColumns=@JoinColumn(name="id_perfil"),
         inverseJoinColumns=@JoinColumn(name="id_autorizacao"))
+	@OrderBy(value = "nome")
 	private Set<Autorizacao> autorizacoes;
 	
 	@ManyToMany(mappedBy="perfisUsuario", fetch = FetchType.LAZY)

@@ -34,9 +34,14 @@
 				        <h:outputText value="#{msg['paciente.lista.header']}"/>
 				    </f:facet>
 				    <p:column headerText="#{msg['paciente.numeroprontuario']}">
-						<h:commandLink id="verProntuarioLink" action="#{pacienteMBean.verProntuario(paciente.id)}">
+				    	<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
+							<h:commandLink id="verProntuarioLink" action="#{pacienteMBean.verProntuario(paciente.id)}">
+								<h:outputText value="#{paciente.numeroProntuario}" />
+							</h:commandLink>
+						</sec:ifAnyGranted>
+						<sec:ifNotGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
 							<h:outputText value="#{paciente.numeroProntuario}" />
-						</h:commandLink>
+						</sec:ifNotGranted>
 					</p:column>
 				    
 					<p:column headerText="#{msg['paciente.cpf']}">
@@ -56,8 +61,10 @@
 					</p:column>
 					
 					<p:column width="140px;">
-						<sec:ifAnyGranted roles="EDITAR_PACIENTES">
+						<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
 							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-clipboard" styleClass="datatable-button" title="#{msg['botao.prontuario']}"/>
+						</sec:ifAnyGranted>
+						<sec:ifAnyGranted roles="EDITAR_PACIENTES">
 							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right" title="#{msg['botao.editar']}"/>
 							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right" title="#{msg['botao.inativar']}">
 								<f:setPropertyActionListener target="#{pacienteMBean.pacienteSelecionado}" value="#{paciente}"/>

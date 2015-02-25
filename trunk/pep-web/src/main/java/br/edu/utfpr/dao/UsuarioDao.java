@@ -11,13 +11,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.constants.PerfilEnum;
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Perfil_;
 import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.model.Usuario_;
-
-import com.ocpsoft.pretty.faces.util.StringUtils;
 
 public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializable {
 
@@ -30,7 +30,7 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 
 		List<Predicate> predicados = new ArrayList<>();
 		if (StringUtils.isNotBlank(textoPesquisa)) {
-			predicados.add(qb.like(qb.lower(root.get(Usuario_.nomeCompleto)), "%" + textoPesquisa.toLowerCase() + "%"));
+			predicados.add(qb.like(qb.lower(root.get(Usuario_.nomeCompleto)), "%" + StringUtils.lowerCase(textoPesquisa) + "%"));
 		}
 		
 		if (perfil != null) {
@@ -54,7 +54,7 @@ public class UsuarioDao extends GenericDao<Usuario, Long> implements Serializabl
 		CriteriaQuery<Usuario> q = qb.createQuery(Usuario.class);
 		Root<Usuario> root = q.from(Usuario.class);
 
-		Predicate predicate = qb.equal(root.get(Usuario_.email), email);
+		Predicate predicate = qb.equal(qb.lower(root.get(Usuario_.email)), StringUtils.lowerCase(email));
 		if (chkAtivo != null) {
 			predicate = qb.and(predicate, qb.equal(root.get(Usuario_.chkAtivo), chkAtivo));
 		}

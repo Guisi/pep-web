@@ -11,6 +11,6 @@ public class AutorizacaoDao extends GenericDao<Autorizacao, Long> implements Ser
 	private static final long serialVersionUID = 1L;
 
 	public List<Autorizacao> retornarAutorizacoes() {
-		return findAll(Autorizacao_.descricao);
+		return findAll(Autorizacao_.nome);
 	}
 }

@@ -13,7 +13,7 @@
 			<sec:ifAnyGranted roles="EDITAR_PACIENTES, VISUALIZAR_PACIENTES">
 				<p:menuitem outcome="pretty:listarPacientes" value="#{msg['menu.pacientes']}"/>
 			</sec:ifAnyGranted>
-			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS, EDITAR_ESPECIALIDADES">
+			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS, EDITAR_ESPECIALIDADES, EDITAR_CONVENIOS, EDITAR_MEDICAMENTOS, EDITAR_QUEIXAS_PRINCIPAIS">
 				<p:submenu label="#{msg['menu.administracao']}">
 					<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS">
 						<p:menuitem outcome="pretty:listarUsuarios" value="#{msg['menu.administracao.usuarios']}"/>
@@ -29,6 +29,9 @@
 					</sec:ifAnyGranted>
 					<sec:ifAnyGranted roles="EDITAR_MEDICAMENTOS">
 						<p:menuitem outcome="pretty:listarMedicamentos" value="#{msg['menu.administracao.medicamentos']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_QUEIXAS_PRINCIPAIS">
+						<p:menuitem outcome="pretty:listarQueixasPrincipais" value="#{msg['menu.administracao.queixasprincipais']}"/>
 					</sec:ifAnyGranted>
 				</p:submenu>
 			</sec:ifAnyGranted>

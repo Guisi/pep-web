@@ -22,7 +22,10 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (7,
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (8, 'VISUALIZAR_PACIENTES', 'Autorização para visualizar pacientes.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (9, 'EDITAR_MEDICAMENTOS', 'Autorização para editar medicamentos.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (10, 'ALTERAR_EMAIL_USUARIO', 'Autorização para modificar e-mail do usuário.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 11;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (11, 'EDITAR_QUEIXAS_PRINCIPAIS', 'Autorização para editar queixas principais.');
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (12, 'MANUTENIR_ATENDIMENTOS', 'Autorização para ver, criar e editar atendimentos do paciente.');
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (13, 'VISUALIZAR_ATENDIMENTOS', 'Autorização para ver atendimentos do paciente.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 14;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -37,9 +40,12 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 7);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 9);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 10);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 11);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 12);
 
---vincula autorizacoes de edicao de paciente ao perfil Recepcionista
+--vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 12);
 
 --vincula autorizacao EDITAR_INFORMACOES_PESSOAIS a todos os perfis
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 4);
@@ -131,9 +137,9 @@ ALTER SEQUENCE pep_owner.medicamento_sequence RESTART WITH 18;
 
 --atendimento
 --postgres
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
 --h2
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos
