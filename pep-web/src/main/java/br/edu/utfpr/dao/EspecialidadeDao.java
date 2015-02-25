@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.model.Especialidade;
 import br.edu.utfpr.model.Especialidade_;
 
@@ -22,7 +24,7 @@ public class EspecialidadeDao extends GenericDao<Especialidade, Long> implements
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Especialidade> q = qb.createQuery(Especialidade.class);
 		Root<Especialidade> root = q.from(Especialidade.class);
-		q.where(qb.equal(root.get(Especialidade_.descricao), descricao));
+		q.where(qb.equal(qb.lower(root.get(Especialidade_.descricao)), StringUtils.lowerCase(descricao)));
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}

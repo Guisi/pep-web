@@ -33,15 +33,15 @@
 				        <h:outputText value="#{msg['medicamento.lista.header']}"/>
 				    </f:facet>
 					
-					<p:column headerText="#{msg['medicamento.principioativo']}" styleClass="leftAligned" width="42%" sortBy="#{medicamento.principioAtivo}">
+					<p:column headerText="#{msg['medicamento.principioativo']}" styleClass="leftAligned" width="40%" sortBy="#{medicamento.principioAtivo}">
 						<h:outputText value="#{medicamento.principioAtivo}" />
 					</p:column>
 					
-					<p:column headerText="#{msg['medicamento.apresentacao']}" styleClass="leftAligned" width="42%" sortBy="#{medicamento.apresentacao}">
+					<p:column headerText="#{msg['medicamento.apresentacao']}" styleClass="leftAligned" width="40%" sortBy="#{medicamento.apresentacao}">
 						<h:outputText value="#{medicamento.apresentacao}" />
 					</p:column>
 					
-					<p:column headerText="#{msg['medicamento.chkativo']}" styleClass="centerAligned" width="4%" sortBy="#{medicamento.chkAtivo}">
+					<p:column headerText="#{msg['medicamento.chkativo']}" styleClass="centerAligned" width="8%" sortBy="#{medicamento.chkAtivo}">
 						<h:selectBooleanCheckbox value="#{medicamento.chkAtivo}" disabled="true"/>
 					</p:column>
 					

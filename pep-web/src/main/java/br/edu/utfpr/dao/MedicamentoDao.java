@@ -9,10 +9,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.model.Medicamento;
 import br.edu.utfpr.model.Medicamento_;
-
-import com.ocpsoft.pretty.faces.util.StringUtils;
 
 public class MedicamentoDao extends GenericDao<Medicamento, Long> implements Serializable {
 
@@ -25,7 +25,7 @@ public class MedicamentoDao extends GenericDao<Medicamento, Long> implements Ser
 
 		List<Predicate> predicados = new ArrayList<>();
 		if (StringUtils.isNotBlank(textoPesquisa)) {
-			predicados.add(qb.like(qb.lower(root.get(Medicamento_.principioAtivo)), "%" + textoPesquisa.toLowerCase() + "%"));
+			predicados.add(qb.like(qb.lower(root.get(Medicamento_.principioAtivo)), "%" + StringUtils.lowerCase(textoPesquisa) + "%"));
 		}
 		
 		if (chkAtivo != null) {
@@ -43,9 +43,9 @@ public class MedicamentoDao extends GenericDao<Medicamento, Long> implements Ser
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Medicamento> q = qb.createQuery(Medicamento.class);
 		Root<Medicamento> root = q.from(Medicamento.class);
-		
-		Predicate predicate = qb.equal(root.get(Medicamento_.principioAtivo), principioAtivo);
-		predicate = qb.and(predicate, qb.equal(root.get(Medicamento_.apresentacao), apresentacao));
+
+		Predicate predicate = qb.equal(qb.lower(root.get(Medicamento_.principioAtivo)), StringUtils.lowerCase(principioAtivo));
+		predicate = qb.and(predicate, qb.equal(qb.lower(root.get(Medicamento_.apresentacao)), StringUtils.lowerCase(apresentacao)));
 		q.where(predicate);
 		
 		return entityManager.createQuery(q).getSingleResult();

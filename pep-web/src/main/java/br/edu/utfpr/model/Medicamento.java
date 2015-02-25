@@ -24,7 +24,7 @@ public class Medicamento extends BaseEntity {
 	private Long id;
 	
 	@Column(name="principio_ativo", length=500)
-	@Size(max=300)
+	@Size(max=500)
 	private String principioAtivo;
 	
 	@Column(name="apresentacao", length=100)

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarQueixaPrincipalMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarQueixasPrincipais">
+				<p:messages id="msgQueixasPrincipais"/>
+				
+				<p:outputPanel rendered="#{not empty editarQueixaPrincipalMBean.queixaPrincipalSelecionada}">
+				    <fieldset>
+				    	<legend>#{msg['queixaprincipal.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['queixaprincipal.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarQueixaPrincipalMBean.queixaPrincipalSelecionada.descricao}" maxlength="300" style="width: 800px;" required="true"
+								requiredMessage="#{msg['queixaprincipal.campoobrigatorio.descricao']}"/>
+								
+							<h:outputLabel for="chkAtivoInput" value="#{msg['queixaprincipal.chkativo']}: "/>
+							<h:selectBooleanCheckbox id="chkAtivoInput" value="#{editarQueixaPrincipalMBean.queixaPrincipalSelecionada.chkAtivo}"/>
+						</p:panelGrid>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarQueixasPrincipais" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarQueixaPrincipalMBean.salvarQueixaPrincipal}" icon="ui-icon-check"
+								update="msgQueixasPrincipais" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

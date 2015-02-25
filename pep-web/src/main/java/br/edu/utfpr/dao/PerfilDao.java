@@ -7,6 +7,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.model.Perfil;
 import br.edu.utfpr.model.Perfil_;
 
@@ -22,7 +24,7 @@ public class PerfilDao extends GenericDao<Perfil, Long> implements Serializable 
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Perfil> q = qb.createQuery(Perfil.class);
 		Root<Perfil> root = q.from(Perfil.class);
-		q.where(qb.equal(root.get(Perfil_.nome), nome));
+		q.where(qb.equal(qb.lower(root.get(Perfil_.nome)), StringUtils.lowerCase(nome)));
 		
 		return entityManager.createQuery(q).getSingleResult();
 	}

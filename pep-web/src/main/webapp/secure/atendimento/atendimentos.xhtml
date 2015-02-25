@@ -6,6 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	template="/templates/base.xhtml">
 
 	<ui:define name="content">
@@ -20,9 +21,14 @@
 					<p:panel>
 						<h:panelGrid columns="2" columnClasses="leftAligned, rightAligned" style="width: 100%;">
 							<h:panelGroup>
-								<h:commandLink action="#{atendimentoMBean.editarPaciente}">
+								<sec:ifAnyGranted roles="EDITAR_PACIENTES">
+									<h:commandLink action="#{atendimentoMBean.editarPaciente}">
+										<h:outputText value="#{atendimentoMBean.pacienteSelecionado.nomeCompleto}" style="font-size: 16px; font-weight: bold;"/>
+									</h:commandLink>
+								</sec:ifAnyGranted>
+								<sec:ifNotGranted roles="EDITAR_PACIENTES">
 									<h:outputText value="#{atendimentoMBean.pacienteSelecionado.nomeCompleto}" style="font-size: 16px; font-weight: bold;"/>
-								</h:commandLink>
+								</sec:ifNotGranted>
 								<br/>
 								<div style="margin-top: 7px;">
 									<h:outputText value="#{atendimentoMBean.idadePaciente}"/>
@@ -30,8 +36,10 @@
 									<h:outputText value=" #{atendimentoMBean.cidadePaciente}"/>
 								</div>
 							</h:panelGroup>
-							<p:commandButton value="#{msg['atendimento.botao.novo']}" action="#{atendimentoMBean.novoAtendimento}"
-								icon="ui-icon-document" styleClass="botaoNovo" process="@this" style="margin-top: 7px;"/>
+							<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS">
+								<p:commandButton value="#{msg['atendimento.botao.novo']}" action="#{atendimentoMBean.novoAtendimento}"
+									icon="ui-icon-document" styleClass="botaoNovo" process="@this" style="margin-top: 7px;"/>
+							</sec:ifAnyGranted>
 						</h:panelGrid>
 					</p:panel>
 		
@@ -49,8 +57,10 @@
 										<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pnMedicamentosTable, pnBtnReabrirAtendimento"/>
 									</p:selectOneMenu>
 									<p:outputPanel id="pnBtnReabrirAtendimento">
-										<p:commandButton id="btnReabrirAtendimento" value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
-											rendered="#{atendimentoMBean.mostrarReabrirAtendimento}" process="atendimentoSom, @this" style="margin-top: -3px;"/>
+										<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS">
+											<p:commandButton id="btnReabrirAtendimento" value="Reabrir Atendimento" action="#{atendimentoMBean.editarAtendimento}" 
+												rendered="#{atendimentoMBean.mostrarReabrirAtendimento}" process="atendimentoSom, @this" style="margin-top: -3px;"/>
+										</sec:ifAnyGranted>
 									</p:outputPanel>
 								</h:panelGrid>
 							</f:facet>

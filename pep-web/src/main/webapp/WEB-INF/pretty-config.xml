@@ -138,4 +138,19 @@
 		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="listarQueixasPrincipais">
+		<pattern value="/listarQueixasPrincipais" />
+		<view-id value="/secure/queixaprincipal/queixasprincipais.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaQueixaPrincipal">
+		<pattern value="/novaQueixaPrincipal" />
+		<view-id value="/secure/queixaPrincipal/editarQueixaPrincipal.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarQueixaPrincipal">
+		<pattern value="/editarQueixaPrincipal/#{idQueixaPrincipal}" />
+		<view-id value="/secure/queixaprincipal/editarQueixaPrincipal.xhtml" />
+	</url-mapping>
+	
 </pretty-config>
