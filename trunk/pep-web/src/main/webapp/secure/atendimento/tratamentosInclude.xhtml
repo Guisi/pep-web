@@ -32,11 +32,13 @@
 				emptyMessage="#{msg['atendimento.tratamentos.medicamentos.lista.empty']}"
 				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				
 				<p:column headerText="#{msg['atendimento.tratamentos.medicamento']}">
 					<p:inputText id="nomeInput" value="#{medicamentoAtendimento.descricao}" maxlength="600" rendered="#{empty medicamentoAtendimento.medicamento and not medicamentoAtendimento.atendimentoAnterior}"
 						style="width: 300px;" required="true" requiredMessage="#{msg['atendimento.tratamentos.campoobrigatorio.medicamento']}"/>
 					<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento or medicamentoAtendimento.atendimentoAnterior}"/>
 				</p:column>
+				
 				<p:column headerText="#{msg['atendimento.tratamentos.posologia']}">
 					<p:inputTextarea value="#{medicamentoAtendimento.posologia}" autoResize="false" maxlength="300"
 						rows="2" style="width: 98%;" rendered="#{not medicamentoAtendimento.atendimentoAnterior}"/>

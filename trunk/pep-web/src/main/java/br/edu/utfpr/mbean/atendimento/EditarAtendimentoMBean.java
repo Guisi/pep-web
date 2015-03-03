@@ -17,9 +17,12 @@ import org.apache.commons.lang.StringUtils;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Medicamento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
+import br.edu.utfpr.model.QueixaPrincipal;
+import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.MedicamentoService;
+import br.edu.utfpr.service.QueixaPrincipalService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
@@ -36,6 +39,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private AtendimentoService atendimentoService;
 	@Inject
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
+	@Inject
+	private QueixaPrincipalService queixaPrincipalService;
 	
 	private Atendimento atendimentoSelecionado;
 	private List<Atendimento> atendimentosAnteriores;
@@ -44,6 +49,10 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private List<Medicamento> medicamentosDisponiveis;
 	private List<MedicamentoAtendimento> medicamentosAtendimento;
 	private List<MedicamentoAtendimento> medicamentosAtendimentosAnteriores;
+	
+	private QueixaPrincipal queixaPrincipalSelecionada;
+	private List<QueixaPrincipal> queixasPrincipaisDisponiveis;
+	private List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento;
 
 	@PostConstruct
 	public void init() {
@@ -61,10 +70,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			
 			this.pacienteSelecionado = this.atendimentoSelecionado.getPaciente();
 			this.medicamentosAtendimento = new ArrayList<>(this.atendimentoSelecionado.getMedicamentos());
+			this.queixasPrincipaisAtendimento = new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais());
 		} else {
-			this.atendimentoSelecionado = new Atendimento();
-			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
-			
 			String idPaciente = getRequest().getParameter("idPaciente");
 			
 			if (StringUtils.isNotEmpty(idPaciente) && new Scanner(idPaciente).hasNextLong()) {
@@ -78,12 +85,24 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				return;
 			}
 			
+			this.atendimentoSelecionado = new Atendimento();
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
+			
+			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
+			this.queixasPrincipaisAtendimento = new ArrayList<QueixaPrincipalAtendimento>();
 		}
 		
+		/** carrega listas */
+		
+		//atendimentos anteriores
 		this.listarAtendimentosAnteriores();
+		
+		//tratamentos em andamento
 		this.listarMedicamentosAtendimentosAnteriores();
 		this.listarMedicamentosDisponiveis();
+		
+		//historia e motivo do atendimento
+		this.listarQueixasPrincipaisDisponiveis();
 	}
 	
 	public String cancelar() {
@@ -104,9 +123,12 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	private void salvarAtendimento() {
 		this.atendimentoSelecionado.setMedicamentos(this.medicamentosAtendimento);
+		this.atendimentoSelecionado.setQueixasPrincipais(this.queixasPrincipaisAtendimento);
 		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, this.medicamentosAtendimentosAnteriores);
 	}
 	
+	
+	/** Tratamentos em andamento */
 	private void listarMedicamentosDisponiveis() {
 		this.medicamentosDisponiveis = medicamentoService.retornarMedicamentos(Boolean.TRUE);
 		
@@ -179,6 +201,34 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		return l;
 	}
 	
+	
+	/** Historia e motivo do atendimento */
+	private void listarQueixasPrincipaisDisponiveis() {
+		this.queixasPrincipaisDisponiveis = queixaPrincipalService.retornarQueixasPrincipais(Boolean.TRUE);
+		
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
+			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
+				this.queixasPrincipaisDisponiveis.remove(queixaPrincipalAtendimento.getQueixaPrincipal());
+			}
+		}
+	}
+	
+	public void adicionarQueixaPrincipal() {
+		if (this.queixaPrincipalSelecionada != null) {
+			this.queixasPrincipaisDisponiveis.remove(this.queixaPrincipalSelecionada);
+			
+			QueixaPrincipalAtendimento queixaPrincipalAtendimento = new QueixaPrincipalAtendimento();
+			queixaPrincipalAtendimento.setQueixaPrincipal(this.queixaPrincipalSelecionada);
+			this.queixasPrincipaisAtendimento.add(queixaPrincipalAtendimento);
+
+			this.queixaPrincipalSelecionada = null;
+		}
+	}
+	
+	public void adicionarOutraQueixaPrincipal() {
+		this.queixasPrincipaisAtendimento.add(new QueixaPrincipalAtendimento());
+	}
+	
 	public Atendimento getAtendimentoSelecionado() {
 		return atendimentoSelecionado;
 	}
@@ -225,6 +275,30 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setAtendimentosAnteriores(List<Atendimento> atendimentosAnteriores) {
 		this.atendimentosAnteriores = atendimentosAnteriores;
+	}
+
+	public QueixaPrincipal getQueixaPrincipalSelecionada() {
+		return queixaPrincipalSelecionada;
+	}
+
+	public void setQueixaPrincipalSelecionada(QueixaPrincipal queixaPrincipalSelecionada) {
+		this.queixaPrincipalSelecionada = queixaPrincipalSelecionada;
+	}
+
+	public List<QueixaPrincipal> getQueixasPrincipaisDisponiveis() {
+		return queixasPrincipaisDisponiveis;
+	}
+
+	public void setQueixasPrincipaisDisponiveis(List<QueixaPrincipal> queixasPrincipaisDisponiveis) {
+		this.queixasPrincipaisDisponiveis = queixasPrincipaisDisponiveis;
+	}
+
+	public List<QueixaPrincipalAtendimento> getQueixasPrincipaisAtendimento() {
+		return queixasPrincipaisAtendimento;
+	}
+
+	public void setQueixasPrincipaisAtendimento(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
+		this.queixasPrincipaisAtendimento = queixasPrincipaisAtendimento;
 	}
 	
 }

@@ -135,6 +135,13 @@ INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentac
 INSERT INTO pep_owner.tb_medicamento(id_medicamento, principio_ativo, apresentacao, chk_ativo) VALUES (17, 'ACETATO DE CIPROTERONA - ETINILESTRADIOL', '(0,035 + 2) MG', true);
 ALTER SEQUENCE pep_owner.medicamento_sequence RESTART WITH 18;
 
+-- queixas principais
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (1, 'Alteração laboratorial', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (2, 'Dor de garganta', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (3, 'Dor nas costas', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (4, 'Fadiga', true);
+ALTER SEQUENCE pep_owner.queixa_principal_sequence RESTART WITH 5;
+
 --atendimento
 --postgres
 --INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);

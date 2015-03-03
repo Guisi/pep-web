@@ -25,4 +25,12 @@ public class MedicamentoAtendimentoService {
 			medicamentoAtendimentoDao.save(medicamentoAtendimento);
 		}
 	}
+	
+	public List<MedicamentoAtendimento> retornarMedicamentosAtendimento(Long idAtendimento) {
+		return medicamentoAtendimentoDao.retornarMedicamentosAtendimento(idAtendimento);
+	}
+	
+	public void removerMedicamentoAtendimento(MedicamentoAtendimento medicamentoAtendimento) {
+		medicamentoAtendimentoDao.removeById(medicamentoAtendimento.getId());
+	}
 }
