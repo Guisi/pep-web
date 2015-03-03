@@ -15,6 +15,8 @@ import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Atendimento_;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento_;
+import br.edu.utfpr.model.QueixaPrincipalAtendimento;
+import br.edu.utfpr.model.QueixaPrincipalAtendimento_;
 import br.edu.utfpr.model.Usuario_;
 
 public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Serializable {
@@ -60,8 +62,12 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		Root<Atendimento> root = q.from(Atendimento.class);
 		root.fetch(Atendimento_.paciente);
 
+		//TODO remover fetch e em cada caso buscar as listas
 		Fetch<Atendimento, MedicamentoAtendimento> medicamentosFetch = root.fetch(Atendimento_.medicamentos, JoinType.LEFT);
 		medicamentosFetch.fetch(MedicamentoAtendimento_.medicamento, JoinType.LEFT);
+		
+		Fetch<Atendimento, QueixaPrincipalAtendimento> queixasPrincipaisFetch = root.fetch(Atendimento_.queixasPrincipais, JoinType.LEFT);
+		queixasPrincipaisFetch.fetch(QueixaPrincipalAtendimento_.queixaPrincipal, JoinType.LEFT);
 		
 		q.where(qb.equal(root.get(Atendimento_.id), id));
 		

@@ -9,9 +9,9 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import br.edu.utfpr.dao.AtendimentoDao;
-import br.edu.utfpr.dao.MedicamentoAtendimentoDao;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
+import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 
 @Named
 @Stateless
@@ -20,9 +20,9 @@ public class AtendimentoService {
 	@Inject
 	private AtendimentoDao atendimentoDao;
 	@Inject
-	private MedicamentoAtendimentoDao medicamentoAtendimentoDao;
-	@Inject
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
+	@Inject
+	private QueixaPrincipalAtendimentoService queixaPrincipalAtendimentoService;
 
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -46,7 +46,7 @@ public class AtendimentoService {
 		} else {
 			
 			// Apaga da base os medicamentos excluidos do atendimento
-			List<MedicamentoAtendimento> medicamentos = medicamentoAtendimentoDao.retornarMedicamentosAtendimento(atendimento.getId());
+			List<MedicamentoAtendimento> medicamentos = medicamentoAtendimentoService.retornarMedicamentosAtendimento(atendimento.getId());
 			for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
 				boolean excluido = true;
 				for (MedicamentoAtendimento medicamentoAtendimentoBase : atendimento.getMedicamentos()) {
@@ -57,7 +57,23 @@ public class AtendimentoService {
 				}
 				
 				if (excluido) {
-					medicamentoAtendimentoDao.removeById(medicamentoAtendimento.getId());
+					medicamentoAtendimentoService.removerMedicamentoAtendimento(medicamentoAtendimento);
+				}
+			}
+			
+			// Apaga da base as queixas principais excluidas do atendimento
+			List<QueixaPrincipalAtendimento> queixasPrincipais = queixaPrincipalAtendimentoService.retornarQueixasPrincipaisAtendimento(atendimento.getId());
+			for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
+				boolean excluido = true;
+				for (QueixaPrincipalAtendimento queixaPrincipalBase : atendimento.getQueixasPrincipais()) {
+					if (queixaPrincipalAtendimento.equals(queixaPrincipalBase)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					queixaPrincipalAtendimentoService.removerQueixaPrincipalAtendimento(queixaPrincipalAtendimento);
 				}
 			}
 		}
@@ -65,9 +81,14 @@ public class AtendimentoService {
 		for (MedicamentoAtendimento medicamentoAtendimento : atendimento.getMedicamentos()) {
 			medicamentoAtendimento.setAtendimento(atendimento);
 		}
+		
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : atendimento.getQueixasPrincipais()) {
+			queixaPrincipalAtendimento.setAtendimento(atendimento);
+		}
 
 		atendimentoDao.save(atendimento);
 		
+		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
 		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentosAnteriores);
 
 		return atendimento;

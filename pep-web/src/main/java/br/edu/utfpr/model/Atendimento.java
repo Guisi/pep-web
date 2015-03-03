@@ -40,6 +40,9 @@ public class Atendimento extends BaseEntity {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "atendimento")
 	private List<MedicamentoAtendimento> medicamentos;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "atendimento")
+	private List<QueixaPrincipalAtendimento> queixasPrincipais;
 
 	public Long getId() {
 		return id;
@@ -76,5 +79,12 @@ public class Atendimento extends BaseEntity {
 	public void setMedicamentos(List<MedicamentoAtendimento> medicamentos) {
 		this.medicamentos = medicamentos;
 	}
-	
+
+	public List<QueixaPrincipalAtendimento> getQueixasPrincipais() {
+		return queixasPrincipais;
+	}
+
+	public void setQueixasPrincipais(List<QueixaPrincipalAtendimento> queixasPrincipais) {
+		this.queixasPrincipais = queixasPrincipais;
+	}
 }
