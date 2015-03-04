@@ -31,6 +31,6 @@ public class MedicamentoAtendimentoService {
 	}
 	
 	public void removerMedicamentoAtendimento(MedicamentoAtendimento medicamentoAtendimento) {
-		medicamentoAtendimentoDao.removeById(medicamentoAtendimento.getId());
+		medicamentoAtendimentoDao.remove(medicamentoAtendimento);
 	}
 }

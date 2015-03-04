@@ -2,9 +2,8 @@ package br.edu.utfpr.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,11 +38,13 @@ public class Atendimento extends BaseEntity {
 	@JoinColumn(name = "id_paciente")
 	private Usuario paciente;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "atendimento")
-	private List<MedicamentoAtendimento> medicamentos;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "atendimento")
-	private List<QueixaPrincipalAtendimento> queixasPrincipais;
+	@OrderBy("id_medicamento_atendimento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
+	private Set<MedicamentoAtendimento> medicamentos;
+
+	@OrderBy("id_queixa_principal_atendimento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
+	private Set<QueixaPrincipalAtendimento> queixasPrincipais;
 
 	public Long getId() {
 		return id;
@@ -72,19 +74,19 @@ public class Atendimento extends BaseEntity {
 		this.paciente = paciente;
 	}
 
-	public List<MedicamentoAtendimento> getMedicamentos() {
+	public Set<MedicamentoAtendimento> getMedicamentos() {
 		return medicamentos;
 	}
 
-	public void setMedicamentos(List<MedicamentoAtendimento> medicamentos) {
+	public void setMedicamentos(Set<MedicamentoAtendimento> medicamentos) {
 		this.medicamentos = medicamentos;
 	}
 
-	public List<QueixaPrincipalAtendimento> getQueixasPrincipais() {
+	public Set<QueixaPrincipalAtendimento> getQueixasPrincipais() {
 		return queixasPrincipais;
 	}
 
-	public void setQueixasPrincipais(List<QueixaPrincipalAtendimento> queixasPrincipais) {
+	public void setQueixasPrincipais(Set<QueixaPrincipalAtendimento> queixasPrincipais) {
 		this.queixasPrincipais = queixasPrincipais;
 	}
 }

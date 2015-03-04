@@ -1,6 +1,7 @@
 package br.edu.utfpr.service;
 
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -40,56 +41,63 @@ public class AtendimentoService {
 		}
 	}
 	
-	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentosAnteriores) {
+	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
+			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais) {
+		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
 		} else {
+			// Apaga da base as queixas principais excluidas do atendimento
+			List<QueixaPrincipalAtendimento> queixasPrincipaisBase = queixaPrincipalAtendimentoService.retornarQueixasPrincipaisAtendimento(atendimento.getId());
+			for (QueixaPrincipalAtendimento queixaPrincipalBase : queixasPrincipaisBase) {
+				boolean excluido = true;
+				for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
+					if (queixaPrincipalBase.equals(queixaPrincipalAtendimento)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					queixaPrincipalAtendimentoService.removerQueixaPrincipalAtendimento(queixaPrincipalBase);
+				}
+			}
 			
 			// Apaga da base os medicamentos excluidos do atendimento
-			List<MedicamentoAtendimento> medicamentos = medicamentoAtendimentoService.retornarMedicamentosAtendimento(atendimento.getId());
-			for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
+			List<MedicamentoAtendimento> medicamentosBase = medicamentoAtendimentoService.retornarMedicamentosAtendimento(atendimento.getId());
+			for (MedicamentoAtendimento medicamentoAtendimentoBase : medicamentosBase) {
 				boolean excluido = true;
-				for (MedicamentoAtendimento medicamentoAtendimentoBase : atendimento.getMedicamentos()) {
-					if (medicamentoAtendimento.equals(medicamentoAtendimentoBase)) {
+				for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
+					if (medicamentoAtendimentoBase.equals(medicamentoAtendimento)) {
 						excluido = false;
 						break;
 					}
 				}
 				
 				if (excluido) {
-					medicamentoAtendimentoService.removerMedicamentoAtendimento(medicamentoAtendimento);
-				}
-			}
-			
-			// Apaga da base as queixas principais excluidas do atendimento
-			List<QueixaPrincipalAtendimento> queixasPrincipais = queixaPrincipalAtendimentoService.retornarQueixasPrincipaisAtendimento(atendimento.getId());
-			for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
-				boolean excluido = true;
-				for (QueixaPrincipalAtendimento queixaPrincipalBase : atendimento.getQueixasPrincipais()) {
-					if (queixaPrincipalAtendimento.equals(queixaPrincipalBase)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					queixaPrincipalAtendimentoService.removerQueixaPrincipalAtendimento(queixaPrincipalAtendimento);
+					medicamentoAtendimentoService.removerMedicamentoAtendimento(medicamentoAtendimentoBase);
 				}
 			}
 		}
 		
-		for (MedicamentoAtendimento medicamentoAtendimento : atendimento.getMedicamentos()) {
+		//salva medicamentos do atendimento
+		for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
 			medicamentoAtendimento.setAtendimento(atendimento);
 		}
+		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentos);
+		atendimento.setMedicamentos(new LinkedHashSet<MedicamentoAtendimento>(medicamentos));
 		
-		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : atendimento.getQueixasPrincipais()) {
+		//salva queixas principais do atendimento
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
 			queixaPrincipalAtendimento.setAtendimento(atendimento);
 		}
+		queixaPrincipalAtendimentoService.salvarQueixasPrincipaisAtendimento(queixasPrincipais);
+		atendimento.setQueixasPrincipais(new LinkedHashSet<QueixaPrincipalAtendimento>(queixasPrincipais));
 
-		atendimentoDao.save(atendimento);
-		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
 		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentosAnteriores);
+		
+		atendimentoDao.save(atendimento);
 
 		return atendimento;
 	}

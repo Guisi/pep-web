@@ -122,9 +122,10 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	}
 	
 	private void salvarAtendimento() {
-		this.atendimentoSelecionado.setMedicamentos(this.medicamentosAtendimento);
-		this.atendimentoSelecionado.setQueixasPrincipais(this.queixasPrincipaisAtendimento);
-		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, this.medicamentosAtendimentosAnteriores);
+		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, this.medicamentosAtendimento, 
+				this.medicamentosAtendimentosAnteriores, this.queixasPrincipaisAtendimento);
+		this.medicamentosAtendimento = new ArrayList<>(this.atendimentoSelecionado.getMedicamentos());
+		this.queixasPrincipaisAtendimento = new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais());
 	}
 	
 	
@@ -223,6 +224,26 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 			this.queixaPrincipalSelecionada = null;
 		}
+	}
+	
+	public void removerQueixaPrincipal(int indice) {
+		QueixaPrincipalAtendimento queixaPrincipalAtendimento = this.queixasPrincipaisAtendimento.get(indice);
+		this.queixasPrincipaisAtendimento.remove(indice);
+		if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
+			this.queixasPrincipaisDisponiveis.add(queixaPrincipalAtendimento.getQueixaPrincipal());
+			this.ordenaListasQueixasPrincipais();
+		}
+	}
+	
+	private void ordenaListasQueixasPrincipais() {
+		Comparator<QueixaPrincipal> comparator = new Comparator<QueixaPrincipal>() {
+			@Override
+			public int compare(QueixaPrincipal o1, QueixaPrincipal o2) {
+				return o1.getDescricao().compareTo(o2.getDescricao());
+			}
+		};
+		
+		Collections.sort(this.queixasPrincipaisDisponiveis, comparator);
 	}
 	
 	public void adicionarOutraQueixaPrincipal() {
