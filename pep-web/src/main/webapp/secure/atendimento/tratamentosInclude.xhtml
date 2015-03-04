@@ -17,9 +17,9 @@
 				</p:selectOneMenu>
 				<p:columnGroup>
 					<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
-						disabled="#{empty editarAtendimentoMBean.medicamentoSelecionado}" styleClass="botaoSalvar"/>
+						disabled="#{empty editarAtendimentoMBean.medicamentoSelecionado}" process="medicamentoAddInput, medicamentosTable, @this" styleClass="botaoSalvar"/>
 					<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.adicionarOutroMedicamento}"
-						value="#{msg['atendimento.botao.outrotratamento']}" update="medicamentosTable" styleClass="botaoSalvar"/>
+						value="#{msg['atendimento.botao.outrotratamento']}" process="medicamentosTable, @this" update="medicamentosTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
 				</p:columnGroup>
 			</h:panelGrid>
 			<p:column style="text-align: right;">

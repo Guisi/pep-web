@@ -21,6 +21,12 @@ public class QueixaPrincipalAtendimentoService {
 	}
 	
 	public void removerQueixaPrincipalAtendimento(QueixaPrincipalAtendimento queixaPrincipalAtendimento) {
-		queixaPrincipalAtendimentoDao.removeById(queixaPrincipalAtendimento.getId());
+		queixaPrincipalAtendimentoDao.remove(queixaPrincipalAtendimento);
+	}
+	
+	public void salvarQueixasPrincipaisAtendimento(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
+			queixaPrincipalAtendimentoDao.save(queixaPrincipalAtendimento);
+		}
 	}
 }

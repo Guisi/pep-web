@@ -8,11 +8,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import br.edu.utfpr.model.Atendimento_;
-import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento_;
 
-public class QueixaPrincipalAtendimentoDao extends GenericDao<MedicamentoAtendimento, Long> implements Serializable {
+public class QueixaPrincipalAtendimentoDao extends GenericDao<QueixaPrincipalAtendimento, Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

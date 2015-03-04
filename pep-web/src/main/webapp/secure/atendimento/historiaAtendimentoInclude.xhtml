@@ -17,9 +17,9 @@
 				</p:selectOneMenu>
 				<p:columnGroup>
 					<p:commandButton id="addQueixaPrincipalBtn" action="#{editarAtendimentoMBean.adicionarQueixaPrincipal}" icon="ui-icon-plusthick" update="@this, queixasPrincipaisTable, queixaPrincipalAddInput, :frmEditarAtendimento:msgAtendimentos"
-						disabled="#{empty editarAtendimentoMBean.queixaPrincipalSelecionada}" styleClass="botaoSalvar"/>
+						disabled="#{empty editarAtendimentoMBean.queixaPrincipalSelecionada}" process="queixaPrincipalAddInput, queixasPrincipaisTable, @this" styleClass="botaoSalvar"/>
 					<p:commandButton id="addOutraQueixaBtn" action="#{editarAtendimentoMBean.adicionarOutraQueixaPrincipal}"
-						value="#{msg['atendimento.historiamotivo.botao.outraqueixa']}" update="queixasPrincipaisTable" styleClass="botaoSalvar"/>
+						value="#{msg['atendimento.historiamotivo.botao.outraqueixa']}" process="queixasPrincipaisTable, @this" update="queixasPrincipaisTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
 				</p:columnGroup>
 			</h:panelGrid>
 		</h:panelGrid>
@@ -38,6 +38,11 @@
 
 				<p:column headerText="#{msg['atendimento.historiamotivo.observacao']}">
 					<p:inputTextarea value="#{queixaPrincipalAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"/>
+				</p:column>
+				
+				<p:column width="30px;" style="text-align: left;">
+					<p:commandButton value="" actionListener="#{editarAtendimentoMBean.removerQueixaPrincipal(index)}" update="queixasPrincipaisTable, :frmEditarAtendimento:queixaPrincipalAddInput"
+						icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
 				</p:column>
 				
 			</p:dataTable>
