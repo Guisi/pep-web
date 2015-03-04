@@ -46,6 +46,16 @@
 				</p:column>
 				
 			</p:dataTable>
+			
+			<p:panel styleClass="internal-panel">
+				<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}" styleClass="ui-state-default internal-panel-title"/>
+				<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
+			</p:panel>
+			
+			<p:panel styleClass="internal-panel">
+				<h:outputText value="#{msg['atendimento.historiamotivo.isda']}" styleClass="ui-state-default internal-panel-title"/>
+				<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.isda}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
+			</p:panel>
 		</div>
 	</p:panel>
 </h:html>

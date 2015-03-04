@@ -282,3 +282,14 @@ fieldset {
 	border-bottom: 1px solid #dddddd;
 	margin: 0px 10px 10px 10px;
 }
+
+.internal-panel {
+	margin-top: 10px;
+	text-align: left;
+}
+
+.internal-panel-title {
+	font-size: 12px !important;
+	border: 0px !important;
+	background: none !important;
+}
