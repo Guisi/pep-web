@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import br.edu.utfpr.constants.Constantes;
 
@@ -45,6 +46,14 @@ public class Atendimento extends BaseEntity {
 	@OrderBy("id_queixa_principal_atendimento")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<QueixaPrincipalAtendimento> queixasPrincipais;
+	
+	@Column(name="historia_doenca_atual", length=1000)
+	@Size(max=1000)
+	private String historiaDoencaAtual;
+	
+	@Column(name="isda", length=1000)
+	@Size(max=1000)
+	private String isda;
 
 	public Long getId() {
 		return id;
@@ -88,5 +97,21 @@ public class Atendimento extends BaseEntity {
 
 	public void setQueixasPrincipais(Set<QueixaPrincipalAtendimento> queixasPrincipais) {
 		this.queixasPrincipais = queixasPrincipais;
+	}
+
+	public String getHistoriaDoencaAtual() {
+		return historiaDoencaAtual;
+	}
+
+	public void setHistoriaDoencaAtual(String historiaDoencaAtual) {
+		this.historiaDoencaAtual = historiaDoencaAtual;
+	}
+
+	public String getIsda() {
+		return isda;
+	}
+
+	public void setIsda(String isda) {
+		this.isda = isda;
 	}
 }
