@@ -19,13 +19,17 @@ public class QueixaPrincipalService {
 
 	@Inject
 	private QueixaPrincipalDao queixaPrincipalDao;
-
+	
 	public List<QueixaPrincipal> retornarQueixasPrincipais(Boolean chkAtivo) {
 		return retornarQueixasPrincipais(null, chkAtivo);
 	}
 	
 	public List<QueixaPrincipal> retornarQueixasPrincipais(String textoPesquisa, Boolean chkAtivo) {
 		return queixaPrincipalDao.retornarQueixasPrincipais(textoPesquisa, chkAtivo);
+	}
+	
+	public List<QueixaPrincipal> retornarQueixasPrincipaisMaisUsadas(Integer quantidade, List<Long> idsQueixasIgnorar, Boolean chkAtivo) {
+		return queixaPrincipalDao.retornarQueixasPrincipaisMaisUsadas(quantidade, idsQueixasIgnorar, chkAtivo);
 	}
 	
 	public QueixaPrincipal retornarQueixaPrincipal(Long id) {

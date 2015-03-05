@@ -68,8 +68,7 @@
 				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}"
 					styleClass="datatable-no-header">
 					<p:column style="text-align: left;">
-						<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
-						<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+						<h:outputText value="#{medicamentoAtendimento.descricao}"/>
 						<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
 					</p:column>
 				</p:dataTable>

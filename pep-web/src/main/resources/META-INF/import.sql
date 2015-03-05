@@ -140,7 +140,18 @@ INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_at
 INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (2, 'Dor de garganta', true);
 INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (3, 'Dor nas costas', true);
 INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (4, 'Fadiga', true);
-ALTER SEQUENCE pep_owner.queixa_principal_sequence RESTART WITH 5;
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (5, 'Astenia', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (6, 'Hipertensão arterial', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (7, 'Dor (especificar)', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (8, 'Cefaléia', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (9, 'Cessação de tabagismo', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (10, 'Dispnéia', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (11, 'Dor de cabeça', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (12, 'Dor lombar', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (13, 'Exame de prevenção', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (14, 'Asfixia', true);
+INSERT INTO pep_owner.tb_queixa_principal(id_queixa_principal, descricao, chk_ativo) VALUES (15, 'Abandono', true);
+ALTER SEQUENCE pep_owner.queixa_principal_sequence RESTART WITH 16;
 
 --atendimento
 --postgres
