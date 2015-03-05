@@ -24,7 +24,7 @@ public class AtendimentoService {
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 	@Inject
 	private QueixaPrincipalAtendimentoService queixaPrincipalAtendimentoService;
-
+	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
 	}

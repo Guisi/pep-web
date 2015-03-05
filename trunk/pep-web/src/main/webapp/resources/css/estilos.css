@@ -72,6 +72,10 @@ body {
 	margin-left: -250px;
 }
 
+.ui-panel-titlebar-icon {
+   float: left !important;
+}
+
 .nopadding {
 	padding: 0px !important;
 }
@@ -290,6 +294,13 @@ fieldset {
 
 .internal-panel-title {
 	font-size: 12px !important;
+	font-weight: bold !important;
 	border: 0px !important;
 	background: none !important;
+}
+
+.botao-queixa-principal {
+	float: left;
+	margin-right: 10px !important;
+	margin-bottom: 5px !important;
 }

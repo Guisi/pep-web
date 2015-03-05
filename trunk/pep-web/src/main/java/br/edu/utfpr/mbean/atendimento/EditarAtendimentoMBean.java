@@ -42,6 +42,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	@Inject
 	private QueixaPrincipalService queixaPrincipalService;
 	
+	private static final Integer QTDE_SUGESTOES_QUEIXAS = 10;
+	
 	private Atendimento atendimentoSelecionado;
 	private List<Atendimento> atendimentosAnteriores;
 
@@ -52,6 +54,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	private QueixaPrincipal queixaPrincipalSelecionada;
 	private List<QueixaPrincipal> queixasPrincipaisDisponiveis;
+	private List<QueixaPrincipal> queixasPrincipaisMaisUsadas;
 	private List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento;
 
 	@PostConstruct
@@ -103,6 +106,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		
 		//historia e motivo do atendimento
 		this.listarQueixasPrincipaisDisponiveis();
+		this.listarQueixasPrincipaisMaisUsadas();
 	}
 	
 	public String cancelar() {
@@ -214,15 +218,40 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		}
 	}
 	
+	private void listarQueixasPrincipaisMaisUsadas() {
+		List<Long> idsQueixasIgnorar = new ArrayList<Long>();
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
+			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
+				idsQueixasIgnorar.add(queixaPrincipalAtendimento.getQueixaPrincipal().getId());
+			}
+		}
+		
+		this.queixasPrincipaisMaisUsadas = queixaPrincipalService.retornarQueixasPrincipaisMaisUsadas(QTDE_SUGESTOES_QUEIXAS, idsQueixasIgnorar, Boolean.TRUE);
+		
+		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
+			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
+				this.queixasPrincipaisMaisUsadas.remove(queixaPrincipalAtendimento.getQueixaPrincipal());
+			}
+		}
+	}
+	
+	public void adicionarQueixaPrincipal(QueixaPrincipal queixaPrincipal) {
+		this.queixaPrincipalSelecionada = queixaPrincipal;
+		this.adicionarQueixaPrincipal();
+	}
+	
 	public void adicionarQueixaPrincipal() {
 		if (this.queixaPrincipalSelecionada != null) {
 			this.queixasPrincipaisDisponiveis.remove(this.queixaPrincipalSelecionada);
+			this.queixasPrincipaisMaisUsadas.remove(this.queixaPrincipalSelecionada);
 			
 			QueixaPrincipalAtendimento queixaPrincipalAtendimento = new QueixaPrincipalAtendimento();
 			queixaPrincipalAtendimento.setQueixaPrincipal(this.queixaPrincipalSelecionada);
 			this.queixasPrincipaisAtendimento.add(queixaPrincipalAtendimento);
 
 			this.queixaPrincipalSelecionada = null;
+			
+			this.listarQueixasPrincipaisMaisUsadas();
 		}
 	}
 	
@@ -231,6 +260,9 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.queixasPrincipaisAtendimento.remove(indice);
 		if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
 			this.queixasPrincipaisDisponiveis.add(queixaPrincipalAtendimento.getQueixaPrincipal());
+			this.queixasPrincipaisMaisUsadas.add(queixaPrincipalAtendimento.getQueixaPrincipal());
+			
+			this.listarQueixasPrincipaisMaisUsadas();
 			this.ordenaListasQueixasPrincipais();
 		}
 	}
@@ -244,6 +276,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		};
 		
 		Collections.sort(this.queixasPrincipaisDisponiveis, comparator);
+		Collections.sort(this.queixasPrincipaisMaisUsadas, comparator);
 	}
 	
 	public void adicionarOutraQueixaPrincipal() {
@@ -321,5 +354,12 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	public void setQueixasPrincipaisAtendimento(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
 		this.queixasPrincipaisAtendimento = queixasPrincipaisAtendimento;
 	}
-	
+
+	public List<QueixaPrincipal> getQueixasPrincipaisMaisUsadas() {
+		return queixasPrincipaisMaisUsadas;
+	}
+
+	public void setQueixasPrincipaisMaisUsadas(List<QueixaPrincipal> queixasPrincipaisMaisUsadas) {
+		this.queixasPrincipaisMaisUsadas = queixasPrincipaisMaisUsadas;
+	}
 }
