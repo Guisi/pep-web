@@ -7,73 +7,71 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:p="http://primefaces.org/ui">
 
-	<p:panel header="#{msg['atendimento.historiamotivo.header']}" toggleable="true" styleClass="moduloAtendimentoPanel">
-		<div>
-			<p:panel styleClass="internal-panel">
-				<h:outputText value="#{msg['atendimento.historiamotivo.queixaprincipalduracao']}" styleClass="ui-state-default internal-panel-title"/>
-				<p:outputPanel id="pnBotoesQueixas" style="padding-top: 10px;">
-					<ui:repeat var="queixaPrincipal" value="#{editarAtendimentoMBean.queixasPrincipaisMaisUsadas}">
-						<p:commandButton value="#{queixaPrincipal.descricao}" actionListener="#{editarAtendimentoMBean.adicionarQueixaPrincipal(queixaPrincipal)}"
-							process=":frmEditarAtendimento:queixasPrincipaisTable, @this" styleClass="botao-queixa-principal"
-							update=":frmEditarAtendimento:queixasPrincipaisTable, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:queixaPrincipalAddInput, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:msgAtendimentos">
-						</p:commandButton>
-					</ui:repeat>
-				</p:outputPanel>
+	<div>
+		<p:panel styleClass="internal-panel">
+			<h:outputText value="#{msg['atendimento.historiamotivo.queixaprincipalduracao']}" styleClass="ui-state-default internal-panel-title"/>
+			<p:outputPanel id="pnBotoesQueixas" style="padding-top: 10px;">
+				<ui:repeat var="queixaPrincipal" value="#{editarAtendimentoMBean.queixasPrincipaisMaisUsadas}">
+					<p:commandButton value="#{queixaPrincipal.descricao}" actionListener="#{editarAtendimentoMBean.adicionarQueixaPrincipal(queixaPrincipal)}"
+						process=":frmEditarAtendimento:queixasPrincipaisTable, @this" styleClass="botao-queixa-principal"
+						update=":frmEditarAtendimento:queixasPrincipaisTable, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:queixaPrincipalAddInput, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:msgAtendimentos">
+					</p:commandButton>
+				</ui:repeat>
+			</p:outputPanel>
 
-				<h:panelGrid columns="2" width="100%">
-					<h:panelGrid columns="2">
-						<p:selectOneMenu id="queixaPrincipalAddInput" value="#{editarAtendimentoMBean.queixaPrincipalSelecionada}" converter="genericEntityConverter" style="width: 500px; margin-top: 2px;" filter="true" filterMatchMode="contains">
-							<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-							<f:selectItems value="#{editarAtendimentoMBean.queixasPrincipaisDisponiveis}" var="queixaPrincipal" itemLabel="#{queixaPrincipal.descricao}"/>
-							<p:ajax event="change" update="addQueixaPrincipalBtn" process="@this"/>
-						</p:selectOneMenu>
-						<p:columnGroup>
-							<p:commandButton id="addQueixaPrincipalBtn" action="#{editarAtendimentoMBean.adicionarQueixaPrincipal}" icon="ui-icon-plusthick" update="@this, queixasPrincipaisTable, queixaPrincipalAddInput, pnBotoesQueixas, :frmEditarAtendimento:msgAtendimentos"
-								disabled="#{empty editarAtendimentoMBean.queixaPrincipalSelecionada}" process="queixaPrincipalAddInput, queixasPrincipaisTable, @this" styleClass="botaoSalvar"/>
-							<p:commandButton id="addOutraQueixaBtn" action="#{editarAtendimentoMBean.adicionarOutraQueixaPrincipal}"
-								value="#{msg['atendimento.historiamotivo.botao.outraqueixa']}" process="queixasPrincipaisTable, @this" update="queixasPrincipaisTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
-						</p:columnGroup>
-					</h:panelGrid>
-					
-					<p:column style="text-align: right;">
-						<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}"/>
-					</p:column>
+			<h:panelGrid columns="2" width="100%">
+				<h:panelGrid columns="2">
+					<p:selectOneMenu id="queixaPrincipalAddInput" value="#{editarAtendimentoMBean.queixaPrincipalSelecionada}" converter="genericEntityConverter" style="width: 400px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+						<f:selectItems value="#{editarAtendimentoMBean.queixasPrincipaisDisponiveis}" var="queixaPrincipal" itemLabel="#{queixaPrincipal.descricao}"/>
+						<p:ajax event="change" update="addQueixaPrincipalBtn" process="@this"/>
+					</p:selectOneMenu>
+					<p:columnGroup>
+						<p:commandButton id="addQueixaPrincipalBtn" action="#{editarAtendimentoMBean.adicionarQueixaPrincipal}" icon="ui-icon-plusthick" update="@this, queixasPrincipaisTable, queixaPrincipalAddInput, pnBotoesQueixas, :frmEditarAtendimento:msgAtendimentos"
+							disabled="#{empty editarAtendimentoMBean.queixaPrincipalSelecionada}" process="queixaPrincipalAddInput, queixasPrincipaisTable, @this" styleClass="botaoSalvar"/>
+						<p:commandButton id="addOutraQueixaBtn" action="#{editarAtendimentoMBean.adicionarOutraQueixaPrincipal}"
+							value="#{msg['atendimento.historiamotivo.botao.outraqueixa']}" process="queixasPrincipaisTable, @this" update="queixasPrincipaisTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
+					</p:columnGroup>
 				</h:panelGrid>
 				
-				<p:dataTable id="queixasPrincipaisTable" var="queixaPrincipalAtendimento" value="#{editarAtendimentoMBean.queixasPrincipaisAtendimento}" 
-					emptyMessage="#{msg['atendimento.historiamotivo.queixasprincipais.lista.empty']}"
-					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
-					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-	
-					<p:column headerText="#{msg['atendimento.historiamotivo.queixaprincipal']}">
-						<p:inputText id="descricaoInput" value="#{queixaPrincipalAtendimento.descricao}" maxlength="300" rendered="#{empty queixaPrincipalAtendimento.queixaPrincipal}"
-							style="width: 300px;" required="true" requiredMessage="#{msg['atendimento.historiamotivo.campoobrigatorio.queixaprincipal']}"/>
-						<h:outputText value="#{queixaPrincipalAtendimento.descricao}" rendered="#{not empty queixaPrincipalAtendimento.queixaPrincipal}"/>
-					</p:column>
-	
-					<p:column headerText="#{msg['atendimento.historiamotivo.observacao']}">
-						<p:inputTextarea value="#{queixaPrincipalAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"/>
-					</p:column>
-					
-					<p:column width="30px;" style="text-align: left;">
-						<p:commandButton value="" actionListener="#{editarAtendimentoMBean.removerQueixaPrincipal(index)}" update="queixasPrincipaisTable, :frmEditarAtendimento:queixaPrincipalAddInput"
-							icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
-					</p:column>
-					
-				</p:dataTable>
-			</p:panel>
+				<p:column style="text-align: right;">
+					<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}"/>
+				</p:column>
+			</h:panelGrid>
 			
-			<p:panel styleClass="internal-panel">
-				<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}" styleClass="ui-state-default internal-panel-title"/>
-				<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
-			</p:panel>
-			
-			<p:panel styleClass="internal-panel">
-				<h:outputText value="#{msg['atendimento.historiamotivo.isda']}" styleClass="ui-state-default internal-panel-title"/>
-				<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.isda}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
-			</p:panel>
-		</div>
-	</p:panel>
+			<p:dataTable id="queixasPrincipaisTable" var="queixaPrincipalAtendimento" value="#{editarAtendimentoMBean.queixasPrincipaisAtendimento}" 
+				emptyMessage="#{msg['atendimento.historiamotivo.queixasprincipais.lista.empty']}"
+				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+				<p:column headerText="#{msg['atendimento.historiamotivo.queixaprincipal']}">
+					<p:inputText id="descricaoInput" value="#{queixaPrincipalAtendimento.descricao}" maxlength="300" rendered="#{empty queixaPrincipalAtendimento.queixaPrincipal}"
+						style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.historiamotivo.campoobrigatorio.queixaprincipal']}"/>
+					<h:outputText value="#{queixaPrincipalAtendimento.descricao}" rendered="#{not empty queixaPrincipalAtendimento.queixaPrincipal}"/>
+				</p:column>
+
+				<p:column headerText="#{msg['atendimento.historiamotivo.observacao']}">
+					<p:inputTextarea value="#{queixaPrincipalAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"/>
+				</p:column>
+				
+				<p:column width="30px;" style="text-align: left;">
+					<p:commandButton value="" actionListener="#{editarAtendimentoMBean.removerQueixaPrincipal(index)}" update="queixasPrincipaisTable, :frmEditarAtendimento:queixaPrincipalAddInput"
+						icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
+				</p:column>
+				
+			</p:dataTable>
+		</p:panel>
+		
+		<p:panel styleClass="internal-panel">
+			<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}" styleClass="ui-state-default internal-panel-title"/>
+			<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
+		</p:panel>
+		
+		<p:panel styleClass="internal-panel">
+			<h:outputText value="#{msg['atendimento.historiamotivo.isda']}" styleClass="ui-state-default internal-panel-title"/>
+			<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.isda}" autoResize="false" maxlength="1000" rows="3" style="width: 99%; margin-top: 5px;"/>
+		</p:panel>
+	</div>
 	
 	<p:dialog widgetVar="dlgQueixasPrincipaisAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.historiamotivo.anteriores.modal.header']}" fitViewport="true" dynamic="true"

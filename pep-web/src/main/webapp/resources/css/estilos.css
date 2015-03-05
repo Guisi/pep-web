@@ -8,6 +8,10 @@ body {
 	height: 100%;
 }
 
+fieldset {
+	border: 1px solid #dddddd;
+}
+
 .headerBox {
 	width: 980px;
 	height: 60px;
@@ -107,6 +111,11 @@ body {
 
 .rightContent {
 	vertical-align: top;
+}
+
+.atendimento-leftMenu {
+	vertical-align: top;
+	width: 213px;
 }
 
 .labelColumn {
