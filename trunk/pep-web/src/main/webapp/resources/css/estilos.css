@@ -269,6 +269,14 @@ fieldset {
 	margin-bottom: 10px;
 }
 
+.atendimentoPanel {
+	padding: 0px !important;
+}
+
+.atendimentoPanel > .ui-panel-content {
+	padding: 1px !important;
+}
+
 .atendimentosPanel > .ui-panel-titlebar {
 	text-align: left;
 	padding: 0px 0px 0px 15px !important;
@@ -310,6 +318,6 @@ fieldset {
 
 .botao-queixa-principal {
 	float: left;
-	margin-right: 10px !important;
+	margin-right: 5px !important;
 	margin-bottom: 5px !important;
 }
