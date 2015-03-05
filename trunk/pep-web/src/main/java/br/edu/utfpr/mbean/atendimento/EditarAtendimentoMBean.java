@@ -44,6 +44,9 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	private static final Integer QTDE_SUGESTOES_QUEIXAS = 10;
 	
+	private String menuInclude;
+	private String menuHeader;
+	
 	private Atendimento atendimentoSelecionado;
 	private List<Atendimento> atendimentosAnteriores;
 
@@ -361,5 +364,21 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setQueixasPrincipaisMaisUsadas(List<QueixaPrincipal> queixasPrincipaisMaisUsadas) {
 		this.queixasPrincipaisMaisUsadas = queixasPrincipaisMaisUsadas;
+	}
+
+	public String getMenuInclude() {
+		return menuInclude;
+	}
+
+	public void setMenuInclude(String menuInclude) {
+		this.menuInclude = menuInclude;
+	}
+
+	public String getMenuHeader() {
+		return menuHeader;
+	}
+
+	public void setMenuHeader(String menuHeader) {
+		this.menuHeader = menuHeader;
 	}
 }
