@@ -37,4 +37,15 @@ public class DoencaDao extends GenericDao<Doenca, Long> implements Serializable 
 		
 		return entityManager.createQuery(q).getResultList();
 	}
+	
+	public Doenca retornarDoenca(String codigoCid) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Doenca> q = qb.createQuery(Doenca.class);
+		Root<Doenca> root = q.from(Doenca.class);
+		
+		Predicate predicate = qb.equal(qb.lower(root.get(Doenca_.codigoCid)), StringUtils.lowerCase(codigoCid));
+		q.where(predicate);
+		
+		return entityManager.createQuery(q).getSingleResult();
+	}
 }
