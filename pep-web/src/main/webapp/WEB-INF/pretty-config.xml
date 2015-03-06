@@ -153,4 +153,8 @@
 		<view-id value="/secure/queixaprincipal/editarQueixaPrincipal.xhtml" />
 	</url-mapping>
 	
+	<url-mapping id="listarDoencas">
+		<pattern value="/listarDoencas" />
+		<view-id value="/secure/doenca/doencas.xhtml" />
+	</url-mapping>
 </pretty-config>

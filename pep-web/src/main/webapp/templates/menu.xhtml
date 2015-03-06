@@ -21,11 +21,14 @@
 					<sec:ifAnyGranted roles="EDITAR_PERFIS">
 						<p:menuitem outcome="pretty:listarPerfis" value="#{msg['menu.administracao.perfilusuario']}"/>
 					</sec:ifAnyGranted>
-					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
-						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
-					</sec:ifAnyGranted>
 					<sec:ifAnyGranted roles="EDITAR_CONVENIOS">
 						<p:menuitem outcome="pretty:listarConvenios" value="#{msg['menu.administracao.convenios']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_DOENCAS">
+						<p:menuitem outcome="pretty:listarDoencas" value="#{msg['menu.administracao.doencas']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
+						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
 					</sec:ifAnyGranted>
 					<sec:ifAnyGranted roles="EDITAR_MEDICAMENTOS">
 						<p:menuitem outcome="pretty:listarMedicamentos" value="#{msg['menu.administracao.medicamentos']}"/>

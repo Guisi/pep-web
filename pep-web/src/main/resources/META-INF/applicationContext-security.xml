@@ -21,6 +21,7 @@
 		<security:intercept-url pattern="/secure/paciente/editarPaciente**" access="hasRole('EDITAR_PACIENTES')" />
 		<security:intercept-url pattern="/secure/medicamento/**" access="hasRole('EDITAR_MEDICAMENTOS')" />
 		<security:intercept-url pattern="/secure/queixaprincipal/**" access="hasRole('EDITAR_QUEIXAS_PRINCIPAIS')" />
+		<security:intercept-url pattern="/secure/doenca/**" access="hasRole('EDITAR_DOENCAS')" />
 		<security:intercept-url pattern="/secure/atendimento/**" access="hasAnyRole('MANUTENIR_ATENDIMENTOS', 'VISUALIZAR_ATENDIMENTOS')" />
 		<security:intercept-url pattern="/secure/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/*" access="permitAll" />
