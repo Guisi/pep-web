@@ -25,7 +25,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (10
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (11, 'EDITAR_QUEIXAS_PRINCIPAIS', 'Autorização para editar queixas principais.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (12, 'MANUTENIR_ATENDIMENTOS', 'Autorização para ver, criar e editar atendimentos do paciente.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (13, 'VISUALIZAR_ATENDIMENTOS', 'Autorização para ver atendimentos do paciente.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 14;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (14, 'EDITAR_DOENCAS', 'Autorização para editar doenças.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 15;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -42,6 +43,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 10);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 11);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 12);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 14);
 
 --vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
