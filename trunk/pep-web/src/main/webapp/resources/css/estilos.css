@@ -194,8 +194,7 @@ fieldset {
 }
 
 .divBotoesEdicao {
-	margin-top: 10px;
-	margin-right: 10px;
+	margin: 10px 10px 10px 0px;
 	text-align: right;
 }
 
@@ -284,6 +283,14 @@ fieldset {
 
 .atendimentosPanel > .ui-panel-content {
 	padding: 5px !important;
+}
+
+.resumoAtendimentoPanel {
+	border: 0px !important;
+}
+
+.resumoAtendimentoPanel > .ui-panel-titlebar {
+	border-bottom: 0px;
 }
 
 .resumoAtendimentoPanel > .ui-panel-content {
