@@ -311,6 +311,10 @@ fieldset {
 	margin: 0px 10px 10px 10px;
 }
 
+.datalist-noborder .ui-datalist-content {
+	border: 0px !important;
+}
+
 .internal-panel {
 	margin-top: 10px;
 	text-align: left;

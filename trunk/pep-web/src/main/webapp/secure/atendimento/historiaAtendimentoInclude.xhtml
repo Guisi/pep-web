@@ -35,7 +35,7 @@
 				</h:panelGrid>
 				
 				<p:column style="text-align: right;">
-					<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}"/>
+					<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresHistoriaMotivo}"/>
 				</p:column>
 			</h:panelGrid>
 			
@@ -77,9 +77,11 @@
 		draggable="true" header="#{msg['atendimento.historiamotivo.anteriores.modal.header']}" fitViewport="true" dynamic="true"
 		rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}" width="800">
 	
-		<ui:repeat var="atendimento" value="#{editarAtendimentoMBean.atendimentosAnteriores}">
-			<p:panel header="#{msg['atendimento.historiamotivo.anteriores.atendimento.header']} #{atendimento.dataFormatada}" toggleable="true"
-				style="margin-top: 5px; text-align: left;">
+		<p:dataList value="#{editarAtendimentoMBean.atendimentosAnterioresHistoriaMotivo}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="3" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			
+			<p:panel header="#{msg['atendimento.historiamotivo.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px; text-align: left;">
 				<p:dataTable id="queixaPrincipalAnteriorTable" var="queixaPrincipal" value="#{atendimento.queixasPrincipais}"
 					styleClass="datatable-no-header" rendered="#{not empty atendimento.queixasPrincipais}">
 					<p:column style="text-align: left;">
@@ -98,6 +100,6 @@
 					<h:outputText value="#{atendimento.isda}"/>
 				</p>
 			</p:panel>
-		</ui:repeat>
+		</p:dataList>
 	</p:dialog>
 </h:html>
