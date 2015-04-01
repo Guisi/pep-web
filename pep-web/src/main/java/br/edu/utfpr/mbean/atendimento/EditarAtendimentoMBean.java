@@ -209,6 +209,16 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		return l;
 	}
 	
+	public List<Atendimento> getAtendimentosAnterioresTratamentos() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : this.atendimentosAnteriores) {
+			if (!atendimento.getMedicamentos().isEmpty()) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
+	}
+	
 	
 	/** Historia e motivo do atendimento */
 	private void listarQueixasPrincipaisDisponiveis() {
@@ -284,6 +294,18 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	public void adicionarOutraQueixaPrincipal() {
 		this.queixasPrincipaisAtendimento.add(new QueixaPrincipalAtendimento());
+	}
+	
+	public List<Atendimento> getAtendimentosAnterioresHistoriaMotivo() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : this.atendimentosAnteriores) {
+			if (!atendimento.getQueixasPrincipais().isEmpty()
+					|| StringUtils.isNotBlank(atendimento.getHistoriaDoencaAtual())
+					|| StringUtils.isNotBlank(atendimento.getIsda())) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
 	}
 	
 	public Atendimento getAtendimentoSelecionado() {

@@ -22,7 +22,7 @@
 			</p:columnGroup>
 		</h:panelGrid>
 		<p:column style="text-align: right;">
-			<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}"/>
+			<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresTratamentos}"/>
 		</p:column>
 	</h:panelGrid>
 	
@@ -60,17 +60,17 @@
 		draggable="true" header="#{msg['atendimento.tratamentos.anteriores.modal.header']}" fitViewport="true" dynamic="true"
 		rendered="#{not empty editarAtendimentoMBean.atendimentosAnteriores}" width="800">
 	
-		<ui:repeat var="atendimento" value="#{editarAtendimentoMBean.atendimentosAnteriores}">
-			<p:panel header="#{msg['atendimento.tratamentos.anteriores.atendimento.header']} #{atendimento.dataFormatada}" toggleable="true"
-				rendered="#{not empty atendimento.medicamentos}" style="margin-top: 5px;">
-				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}"
-					styleClass="datatable-no-header">
+		<p:dataList value="#{editarAtendimentoMBean.atendimentosAnterioresTratamentos}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			<p:panel header="#{msg['atendimento.tratamentos.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
+				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}" styleClass="datatable-no-header">
 					<p:column style="text-align: left;">
 						<h:outputText value="#{medicamentoAtendimento.descricao}"/>
 						<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
-		</ui:repeat>
+		</p:dataList>
 	</p:dialog>
 </h:html>
