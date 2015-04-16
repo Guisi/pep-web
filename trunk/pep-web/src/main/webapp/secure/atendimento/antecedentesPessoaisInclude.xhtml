@@ -13,6 +13,11 @@
 
 			<h:panelGrid columns="2" width="100%">
 				<h:panelGrid columns="2">
+					<p:selectOneMenu id="antecedenteClinicoAddInput" value="#{editarAtendimentoMBean.antecedenteClinicoSelecionado}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+						<f:selectItems value="#{editarAtendimentoMBean.antecedentesClinicosDisponiveis}" var="antecedenteClinico" itemLabel="#{antecedenteClinico.codigoCid} - #{antecedenteClinico.descricao}" itemValue="#{antecedenteClinico}"/>
+						<p:ajax event="change" process="@this"/>
+					</p:selectOneMenu>
 				</h:panelGrid>
 			</h:panelGrid>
 		</p:panel>
