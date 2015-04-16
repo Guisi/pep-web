@@ -14,15 +14,15 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.Medicamento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
-import br.edu.utfpr.model.QueixaPrincipal;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.MedicamentoService;
-import br.edu.utfpr.service.QueixaPrincipalService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
@@ -39,10 +39,9 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private AtendimentoService atendimentoService;
 	@Inject
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
-	@Inject
-	private QueixaPrincipalService queixaPrincipalService;
 	
-	private static final Integer QTDE_SUGESTOES_QUEIXAS = 10;
+	@Inject
+	private HistoriaAtendimentoViewBean historiaViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -55,14 +54,14 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private List<MedicamentoAtendimento> medicamentosAtendimento;
 	private List<MedicamentoAtendimento> medicamentosAtendimentosAnteriores;
 	
-	private QueixaPrincipal queixaPrincipalSelecionada;
-	private List<QueixaPrincipal> queixasPrincipaisDisponiveis;
-	private List<QueixaPrincipal> queixasPrincipaisMaisUsadas;
-	private List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento;
+	private Doenca antecedenteClinicoSelecionado;
+	private List<Doenca> antecedentesClinicosDisponiveis;
 
 	@PostConstruct
 	public void init() {
 		String idAtendimento = getRequest().getParameter("idAtendimento");
+		
+		List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento;
 		
 		if (StringUtils.isNotEmpty(idAtendimento)) {
 			if (new Scanner(idAtendimento).hasNextLong()) {
@@ -76,7 +75,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			
 			this.pacienteSelecionado = this.atendimentoSelecionado.getPaciente();
 			this.medicamentosAtendimento = new ArrayList<>(this.atendimentoSelecionado.getMedicamentos());
-			this.queixasPrincipaisAtendimento = new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais());
+			queixasPrincipaisAtendimento = new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais());
 		} else {
 			String idPaciente = getRequest().getParameter("idPaciente");
 			
@@ -95,21 +94,17 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
 			
 			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
-			this.queixasPrincipaisAtendimento = new ArrayList<QueixaPrincipalAtendimento>();
+			queixasPrincipaisAtendimento = new ArrayList<QueixaPrincipalAtendimento>();
 		}
 		
-		/** carrega listas */
-		
 		//atendimentos anteriores
-		this.listarAtendimentosAnteriores();
+		this.atendimentosAnteriores = atendimentoService.retornarAtendimentosAnterioresPaciente(this.pacienteSelecionado.getId(), this.atendimentoSelecionado.getId());
+		
+		this.historiaViewBean.init(queixasPrincipaisAtendimento);
 		
 		//tratamentos em andamento
 		this.listarMedicamentosAtendimentosAnteriores();
 		this.listarMedicamentosDisponiveis();
-		
-		//historia e motivo do atendimento
-		this.listarQueixasPrincipaisDisponiveis();
-		this.listarQueixasPrincipaisMaisUsadas();
 	}
 	
 	public String cancelar() {
@@ -130,11 +125,10 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	
 	private void salvarAtendimento() {
 		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, this.medicamentosAtendimento, 
-				this.medicamentosAtendimentosAnteriores, this.queixasPrincipaisAtendimento);
+				this.medicamentosAtendimentosAnteriores, this.historiaViewBean.getQueixasPrincipaisAtendimento());
 		this.medicamentosAtendimento = new ArrayList<>(this.atendimentoSelecionado.getMedicamentos());
-		this.queixasPrincipaisAtendimento = new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais());
+		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
 	}
-	
 	
 	/** Tratamentos em andamento */
 	private void listarMedicamentosDisponiveis() {
@@ -146,10 +140,6 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.medicamentosDisponiveis.remove(medicamentoAtendimento.getMedicamento());
 			}
 		}
-	}
-	
-	private void listarAtendimentosAnteriores() {
-		this.atendimentosAnteriores = atendimentoService.retornarAtendimentosAnterioresPaciente(this.pacienteSelecionado.getId(), this.atendimentoSelecionado.getId());
 	}
 	
 	private void listarMedicamentosAtendimentosAnteriores() {
@@ -219,95 +209,6 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		return atendimentos;
 	}
 	
-	
-	/** Historia e motivo do atendimento */
-	private void listarQueixasPrincipaisDisponiveis() {
-		this.queixasPrincipaisDisponiveis = queixaPrincipalService.retornarQueixasPrincipais(Boolean.TRUE);
-		
-		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
-			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
-				this.queixasPrincipaisDisponiveis.remove(queixaPrincipalAtendimento.getQueixaPrincipal());
-			}
-		}
-	}
-	
-	private void listarQueixasPrincipaisMaisUsadas() {
-		List<Long> idsQueixasIgnorar = new ArrayList<Long>();
-		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
-			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
-				idsQueixasIgnorar.add(queixaPrincipalAtendimento.getQueixaPrincipal().getId());
-			}
-		}
-		
-		this.queixasPrincipaisMaisUsadas = queixaPrincipalService.retornarQueixasPrincipaisMaisUsadas(QTDE_SUGESTOES_QUEIXAS, idsQueixasIgnorar, Boolean.TRUE);
-		
-		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
-			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
-				this.queixasPrincipaisMaisUsadas.remove(queixaPrincipalAtendimento.getQueixaPrincipal());
-			}
-		}
-	}
-	
-	public void adicionarQueixaPrincipal(QueixaPrincipal queixaPrincipal) {
-		this.queixaPrincipalSelecionada = queixaPrincipal;
-		this.adicionarQueixaPrincipal();
-	}
-	
-	public void adicionarQueixaPrincipal() {
-		if (this.queixaPrincipalSelecionada != null) {
-			this.queixasPrincipaisDisponiveis.remove(this.queixaPrincipalSelecionada);
-			this.queixasPrincipaisMaisUsadas.remove(this.queixaPrincipalSelecionada);
-			
-			QueixaPrincipalAtendimento queixaPrincipalAtendimento = new QueixaPrincipalAtendimento();
-			queixaPrincipalAtendimento.setQueixaPrincipal(this.queixaPrincipalSelecionada);
-			this.queixasPrincipaisAtendimento.add(queixaPrincipalAtendimento);
-
-			this.queixaPrincipalSelecionada = null;
-			
-			this.listarQueixasPrincipaisMaisUsadas();
-		}
-	}
-	
-	public void removerQueixaPrincipal(int indice) {
-		QueixaPrincipalAtendimento queixaPrincipalAtendimento = this.queixasPrincipaisAtendimento.get(indice);
-		this.queixasPrincipaisAtendimento.remove(indice);
-		if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
-			this.queixasPrincipaisDisponiveis.add(queixaPrincipalAtendimento.getQueixaPrincipal());
-			this.queixasPrincipaisMaisUsadas.add(queixaPrincipalAtendimento.getQueixaPrincipal());
-			
-			this.listarQueixasPrincipaisMaisUsadas();
-			this.ordenaListasQueixasPrincipais();
-		}
-	}
-	
-	private void ordenaListasQueixasPrincipais() {
-		Comparator<QueixaPrincipal> comparator = new Comparator<QueixaPrincipal>() {
-			@Override
-			public int compare(QueixaPrincipal o1, QueixaPrincipal o2) {
-				return o1.getDescricao().compareTo(o2.getDescricao());
-			}
-		};
-		
-		Collections.sort(this.queixasPrincipaisDisponiveis, comparator);
-		Collections.sort(this.queixasPrincipaisMaisUsadas, comparator);
-	}
-	
-	public void adicionarOutraQueixaPrincipal() {
-		this.queixasPrincipaisAtendimento.add(new QueixaPrincipalAtendimento());
-	}
-	
-	public List<Atendimento> getAtendimentosAnterioresHistoriaMotivo() {
-		List<Atendimento> atendimentos = new ArrayList<>();
-		for (Atendimento atendimento : this.atendimentosAnteriores) {
-			if (!atendimento.getQueixasPrincipais().isEmpty()
-					|| StringUtils.isNotBlank(atendimento.getHistoriaDoencaAtual())
-					|| StringUtils.isNotBlank(atendimento.getIsda())) {
-				atendimentos.add(atendimento);
-			}
-		}
-		return atendimentos;
-	}
-	
 	public Atendimento getAtendimentoSelecionado() {
 		return atendimentoSelecionado;
 	}
@@ -356,38 +257,6 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.atendimentosAnteriores = atendimentosAnteriores;
 	}
 
-	public QueixaPrincipal getQueixaPrincipalSelecionada() {
-		return queixaPrincipalSelecionada;
-	}
-
-	public void setQueixaPrincipalSelecionada(QueixaPrincipal queixaPrincipalSelecionada) {
-		this.queixaPrincipalSelecionada = queixaPrincipalSelecionada;
-	}
-
-	public List<QueixaPrincipal> getQueixasPrincipaisDisponiveis() {
-		return queixasPrincipaisDisponiveis;
-	}
-
-	public void setQueixasPrincipaisDisponiveis(List<QueixaPrincipal> queixasPrincipaisDisponiveis) {
-		this.queixasPrincipaisDisponiveis = queixasPrincipaisDisponiveis;
-	}
-
-	public List<QueixaPrincipalAtendimento> getQueixasPrincipaisAtendimento() {
-		return queixasPrincipaisAtendimento;
-	}
-
-	public void setQueixasPrincipaisAtendimento(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
-		this.queixasPrincipaisAtendimento = queixasPrincipaisAtendimento;
-	}
-
-	public List<QueixaPrincipal> getQueixasPrincipaisMaisUsadas() {
-		return queixasPrincipaisMaisUsadas;
-	}
-
-	public void setQueixasPrincipaisMaisUsadas(List<QueixaPrincipal> queixasPrincipaisMaisUsadas) {
-		this.queixasPrincipaisMaisUsadas = queixasPrincipaisMaisUsadas;
-	}
-
 	public String getMenuInclude() {
 		return menuInclude;
 	}
@@ -402,5 +271,29 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setMenuHeader(String menuHeader) {
 		this.menuHeader = menuHeader;
+	}
+
+	public Doenca getAntecedenteClinicoSelecionado() {
+		return antecedenteClinicoSelecionado;
+	}
+
+	public void setAntecedenteClinicoSelecionado(Doenca antecedenteClinicoSelecionado) {
+		this.antecedenteClinicoSelecionado = antecedenteClinicoSelecionado;
+	}
+
+	public List<Doenca> getAntecedentesClinicosDisponiveis() {
+		return antecedentesClinicosDisponiveis;
+	}
+
+	public void setAntecedentesClinicosDisponiveis(List<Doenca> antecedentesClinicosDisponiveis) {
+		this.antecedentesClinicosDisponiveis = antecedentesClinicosDisponiveis;
+	}
+
+	public HistoriaAtendimentoViewBean getHistoriaViewBean() {
+		return historiaViewBean;
+	}
+
+	public void setHistoriaViewBean(HistoriaAtendimentoViewBean historiaViewBean) {
+		this.historiaViewBean = historiaViewBean;
 	}
 }

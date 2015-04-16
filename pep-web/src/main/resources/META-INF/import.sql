@@ -263,9 +263,9 @@ ALTER SEQUENCE pep_owner.doenca_sequence RESTART WITH 103;
 
 --atendimento
 --postgres
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
 --h2
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos
