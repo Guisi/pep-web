@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.QueixaPrincipal;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
@@ -30,9 +31,17 @@ public class HistoriaAtendimentoViewBean extends BaseAtendimentoViewBean {
 	private List<QueixaPrincipal> queixasPrincipaisMaisUsadas;
 	private List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento;
 	
-	public void init(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
-		this.setQueixasPrincipaisAtendimento(queixasPrincipaisAtendimento);
+	@Override
+	public void init(EditarAtendimentoMBean mbean) {
+		super.init(mbean);
 		
+		if (mbean.getAtendimentoSelecionado().isNew()) {
+			this.queixasPrincipaisAtendimento = new ArrayList<QueixaPrincipalAtendimento>();
+		} else {
+			this.queixasPrincipaisAtendimento = new ArrayList<>(getAtendimentoSelecionado().getQueixasPrincipais());
+		}
+
+		this.setQueixasPrincipaisAtendimento(queixasPrincipaisAtendimento);
 		this.listarQueixasPrincipaisDisponiveis();
 		this.listarQueixasPrincipaisMaisUsadas();
 	}
