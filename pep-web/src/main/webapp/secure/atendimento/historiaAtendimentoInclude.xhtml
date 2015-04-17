@@ -10,11 +10,12 @@
 	<div>
 		<p:panel styleClass="internal-panel">
 			<h:outputText value="#{msg['atendimento.historiamotivo.queixaprincipalduracao']}" styleClass="ui-state-default internal-panel-title"/>
+
 			<p:panel id="pnBotoesQueixas" style="margin: 10px 0px 10px 0px; display: table;">
 				<ui:repeat var="queixaPrincipal" value="#{editarAtendimentoMBean.historiaViewBean.queixasPrincipaisMaisUsadas}">
 					<p:commandButton value="#{queixaPrincipal.descricao}" actionListener="#{editarAtendimentoMBean.historiaViewBean.adicionarQueixaPrincipal(queixaPrincipal)}"
-						process=":frmEditarAtendimento:queixasPrincipaisTable, @this" styleClass="botao-queixa-principal"
-						update=":frmEditarAtendimento:queixasPrincipaisTable, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:queixaPrincipalAddInput, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:msgAtendimentos">
+						process=":frmEditarAtendimento:queixasPrincipaisTable, @this" styleClass="botao-mais-usados"
+						update=":frmEditarAtendimento:queixasPrincipaisTable, :frmEditarAtendimento:pnBotoesQueixas, :frmEditarAtendimento:queixaPrincipalAddInput, :frmEditarAtendimento:msgAtendimentos">
 					</p:commandButton>
 				</ui:repeat>
 			</p:panel>

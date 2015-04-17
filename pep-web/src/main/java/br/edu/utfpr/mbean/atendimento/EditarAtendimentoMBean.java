@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesPessoaisViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.TratamentosAndamentoViewBean;
+import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
@@ -82,6 +83,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		//inicializa viewbeans
 		this.historiaViewBean.init(this);
 		this.tratamentoViewBean.init(this);
+		this.antecedentesPessoaisViewBean.init(this);
 	}
 	
 	public String cancelar() {
@@ -104,10 +106,12 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.atendimentoSelecionado = atendimentoService.salvarAtendimento(this.atendimentoSelecionado, 
 				this.tratamentoViewBean.getMedicamentosAtendimento(), 
 				this.tratamentoViewBean.getMedicamentosAtendimentosAnteriores(),
-				this.historiaViewBean.getQueixasPrincipaisAtendimento());
+				this.historiaViewBean.getQueixasPrincipaisAtendimento(),
+				this.antecedentesPessoaisViewBean.getAntecedentesClinicosAtendimento());
 
 		this.tratamentoViewBean.setMedicamentosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getMedicamentos()));
 		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
+		this.antecedentesPessoaisViewBean.setAntecedentesClinicosAtendimento(new ArrayList<AntecedenteClinicoAtendimento>(this.atendimentoSelecionado.getAntecedentesClinicos()));
 	}
 	
 	public Atendimento getAtendimentoSelecionado() {

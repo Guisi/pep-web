@@ -11,6 +11,8 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
+import br.edu.utfpr.model.AntecedenteClinicoAtendimento_;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Atendimento_;
 import br.edu.utfpr.model.MedicamentoAtendimento;
@@ -45,6 +47,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		
 		Fetch<Atendimento, QueixaPrincipalAtendimento> queixasPrincipaisFetch = root.fetch(Atendimento_.queixasPrincipais, JoinType.LEFT);
 		queixasPrincipaisFetch.fetch(QueixaPrincipalAtendimento_.queixaPrincipal, JoinType.LEFT);
+		
+		Fetch<Atendimento, AntecedenteClinicoAtendimento> antecedenteClinicoFetch = root.fetch(Atendimento_.antecedentesClinicos, JoinType.LEFT);
+		antecedenteClinicoFetch.fetch(AntecedenteClinicoAtendimento_.doenca, JoinType.LEFT);
 
 		List<Predicate> predicados = new ArrayList<>();
 		predicados.add(qb.equal(root.get(Atendimento_.paciente).get(Usuario_.id), idPaciente));
@@ -71,6 +76,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		
 		Fetch<Atendimento, QueixaPrincipalAtendimento> queixasPrincipaisFetch = root.fetch(Atendimento_.queixasPrincipais, JoinType.LEFT);
 		queixasPrincipaisFetch.fetch(QueixaPrincipalAtendimento_.queixaPrincipal, JoinType.LEFT);
+		
+		Fetch<Atendimento, AntecedenteClinicoAtendimento> antecedenteClinicoFetch = root.fetch(Atendimento_.antecedentesClinicos, JoinType.LEFT);
+		antecedenteClinicoFetch.fetch(AntecedenteClinicoAtendimento_.doenca, JoinType.LEFT);
 		
 		q.where(qb.equal(root.get(Atendimento_.id), id));
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.Usuario;
 
 public abstract class BaseAtendimentoViewBean implements Serializable {
 
@@ -18,6 +19,10 @@ public abstract class BaseAtendimentoViewBean implements Serializable {
 	
 	public Atendimento getAtendimentoSelecionado() {
 		return mbean.getAtendimentoSelecionado();
+	}
+	
+	public Usuario getPacienteSelecionado() {
+		return mbean.getPacienteSelecionado();
 	}
 	
 	public List<Atendimento> getAtendimentosAnteriores() {
