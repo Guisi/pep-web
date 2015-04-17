@@ -76,6 +76,10 @@ fieldset {
 	margin-left: -250px;
 }
 
+.ui-accordion .ui-accordion-header {
+    margin-bottom: 5px;
+}
+
 .ui-panel-titlebar-icon {
    float: left !important;
 }
@@ -327,8 +331,21 @@ fieldset {
 	background: none !important;
 }
 
-.botao-queixa-principal {
+.botao-mais-usados {
 	float: left;
 	margin-right: 5px !important;
 	margin-bottom: 5px !important;
+}
+
+.botao-mais-usados-fixo {
+	float: left;
+	margin-right: 5px !important;
+	margin-bottom: 5px !important;
+	max-width: 300px;
+}
+
+.botao-mais-usados-fixo span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }

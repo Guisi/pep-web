@@ -59,4 +59,8 @@ public class DoencaService {
 		
 		doencaDao.save(doenca);
 	}
+	
+	public List<Doenca> retornarDoencasDiagnosticadas(Long idPaciente) {
+		return doencaDao.retornarDoencasDiagnosticadas(idPaciente);
+	}
 }

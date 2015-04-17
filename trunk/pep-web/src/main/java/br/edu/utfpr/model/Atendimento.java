@@ -47,6 +47,10 @@ public class Atendimento extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<QueixaPrincipalAtendimento> queixasPrincipais;
 	
+	@OrderBy("id_antecedente_clinico_atendimento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
+	private Set<AntecedenteClinicoAtendimento> antecedentesClinicos;
+	
 	@Column(name="historia_doenca_atual", length=1000)
 	@Size(max=1000)
 	private String historiaDoencaAtual;
@@ -113,5 +117,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setIsda(String isda) {
 		this.isda = isda;
+	}
+
+	public Set<AntecedenteClinicoAtendimento> getAntecedentesClinicos() {
+		return antecedentesClinicos;
+	}
+
+	public void setAntecedentesClinicos(Set<AntecedenteClinicoAtendimento> antecedentesClinicos) {
+		this.antecedentesClinicos = antecedentesClinicos;
 	}
 }

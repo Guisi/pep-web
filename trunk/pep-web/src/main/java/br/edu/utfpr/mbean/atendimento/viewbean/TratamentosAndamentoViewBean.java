@@ -32,7 +32,7 @@ public class TratamentosAndamentoViewBean extends BaseAtendimentoViewBean {
 	public void init(EditarAtendimentoMBean mbean) {
 		super.init(mbean);
 		
-		if (mbean.getAtendimentoSelecionado().isNew()) {
+		if (getAtendimentoSelecionado().isNew()) {
 			this.medicamentosAtendimento = new ArrayList<MedicamentoAtendimento>();
 		} else {
 			this.medicamentosAtendimento = new ArrayList<>(getAtendimentoSelecionado().getMedicamentos());
@@ -55,7 +55,7 @@ public class TratamentosAndamentoViewBean extends BaseAtendimentoViewBean {
 	
 	private void listarMedicamentosAtendimentosAnteriores() {
 		this.medicamentosAtendimentosAnteriores = medicamentoAtendimentoService
-				.retornarMedicamentosEmUsoPaciente(getMbean().getPacienteSelecionado().getId(), getMbean().getAtendimentoSelecionado().getId());
+				.retornarMedicamentosEmUsoPaciente(getPacienteSelecionado().getId(), getAtendimentoSelecionado().getId());
 		for (MedicamentoAtendimento medicamentoAtendimento : this.medicamentosAtendimentosAnteriores) {
 			medicamentoAtendimento.setAtendimentoAnterior(true);
 		}

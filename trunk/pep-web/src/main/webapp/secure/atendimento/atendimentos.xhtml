@@ -84,14 +84,22 @@
 						
 						<p:panel header="#{msg['atendimento.resumo.header']}" style="width: 350px;">
 							<p:accordionPanel multiple="true" activeIndex="">
-								<p:tab title="#{msg['atendimento.tratamentos.header']} (#{fn:length(atendimentoMBean.medicamentosEmUso)})">
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.tratamentos.header']} (#{fn:length(atendimentoMBean.medicamentosEmUso)})">
 									<p:dataList value="#{atendimentoMBean.medicamentosEmUso}" var="medicamentoAtendimento"
 										emptyMessage="#{msg['atendimento.tratamentos.lista.empty']}" type="definition" itemStyleClass="datalist-item">
-								        <h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{empty medicamentoAtendimento.medicamento}"/>
-										<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento}"/>
+								        <h:outputText value="#{medicamentoAtendimento.descricao}"/>
 										<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
 								    </p:dataList>
 								</p:tab>
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.doencasdiagnosticadas.header']} (#{fn:length(atendimentoMBean.doencasDiagnosticadas)})">
+									<p:dataList value="#{atendimentoMBean.doencasDiagnosticadas}" var="doenca"
+										emptyMessage="#{msg['atendimento.resumoprontuario.doencasdiagnosticadas.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{doenca.codigoCid} - #{doenca.descricao}"/>
+								    </p:dataList>
+								</p:tab>
+								
 							</p:accordionPanel>
 						</p:panel>
 					</h:panelGrid>

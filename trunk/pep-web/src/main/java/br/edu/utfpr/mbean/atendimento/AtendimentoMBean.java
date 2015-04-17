@@ -12,8 +12,10 @@ import javax.inject.Inject;
 import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
+import br.edu.utfpr.service.DoencaService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -29,6 +31,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private UsuarioService usuarioService;
 	@Inject
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
+	@Inject
+	private DoencaService doencaService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
@@ -37,6 +41,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	
 	/* Resumo prontuario */
 	private List<MedicamentoAtendimento> medicamentosEmUso;
+	private List<Doenca> doencasDiagnosticadas;
 	
 	@PostConstruct
 	public void init() {
@@ -68,6 +73,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	
 	public void listarResumoProntuario() {
 		this.medicamentosEmUso = medicamentoAtendimentoService.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), null);
+		this.doencasDiagnosticadas = doencaService.retornarDoencasDiagnosticadas(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -113,5 +119,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setMedicamentosEmUso(List<MedicamentoAtendimento> medicamentosEmUso) {
 		this.medicamentosEmUso = medicamentosEmUso;
+	}
+
+	public List<Doenca> getDoencasDiagnosticadas() {
+		return doencasDiagnosticadas;
+	}
+
+	public void setDoencasDiagnosticadas(List<Doenca> doencasDiagnosticadas) {
+		this.doencasDiagnosticadas = doencasDiagnosticadas;
 	}
 }

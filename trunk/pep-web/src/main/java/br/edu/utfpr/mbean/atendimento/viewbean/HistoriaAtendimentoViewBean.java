@@ -67,11 +67,11 @@ public class HistoriaAtendimentoViewBean extends BaseAtendimentoViewBean {
 		
 		this.queixasPrincipaisMaisUsadas = queixaPrincipalService.retornarQueixasPrincipaisMaisUsadas(QTDE_SUGESTOES_QUEIXAS, idsQueixasIgnorar, Boolean.TRUE);
 		
-		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
+		/*for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
 			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
 				this.queixasPrincipaisMaisUsadas.remove(queixaPrincipalAtendimento.getQueixaPrincipal());
 			}
-		}
+		}*/
 	}
 	
 	public void adicionarQueixaPrincipal(QueixaPrincipal queixaPrincipal) {
@@ -99,7 +99,6 @@ public class HistoriaAtendimentoViewBean extends BaseAtendimentoViewBean {
 		this.queixasPrincipaisAtendimento.remove(indice);
 		if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {
 			this.queixasPrincipaisDisponiveis.add(queixaPrincipalAtendimento.getQueixaPrincipal());
-			this.queixasPrincipaisMaisUsadas.add(queixaPrincipalAtendimento.getQueixaPrincipal());
 			
 			this.listarQueixasPrincipaisMaisUsadas();
 			this.ordenaListasQueixasPrincipais();

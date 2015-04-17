@@ -1,10 +1,14 @@
 package br.edu.utfpr.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -33,6 +37,9 @@ public class Doenca extends BaseEntity {
 	
 	@Column(name="chk_ativo")
 	private Boolean chkAtivo;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "doenca")
+	private Set<AntecedenteClinicoAtendimento> antecedentesClinicosAtendimentos;
 	
 	@Override
 	public Long getId() {
@@ -65,6 +72,14 @@ public class Doenca extends BaseEntity {
 
 	public void setCodigoCid(String codigoCid) {
 		this.codigoCid = codigoCid;
+	}
+
+	public Set<AntecedenteClinicoAtendimento> getAntecedentesClinicosAtendimentos() {
+		return antecedentesClinicosAtendimentos;
+	}
+
+	public void setAntecedentesClinicosAtendimentos(Set<AntecedenteClinicoAtendimento> antecedentesClinicosAtendimentos) {
+		this.antecedentesClinicosAtendimentos = antecedentesClinicosAtendimentos;
 	}
 
 }
