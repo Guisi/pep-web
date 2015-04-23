@@ -157,4 +157,29 @@
 		<pattern value="/listarDoencas" />
 		<view-id value="/secure/doenca/doencas.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="novaDoenca">
+		<pattern value="/novaDoenca" />
+		<view-id value="/secure/doenca/editarDoenca.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarDoenca">
+		<pattern value="/editarDoenca/#{idDoenca}" />
+		<view-id value="/secure/doenca/editarDoenca.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarProcedimentos">
+		<pattern value="/listarProcedimentos" />
+		<view-id value="/secure/procedimento/procedimentos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoProcedimento">
+		<pattern value="/novoProcedimento" />
+		<view-id value="/secure/procedimento/editarProcedimento.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarProcedimento">
+		<pattern value="/editarProcedimento/#{idProcedimento}" />
+		<view-id value="/secure/procedimento/editarProcedimento.xhtml" />
+	</url-mapping>
 </pretty-config>

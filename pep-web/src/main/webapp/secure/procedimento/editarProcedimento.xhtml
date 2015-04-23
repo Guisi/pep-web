@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarProcedimentoMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarProcedimentos">
+				<p:messages id="msgProcedimentos"/>
+				
+				<p:outputPanel rendered="#{not empty editarProcedimentoMBean.procedimentoSelecionado}">
+				    <fieldset>
+				    	<legend>#{msg['procedimento.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['procedimento.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarProcedimentoMBean.procedimentoSelecionado.descricao}" maxlength="300" style="width: 800px;" required="true"
+								requiredMessage="#{msg['procedimento.campoobrigatorio.descricao']}"/>
+								
+							<h:outputLabel for="tipoProcedimentoInput" value="#{msg['procedimento.tipo']}: "/>
+							<p:selectOneMenu id="tipoProcedimentoInput" value="#{editarProcedimentoMBean.procedimentoSelecionado.tipoProcedimento}" required="true"
+								requiredMessage="#{msg['procedimento.campoobrigatorio.tipo']}">
+								<f:selectItem itemLabel="#{msg['general.app.selecione']}" noSelectionOption="true"/>
+								<f:selectItems value="#{editarProcedimentoMBean.tiposProcedimento}" var="tipoProcedimento" itemLabel="#{tipoProcedimento.nome}" itemValue="#{tipoProcedimento}"/>
+							</p:selectOneMenu>
+								
+							<h:outputLabel for="chkAtivoInput" value="#{msg['procedimento.chkativo']}: "/>
+							<h:selectBooleanCheckbox id="chkAtivoInput" value="#{editarProcedimentoMBean.procedimentoSelecionado.chkAtivo}"/>
+						</p:panelGrid>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarProcedimentos" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarProcedimentoMBean.salvarProcedimento}" icon="ui-icon-check"
+								update="msgProcedimentos" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

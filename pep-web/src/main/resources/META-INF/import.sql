@@ -26,7 +26,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (11
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (12, 'MANUTENIR_ATENDIMENTOS', 'Autorização para ver, criar e editar atendimentos do paciente.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (13, 'VISUALIZAR_ATENDIMENTOS', 'Autorização para ver atendimentos do paciente.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (14, 'EDITAR_DOENCAS', 'Autorização para editar doenças.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 15;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (15, 'EDITAR_PROCEDIMENTOS', 'Autorização para editar procedimentos.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 16;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -44,6 +45,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 11);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 12);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 14);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 15);
 
 --vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
@@ -260,12 +262,22 @@ INSERT INTO pep_owner.tb_doenca(id_doenca, codigocid, descricao, chk_ativo) VALU
 INSERT INTO pep_owner.tb_doenca(id_doenca, codigocid, descricao, chk_ativo) VALUES (102, 'A20.9', 'Peste form NE', true);
 ALTER SEQUENCE pep_owner.doenca_sequence RESTART WITH 103;
 
+--procedimentos
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (1, 'Mamoplastia', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (2, 'Amigdalectomia', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (3, 'Colecistectomia', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (4, 'Herniorrafia Inguinal', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (5, 'Apendicectomia', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (6, 'Histerectomia total laparoscópica', 'CIRURGICO', true);
+INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (7, 'Tireoidectomia total', 'CIRURGICO', true);
+ALTER SEQUENCE pep_owner.procedimento_sequence RESTART WITH 8;
+
 
 --atendimento
 --postgres
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
 --h2
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos

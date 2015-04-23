@@ -6,24 +6,14 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.SetJoin;
 
 import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.constants.TipoProcedimento;
-import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
-import br.edu.utfpr.model.AntecedenteClinicoAtendimento_;
-import br.edu.utfpr.model.Atendimento;
-import br.edu.utfpr.model.Atendimento_;
-import br.edu.utfpr.model.Doenca;
-import br.edu.utfpr.model.Doenca_;
 import br.edu.utfpr.model.Procedimento;
 import br.edu.utfpr.model.Procedimento_;
-import br.edu.utfpr.model.Usuario;
-import br.edu.utfpr.model.Usuario_;
 
 public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements Serializable {
 
@@ -53,30 +43,14 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
 		return entityManager.createQuery(q).getResultList();
 	}
 	
-	public Doenca retornarDoenca(String codigoCid) {
+	public Procedimento retornarProcedimento(String descricao) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Doenca> q = qb.createQuery(Doenca.class);
-		Root<Doenca> root = q.from(Doenca.class);
+		CriteriaQuery<Procedimento> q = qb.createQuery(Procedimento.class);
+		Root<Procedimento> root = q.from(Procedimento.class);
 		
-		Predicate predicate = qb.equal(qb.lower(root.get(Doenca_.codigoCid)), StringUtils.lowerCase(codigoCid));
+		Predicate predicate = qb.equal(qb.lower(root.get(Procedimento_.descricao)), StringUtils.lowerCase(descricao));
 		q.where(predicate);
 		
 		return entityManager.createQuery(q).getSingleResult();
-	}
-	
-	public List<Doenca> retornarDoencasDiagnosticadas(Long idPaciente) {
-		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Doenca> q = qb.createQuery(Doenca.class);
-		Root<Doenca> root = q.from(Doenca.class);
-		
-		SetJoin<Doenca, AntecedenteClinicoAtendimento> antecedentesClinicosJoin = root.join(Doenca_.antecedentesClinicosAtendimentos);
-		Join<AntecedenteClinicoAtendimento, Atendimento> atendimentoAntecedenteClinicoJoin = antecedentesClinicosJoin.join(AntecedenteClinicoAtendimento_.atendimento);
-		Join<Atendimento, Usuario> pacienteJoin = atendimentoAntecedenteClinicoJoin.join(Atendimento_.paciente);
-		
-		q.where(qb.equal(pacienteJoin.get(Usuario_.id), idPaciente));
-
-		q.orderBy(qb.asc(antecedentesClinicosJoin.get(AntecedenteClinicoAtendimento_.id)));
-		
-		return entityManager.createQuery(q).getResultList();
 	}
 }
