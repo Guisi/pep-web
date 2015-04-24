@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.QueixaPrincipal;
@@ -23,8 +24,6 @@ public class HistoriaAtendimentoViewBean extends BaseAtendimentoViewBean {
 	
 	@Inject
 	private QueixaPrincipalService queixaPrincipalService;
-	
-	private static final Integer QTDE_SUGESTOES_QUEIXAS = 10;
 	
 	private QueixaPrincipal queixaPrincipalSelecionada;
 	private List<QueixaPrincipal> queixasPrincipaisDisponiveis;
@@ -65,7 +64,8 @@ public class HistoriaAtendimentoViewBean extends BaseAtendimentoViewBean {
 			}
 		}
 		
-		this.queixasPrincipaisMaisUsadas = queixaPrincipalService.retornarQueixasPrincipaisMaisUsadas(QTDE_SUGESTOES_QUEIXAS, idsQueixasIgnorar, Boolean.TRUE);
+		this.queixasPrincipaisMaisUsadas = queixaPrincipalService
+				.retornarQueixasPrincipaisMaisUsadas(Constantes.QTDE_SUGESTOES_QUEIXAS, idsQueixasIgnorar, Boolean.TRUE);
 		
 		/*for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
 			if (queixaPrincipalAtendimento.getQueixaPrincipal() != null) {

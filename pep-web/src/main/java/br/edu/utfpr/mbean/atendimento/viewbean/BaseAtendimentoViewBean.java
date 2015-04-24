@@ -1,6 +1,7 @@
 package br.edu.utfpr.mbean.atendimento.viewbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
@@ -31,6 +32,17 @@ public abstract class BaseAtendimentoViewBean implements Serializable {
 
 	protected EditarAtendimentoMBean getMbean() {
 		return mbean;
+	}
+	
+	public List<Atendimento> getAtendimentosAnterioresAntecedentesPessoais() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : getAtendimentosAnteriores()) {
+			if (!atendimento.getAntecedentesClinicos().isEmpty()
+					|| !atendimento.getAntecedentesCirurgicos().isEmpty()) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
 	}
 
 }

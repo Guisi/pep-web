@@ -57,4 +57,8 @@ public class ProcedimentoService {
 		
 		procedimentoDao.save(procedimento);
 	}
+	
+	public List<Procedimento> retornarProcedimentosRealizados(TipoProcedimento tipoProcedimento, Long idPaciente) {
+		return procedimentoDao.retornarProcedimentosRealizados(tipoProcedimento, idPaciente);
+	}
 }

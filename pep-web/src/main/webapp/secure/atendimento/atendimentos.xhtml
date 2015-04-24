@@ -100,6 +100,13 @@
 								    </p:dataList>
 								</p:tab>
 								
+								<p:tab title="#{msg['atendimento.resumoprontuario.cirurgias.header']} (#{fn:length(atendimentoMBean.cirurgias)})">
+									<p:dataList value="#{atendimentoMBean.cirurgias}" var="cirurgia"
+										emptyMessage="#{msg['atendimento.resumoprontuario.cirurgias.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{cirurgia.descricao}"/>
+								    </p:dataList>
+								</p:tab>
+								
 							</p:accordionPanel>
 						</p:panel>
 					</h:panelGrid>
