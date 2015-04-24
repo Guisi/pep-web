@@ -1,6 +1,8 @@
 package br.edu.utfpr.converter;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,6 +17,8 @@ import br.edu.utfpr.model.BaseEntity;
 
 @FacesConverter(value = "pickListConverter")
 public class PickListConverter implements Converter {
+	
+	private static Logger logger = Logger.getLogger(PickListConverter.class.getName());
 
 	@Override
 	public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
@@ -28,6 +32,7 @@ public class PickListConverter implements Converter {
             try {
                 string = String.valueOf(((BaseEntity) object).getId());
             } catch (ClassCastException cce) {
+            	logger.log(Level.SEVERE, "Erro em PickListConverter.", cce);
                 throw new ConverterException(cce);
             }
         }
@@ -46,11 +51,11 @@ public class PickListConverter implements Converter {
   
             return entity;
         } catch (ClassCastException cce) {  
-            cce.printStackTrace();  
-            throw new ConverterException();  
+        	logger.log(Level.SEVERE, "Erro em PickListConverter.", cce);
+            throw new ConverterException(cce);
         } catch (NumberFormatException nfe) {  
-            nfe.printStackTrace();  
-            throw new ConverterException();  
+        	logger.log(Level.SEVERE, "Erro em PickListConverter.", nfe);  
+            throw new ConverterException(nfe);
         }  
     }
 	

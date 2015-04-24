@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -40,6 +42,8 @@ import br.edu.utfpr.utils.UserThreadLocal;
 @Named
 @Stateless
 public class UsuarioService {
+	
+	private static Logger logger = Logger.getLogger(UsuarioService.class.getName()); 
 
 	@Inject
 	private UsuarioDao usuarioDao;
@@ -163,8 +167,12 @@ public class UsuarioService {
 			for (Perfil perfil : usuario.getPerfisUsuario()) {
 				perfil.getAutorizacoes().size();
 			}
+			
+			logger.log(Level.INFO, "Usuario " + username + " autenticado na aplicacao.");
+			
 			return usuario;
 		} catch (NoResultException e) {
+			logger.log(Level.WARNING, "Usuario ou senha invalida na autenticacao do usuario " + username);
 			throw new AppException("login.error.usuariosenhainvalido");
 		}
 	}
@@ -191,6 +199,8 @@ public class UsuarioService {
 		email.setMensagem(msg);
 
 		emailHandler.sendEmail(email);
+		
+		logger.log(Level.INFO, "Enviou email de senha provisoria para usuario " + usuario.getEmail());
 	}
 	
 	public void reiniciarSenha(String username) throws AppException {
@@ -227,6 +237,8 @@ public class UsuarioService {
 		email.setMensagem(msg);
 
 		emailHandler.sendEmail(email);
+		
+		logger.log(Level.INFO, "Link para alteracao de senha enviado por email para usuario " + username);
 	}
 	
 	public List<AlteracaoAtributo> retornarHistoricoAlteracaoUsuario(Long idUsuario) {
