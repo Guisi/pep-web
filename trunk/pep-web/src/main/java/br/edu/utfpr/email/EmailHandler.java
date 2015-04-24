@@ -1,5 +1,8 @@
 package br.edu.utfpr.email;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Address;
@@ -23,6 +26,8 @@ import br.edu.utfpr.exception.EmailException;
  * @author douglas.guisi
  */
 public class EmailHandler {
+	
+	private static Logger logger = Logger.getLogger(EmailHandler.class.getName());
 	
 	/**
 	 * Sessao para envio e recebimento de emails
@@ -172,7 +177,7 @@ public class EmailHandler {
 
 			return true;
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Erro generico ao enviar email.", e);
 			throw new EmailException("email.code.error.1104");
 		}
 	}
