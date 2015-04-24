@@ -8,9 +8,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<div>
-		<p:panel styleClass="internal-panel">
-			<h:outputText value="#{msg['atendimento.historiamotivo.queixaprincipalduracao']}" styleClass="ui-state-default internal-panel-title"/>
+		<div style="text-align: right; width: 100%;">
+			<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.historiaViewBean.atendimentosAnterioresHistoriaMotivo}"/>
+		</div>
 
+		<p:panel styleClass="internal-panel" header="#{msg['atendimento.historiamotivo.queixaprincipalduracao']}">
 			<p:panel id="pnBotoesQueixas" style="margin: 10px 0px 10px 0px; display: table;">
 				<ui:repeat var="queixaPrincipal" value="#{editarAtendimentoMBean.historiaViewBean.queixasPrincipaisMaisUsadas}">
 					<p:commandButton value="#{queixaPrincipal.descricao}" actionListener="#{editarAtendimentoMBean.historiaViewBean.adicionarQueixaPrincipal(queixaPrincipal)}"
@@ -34,10 +36,6 @@
 							value="#{msg['atendimento.historiamotivo.botao.outraqueixa']}" process="queixasPrincipaisTable, @this" update="queixasPrincipaisTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
 					</p:columnGroup>
 				</h:panelGrid>
-				
-				<p:column style="text-align: right;">
-					<h:commandLink value="Ver anteriores" onclick="PF('dlgQueixasPrincipaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.historiaViewBean.atendimentosAnterioresHistoriaMotivo}"/>
-				</p:column>
 			</h:panelGrid>
 			
 			<p:dataTable id="queixasPrincipaisTable" var="queixaPrincipalAtendimento" value="#{editarAtendimentoMBean.historiaViewBean.queixasPrincipaisAtendimento}" 
@@ -87,19 +85,23 @@
 					styleClass="datatable-no-header" rendered="#{not empty atendimento.queixasPrincipais}">
 					<p:column style="text-align: left;">
 						<h:outputText value="#{queixaPrincipal.descricao}"/>
-						<h:outputText value=" - #{queixaPrincipal.observacao}"/>
+						<h:outputText value=" - #{queixaPrincipal.observacao}" rendered="#{not empty queixaPrincipal.observacao}"/>
 					</p:column>
 				</p:dataTable>
 
-				<p>
-					<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}: " styleClass="internal-panel-title"/>
-					<h:outputText value="#{atendimento.historiaDoencaAtual}"/>
-				</p>
+				<p:outputPanel rendered="#{not empty atendimento.historiaDoencaAtual}">
+					<p>
+						<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}: " styleClass="internal-panel-title"/>
+						<h:outputText value="#{atendimento.historiaDoencaAtual}"/>
+					</p>
+				</p:outputPanel>
 				
-				<p>
-					<h:outputText value="#{msg['atendimento.historiamotivo.isda']}: " styleClass="internal-panel-title"/>
-					<h:outputText value="#{atendimento.isda}"/>
-				</p>
+				<p:outputPanel rendered="#{not empty atendimento.isda}">
+					<p>
+						<h:outputText value="#{msg['atendimento.historiamotivo.isda']}: " styleClass="internal-panel-title"/>
+						<h:outputText value="#{atendimento.isda}"/>
+					</p>
+				</p:outputPanel>
 			</p:panel>
 		</p:dataList>
 	</p:dialog>

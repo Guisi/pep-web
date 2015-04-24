@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import br.edu.utfpr.dao.AtendimentoDao;
+import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
@@ -27,6 +28,8 @@ public class AtendimentoService {
 	private QueixaPrincipalAtendimentoService queixaPrincipalAtendimentoService;
 	@Inject
 	private AntecedenteClinicoAtendimentoService antecedenteClinicoAtendimentoService;
+	@Inject
+	private AntecedenteCirurgicoAtendimentoService antecedenteCirurgicoAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -46,7 +49,7 @@ public class AtendimentoService {
 	
 	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
-			List<AntecedenteClinicoAtendimento> antecedentesClinicos) {
+			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -98,7 +101,26 @@ public class AtendimentoService {
 					antecedenteClinicoAtendimentoService.removerAntecedenteClinicoAtendimento(antecedenteClinicoBase);
 				}
 			}
+			
+			// Apaga da base os antecedentes cirurgicos excluidos do atendimento
+			List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicosBase = antecedenteCirurgicoAtendimentoService.retornarAntecedentesCirurgicosAtendimento(atendimento.getId());
+			for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoBase : antecedentesCirurgicosBase) {
+				boolean excluido = true;
+				for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoAtendimento : antecedentesCirurgicos) {
+					if (antecedenteCirurgicoBase.equals(antecedenteCirurgicoAtendimento)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					antecedenteCirurgicoAtendimentoService.removerAntecedenteCirurgicoAtendimento(antecedenteCirurgicoBase);
+				}
+			}
 		}
+		
+		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
+		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentosAnteriores);
 		
 		//salva medicamentos do atendimento
 		for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
@@ -120,10 +142,14 @@ public class AtendimentoService {
 		}
 		antecedenteClinicoAtendimentoService.salvarAntecedentesClinicosAtendimento(antecedentesClinicos);
 		atendimento.setAntecedentesClinicos(new LinkedHashSet<AntecedenteClinicoAtendimento>(antecedentesClinicos));
-
-		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
-		medicamentoAtendimentoService.salvarMedicamentosAtendimento(medicamentosAnteriores);
 		
+		//salva antecedentes cirurgicos do atendimento
+		for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoAtendimento : antecedentesCirurgicos) {
+			antecedenteCirurgicoAtendimento.setAtendimento(atendimento);
+		}
+		antecedenteCirurgicoAtendimentoService.salvarAntecedentesCirurgicosAtendimento(antecedentesCirurgicos);
+		atendimento.setAntecedentesCirurgicos(new LinkedHashSet<AntecedenteCirurgicoAtendimento>(antecedentesCirurgicos));
+
 		//salva o atendimento
 		atendimentoDao.save(atendimento);
 

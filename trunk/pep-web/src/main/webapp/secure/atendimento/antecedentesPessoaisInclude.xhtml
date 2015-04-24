@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<h:html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
@@ -7,74 +7,15 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:p="http://primefaces.org/ui">
 
-	<div>
-		<p:panel styleClass="internal-panel">
-			<h:outputText value="#{msg['atendimento.antecedentespessoais.antecedentesclinicos']}" styleClass="ui-state-default internal-panel-title"/>
-			
-			<p:panel id="pnBotoesAntecedentesClinicos" style="margin: 10px 0px 10px 0px; display: table;">
-				<ui:repeat var="antecedenteClinico" value="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.antecedentesClinicosMaisUsados}">
-					<p:commandButton value="#{antecedenteClinico.codigoCid} - #{antecedenteClinico.descricao}" actionListener="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.adicionarAntecedenteClinico(antecedenteClinico)}"
-						process=":frmEditarAtendimento:antecedentesClinicosTable, @this" styleClass="botao-mais-usados-fixo"
-						update=":frmEditarAtendimento:antecedentesClinicosTable, :frmEditarAtendimento:pnBotoesAntecedentesClinicos, :frmEditarAtendimento:antecedenteClinicoAddInput, :frmEditarAtendimento:msgAtendimentos">
-					</p:commandButton>
-				</ui:repeat>
-			</p:panel>
-
-			<h:panelGrid columns="2" width="100%">
-				<h:panelGrid columns="2">
-					<p:selectOneMenu id="antecedenteClinicoAddInput" value="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.antecedenteClinicoSelecionado}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
-						<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-						<f:selectItems value="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.antecedentesClinicosDisponiveis}" var="antecedenteClinico" itemLabel="#{antecedenteClinico.codigoCid} - #{antecedenteClinico.descricao}" itemValue="#{antecedenteClinico}"/>
-						<p:ajax event="change" update="addAntecedenteClinicoBtn" process="@this"/>
-					</p:selectOneMenu>
-					<p:columnGroup>
-						<p:commandButton id="addAntecedenteClinicoBtn" action="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.adicionarAntecedenteClinico}" icon="ui-icon-plusthick" update="@this, antecedenteClinicoAddInput, antecedentesClinicosTable, :frmEditarAtendimento:msgAtendimentos"
-							disabled="#{empty editarAtendimentoMBean.antecedentesPessoaisViewBean.antecedenteClinicoSelecionado}" process="antecedenteClinicoAddInput, antecedentesClinicosTable, @this" styleClass="botaoSalvar"/>
-						<p:commandButton id="addOutroAntecedenteClinicoBtn" action="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.adicionarOutroAntecedenteClinico}"
-							value="#{msg['atendimento.antecedentespessoais.antecedentesclinicos.botao.outroantecedente']}" process="antecedentesClinicosTable, @this" update="antecedentesClinicosTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
-					</p:columnGroup>
-				</h:panelGrid>
-				
-				<p:column style="text-align: right;">
-					<h:commandLink value="Ver anteriores" onclick="PF('dlgAntecedentesPessoaisAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.antecedentesPessoaisViewBean.atendimentosAnterioresAntecedentesPessoais}"/>
-				</p:column>
-			</h:panelGrid>
-			
-			<p:dataTable id="antecedentesClinicosTable" var="antecedenteClinicoAtendimento" value="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.antecedentesClinicosAtendimentoAgrupado}" 
-				emptyMessage="#{msg['atendimento.antecedentespessoais.antecedentesclinicos.lista.empty']}"
-				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
-				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-
-				<p:column headerText="#{msg['atendimento.antecedentespessoais.antecedentesclinicos.antecedenteclinico']}">
-					<p:inputText id="descricaoInput" value="#{antecedenteClinicoAtendimento.descricao}" maxlength="300"
-						rendered="#{empty antecedenteClinicoAtendimento.doenca and not antecedenteClinicoAtendimento.atendimentoAnterior}"
-						style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.antecedentespessoais.antecedentesclinicos.campoobrigatorio.antecedenteclinico']}"/>
-					<h:outputText value="#{antecedenteClinicoAtendimento.descricao}" rendered="#{not empty antecedenteClinicoAtendimento.doenca or antecedenteClinicoAtendimento.atendimentoAnterior}"/>
-				</p:column>
-
-				<p:column headerText="#{msg['atendimento.antecedentespessoais.antecedentesclinicos.observacao']}">
-					<p:inputTextarea value="#{antecedenteClinicoAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"
-						rendered="#{not antecedenteClinicoAtendimento.atendimentoAnterior}"/>
-						
-					<h:outputText value="#{antecedenteClinicoAtendimento.observacao}" rendered="#{antecedenteClinicoAtendimento.atendimentoAnterior}"/>
-				</p:column>
-				
-				<p:column width="30px;" style="text-align: left;">
-					<p:commandButton value="" actionListener="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.removerAntecedenteClinico(index)}"
-						update="antecedentesClinicosTable, :frmEditarAtendimento:antecedenteClinicoAddInput"
-						rendered="#{not antecedenteClinicoAtendimento.atendimentoAnterior}"
-						icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
-				</p:column>
-				
-			</p:dataTable>
-		</p:panel>
-	</div>
+	<ui:include src="antecedentesClinicosInclude.xhtml" />
+	
+	<ui:include src="antecedentesCirurgicosInclude.xhtml" />
 	
 	<p:dialog widgetVar="dlgAntecedentesPessoaisAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.antecedentespessoais.anteriores.modal.header']}" fitViewport="true" dynamic="true"
-		rendered="#{not empty editarAtendimentoMBean.antecedentesPessoaisViewBean.atendimentosAnteriores}" width="800">
+		rendered="#{not empty editarAtendimentoMBean.antecedentesClinicosViewBean.atendimentosAnteriores}" width="800">
 	
-		<p:dataList value="#{editarAtendimentoMBean.antecedentesPessoaisViewBean.atendimentosAnterioresAntecedentesPessoais}" var="atendimento" type="none" itemType="none"
+		<p:dataList value="#{editarAtendimentoMBean.antecedentesClinicosViewBean.atendimentosAnterioresAntecedentesPessoais}" var="atendimento" type="none" itemType="none"
 			paginator="true" rows="3" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
 			
@@ -83,10 +24,18 @@
 					rendered="#{not empty atendimento.antecedentesClinicos}">
 					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentesclinicos.header']}">
 						<h:outputText value="#{antecedenteClinico.descricao}"/>
-						<h:outputText value=" - #{antecedenteClinico.observacao}"/>
+						<h:outputText value=" - #{antecedenteClinico.observacao}" rendered="#{not empty antecedenteClinico.observacao}"/>
+					</p:column>
+				</p:dataTable>
+			
+				<p:dataTable id="antecedentesCirurgicosAnterioresTable" var="antecedenteCirurgico" value="#{atendimento.antecedentesCirurgicos}"
+					rendered="#{not empty atendimento.antecedentesCirurgicos}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentescirurgicos.header']}">
+						<h:outputText value="#{antecedenteCirurgico.descricao}"/>
+						<h:outputText value=" - #{antecedenteCirurgico.observacao}" rendered="#{not empty antecedenteCirurgico.observacao}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
 		</p:dataList>
 	</p:dialog>
-</h:html>
+</ui:composition>

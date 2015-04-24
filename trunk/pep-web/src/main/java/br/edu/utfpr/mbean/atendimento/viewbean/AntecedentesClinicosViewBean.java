@@ -7,14 +7,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.edu.utfpr.constants.Constantes;
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
-import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.service.AntecedenteClinicoAtendimentoService;
 import br.edu.utfpr.service.DoencaService;
 
-public class AntecedentesPessoaisViewBean extends BaseAtendimentoViewBean {
+public class AntecedentesClinicosViewBean extends BaseAtendimentoViewBean {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,8 +23,6 @@ public class AntecedentesPessoaisViewBean extends BaseAtendimentoViewBean {
 	@Inject
 	private AntecedenteClinicoAtendimentoService antecedenteClinicoAtendimentoService;
 	
-	private static final Integer QTDE_SUGESTOES_ANTECEDENTES_CLINICOS = 10;
-
 	private Doenca antecedenteClinicoSelecionado;
 	private List<Doenca> antecedentesClinicosDisponiveis;
 	private List<Doenca> antecedentesClinicosMaisUsados;
@@ -66,7 +64,7 @@ public class AntecedentesPessoaisViewBean extends BaseAtendimentoViewBean {
 		}
 		
 		this.antecedentesClinicosMaisUsados = antecedenteClinicoAtendimentoService
-				.retornarAntecedentesClinicosMaisUsados(QTDE_SUGESTOES_ANTECEDENTES_CLINICOS, idsDoencasIgnorar, Boolean.TRUE);
+				.retornarAntecedentesClinicosMaisUsados(Constantes.QTDE_SUGESTOES_ANTECEDENTES_CLINICOS, idsDoencasIgnorar, Boolean.TRUE);
 	}
 	
 	private void listarAntecedentesClinicosAtendimentosAnteriores() {
@@ -128,17 +126,6 @@ public class AntecedentesPessoaisViewBean extends BaseAtendimentoViewBean {
 		
 		Collections.sort(this.antecedentesClinicosDisponiveis, comparator);
 		Collections.sort(this.antecedentesClinicosMaisUsados, comparator);
-	}
-	
-	public List<Atendimento> getAtendimentosAnterioresAntecedentesPessoais() {
-		List<Atendimento> atendimentos = new ArrayList<>();
-		for (Atendimento atendimento : getAtendimentosAnteriores()) {
-			//TODO incluir condicao para cada item de antecedentes pessoais
-			if (!atendimento.getAntecedentesClinicos().isEmpty()) {
-				atendimentos.add(atendimento);
-			}
-		}
-		return atendimentos;
 	}
 	
 	public Doenca getAntecedenteClinicoSelecionado() {

@@ -10,6 +10,8 @@ body {
 
 fieldset {
 	border: 1px solid #dddddd;
+	text-align: center;
+	padding-top: 5px;
 }
 
 .headerBox {
@@ -74,10 +76,6 @@ fieldset {
 	left: 50%;
 	margin-top: -125px;
 	margin-left: -250px;
-}
-
-.ui-accordion .ui-accordion-header {
-    margin-bottom: 5px;
 }
 
 .ui-panel-titlebar-icon {
@@ -154,11 +152,6 @@ fieldset {
 
 .datatable-button-right {
 	margin-left: 5px;
-}
-
-fieldset {
-	text-align: center;
-	padding-top: 10px;
 }
 
 .ui-datatable .ui-datatable-odd.ui-state-highlight {
@@ -305,9 +298,18 @@ fieldset {
     display: none;
 }
 
+.ui-accordion .ui-state-active {
+	margin-bottom: 0px !important;
+}
+
+.ui-accordion .ui-accordion-header {
+	margin-bottom: 5px;
+}
+
 .ui-accordion .ui-accordion-content {
 	padding: 0px !important;
 	text-align: left;
+	margin-bottom: 5px !important;
 }
 
 .datalist-item {

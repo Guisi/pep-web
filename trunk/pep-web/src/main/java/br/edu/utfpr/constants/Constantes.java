@@ -27,4 +27,10 @@ public interface Constantes {
 	final String EDITAR_PACIENTE_URL = "editarPaciente";
 	
 	final String NOVO_PACIENTE_URL = "novoPaciente";
+	
+	final Integer QTDE_SUGESTOES_QUEIXAS = 10;
+	
+	final Integer QTDE_SUGESTOES_ANTECEDENTES_CLINICOS = 10;
+	
+	final Integer QTDE_SUGESTOES_ANTECEDENTES_CIRURGICOS = 10;
 }

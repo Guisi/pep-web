@@ -11,12 +11,15 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.constants.TipoProcedimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.MedicamentoAtendimento;
+import br.edu.utfpr.model.Procedimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.DoencaService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
+import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
 @ManagedBean
@@ -33,6 +36,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private MedicamentoAtendimentoService medicamentoAtendimentoService;
 	@Inject
 	private DoencaService doencaService;
+	@Inject
+	private ProcedimentoService procedimentoService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
@@ -42,6 +47,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	/* Resumo prontuario */
 	private List<MedicamentoAtendimento> medicamentosEmUso;
 	private List<Doenca> doencasDiagnosticadas;
+	private List<Procedimento> cirurgias;
 	
 	@PostConstruct
 	public void init() {
@@ -74,6 +80,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	public void listarResumoProntuario() {
 		this.medicamentosEmUso = medicamentoAtendimentoService.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), null);
 		this.doencasDiagnosticadas = doencaService.retornarDoencasDiagnosticadas(this.pacienteSelecionado.getId());
+		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(TipoProcedimento.CIRURGICO, this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -127,5 +134,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setDoencasDiagnosticadas(List<Doenca> doencasDiagnosticadas) {
 		this.doencasDiagnosticadas = doencasDiagnosticadas;
+	}
+
+	public List<Procedimento> getCirurgias() {
+		return cirurgias;
+	}
+
+	public void setCirurgias(List<Procedimento> cirurgias) {
+		this.cirurgias = cirurgias;
 	}
 }

@@ -12,9 +12,11 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesPessoaisViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesCirurgicosViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesClinicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.TratamentosAndamentoViewBean;
+import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.service.AtendimentoService;
@@ -36,7 +38,9 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	@Inject
 	private TratamentosAndamentoViewBean tratamentoViewBean;
 	@Inject
-	private AntecedentesPessoaisViewBean antecedentesPessoaisViewBean;
+	private AntecedentesClinicosViewBean antecedentesClinicosViewBean;
+	@Inject
+	private AntecedentesCirurgicosViewBean antecedentesCirurgicosViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -83,7 +87,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		//inicializa viewbeans
 		this.historiaViewBean.init(this);
 		this.tratamentoViewBean.init(this);
-		this.antecedentesPessoaisViewBean.init(this);
+		this.antecedentesClinicosViewBean.init(this);
+		this.antecedentesCirurgicosViewBean.init(this);
 	}
 	
 	public String cancelar() {
@@ -107,11 +112,13 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.tratamentoViewBean.getMedicamentosAtendimento(), 
 				this.tratamentoViewBean.getMedicamentosAtendimentosAnteriores(),
 				this.historiaViewBean.getQueixasPrincipaisAtendimento(),
-				this.antecedentesPessoaisViewBean.getAntecedentesClinicosAtendimento());
-
+				this.antecedentesClinicosViewBean.getAntecedentesClinicosAtendimento(),
+				this.antecedentesCirurgicosViewBean.getAntecedentesCirurgicosAtendimento());
+		
 		this.tratamentoViewBean.setMedicamentosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getMedicamentos()));
 		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
-		this.antecedentesPessoaisViewBean.setAntecedentesClinicosAtendimento(new ArrayList<AntecedenteClinicoAtendimento>(this.atendimentoSelecionado.getAntecedentesClinicos()));
+		this.antecedentesClinicosViewBean.setAntecedentesClinicosAtendimento(new ArrayList<AntecedenteClinicoAtendimento>(this.atendimentoSelecionado.getAntecedentesClinicos()));
+		this.antecedentesCirurgicosViewBean.setAntecedentesCirurgicosAtendimento(new ArrayList<AntecedenteCirurgicoAtendimento>(this.atendimentoSelecionado.getAntecedentesCirurgicos()));
 	}
 	
 	public Atendimento getAtendimentoSelecionado() {
@@ -162,11 +169,19 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.tratamentoViewBean = tratamentoViewBean;
 	}
 
-	public AntecedentesPessoaisViewBean getAntecedentesPessoaisViewBean() {
-		return antecedentesPessoaisViewBean;
+	public AntecedentesClinicosViewBean getAntecedentesClinicosViewBean() {
+		return antecedentesClinicosViewBean;
 	}
 
-	public void setAntecedentesPessoaisViewBean(AntecedentesPessoaisViewBean antecedentesPessoaisViewBean) {
-		this.antecedentesPessoaisViewBean = antecedentesPessoaisViewBean;
+	public void setAntecedentesClinicosViewBean(AntecedentesClinicosViewBean antecedentesClinicosViewBean) {
+		this.antecedentesClinicosViewBean = antecedentesClinicosViewBean;
+	}
+
+	public AntecedentesCirurgicosViewBean getAntecedentesCirurgicosViewBean() {
+		return antecedentesCirurgicosViewBean;
+	}
+
+	public void setAntecedentesCirurgicosViewBean(AntecedentesCirurgicosViewBean antecedentesCirurgicosViewBean) {
+		this.antecedentesCirurgicosViewBean = antecedentesCirurgicosViewBean;
 	}
 }
