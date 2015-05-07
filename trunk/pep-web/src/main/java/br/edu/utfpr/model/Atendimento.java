@@ -62,6 +62,10 @@ public class Atendimento extends BaseEntity {
 	@OrderBy("id_antecedente_cirurgico_atendimento")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos;
+	
+	@OrderBy("id_habito_atendimento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
+	private Set<HabitoAtendimento> habitos;
 
 	public Long getId() {
 		return id;
@@ -137,5 +141,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setAntecedentesCirurgicos(Set<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos) {
 		this.antecedentesCirurgicos = antecedentesCirurgicos;
+	}
+
+	public Set<HabitoAtendimento> getHabitos() {
+		return habitos;
+	}
+
+	public void setHabitos(Set<HabitoAtendimento> habitos) {
+		this.habitos = habitos;
 	}
 }
