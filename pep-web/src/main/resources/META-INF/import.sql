@@ -27,7 +27,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (12
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (13, 'VISUALIZAR_ATENDIMENTOS', 'Autorização para ver atendimentos do paciente.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (14, 'EDITAR_DOENCAS', 'Autorização para editar doenças.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (15, 'EDITAR_PROCEDIMENTOS', 'Autorização para editar procedimentos.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 16;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (16, 'EDITAR_HABITOS', 'Autorização para editar hábitos.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 17;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -46,6 +47,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 12);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 14);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 15);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 16);
 
 --vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
@@ -272,12 +274,23 @@ INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedime
 INSERT INTO pep_owner.tb_procedimento(id_procedimento, descricao, tipo_procedimento, chk_ativo) VALUES (7, 'Tireoidectomia total', 'CIRURGICO', true);
 ALTER SEQUENCE pep_owner.procedimento_sequence RESTART WITH 8;
 
+--habitos
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (1, 'Atividade física', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (2, 'Sedentarismo', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (3, 'Etilismo', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (4, 'Ex-tabagista', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (5, 'Hábitos alimentares inadequados', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (6, 'Tabagista', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (7, 'Beliscador', true);
+INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (8, 'Uso de drogas', true);
+ALTER SEQUENCE pep_owner.habito_sequence RESTART WITH 9;
+
 
 --atendimento
 --postgres
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
 --h2
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
 
 --tratamentos
