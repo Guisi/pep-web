@@ -22,7 +22,7 @@ public class HabitoDao extends GenericDao<Habito, Long> implements Serializable 
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Habito> retornarhabitos(String textoPesquisa, Boolean chkAtivo) {
+	public List<Habito> retornarHabitos(String textoPesquisa, Boolean chkAtivo) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Habito> q = qb.createQuery(Habito.class);
 		Root<Habito> root = q.from(Habito.class);
