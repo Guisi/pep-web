@@ -9,55 +9,55 @@ import javax.persistence.NoResultException;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.edu.utfpr.dao.QueixaPrincipalDao;
+import br.edu.utfpr.dao.HabitoDao;
 import br.edu.utfpr.exception.AppException;
-import br.edu.utfpr.model.QueixaPrincipal;
+import br.edu.utfpr.model.Habito;
 
 @Named
 @Stateless
 public class HabitoService {
 
 	@Inject
-	private QueixaPrincipalDao queixaPrincipalDao;
+	private HabitoDao habitoDao;
 	
-	public List<QueixaPrincipal> retornarQueixasPrincipais(Boolean chkAtivo) {
-		return retornarQueixasPrincipais(null, chkAtivo);
+	public List<Habito> retornarHabitos(Boolean chkAtivo) {
+		return retornarHabitos(null, chkAtivo);
 	}
 	
-	public List<QueixaPrincipal> retornarQueixasPrincipais(String textoPesquisa, Boolean chkAtivo) {
-		return queixaPrincipalDao.retornarQueixasPrincipais(textoPesquisa, chkAtivo);
+	public List<Habito> retornarHabitos(String textoPesquisa, Boolean chkAtivo) {
+		return habitoDao.retornarHabitos(textoPesquisa, chkAtivo);
 	}
 	
-	public List<QueixaPrincipal> retornarQueixasPrincipaisMaisUsadas(Integer quantidade, List<Long> idsQueixasIgnorar, Boolean chkAtivo) {
-		return queixaPrincipalDao.retornarQueixasPrincipaisMaisUsadas(quantidade, idsQueixasIgnorar, chkAtivo);
+	public List<Habito> retornarHabitosMaisUsados(Integer quantidade, List<Long> idsHabitosIgnorar, Boolean chkAtivo) {
+		return habitoDao.retornarHabitosMaisUsados(quantidade, idsHabitosIgnorar, chkAtivo);
 	}
 	
-	public QueixaPrincipal retornarQueixaPrincipal(Long id) {
+	public Habito retornarHabito(Long id) {
 		try {
-			return queixaPrincipalDao.getById(id);
+			return habitoDao.getById(id);
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
 	
-	public QueixaPrincipal retornarQueixaPrincipal(String descricao) {
+	public Habito retornarHabito(String descricao) {
 		try {
-			return queixaPrincipalDao.retornarQueixaPrincipal(descricao);
+			return habitoDao.retornarHabito(descricao);
 		} catch (NoResultException e) {
 			return null;
 		}
 	}
 	
-	public void salvarQueixaPrincipal(QueixaPrincipal queixaPrincipal) throws AppException {
-		String descricao = StringUtils.trimToNull(queixaPrincipal.getDescricao());
-		queixaPrincipal.setDescricao(descricao);
+	public void salvarHabito(Habito habito) throws AppException {
+		String descricao = StringUtils.trimToNull(habito.getDescricao());
+		habito.setDescricao(descricao);
 		
 		//valida se nao esta duplicando
-		QueixaPrincipal queixaPrincipalBase = this.retornarQueixaPrincipal(descricao);
-		if (queixaPrincipalBase != null && !queixaPrincipalBase.getId().equals(queixaPrincipal.getId())) {
-			throw new AppException("queixaprincipal.salvar.erro.existente", descricao);
+		Habito habitoBase = this.retornarHabito(descricao);
+		if (habitoBase != null && !habitoBase.getId().equals(habito.getId())) {
+			throw new AppException("habito.salvar.erro.existente", descricao);
 		}
 		
-		queixaPrincipalDao.save(queixaPrincipal);
+		habitoDao.save(habito);
 	}
 }
