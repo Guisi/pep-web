@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{habitoMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarHabitos">
+				<p:messages id="msgHabitos"/>
+				
+				<div align="right">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{habitoMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['habito.botao.procurar']}" action="#{habitoMBean.listarHabitos}" 
+								icon="ui-icon-search" update="habitoTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['habito.botao.novo']}" action="#{habitoMBean.novoHabito}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
+				</div>
+				
+				<p:dataTable id="habitoTable" var="habito" value="#{habitoMBean.habitoList}" emptyMessage="#{msg['habito.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['habito.lista.header']}"/>
+				    </f:facet>
+					
+					<p:column headerText="#{msg['habito.descricao']}" styleClass="leftAligned" sortBy="#{habito.descricao}">
+						<h:outputText value="#{habito.descricao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['habito.chkativo']}" styleClass="centerAligned" width="10%" sortBy="#{habito.chkAtivo}">
+						<h:selectBooleanCheckbox value="#{habito.chkAtivo}" disabled="true"/>
+					</p:column>
+					
+					<p:column width="70px;" style="text-align: center;">
+						<p:commandButton value="" action="#{habitoMBean.editarHabito(habito.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

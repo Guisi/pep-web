@@ -182,4 +182,19 @@
 		<pattern value="/editarProcedimento/#{idProcedimento}" />
 		<view-id value="/secure/procedimento/editarProcedimento.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarHabitos">
+		<pattern value="/listarHabitos" />
+		<view-id value="/secure/habito/habitos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoHabito">
+		<pattern value="/novoHabito" />
+		<view-id value="/secure/habito/editarHabito.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarHabito">
+		<pattern value="/editarHabito/#{idHabito}" />
+		<view-id value="/secure/habito/editarHabito.xhtml" />
+	</url-mapping>
 </pretty-config>
