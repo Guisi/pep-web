@@ -285,15 +285,25 @@ INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (7, 'Bel
 INSERT INTO pep_owner.tb_habito(id_habito, descricao, chk_ativo) VALUES (8, 'Uso de drogas', true);
 ALTER SEQUENCE pep_owner.habito_sequence RESTART WITH 9;
 
-
---atendimento
+--##########################
+--#### atendimento #########
+--##########################
 --postgres
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
 --h2
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3);
-ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 2;
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 1', 'ISDA atendimento 1');
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, PARSEDATETIME('12 May 2015 10:30 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 2', 'ISDA atendimento 2');
+ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 3;
+
+--queixas principais
+INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento, id_queixa_principal) VALUES (1, '', 'tá doendo muito', 1, 2);
+INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Dor de cotovelo', 'Pode estar relacionado à desilusão amorosa...', 1);
+INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento, id_queixa_principal) VALUES (3, '', 'tadinho', 2, 15);
+INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Dilma rouba demais', 'Dica, mude-se para outro país', 2);
 
 --tratamentos
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (1, '', 'a cada 8 horas', 1, 1, true);
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (2, 'Paracetamol', 'a cada 4 horas', 1, true);
-ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 3;
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (3, '', 'tomar de meia em meia hora', 2, 9, true);
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (4, 'Paracetamol', 'a cada 12 horas', 2, true);
+ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 5;
