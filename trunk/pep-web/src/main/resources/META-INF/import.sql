@@ -300,6 +300,7 @@ INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendi
 INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Dor de cotovelo', 'Pode estar relacionado à desilusão amorosa...', 1);
 INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento, id_queixa_principal) VALUES (3, '', 'tadinho', 2, 15);
 INSERT INTO pep_owner.tb_queixa_principal_atendimento(id_queixa_principal_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Dilma rouba demais', 'Dica, mude-se para outro país', 2);
+ALTER SEQUENCE pep_owner.queixa_principal_atendimento_sequence RESTART WITH 5;
 
 --tratamentos
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (1, '', 'a cada 8 horas', 1, 1, true);
@@ -307,3 +308,10 @@ INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, des
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (3, '', 'tomar de meia em meia hora', 2, 9, true);
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (4, 'Paracetamol', 'a cada 12 horas', 2, true);
 ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 5;
+
+--antecedentes clinicos
+INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (1, '', 'Foi foda!', 1, 1);
+INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Gripe aviária', 'Quase morri!', 1);
+INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'Foi foda!', 2, 31);
+INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Mal estar', 'Desculpa pra faltar no trabalho.', 2);
+ALTER SEQUENCE pep_owner.antecedente_clinico_sequence RESTART WITH 5;
