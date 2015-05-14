@@ -351,3 +351,7 @@ fieldset {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.resumoprontuario-observacao {
+	font-size: 10px;
+}

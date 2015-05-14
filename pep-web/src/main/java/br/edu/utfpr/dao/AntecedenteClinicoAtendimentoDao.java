@@ -18,6 +18,7 @@ import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Atendimento_;
 import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.Doenca_;
+import br.edu.utfpr.model.Usuario;
 import br.edu.utfpr.model.Usuario_;
 
 public class AntecedenteClinicoAtendimentoDao extends GenericDao<AntecedenteClinicoAtendimento, Long> implements Serializable {
@@ -78,5 +79,21 @@ public class AntecedenteClinicoAtendimentoDao extends GenericDao<AntecedenteClin
 					qb.asc(root.get(Doenca_.codigoCid)), qb.asc(root.get(Doenca_.descricao)));
 		
 		return entityManager.createQuery(cq).setMaxResults(quantidade).getResultList();
+	}
+	
+	public List<AntecedenteClinicoAtendimento> retornarAntecedentesClinicosDiagnosticadas(Long idPaciente) {
+		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<AntecedenteClinicoAtendimento> q = qb.createQuery(AntecedenteClinicoAtendimento.class);
+		Root<AntecedenteClinicoAtendimento> root = q.from(AntecedenteClinicoAtendimento.class);
+		
+		Join<AntecedenteClinicoAtendimento, Atendimento> atendimentoAntecedenteClinicoJoin = root.join(AntecedenteClinicoAtendimento_.atendimento);
+		Join<Atendimento, Usuario> pacienteJoin = atendimentoAntecedenteClinicoJoin.join(Atendimento_.paciente);
+		root.fetch(AntecedenteClinicoAtendimento_.doenca, JoinType.LEFT);
+		
+		q.where(qb.equal(pacienteJoin.get(Usuario_.id), idPaciente));
+
+		q.orderBy(qb.asc(root.get(AntecedenteClinicoAtendimento_.id)));
+		
+		return entityManager.createQuery(q).getResultList();
 	}
 }

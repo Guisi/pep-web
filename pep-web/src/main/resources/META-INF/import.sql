@@ -289,10 +289,11 @@ ALTER SEQUENCE pep_owner.habito_sequence RESTART WITH 9;
 --#### atendimento #########
 --##########################
 --postgres
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente) VALUES (1, '2015-01-10 15:35', 3);
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, '2015-01-10 15:35', 3, 'História atendimento 1', 'ISDA atendimento 1');
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, '2015-05-12 10:30', 3, 'História atendimento 2', 'ISDA atendimento 2');
 --h2
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 1', 'ISDA atendimento 1');
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, PARSEDATETIME('12 May 2015 10:30 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 2', 'ISDA atendimento 2');
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 1', 'ISDA atendimento 1');
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, PARSEDATETIME('12 May 2015 10:30 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 2', 'ISDA atendimento 2');
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 3;
 
 --queixas principais
@@ -306,7 +307,7 @@ ALTER SEQUENCE pep_owner.queixa_principal_atendimento_sequence RESTART WITH 5;
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (1, '', 'a cada 8 horas', 1, 1, true);
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (2, 'Paracetamol', 'a cada 4 horas', 1, true);
 INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, id_medicamento, chk_em_uso) VALUES (3, '', 'tomar de meia em meia hora', 2, 9, true);
-INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (4, 'Paracetamol', 'a cada 12 horas', 2, true);
+INSERT INTO pep_owner.tb_medicamento_atendimento(id_medicamento_atendimento, descricao, apresentacao, id_atendimento, chk_em_uso) VALUES (4, 'Antigripal', 'a cada 12 horas', 2, true);
 ALTER SEQUENCE pep_owner.medicamento_atendimento_sequence RESTART WITH 5;
 
 --antecedentes clinicos
@@ -315,3 +316,10 @@ INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_
 INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'Foi foda!', 2, 31);
 INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Mal estar', 'Desculpa pra faltar no trabalho.', 2);
 ALTER SEQUENCE pep_owner.antecedente_clinico_sequence RESTART WITH 5;
+
+--antecedentes cirurgicos
+INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento, id_procedimento) VALUES (1, null, 'Deu boa!', 1, 1);
+INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Facectomia', 'Nem sei o que é isso!', 1);
+INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento) VALUES (3, 'Retinopexia', 'Muito menos isso...', 1);
+INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento, id_procedimento) VALUES (4, null, 'Nem doeu!', 1, 2);
+ALTER SEQUENCE pep_owner.antecedente_cirurgico_sequence RESTART WITH 5;

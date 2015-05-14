@@ -11,16 +11,15 @@ import javax.inject.Inject;
 
 import org.apache.commons.lang.StringUtils;
 
-import br.edu.utfpr.constants.TipoProcedimento;
 import br.edu.utfpr.model.Atendimento;
-import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.MedicamentoAtendimento;
-import br.edu.utfpr.model.Procedimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.DoencaService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
+import br.edu.utfpr.service.vo.DoencaDiagnosticada;
+import br.edu.utfpr.service.vo.ProcedimentoRealizado;
 
 @ManagedBean
 @ViewScoped
@@ -46,8 +45,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	
 	/* Resumo prontuario */
 	private List<MedicamentoAtendimento> medicamentosEmUso;
-	private List<Doenca> doencasDiagnosticadas;
-	private List<Procedimento> cirurgias;
+	private List<DoencaDiagnosticada> doencasDiagnosticadas;
+	private List<ProcedimentoRealizado> cirurgias;
 	
 	@PostConstruct
 	public void init() {
@@ -80,7 +79,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	public void listarResumoProntuario() {
 		this.medicamentosEmUso = medicamentoAtendimentoService.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), null);
 		this.doencasDiagnosticadas = doencaService.retornarDoencasDiagnosticadas(this.pacienteSelecionado.getId());
-		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(TipoProcedimento.CIRURGICO, this.pacienteSelecionado.getId());
+		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -128,19 +127,19 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.medicamentosEmUso = medicamentosEmUso;
 	}
 
-	public List<Doenca> getDoencasDiagnosticadas() {
+	public List<DoencaDiagnosticada> getDoencasDiagnosticadas() {
 		return doencasDiagnosticadas;
 	}
 
-	public void setDoencasDiagnosticadas(List<Doenca> doencasDiagnosticadas) {
+	public void setDoencasDiagnosticadas(List<DoencaDiagnosticada> doencasDiagnosticadas) {
 		this.doencasDiagnosticadas = doencasDiagnosticadas;
 	}
 
-	public List<Procedimento> getCirurgias() {
+	public List<ProcedimentoRealizado> getCirurgias() {
 		return cirurgias;
 	}
 
-	public void setCirurgias(List<Procedimento> cirurgias) {
+	public void setCirurgias(List<ProcedimentoRealizado> cirurgias) {
 		this.cirurgias = cirurgias;
 	}
 }
