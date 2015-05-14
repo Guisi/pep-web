@@ -1,5 +1,6 @@
 package br.edu.utfpr.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,9 +10,12 @@ import javax.persistence.NoResultException;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.dao.AntecedenteClinicoAtendimentoDao;
 import br.edu.utfpr.dao.DoencaDao;
 import br.edu.utfpr.exception.AppException;
+import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Doenca;
+import br.edu.utfpr.service.vo.DoencaDiagnosticada;
 
 @Named
 @Stateless
@@ -19,6 +23,8 @@ public class DoencaService {
 
 	@Inject
 	private DoencaDao doencaDao;
+	@Inject
+	private AntecedenteClinicoAtendimentoDao antecedenteClinicoAtendimentoDao;
 	
 	public List<Doenca> retornarDoencas(Boolean chkAtivo) {
 		return retornarDoencas(null, chkAtivo);
@@ -60,7 +66,23 @@ public class DoencaService {
 		doencaDao.save(doenca);
 	}
 	
-	public List<Doenca> retornarDoencasDiagnosticadas(Long idPaciente) {
-		return doencaDao.retornarDoencasDiagnosticadas(idPaciente);
+	public List<DoencaDiagnosticada> retornarDoencasDiagnosticadas(Long idPaciente) {
+		//busca doencas de antecedentes clinicos
+		List<AntecedenteClinicoAtendimento> antecedentes = antecedenteClinicoAtendimentoDao.retornarAntecedentesClinicosDiagnosticadas(idPaciente);
+		List<DoencaDiagnosticada> doencas = new ArrayList<>();
+		for (AntecedenteClinicoAtendimento antecedenteClinicoAtendimento : antecedentes) {
+			DoencaDiagnosticada doencaDiagnosticada = new DoencaDiagnosticada();
+			Doenca doenca = antecedenteClinicoAtendimento.getDoenca();
+			if (doenca != null) {
+				doencaDiagnosticada.setCodigoCid(doenca.getCodigoCid());
+				doencaDiagnosticada.setDescricao(doenca.getDescricao());
+			} else {
+				doencaDiagnosticada.setDescricao(antecedenteClinicoAtendimento.getDescricao());
+			}
+			doencaDiagnosticada.setObservacao(antecedenteClinicoAtendimento.getObservacao());
+			doencas.add(doencaDiagnosticada);
+		}
+		
+		return doencas;
 	}
 }

@@ -6,22 +6,14 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.SetJoin;
 
 import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.constants.TipoProcedimento;
-import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
-import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento_;
-import br.edu.utfpr.model.Atendimento;
-import br.edu.utfpr.model.Atendimento_;
 import br.edu.utfpr.model.Procedimento;
 import br.edu.utfpr.model.Procedimento_;
-import br.edu.utfpr.model.Usuario;
-import br.edu.utfpr.model.Usuario_;
 
 public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements Serializable {
 
@@ -60,21 +52,5 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
 		q.where(predicate);
 		
 		return entityManager.createQuery(q).getSingleResult();
-	}
-	
-	public List<Procedimento> retornarProcedimentosRealizados(TipoProcedimento tipoProcedimento, Long idPaciente) {
-		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Procedimento> q = qb.createQuery(Procedimento.class);
-		Root<Procedimento> root = q.from(Procedimento.class);
-		
-		SetJoin<Procedimento, AntecedenteCirurgicoAtendimento> antecedentesCirurgicosJoin = root.join(Procedimento_.antecedentesCirurgicosAtendimentos);
-		Join<AntecedenteCirurgicoAtendimento, Atendimento> atendimentoAntecedenteCirurgicoJoin = antecedentesCirurgicosJoin.join(AntecedenteCirurgicoAtendimento_.atendimento);
-		Join<Atendimento, Usuario> pacienteJoin = atendimentoAntecedenteCirurgicoJoin.join(Atendimento_.paciente);
-		
-		q.where(qb.equal(pacienteJoin.get(Usuario_.id), idPaciente));
-
-		q.orderBy(qb.asc(antecedentesCirurgicosJoin.get(AntecedenteCirurgicoAtendimento_.id)));
-		
-		return entityManager.createQuery(q).getResultList();
 	}
 }

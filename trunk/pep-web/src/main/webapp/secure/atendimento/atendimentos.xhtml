@@ -88,14 +88,19 @@
 									<p:dataList value="#{atendimentoMBean.medicamentosEmUso}" var="medicamentoAtendimento"
 										emptyMessage="#{msg['atendimento.tratamentos.lista.empty']}" type="definition" itemStyleClass="datalist-item">
 								        <h:outputText value="#{medicamentoAtendimento.descricao}"/>
-										<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+								        <br/>
+										<h:outputText value="(#{medicamentoAtendimento.posologia})" styleClass="resumoprontuario-observacao" 
+											rendered="#{not empty medicamentoAtendimento.posologia}"/>
 								    </p:dataList>
 								</p:tab>
 								
 								<p:tab title="#{msg['atendimento.resumoprontuario.doencasdiagnosticadas.header']} (#{atendimentoMBean.doencasDiagnosticadas.size()})">
 									<p:dataList value="#{atendimentoMBean.doencasDiagnosticadas}" var="doenca"
 										emptyMessage="#{msg['atendimento.resumoprontuario.doencasdiagnosticadas.lista.empty']}" type="definition" itemStyleClass="datalist-item">
-								        <h:outputText value="#{doenca.codigoCid} - #{doenca.descricao}"/>
+								        <h:outputText value="#{doenca.codigoCid} - " rendered="#{not empty doenca.codigoCid}"/>
+								        <h:outputText value="#{doenca.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{doenca.observacao})" styleClass="resumoprontuario-observacao"/>
 								    </p:dataList>
 								</p:tab>
 								
@@ -103,6 +108,8 @@
 									<p:dataList value="#{atendimentoMBean.cirurgias}" var="cirurgia"
 										emptyMessage="#{msg['atendimento.resumoprontuario.cirurgias.lista.empty']}" type="definition" itemStyleClass="datalist-item">
 								        <h:outputText value="#{cirurgia.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{cirurgia.observacao})" styleClass="resumoprontuario-observacao"/>
 								    </p:dataList>
 								</p:tab>
 								
