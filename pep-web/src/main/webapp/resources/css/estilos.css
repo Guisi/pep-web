@@ -282,10 +282,6 @@ fieldset {
 	padding: 5px !important;
 }
 
-.resumoAtendimentoPanel {
-	border: 0px !important;
-}
-
 .resumoAtendimentoPanel > .ui-panel-titlebar {
 	border-bottom: 0px;
 }
@@ -354,4 +350,14 @@ fieldset {
 
 .resumoprontuario-observacao {
 	font-size: 10px;
+}
+
+.resumo-prontuario-panel-label {
+	text-align: left;
+	padding: 2px;
+	font-size: 11px !important;
+}
+
+.resumo-prontuario-internal-title {
+	font-weight: bold !important;
 }
