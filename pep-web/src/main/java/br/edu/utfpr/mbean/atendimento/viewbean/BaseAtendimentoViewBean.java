@@ -38,7 +38,8 @@ public abstract class BaseAtendimentoViewBean implements Serializable {
 		List<Atendimento> atendimentos = new ArrayList<>();
 		for (Atendimento atendimento : getAtendimentosAnteriores()) {
 			if (!atendimento.getAntecedentesClinicos().isEmpty()
-					|| !atendimento.getAntecedentesCirurgicos().isEmpty()) {
+					|| !atendimento.getAntecedentesCirurgicos().isEmpty()
+					|| !atendimento.getHabitos().isEmpty()) {
 				atendimentos.add(atendimento);
 			}
 		}

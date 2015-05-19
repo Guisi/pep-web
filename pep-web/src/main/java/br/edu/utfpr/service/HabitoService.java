@@ -1,5 +1,6 @@
 package br.edu.utfpr.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,9 +10,12 @@ import javax.persistence.NoResultException;
 
 import org.apache.commons.lang.StringUtils;
 
+import br.edu.utfpr.dao.HabitoAtendimentoDao;
 import br.edu.utfpr.dao.HabitoDao;
 import br.edu.utfpr.exception.AppException;
 import br.edu.utfpr.model.Habito;
+import br.edu.utfpr.model.HabitoAtendimento;
+import br.edu.utfpr.service.vo.HabitoPaciente;
 
 @Named
 @Stateless
@@ -19,6 +23,8 @@ public class HabitoService {
 
 	@Inject
 	private HabitoDao habitoDao;
+	@Inject
+	private HabitoAtendimentoDao habitoAtendimentoDao;
 	
 	public List<Habito> retornarHabitos(Boolean chkAtivo) {
 		return retornarHabitos(null, chkAtivo);
@@ -59,5 +65,22 @@ public class HabitoService {
 		}
 		
 		habitoDao.save(habito);
+	}
+	
+	public List<HabitoPaciente> retornarHabitosPaciente(Long idPaciente) {
+		List<HabitoPaciente> habitosPaciente = new ArrayList<>();
+		List<HabitoAtendimento> habitosAtendimento = habitoAtendimentoDao.retornarHabitosPaciente(idPaciente);
+		for (HabitoAtendimento habitoAtendimento : habitosAtendimento) {
+			HabitoPaciente habitoPaciente = new HabitoPaciente();
+			Habito habito = habitoAtendimento.getHabito();
+			if (habito != null) {
+				habitoPaciente.setDescricao(habito.getDescricao());
+			} else {
+				habitoPaciente.setDescricao(habitoAtendimento.getDescricao());
+			}
+			habitoPaciente.setObservacao(habitoAtendimento.getObservacao());
+			habitosPaciente.add(habitoPaciente);
+		}
+		return habitosPaciente;
 	}
 }

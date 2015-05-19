@@ -15,10 +15,12 @@ import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.DoencaService;
+import br.edu.utfpr.service.HabitoService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
 import br.edu.utfpr.service.vo.DoencaDiagnosticada;
+import br.edu.utfpr.service.vo.HabitoPaciente;
 import br.edu.utfpr.service.vo.ProcedimentoRealizado;
 
 @ManagedBean
@@ -37,6 +39,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private DoencaService doencaService;
 	@Inject
 	private ProcedimentoService procedimentoService;
+	@Inject
+	private HabitoService habitoService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
@@ -47,6 +51,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private List<MedicamentoAtendimento> medicamentosEmUso;
 	private List<DoencaDiagnosticada> doencasDiagnosticadas;
 	private List<ProcedimentoRealizado> cirurgias;
+	private List<HabitoPaciente> habitos;
 	
 	@PostConstruct
 	public void init() {
@@ -80,6 +85,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.medicamentosEmUso = medicamentoAtendimentoService.retornarMedicamentosEmUsoPaciente(this.pacienteSelecionado.getId(), null);
 		this.doencasDiagnosticadas = doencaService.retornarDoencasDiagnosticadas(this.pacienteSelecionado.getId());
 		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(this.pacienteSelecionado.getId());
+		this.habitos = habitoService.retornarHabitosPaciente(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -142,4 +148,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	public void setCirurgias(List<ProcedimentoRealizado> cirurgias) {
 		this.cirurgias = cirurgias;
 	}
+
+	public List<HabitoPaciente> getHabitos() {
+		return habitos;
+	}
+
+	public void setHabitos(List<HabitoPaciente> habitos) {
+		this.habitos = habitos;
+	}
+
 }

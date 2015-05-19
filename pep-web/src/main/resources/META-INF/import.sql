@@ -315,11 +315,18 @@ INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_
 INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Gripe aviária', 'Quase morri!', 1);
 INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'Foi foda!', 2, 31);
 INSERT INTO pep_owner.tb_antecedente_clinico_atendimento(id_antecedente_clinico_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Mal estar', 'Desculpa pra faltar no trabalho.', 2);
-ALTER SEQUENCE pep_owner.antecedente_clinico_sequence RESTART WITH 5;
+ALTER SEQUENCE pep_owner.antecedente_clinico_atendimento_sequence RESTART WITH 5;
 
 --antecedentes cirurgicos
 INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento, id_procedimento) VALUES (1, null, 'Deu boa!', 1, 1);
 INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Facectomia', 'Nem sei o que é isso!', 1);
 INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento) VALUES (3, 'Retinopexia', 'Muito menos isso...', 1);
 INSERT INTO pep_owner.tb_antecedente_cirurgico_atendimento(id_antecedente_cirurgico_atendimento, descricao, observacao, id_atendimento, id_procedimento) VALUES (4, null, 'Nem doeu!', 1, 2);
-ALTER SEQUENCE pep_owner.antecedente_cirurgico_sequence RESTART WITH 5;
+ALTER SEQUENCE pep_owner.antecedente_cirurgico_atendimento_sequence RESTART WITH 5;
+
+--habitos
+INSERT INTO pep_owner.tb_habito_atendimento(id_habito_atendimento, descricao, observacao, id_atendimento, id_habito) VALUES (1, '', 'de vez em quando', 1, 1);
+INSERT INTO pep_owner.tb_habito_atendimento(id_habito_atendimento, descricao, observacao, id_atendimento, id_habito) VALUES (2, '', '', 1, 2);
+INSERT INTO pep_owner.tb_habito_atendimento(id_habito_atendimento, descricao, observacao, id_atendimento, id_habito) VALUES (3, '', 'bla bla bla', 2, 3);
+INSERT INTO pep_owner.tb_habito_atendimento(id_habito_atendimento, descricao, observacao, id_atendimento, id_habito) VALUES (4, '', '', 2, 4);
+ALTER SEQUENCE pep_owner.habito_atendimento_sequence RESTART WITH 5;
