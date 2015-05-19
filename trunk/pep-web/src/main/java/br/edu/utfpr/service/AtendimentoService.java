@@ -13,6 +13,7 @@ import br.edu.utfpr.dao.AtendimentoDao;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.HabitoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 
@@ -30,6 +31,8 @@ public class AtendimentoService {
 	private AntecedenteClinicoAtendimentoService antecedenteClinicoAtendimentoService;
 	@Inject
 	private AntecedenteCirurgicoAtendimentoService antecedenteCirurgicoAtendimentoService;
+	@Inject
+	private HabitoAtendimentoService habitoAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -49,7 +52,8 @@ public class AtendimentoService {
 	
 	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
-			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos) {
+			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
+			List<HabitoAtendimento> habitos) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -117,6 +121,22 @@ public class AtendimentoService {
 					antecedenteCirurgicoAtendimentoService.removerAntecedenteCirurgicoAtendimento(antecedenteCirurgicoBase);
 				}
 			}
+			
+			// Apaga da base os habitos excluidos do atendimento
+			List<HabitoAtendimento> habitosBase = habitoAtendimentoService.retornarHabitosAtendimento(atendimento.getId());
+			for (HabitoAtendimento habitoBase : habitosBase) {
+				boolean excluido = true;
+				for (HabitoAtendimento habitoAtendimento : habitos) {
+					if (habitoBase.equals(habitoAtendimento)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					habitoAtendimentoService.removerHabitoAtendimento(habitoBase);
+				}
+			}
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -149,6 +169,13 @@ public class AtendimentoService {
 		}
 		antecedenteCirurgicoAtendimentoService.salvarAntecedentesCirurgicosAtendimento(antecedentesCirurgicos);
 		atendimento.setAntecedentesCirurgicos(new LinkedHashSet<AntecedenteCirurgicoAtendimento>(antecedentesCirurgicos));
+		
+		//salva habitos do atendimento
+		for (HabitoAtendimento habitoAtendimento : habitos) {
+			habitoAtendimento.setAtendimento(atendimento);
+		}
+		habitoAtendimentoService.salvarHabitosAtendimento(habitos);
+		atendimento.setHabitos(new LinkedHashSet<HabitoAtendimento>(habitos));
 
 		//salva o atendimento
 		atendimentoDao.save(atendimento);

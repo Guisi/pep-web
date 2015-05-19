@@ -100,7 +100,7 @@
 								        <h:outputText value="#{doenca.codigoCid} - " rendered="#{not empty doenca.codigoCid}"/>
 								        <h:outputText value="#{doenca.descricao}"/>
 								        <br/>
-								        <h:outputText value="(#{doenca.observacao})" styleClass="resumoprontuario-observacao"/>
+								        <h:outputText value="(#{doenca.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty doenca.observacao}"/>
 								    </p:dataList>
 								</p:tab>
 								
@@ -109,7 +109,16 @@
 										emptyMessage="#{msg['atendimento.resumoprontuario.cirurgias.lista.empty']}" type="definition" itemStyleClass="datalist-item">
 								        <h:outputText value="#{cirurgia.descricao}"/>
 								        <br/>
-								        <h:outputText value="(#{cirurgia.observacao})" styleClass="resumoprontuario-observacao"/>
+								        <h:outputText value="(#{cirurgia.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty cirurgia.observacao}"/>
+								    </p:dataList>
+								</p:tab>
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.habitos.header']} (#{atendimentoMBean.habitos.size()})">
+									<p:dataList value="#{atendimentoMBean.habitos}" var="habito"
+										emptyMessage="#{msg['atendimento.resumoprontuario.habitos.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{habito.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{habito.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty habito.observacao}"/>
 								    </p:dataList>
 								</p:tab>
 								

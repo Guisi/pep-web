@@ -22,8 +22,8 @@ public class AntecedenteCirurgicoAtendimento extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="antecedente_cirurgico_sequence", sequenceName=Constantes.PEP_OWNER + "antecedente_cirurgico_sequence", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="antecedente_cirurgico_sequence")
+	@SequenceGenerator(name="antecedente_cirurgico_atendimento_sequence", sequenceName=Constantes.PEP_OWNER + "antecedente_cirurgico_atendimento_sequence", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="antecedente_cirurgico_atendimento_sequence")
 	@Column(name="id_antecedente_cirurgico_atendimento")
 	private Long id;
 	

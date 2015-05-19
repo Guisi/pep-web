@@ -11,6 +11,8 @@
 	
 	<ui:include src="antecedentesCirurgicosInclude.xhtml" />
 	
+	<ui:include src="habitosInclude.xhtml" />
+	
 	<p:dialog widgetVar="dlgAntecedentesPessoaisAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.antecedentespessoais.anteriores.modal.header']}" fitViewport="true" dynamic="true"
 		rendered="#{not empty editarAtendimentoMBean.antecedentesClinicosViewBean.atendimentosAnteriores}" width="800">
@@ -28,11 +30,19 @@
 					</p:column>
 				</p:dataTable>
 			
-				<p:dataTable id="antecedentesCirurgicosAnterioresTable" var="antecedenteCirurgico" value="#{atendimento.antecedentesCirurgicos}"
+				<p:dataTable id="antecedentesCirurgicosTable" var="antecedenteCirurgico" value="#{atendimento.antecedentesCirurgicos}"
 					rendered="#{not empty atendimento.antecedentesCirurgicos}" style="margin-top: 7px;">
 					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentescirurgicos.header']}">
 						<h:outputText value="#{antecedenteCirurgico.descricao}"/>
 						<h:outputText value=" - #{antecedenteCirurgico.observacao}" rendered="#{not empty antecedenteCirurgico.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="habitosAnterioresTable" var="habito" value="#{atendimento.habitos}"
+					rendered="#{not empty atendimento.habitos}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.habitos.header']}">
+						<h:outputText value="#{habito.descricao}"/>
+						<h:outputText value=" - #{habito.observacao}" rendered="#{not empty habito.observacao}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
