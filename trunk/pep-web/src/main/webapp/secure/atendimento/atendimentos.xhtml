@@ -47,13 +47,13 @@
 					</p:panel>
 		
 					<h:panelGrid columns="2" rendered="#{not empty atendimentoMBean.atendimentoList}" columnClasses="rightContent,rightContent">
-						<p:panel styleClass="atendimentosPanel">
+						<p:panel styleClass="atendimentosPanel" style="width: 600px;">
 							<f:facet name="header">
 								<h:panelGrid columns="3">
 									<h:outputText value="#{msg['atendimento.lista.header']}: "/>
 									<p:selectOneMenu id="atendimentoSom" value="#{atendimentoMBean.atendimentoSelecionado}" converter="genericEntityConverter" style="width: 300px; margin-left: 5px;">
 										<f:selectItems value="#{atendimentoMBean.atendimentoList}" var="atendimento" itemLabel="#{atendimento.dataFormatada}" itemValue="#{atendimento}"/>
-										<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pnMedicamentosTable, pnHistoriaTable, pnBtnReabrirAtendimento"/>
+										<p:ajax event="change" listener="#{atendimentoMBean.onAtendimentoSelecionado}" update="pgResumoAtendimento, pnBtnReabrirAtendimento"/>
 									</p:selectOneMenu>
 									<p:outputPanel id="pnBtnReabrirAtendimento">
 										<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS">
@@ -64,80 +64,87 @@
 								</h:panelGrid>
 							</f:facet>
 	
-							<h:panelGrid columns="1" style="width: 100%;">
+							<h:panelGrid id="pgResumoAtendimento" columns="1" style="width: 100%; padding-right: 10px;">
+								
 								<!-- resumo historia e motivos de atendimento -->
-								<p:outputPanel id="pnHistoriaTable" style="margin-right: 10px;">
-									<p:panel header="#{msg['atendimento.historiamotivo.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais 
-													or not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual 
-													or not empty atendimentoMBean.atendimentoSelecionado.isda}" toggleable="true" collapsed="true">
-										<p:dataTable id="queixasTable" var="queixaAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.queixasPrincipais}"
-											rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais}" styleClass="datatable-no-header">
-											<p:column style="text-align: left;">
-												<h:outputText value="#{queixaAtendimento.descricao}"/>
-												<br/>
-												<h:outputText value="(#{queixaAtendimento.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty queixaAtendimento.observacao}"/>
-											</p:column>
-										</p:dataTable>
+								<p:panel header="#{msg['atendimento.historiamotivo.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais 
+												or not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual 
+												or not empty atendimentoMBean.atendimentoSelecionado.isda}" toggleable="true" collapsed="false">
+									<p:dataTable id="queixasTable" var="queixaAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.queixasPrincipais}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{queixaAtendimento.descricao}"/>
+											<br/>
+											<h:outputText value="(#{queixaAtendimento.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty queixaAtendimento.observacao}"/>
+										</p:column>
+									</p:dataTable>
+									
+									<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
+										<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" styleClass="resumo-prontuario-panel-label">
+											<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}: " styleClass="resumo-prontuario-internal-title"/>
+											<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}"/>
+										</p:outputPanel>
 										
-										<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
-											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" styleClass="resumo-prontuario-panel-label">
-												<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}: " styleClass="resumo-prontuario-internal-title"/>
-												<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}"/>
-											</p:outputPanel>
-											
-											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.isda}" styleClass="resumo-prontuario-panel-label">
-												<h:outputText value="#{msg['atendimento.historiamotivo.isda']}: " styleClass="resumo-prontuario-internal-title"/>
-												<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.isda}"/>
-											</p:outputPanel>
-										</div>
-									</p:panel>
-								</p:outputPanel>
+										<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.isda}" styleClass="resumo-prontuario-panel-label">
+											<h:outputText value="#{msg['atendimento.historiamotivo.isda']}: " styleClass="resumo-prontuario-internal-title"/>
+											<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.isda}"/>
+										</p:outputPanel>
+									</div>
+								</p:panel>
 
 								<!-- resumo tratamentos em andamento -->
-								<p:outputPanel id="pnMedicamentosTable" style="margin-right: 10px;">
-									<p:panel header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" toggleable="true" collapsed="true">
-										<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
-											rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
-											<p:column style="text-align: left;">
-												<h:outputText value="#{medicamentoAtendimento.descricao}"/>
-												<br/>
-												<h:outputText value="(#{medicamentoAtendimento.posologia})" styleClass="resumoprontuario-observacao" rendered="#{not empty medicamentoAtendimento.posologia}"/>
-											</p:column>
-										</p:dataTable>
-									</p:panel>
-								</p:outputPanel>
+								<p:panel header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" toggleable="true" collapsed="false">
+									<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{medicamentoAtendimento.descricao}"/>
+											<br/>
+											<h:outputText value="(#{medicamentoAtendimento.posologia})" styleClass="resumoprontuario-observacao" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 
 								<!-- resumo antecedentes clínicos -->
-								<p:outputPanel id="pnAntecedentesClinicosTable" style="margin-right: 10px;">
-									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesclinicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}" toggleable="true" collapsed="true">
-										<p:dataTable id="antecedentesClinicosTable" var="antecedenteClinico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}"
-											rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}" styleClass="datatable-no-header">
-											<p:column style="text-align: left;">
-												<h:outputText value="#{antecedenteClinico.descricao}"/>
-												<br/>
-												<h:outputText value="(#{antecedenteClinico.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteClinico.observacao}"/>
-											</p:column>
-										</p:dataTable>
-									</p:panel>
-								</p:outputPanel>
+								<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesclinicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}" toggleable="true" collapsed="false">
+									<p:dataTable id="antecedentesClinicosTable" var="antecedenteClinico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{antecedenteClinico.descricao}"/>
+											<br/>
+											<h:outputText value="(#{antecedenteClinico.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteClinico.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 								
 								<!-- resumo antecedentes crurgicos -->
-								<p:outputPanel id="pnAntecedentesCirurgicosTable" style="margin-right: 10px;">
-									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentescirurgicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}" toggleable="true" collapsed="true">
-										<p:dataTable id="antecedentesCirurgicosTable" var="antecedenteCirurgico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}"
-											rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}" styleClass="datatable-no-header">
-											<p:column style="text-align: left;">
-												<h:outputText value="#{antecedenteCirurgico.descricao}"/>
-												<br/>
-												<h:outputText value="(#{antecedenteCirurgico.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteCirurgico.observacao}"/>
-											</p:column>
-										</p:dataTable>
-									</p:panel>
-								</p:outputPanel>
+								<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentescirurgicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}" toggleable="true" collapsed="false">
+									<p:dataTable id="antecedentesCirurgicosTable" var="antecedenteCirurgico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{antecedenteCirurgico.descricao}"/>
+											<br/>
+											<h:outputText value="(#{antecedenteCirurgico.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteCirurgico.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+								
+								<!-- resumo habitos -->
+								<p:panel header="#{msg['atendimento.antecedentespessoais.habitos']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.habitos}" toggleable="true" collapsed="false">
+									<p:dataTable id="habitosTable" var="habito" value="#{atendimentoMBean.atendimentoSelecionado.habitos}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.habitos}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{habito.descricao}"/>
+											<br/>
+											<h:outputText value="(#{habito.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty habito.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+
 							</h:panelGrid>
 							
 						</p:panel>
