@@ -365,3 +365,10 @@ INSERT INTO pep_owner.tb_alergia_atendimento(id_alergia_atendimento, descricao, 
 INSERT INTO pep_owner.tb_alergia_atendimento(id_alergia_atendimento, descricao, observacao, id_atendimento, id_alergia) VALUES (3, '', 'outra alergia', 2, 3);
 INSERT INTO pep_owner.tb_alergia_atendimento(id_alergia_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Leite com pêra', '', 2);
 ALTER SEQUENCE pep_owner.alergia_atendimento_sequence RESTART WITH 5;
+
+--vacinas
+INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento, id_vacina) VALUES (1, '', 'teste', 1, 1);
+INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Injeção', '', 1);
+INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento, id_vacina) VALUES (3, '', 'outra vacina', 2, 3);
+INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Vacina de mentira', '', 2);
+ALTER SEQUENCE pep_owner.vacina_atendimento_sequence RESTART WITH 5;
