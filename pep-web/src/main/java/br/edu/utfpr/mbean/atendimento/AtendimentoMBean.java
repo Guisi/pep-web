@@ -13,12 +13,14 @@ import org.apache.commons.lang.StringUtils;
 
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
+import br.edu.utfpr.service.AlergiaService;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.DoencaService;
 import br.edu.utfpr.service.HabitoService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
+import br.edu.utfpr.service.vo.AlergiaPaciente;
 import br.edu.utfpr.service.vo.DoencaDiagnosticada;
 import br.edu.utfpr.service.vo.HabitoPaciente;
 import br.edu.utfpr.service.vo.ProcedimentoRealizado;
@@ -41,6 +43,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private ProcedimentoService procedimentoService;
 	@Inject
 	private HabitoService habitoService;
+	@Inject
+	private AlergiaService alergiaService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
@@ -52,6 +56,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private List<DoencaDiagnosticada> doencasDiagnosticadas;
 	private List<ProcedimentoRealizado> cirurgias;
 	private List<HabitoPaciente> habitos;
+	private List<AlergiaPaciente> alergias;
 	
 	@PostConstruct
 	public void init() {
@@ -86,6 +91,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.doencasDiagnosticadas = doencaService.retornarDoencasDiagnosticadas(this.pacienteSelecionado.getId());
 		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(this.pacienteSelecionado.getId());
 		this.habitos = habitoService.retornarHabitosPaciente(this.pacienteSelecionado.getId());
+		this.alergias = alergiaService.retornarAlergiasPaciente(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -157,4 +163,11 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.habitos = habitos;
 	}
 
+	public List<AlergiaPaciente> getAlergias() {
+		return alergias;
+	}
+
+	public void setAlergias(List<AlergiaPaciente> alergias) {
+		this.alergias = alergias;
+	}
 }
