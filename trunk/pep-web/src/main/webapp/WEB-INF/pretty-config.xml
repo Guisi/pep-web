@@ -202,4 +202,14 @@
 		<pattern value="/listarAlergias" />
 		<view-id value="/secure/alergia/alergias.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="novaAlergia">
+		<pattern value="/novaAlergia" />
+		<view-id value="/secure/alergia/editarAlergia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarAlergia">
+		<pattern value="/editarAlergia/#{idAlergia}" />
+		<view-id value="/secure/alergia/editarAlergia.xhtml" />
+	</url-mapping>
 </pretty-config>
