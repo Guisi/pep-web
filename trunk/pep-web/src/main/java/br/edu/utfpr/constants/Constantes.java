@@ -35,4 +35,6 @@ public interface Constantes {
 	final Integer QTDE_SUGESTOES_ANTECEDENTES_CIRURGICOS = 10;
 	
 	final Integer QTDE_SUGESTOES_HABITOS = 10;
+	
+	final Integer QTDE_SUGESTOES_ALERGIAS = 10;
 }

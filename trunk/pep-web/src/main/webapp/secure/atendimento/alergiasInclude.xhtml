@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div style="padding-top: 10px;">
+		<p:panel styleClass="internal-panel" header="#{msg['atendimento.antecedentespessoais.alergias']}">
+			
+			<p:panel id="pnBotoesAlergias" style="margin: 10px 0px 10px 0px; display: table;">
+				<ui:repeat var="alergia" value="#{editarAtendimentoMBean.alergiasViewBean.alergiasMaisUsadas}">
+					<p:commandButton value="#{alergia.descricao}" actionListener="#{editarAtendimentoMBean.alergiasViewBean.adicionarAlergia(alergia)}"
+						process=":frmEditarAtendimento:alergiasTable, @this" styleClass="botao-mais-usados-fixo"
+						update=":frmEditarAtendimento:alergiasTable, :frmEditarAtendimento:pnBotoesAlergias, :frmEditarAtendimento:alergiaAddInput, :frmEditarAtendimento:msgAtendimentos">
+					</p:commandButton>
+				</ui:repeat>
+			</p:panel>
+
+			<h:panelGrid columns="2" width="100%">
+				<h:panelGrid columns="2">
+					<p:selectOneMenu id="alergiaAddInput" value="#{editarAtendimentoMBean.alergiasViewBean.alergiaSelecionada}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+						<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+						<f:selectItems value="#{editarAtendimentoMBean.alergiasViewBean.alergiasDisponiveis}" var="alergia" itemLabel="#{alergia.descricao}" itemValue="#{alergia}"/>
+						<p:ajax event="change" update="addAlergiaBtn" process="@this"/>
+					</p:selectOneMenu>
+					<p:columnGroup>
+						<p:commandButton id="addAlergiaBtn" action="#{editarAtendimentoMBean.alergiasViewBean.adicionarAlergia}" icon="ui-icon-plusthick" update="@this, alergiaAddInput, alergiasTable, :frmEditarAtendimento:msgAtendimentos"
+							disabled="#{empty editarAtendimentoMBean.alergiasViewBean.alergiaSelecionada}" process="alergiaAddInput, alergiasTable, @this" styleClass="botaoSalvar"/>
+						<p:commandButton id="addOutroAlergiaBtn" action="#{editarAtendimentoMBean.alergiasViewBean.adicionarOutraAlergia}"
+							value="#{msg['atendimento.antecedentespessoais.alergias.botao.outraalergia']}" process="alergiasTable, @this" update="alergiasTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
+					</p:columnGroup>
+				</h:panelGrid>
+			</h:panelGrid>
+			
+			<p:dataTable id="alergiasTable" var="alergiaAtendimento" value="#{editarAtendimentoMBean.alergiasViewBean.alergiasAtendimentoAgrupado}" 
+				emptyMessage="#{msg['atendimento.antecedentespessoais.alergias.lista.empty']}"
+				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+				<p:column headerText="#{msg['atendimento.antecedentespessoais.alergias.descricao']}">
+					<p:inputText id="descricaoInput" value="#{alergiaAtendimento.descricao}" maxlength="300"
+						rendered="#{empty alergiaAtendimento.alergia and not alergiaAtendimento.atendimentoAnterior}"
+						style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.antecedentespessoais.alergias.campoobrigatorio.descricao']}"/>
+					<h:outputText value="#{alergiaAtendimento.descricao}" rendered="#{not empty alergiaAtendimento.alergia or alergiaAtendimento.atendimentoAnterior}"/>
+				</p:column>
+
+				<p:column headerText="#{msg['atendimento.antecedentespessoais.alergias.observacao']}">
+					<p:inputTextarea value="#{alergiaAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"
+						rendered="#{not alergiaAtendimento.atendimentoAnterior}"/>
+						
+					<h:outputText value="#{alergiaAtendimento.observacao}" rendered="#{alergiaAtendimento.atendimentoAnterior}"/>
+				</p:column>
+				
+				<p:column width="30px;" style="text-align: left;">
+					<p:commandButton value="" actionListener="#{editarAtendimentoMBean.alergiasViewBean.removerAlergia(index)}"
+						update="alergiasTable, :frmEditarAtendimento:alergiaAddInput"
+						rendered="#{not alergiaAtendimento.atendimentoAnterior}"
+						icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
+				</p:column>
+				
+			</p:dataTable>
+		</p:panel>
+	</div>
+</ui:composition>

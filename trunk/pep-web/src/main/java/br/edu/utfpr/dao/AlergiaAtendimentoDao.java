@@ -55,7 +55,7 @@ public class AlergiaAtendimentoDao extends GenericDao<AlergiaAtendimento, Long> 
 		return entityManager.createQuery(q).getResultList();
 	}
 	
-	public List<Alergia> retornarAlergiasMaisUsados(Integer quantidade, List<Long> idsAlergiasIgnorar, Boolean chkAtivo) {
+	public List<Alergia> retornarAlergiasMaisUsadas(Integer quantidade, List<Long> idsAlergiasIgnorar, Boolean chkAtivo) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Alergia> cq = qb.createQuery(Alergia.class);
 		Root<Alergia> root = cq.from(Alergia.class);

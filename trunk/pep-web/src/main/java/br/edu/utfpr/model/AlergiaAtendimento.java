@@ -24,7 +24,7 @@ public class AlergiaAtendimento extends BaseEntity {
 	@Id
 	@SequenceGenerator(name="alergia_atendimento_sequence", sequenceName=Constantes.PEP_OWNER + "alergia_atendimento_sequence", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="alergia_atendimento_sequence")
-	@Column(name="id_habito_atendimento")
+	@Column(name="id_alergia_atendimento")
 	private Long id;
 	
 	@JoinColumn(name = "id_atendimento")
