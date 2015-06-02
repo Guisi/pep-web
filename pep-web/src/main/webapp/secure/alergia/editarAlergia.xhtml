@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarAlergiaMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarAlergias">
+				<p:messages id="msgAlergias"/>
+				
+				<p:outputPanel rendered="#{not empty editarAlergiaMBean.alergiaSelecionada}">
+				    <fieldset>
+				    	<legend>#{msg['alergia.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['alergia.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarAlergiaMBean.alergiaSelecionada.descricao}" maxlength="300" style="width: 800px;" required="true"
+								requiredMessage="#{msg['alergia.campoobrigatorio.descricao']}"/>
+								
+							<h:outputLabel for="chkAtivoInput" value="#{msg['alergia.chkativo']}: "/>
+							<h:selectBooleanCheckbox id="chkAtivoInput" value="#{editarAlergiaMBean.alergiaSelecionada.chkAtivo}"/>
+						</p:panelGrid>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarAlergias" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarAlergiaMBean.salvarAlergia}" icon="ui-icon-check"
+								update="msgAlergias" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
