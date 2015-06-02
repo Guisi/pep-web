@@ -29,7 +29,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (14
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (15, 'EDITAR_PROCEDIMENTOS', 'Autorização para editar procedimentos.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (16, 'EDITAR_HABITOS', 'Autorização para editar hábitos.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (17, 'EDITAR_ALERGIAS', 'Autorização para editar alergias.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 18;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (18, 'EDITAR_VACINAS', 'Autorização para editar vacinas.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 19;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -50,6 +51,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 15);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 16);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 17);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 18);
 
 --vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
@@ -299,6 +301,17 @@ INSERT INTO pep_owner.tb_alergia(id_alergia, descricao, chk_ativo) VALUES (8, 'A
 INSERT INTO pep_owner.tb_alergia(id_alergia, descricao, chk_ativo) VALUES (9, 'Insetos', true);
 INSERT INTO pep_owner.tb_alergia(id_alergia, descricao, chk_ativo) VALUES (10, 'Látex', true);
 ALTER SEQUENCE pep_owner.alergia_sequence RESTART WITH 11;
+
+--alergias
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (1, 'Anti-tetânica', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (2, 'Pneumocócica Polivalente (Pneumo 23)', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (3, 'Meningite C', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (4, 'Rotavírus', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (5, 'Raiva', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (6, 'Varicela', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (7, 'Tríplice Viral (Sar.+ Cax.+ Rub.) mmr/scr', true);
+INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (8, 'Tetraxim (Dpat + Salk)', true);
+ALTER SEQUENCE pep_owner.vacina_sequence RESTART WITH 9;
 
 --##########################
 --#### atendimento #########

@@ -45,6 +45,9 @@
 					<sec:ifAnyGranted roles="EDITAR_QUEIXAS_PRINCIPAIS">
 						<p:menuitem outcome="pretty:listarQueixasPrincipais" value="#{msg['menu.administracao.queixasprincipais']}"/>
 					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_VACINAS">
+						<p:menuitem outcome="pretty:listarVacinas" value="#{msg['menu.administracao.vacinas']}"/>
+					</sec:ifAnyGranted>
 				</p:submenu>
 			</sec:ifAnyGranted>
 			

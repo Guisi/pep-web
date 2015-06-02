@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarVacinaMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarVacinas">
+				<p:messages id="msgVacinas"/>
+				
+				<p:outputPanel rendered="#{not empty editarVacinaMBean.vacinaSelecionada}">
+				    <fieldset>
+				    	<legend>#{msg['vacina.editar.header']}</legend>
+				    	
+						<p:focus for="descricaoInput"/>
+						<p:panelGrid columns="2" styleClass="noborder" columnClasses="labelColumn, valueColumn" style="width: 100%;">
+							<h:outputLabel for="descricaoInput" value="#{msg['vacina.descricao']}: "/>
+							<p:inputText id="descricaoInput" value="#{editarVacinaMBean.vacinaSelecionada.descricao}" maxlength="300" style="width: 800px;" required="true"
+								requiredMessage="#{msg['vacina.campoobrigatorio.descricao']}"/>
+								
+							<h:outputLabel for="chkAtivoInput" value="#{msg['vacina.chkativo']}: "/>
+							<h:selectBooleanCheckbox id="chkAtivoInput" value="#{editarVacinaMBean.vacinaSelecionada.chkAtivo}"/>
+						</p:panelGrid>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelaralteracoes']}" action="pretty:listarVacinas" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvaralteracoes']}" action="#{editarVacinaMBean.salvarVacina}" icon="ui-icon-check"
+								update="msgVacinas" styleClass="botaoSalvar"/>
+						</div>
+					</fieldset>
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
