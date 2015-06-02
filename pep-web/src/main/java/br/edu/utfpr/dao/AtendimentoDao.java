@@ -11,6 +11,8 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import br.edu.utfpr.model.AlergiaAtendimento;
+import br.edu.utfpr.model.AlergiaAtendimento_;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento_;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
@@ -61,6 +63,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		Fetch<Atendimento, HabitoAtendimento> habitosFetch = root.fetch(Atendimento_.habitos, JoinType.LEFT);
 		habitosFetch.fetch(HabitoAtendimento_.habito, JoinType.LEFT);
 		
+		Fetch<Atendimento, AlergiaAtendimento> alergiasFetch = root.fetch(Atendimento_.alergias, JoinType.LEFT);
+		alergiasFetch.fetch(AlergiaAtendimento_.alergia, JoinType.LEFT);
+		
 		List<Predicate> predicados = new ArrayList<>();
 		predicados.add(qb.equal(root.get(Atendimento_.paciente).get(Usuario_.id), idPaciente));
 		
@@ -95,6 +100,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		
 		Fetch<Atendimento, HabitoAtendimento> habitosFetch = root.fetch(Atendimento_.habitos, JoinType.LEFT);
 		habitosFetch.fetch(HabitoAtendimento_.habito, JoinType.LEFT);
+		
+		Fetch<Atendimento, AlergiaAtendimento> alergiasFetch = root.fetch(Atendimento_.alergias, JoinType.LEFT);
+		alergiasFetch.fetch(AlergiaAtendimento_.alergia, JoinType.LEFT);
 		
 		q.where(qb.equal(root.get(Atendimento_.id), id));
 		

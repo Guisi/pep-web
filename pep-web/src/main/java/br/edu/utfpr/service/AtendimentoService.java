@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.NoResultException;
 
 import br.edu.utfpr.dao.AtendimentoDao;
+import br.edu.utfpr.model.AlergiaAtendimento;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
@@ -33,6 +34,8 @@ public class AtendimentoService {
 	private AntecedenteCirurgicoAtendimentoService antecedenteCirurgicoAtendimentoService;
 	@Inject
 	private HabitoAtendimentoService habitoAtendimentoService;
+	@Inject
+	private AlergiaAtendimentoService alergiaAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -53,7 +56,7 @@ public class AtendimentoService {
 	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
 			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
-			List<HabitoAtendimento> habitos) {
+			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -137,6 +140,22 @@ public class AtendimentoService {
 					habitoAtendimentoService.removerHabitoAtendimento(habitoBase);
 				}
 			}
+			
+			// Apaga da base as alergias excluidass do atendimento
+			List<AlergiaAtendimento> alergiasBase = alergiaAtendimentoService.retornarAlergiasAtendimento(atendimento.getId());
+			for (AlergiaAtendimento alergiaBase : alergiasBase) {
+				boolean excluido = true;
+				for (AlergiaAtendimento alergiaAtendimento : alergias) {
+					if (alergiaBase.equals(alergiaAtendimento)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					alergiaAtendimentoService.removerAlergiaAtendimento(alergiaBase);
+				}
+			}
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -176,6 +195,13 @@ public class AtendimentoService {
 		}
 		habitoAtendimentoService.salvarHabitosAtendimento(habitos);
 		atendimento.setHabitos(new LinkedHashSet<HabitoAtendimento>(habitos));
+		
+		//salva alergias do atendimento
+		for (AlergiaAtendimento alergiaAtendimento : alergias) {
+			alergiaAtendimento.setAtendimento(atendimento);
+		}
+		alergiaAtendimentoService.salvarAlergiasAtendimento(alergias);
+		atendimento.setAlergias(new LinkedHashSet<AlergiaAtendimento>(alergias));
 
 		//salva o atendimento
 		atendimentoDao.save(atendimento);

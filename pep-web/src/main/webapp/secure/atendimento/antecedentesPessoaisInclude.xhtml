@@ -13,11 +13,13 @@
 	
 	<ui:include src="habitosInclude.xhtml" />
 	
+	<ui:include src="alergiasInclude.xhtml" />
+	
 	<p:dialog widgetVar="dlgAntecedentesPessoaisAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.antecedentespessoais.anteriores.modal.header']}" fitViewport="true" dynamic="true"
-		rendered="#{not empty editarAtendimentoMBean.antecedentesClinicosViewBean.atendimentosAnteriores}" width="800">
+		rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresAntecedentesPessoais}" width="800">
 	
-		<p:dataList value="#{editarAtendimentoMBean.antecedentesClinicosViewBean.atendimentosAnterioresAntecedentesPessoais}" var="atendimento" type="none" itemType="none"
+		<p:dataList value="#{editarAtendimentoMBean.atendimentosAnterioresAntecedentesPessoais}" var="atendimento" type="none" itemType="none"
 			paginator="true" rows="3" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
 			
@@ -43,6 +45,14 @@
 					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.habitos.header']}">
 						<h:outputText value="#{habito.descricao}"/>
 						<h:outputText value=" - #{habito.observacao}" rendered="#{not empty habito.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="alergiasAnterioresTable" var="alergia" value="#{atendimento.alergias}"
+					rendered="#{not empty atendimento.alergias}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.alergias.header']}">
+						<h:outputText value="#{alergia.descricao}"/>
+						<h:outputText value=" - #{alergia.observacao}" rendered="#{not empty alergia.observacao}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
