@@ -144,6 +144,19 @@
 										</p:column>
 									</p:dataTable>
 								</p:panel>
+								
+								<!-- resumo alergias -->
+								<p:panel header="#{msg['atendimento.antecedentespessoais.alergias']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.alergias}" toggleable="true" collapsed="false">
+									<p:dataTable id="alergiasTable" var="alergia" value="#{atendimentoMBean.atendimentoSelecionado.alergias}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.alergias}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{alergia.descricao}"/>
+											<br/>
+											<h:outputText value="(#{alergia.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty alergia.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 
 							</h:panelGrid>
 							
@@ -187,6 +200,15 @@
 								        <h:outputText value="#{habito.descricao}"/>
 								        <br/>
 								        <h:outputText value="(#{habito.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty habito.observacao}"/>
+								    </p:dataList>
+								</p:tab>
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.alergias.header']} (#{atendimentoMBean.alergias.size()})">
+									<p:dataList value="#{atendimentoMBean.alergias}" var="alergia"
+										emptyMessage="#{msg['atendimento.resumoprontuario.alergias.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{alergia.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{alergia.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty alergia.observacao}"/>
 								    </p:dataList>
 								</p:tab>
 								
