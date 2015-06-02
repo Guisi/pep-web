@@ -20,10 +20,12 @@ import br.edu.utfpr.service.HabitoService;
 import br.edu.utfpr.service.MedicamentoAtendimentoService;
 import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
+import br.edu.utfpr.service.VacinaService;
 import br.edu.utfpr.service.vo.AlergiaPaciente;
 import br.edu.utfpr.service.vo.DoencaDiagnosticada;
 import br.edu.utfpr.service.vo.HabitoPaciente;
 import br.edu.utfpr.service.vo.ProcedimentoRealizado;
+import br.edu.utfpr.service.vo.VacinaPaciente;
 
 @ManagedBean
 @ViewScoped
@@ -45,6 +47,8 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private HabitoService habitoService;
 	@Inject
 	private AlergiaService alergiaService;
+	@Inject
+	private VacinaService vacinaService;
 	
 	private List<Atendimento> atendimentoList;
 	private Atendimento atendimentoSelecionado;
@@ -57,6 +61,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private List<ProcedimentoRealizado> cirurgias;
 	private List<HabitoPaciente> habitos;
 	private List<AlergiaPaciente> alergias;
+	private List<VacinaPaciente> vacinas;
 	
 	@PostConstruct
 	public void init() {
@@ -92,6 +97,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.cirurgias = procedimentoService.retornarProcedimentosRealizados(this.pacienteSelecionado.getId());
 		this.habitos = habitoService.retornarHabitosPaciente(this.pacienteSelecionado.getId());
 		this.alergias = alergiaService.retornarAlergiasPaciente(this.pacienteSelecionado.getId());
+		this.vacinas = vacinaService.retornarVacinasPaciente(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -169,5 +175,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setAlergias(List<AlergiaPaciente> alergias) {
 		this.alergias = alergias;
+	}
+
+	public List<VacinaPaciente> getVacinas() {
+		return vacinas;
+	}
+
+	public void setVacinas(List<VacinaPaciente> vacinas) {
+		this.vacinas = vacinas;
 	}
 }

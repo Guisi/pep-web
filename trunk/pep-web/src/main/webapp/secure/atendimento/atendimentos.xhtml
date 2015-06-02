@@ -157,6 +157,19 @@
 										</p:column>
 									</p:dataTable>
 								</p:panel>
+								
+								<!-- resumo vacinas -->
+								<p:panel header="#{msg['atendimento.antecedentespessoais.vacinas']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.vacinas}" toggleable="true" collapsed="false">
+									<p:dataTable id="vacinasTable" var="vacina" value="#{atendimentoMBean.atendimentoSelecionado.vacinas}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.vacinas}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{vacina.descricao}"/>
+											<br/>
+											<h:outputText value="(#{vacina.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty vacina.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 
 							</h:panelGrid>
 							
@@ -209,6 +222,15 @@
 								        <h:outputText value="#{alergia.descricao}"/>
 								        <br/>
 								        <h:outputText value="(#{alergia.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty alergia.observacao}"/>
+								    </p:dataList>
+								</p:tab>
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.vacinas.header']} (#{atendimentoMBean.vacinas.size()})">
+									<p:dataList value="#{atendimentoMBean.vacinas}" var="vacina"
+										emptyMessage="#{msg['atendimento.resumoprontuario.vacinas.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{vacina.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{vacina.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty vacina.observacao}"/>
 								    </p:dataList>
 								</p:tab>
 								

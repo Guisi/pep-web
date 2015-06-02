@@ -17,6 +17,7 @@ import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.HabitoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
+import br.edu.utfpr.model.VacinaAtendimento;
 
 @Named
 @Stateless
@@ -36,6 +37,8 @@ public class AtendimentoService {
 	private HabitoAtendimentoService habitoAtendimentoService;
 	@Inject
 	private AlergiaAtendimentoService alergiaAtendimentoService;
+	@Inject
+	private VacinaAtendimentoService vacinaAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -56,7 +59,7 @@ public class AtendimentoService {
 	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
 			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
-			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias) {
+			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias, List<VacinaAtendimento> vacinas) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -156,6 +159,22 @@ public class AtendimentoService {
 					alergiaAtendimentoService.removerAlergiaAtendimento(alergiaBase);
 				}
 			}
+			
+			// Apaga da base as alergias excluidass do atendimento
+			List<VacinaAtendimento> vacinasBase = vacinaAtendimentoService.retornarVacinasAtendimento(atendimento.getId());
+			for (VacinaAtendimento vacinaBase : vacinasBase) {
+				boolean excluido = true;
+				for (VacinaAtendimento vacinaAtendimento : vacinas) {
+					if (vacinaBase.equals(vacinaAtendimento)) {
+						excluido = false;
+						break;
+					}
+				}
+				
+				if (excluido) {
+					vacinaAtendimentoService.removerVacinaAtendimento(vacinaBase);
+				}
+			}
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -202,6 +221,13 @@ public class AtendimentoService {
 		}
 		alergiaAtendimentoService.salvarAlergiasAtendimento(alergias);
 		atendimento.setAlergias(new LinkedHashSet<AlergiaAtendimento>(alergias));
+		
+		//salva Vacinas do atendimento
+		for (VacinaAtendimento vacinaAtendimento : vacinas) {
+			vacinaAtendimento.setAtendimento(atendimento);
+		}
+		vacinaAtendimentoService.salvarVacinasAtendimento(vacinas);
+		atendimento.setVacinas(new LinkedHashSet<VacinaAtendimento>(vacinas));
 
 		//salva o atendimento
 		atendimentoDao.save(atendimento);
