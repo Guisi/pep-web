@@ -197,4 +197,9 @@
 		<pattern value="/editarHabito/#{idHabito}" />
 		<view-id value="/secure/habito/editarHabito.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarAlergias">
+		<pattern value="/listarAlergias" />
+		<view-id value="/secure/alergia/alergias.xhtml" />
+	</url-mapping>
 </pretty-config>
