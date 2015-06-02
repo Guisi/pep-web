@@ -26,6 +26,8 @@ import br.edu.utfpr.model.MedicamentoAtendimento_;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento_;
 import br.edu.utfpr.model.Usuario_;
+import br.edu.utfpr.model.VacinaAtendimento;
+import br.edu.utfpr.model.VacinaAtendimento_;
 
 public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Serializable {
 
@@ -66,6 +68,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		Fetch<Atendimento, AlergiaAtendimento> alergiasFetch = root.fetch(Atendimento_.alergias, JoinType.LEFT);
 		alergiasFetch.fetch(AlergiaAtendimento_.alergia, JoinType.LEFT);
 		
+		Fetch<Atendimento, VacinaAtendimento> vacinasFetch = root.fetch(Atendimento_.vacinas, JoinType.LEFT);
+		vacinasFetch.fetch(VacinaAtendimento_.vacina, JoinType.LEFT);
+		
 		List<Predicate> predicados = new ArrayList<>();
 		predicados.add(qb.equal(root.get(Atendimento_.paciente).get(Usuario_.id), idPaciente));
 		
@@ -103,6 +108,9 @@ public class AtendimentoDao extends GenericDao<Atendimento, Long> implements Ser
 		
 		Fetch<Atendimento, AlergiaAtendimento> alergiasFetch = root.fetch(Atendimento_.alergias, JoinType.LEFT);
 		alergiasFetch.fetch(AlergiaAtendimento_.alergia, JoinType.LEFT);
+		
+		Fetch<Atendimento, VacinaAtendimento> vacinasFetch = root.fetch(Atendimento_.vacinas, JoinType.LEFT);
+		vacinasFetch.fetch(VacinaAtendimento_.vacina, JoinType.LEFT);
 		
 		q.where(qb.equal(root.get(Atendimento_.id), id));
 		

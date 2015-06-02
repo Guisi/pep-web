@@ -44,8 +44,8 @@ public class AlergiaMBean extends BaseMBean {
 		return alergiaList;
 	}
 
-	public void setAlergiaList(List<Alergia> AlergiaList) {
-		this.alergiaList = AlergiaList;
+	public void setAlergiaList(List<Alergia> alergiaList) {
+		this.alergiaList = alergiaList;
 	}
 
 	public String getPesquisa() {
