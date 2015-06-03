@@ -41,6 +41,9 @@ public class Doenca extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "doenca")
 	private Set<AntecedenteClinicoAtendimento> antecedentesClinicosAtendimentos;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "doenca")
+	private Set<AntecedenteFamiliarAtendimento> antecedentesFamiliaresAtendimentos;
+	
 	@Override
 	public Long getId() {
 		return id;
@@ -80,6 +83,14 @@ public class Doenca extends BaseEntity {
 
 	public void setAntecedentesClinicosAtendimentos(Set<AntecedenteClinicoAtendimento> antecedentesClinicosAtendimentos) {
 		this.antecedentesClinicosAtendimentos = antecedentesClinicosAtendimentos;
+	}
+
+	public Set<AntecedenteFamiliarAtendimento> getAntecedentesFamiliaresAtendimentos() {
+		return antecedentesFamiliaresAtendimentos;
+	}
+
+	public void setAntecedentesFamiliaresAtendimentos(Set<AntecedenteFamiliarAtendimento> antecedentesFamiliaresAtendimentos) {
+		this.antecedentesFamiliaresAtendimentos = antecedentesFamiliaresAtendimentos;
 	}
 
 }

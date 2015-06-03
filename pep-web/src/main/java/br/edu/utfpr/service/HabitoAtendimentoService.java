@@ -29,13 +29,26 @@ public class HabitoAtendimentoService {
 		return habitoAtendimentoDao.retornarHabitosMaisUsados(quantidade, idsHabitosIgnorar, chkAtivo);
 	}
 	
-	public void removerHabitoAtendimento(HabitoAtendimento habitoAtendimento) {
-		habitoAtendimentoDao.remove(habitoAtendimento);
-	}
-	
 	public void salvarHabitosAtendimento(List<HabitoAtendimento> habitosAtendimento) {
 		for (HabitoAtendimento habitoAtendimento : habitosAtendimento) {
 			habitoAtendimentoDao.save(habitoAtendimento);
+		}
+	}
+	
+	public void removerHabitosExcluidos(Long idAtendimento, List<HabitoAtendimento> habitos) {
+		List<HabitoAtendimento> habitosBase = this.retornarHabitosAtendimento(idAtendimento);
+		for (HabitoAtendimento habitoBase : habitosBase) {
+			boolean excluido = true;
+			for (HabitoAtendimento habitoAtendimento : habitos) {
+				if (habitoBase.equals(habitoAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				habitoAtendimentoDao.remove(habitoBase);
+			}
 		}
 	}
 }

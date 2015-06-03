@@ -20,13 +20,26 @@ public class QueixaPrincipalAtendimentoService {
 		return queixaPrincipalAtendimentoDao.retornarQueixasPrincipaisAtendimento(idAtendimento);
 	}
 	
-	public void removerQueixaPrincipalAtendimento(QueixaPrincipalAtendimento queixaPrincipalAtendimento) {
-		queixaPrincipalAtendimentoDao.remove(queixaPrincipalAtendimento);
-	}
-	
 	public void salvarQueixasPrincipaisAtendimento(List<QueixaPrincipalAtendimento> queixasPrincipaisAtendimento) {
 		for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipaisAtendimento) {
 			queixaPrincipalAtendimentoDao.save(queixaPrincipalAtendimento);
+		}
+	}
+	
+	public void removerQueixasPrincipaisExcluidas(Long idAtendimento, List<QueixaPrincipalAtendimento> queixasPrincipais) {
+		List<QueixaPrincipalAtendimento> queixasPrincipaisBase = this.retornarQueixasPrincipaisAtendimento(idAtendimento);
+		for (QueixaPrincipalAtendimento queixaPrincipalBase : queixasPrincipaisBase) {
+			boolean excluido = true;
+			for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
+				if (queixaPrincipalBase.equals(queixaPrincipalAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				queixaPrincipalAtendimentoDao.remove(queixaPrincipalBase);
+			}
 		}
 	}
 }

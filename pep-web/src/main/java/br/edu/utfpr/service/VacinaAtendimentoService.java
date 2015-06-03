@@ -29,13 +29,26 @@ public class VacinaAtendimentoService {
 		return vacinaAtendimentoDao.retornarVacinasMaisUsadas(quantidade, idsVacinasIgnorar, chkAtivo);
 	}
 	
-	public void removerVacinaAtendimento(VacinaAtendimento vacinaAtendimento) {
-		vacinaAtendimentoDao.remove(vacinaAtendimento);
-	}
-	
 	public void salvarVacinasAtendimento(List<VacinaAtendimento> vacinasAtendimento) {
 		for (VacinaAtendimento vacinaAtendimento : vacinasAtendimento) {
 			vacinaAtendimentoDao.save(vacinaAtendimento);
+		}
+	}
+	
+	public void removerVacinasExcluidas(Long idAtendimento, List<VacinaAtendimento> vacinas) {
+		List<VacinaAtendimento> vacinasBase = this.retornarVacinasAtendimento(idAtendimento);
+		for (VacinaAtendimento vacinaBase : vacinasBase) {
+			boolean excluido = true;
+			for (VacinaAtendimento vacinaAtendimento : vacinas) {
+				if (vacinaBase.equals(vacinaAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				vacinaAtendimentoDao.remove(vacinaBase);
+			}
 		}
 	}
 }

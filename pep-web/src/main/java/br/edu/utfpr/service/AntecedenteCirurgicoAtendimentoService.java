@@ -30,13 +30,26 @@ public class AntecedenteCirurgicoAtendimentoService {
 		return antecedenteCirurgicoAtendimentoDao.retornarAntecedentesCirurgicosMaisUsados(quantidade, idsProcedimentosIgnorar, chkAtivo, tipoProcedimento);
 	}
 	
-	public void removerAntecedenteCirurgicoAtendimento(AntecedenteCirurgicoAtendimento AntecedenteCirurgicoAtendimento) {
-		antecedenteCirurgicoAtendimentoDao.remove(AntecedenteCirurgicoAtendimento);
-	}
-	
 	public void salvarAntecedentesCirurgicosAtendimento(List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicosAtendimento) {
 		for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoAtendimento : antecedentesCirurgicosAtendimento) {
 			antecedenteCirurgicoAtendimentoDao.save(antecedenteCirurgicoAtendimento);
+		}
+	}
+	
+	public void removerAntecedentesCirurgicosExcluidos(Long idAtendimento, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos) {
+		List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicosBase = this.retornarAntecedentesCirurgicosAtendimento(idAtendimento);
+		for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoBase : antecedentesCirurgicosBase) {
+			boolean excluido = true;
+			for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoAtendimento : antecedentesCirurgicos) {
+				if (antecedenteCirurgicoBase.equals(antecedenteCirurgicoAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				antecedenteCirurgicoAtendimentoDao.remove(antecedenteCirurgicoBase);
+			}
 		}
 	}
 }

@@ -39,4 +39,6 @@ public interface Constantes {
 	final Integer QTDE_SUGESTOES_ALERGIAS = 10;
 	
 	final Integer QTDE_SUGESTOES_VACINAS = 10;
+	
+	final Integer QTDE_SUGESTOES_ANTECEDENTES_FAMILIARES = 10;
 }

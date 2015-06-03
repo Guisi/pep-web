@@ -372,3 +372,10 @@ INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, ob
 INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento, id_vacina) VALUES (3, '', 'outra vacina', 2, 3);
 INSERT INTO pep_owner.tb_vacina_atendimento(id_vacina_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Vacina de mentira', '', 2);
 ALTER SEQUENCE pep_owner.vacina_atendimento_sequence RESTART WITH 5;
+
+--antecedentes familiares
+INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (1, '', 'teste', 1, 60);
+INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Sarnice', '', 1);
+INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'outro antecedente familiar', 2, 80);
+INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Outro antecedente familiar', 'só pra constar', 2);
+ALTER SEQUENCE pep_owner.antecedente_familiar_atendimento_sequence RESTART WITH 5;
