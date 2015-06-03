@@ -170,6 +170,19 @@
 										</p:column>
 									</p:dataTable>
 								</p:panel>
+								
+								<!-- resumo antecedentes familiares -->
+								<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesfamiliares']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}" toggleable="true" collapsed="false">
+									<p:dataTable id="antecedentesFamiliaresTable" var="antecedenteFamiliar" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}"
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}" styleClass="datatable-no-header">
+										<p:column style="text-align: left;">
+											<h:outputText value="#{antecedenteFamiliar.descricao}"/>
+											<br/>
+											<h:outputText value="(#{antecedenteFamiliar.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteFamiliar.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 
 							</h:panelGrid>
 							
@@ -231,6 +244,16 @@
 								        <h:outputText value="#{vacina.descricao}"/>
 								        <br/>
 								        <h:outputText value="(#{vacina.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty vacina.observacao}"/>
+								    </p:dataList>
+								</p:tab>
+								
+								<p:tab title="#{msg['atendimento.resumoprontuario.antecedentesfamiliares.header']} (#{atendimentoMBean.antecedentesFamiliares.size()})">
+									<p:dataList value="#{atendimentoMBean.antecedentesFamiliares}" var="antecedenteFamiliar"
+										emptyMessage="#{msg['atendimento.resumoprontuario.antecedentesfamiliares.lista.empty']}" type="definition" itemStyleClass="datalist-item">
+								        <h:outputText value="#{antecedenteFamiliar.codigoCid} - " rendered="#{not empty antecedenteFamiliar.codigoCid}"/>
+								        <h:outputText value="#{antecedenteFamiliar.descricao}"/>
+								        <br/>
+								        <h:outputText value="(#{antecedenteFamiliar.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty antecedenteFamiliar.observacao}"/>
 								    </p:dataList>
 								</p:tab>
 								

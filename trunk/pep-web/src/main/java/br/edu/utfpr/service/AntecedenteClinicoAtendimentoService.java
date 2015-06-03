@@ -29,13 +29,26 @@ public class AntecedenteClinicoAtendimentoService {
 		return antecedenteClinicoAtendimentoDao.retornarAntecedentesClinicosMaisUsados(quantidade, idsDoencasIgnorar, chkAtivo);
 	}
 	
-	public void removerAntecedenteClinicoAtendimento(AntecedenteClinicoAtendimento antecedenteClinicoAtendimento) {
-		antecedenteClinicoAtendimentoDao.remove(antecedenteClinicoAtendimento);
-	}
-	
 	public void salvarAntecedentesClinicosAtendimento(List<AntecedenteClinicoAtendimento> antecedentesClinicosAtendimento) {
 		for (AntecedenteClinicoAtendimento antecedenteClinicoAtendimento : antecedentesClinicosAtendimento) {
 			antecedenteClinicoAtendimentoDao.save(antecedenteClinicoAtendimento);
+		}
+	}
+	
+	public void removerAntecedentesClinicosExcluidos(Long idAtendimento, List<AntecedenteClinicoAtendimento> antecedentesClinicos) {
+		List<AntecedenteClinicoAtendimento> antecedentesClinicosBase = this.retornarAntecedentesClinicosAtendimento(idAtendimento);
+		for (AntecedenteClinicoAtendimento antecedenteClinicoBase : antecedentesClinicosBase) {
+			boolean excluido = true;
+			for (AntecedenteClinicoAtendimento antecedenteClinicoAtendimento : antecedentesClinicos) {
+				if (antecedenteClinicoBase.equals(antecedenteClinicoAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				antecedenteClinicoAtendimentoDao.remove(antecedenteClinicoBase);
+			}
 		}
 	}
 }

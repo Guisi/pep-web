@@ -22,6 +22,7 @@ import br.edu.utfpr.service.ProcedimentoService;
 import br.edu.utfpr.service.UsuarioService;
 import br.edu.utfpr.service.VacinaService;
 import br.edu.utfpr.service.vo.AlergiaPaciente;
+import br.edu.utfpr.service.vo.AntecedenteFamiliarPaciente;
 import br.edu.utfpr.service.vo.DoencaDiagnosticada;
 import br.edu.utfpr.service.vo.HabitoPaciente;
 import br.edu.utfpr.service.vo.ProcedimentoRealizado;
@@ -62,6 +63,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 	private List<HabitoPaciente> habitos;
 	private List<AlergiaPaciente> alergias;
 	private List<VacinaPaciente> vacinas;
+	private List<AntecedenteFamiliarPaciente> antecedentesFamiliares;
 	
 	@PostConstruct
 	public void init() {
@@ -98,6 +100,7 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 		this.habitos = habitoService.retornarHabitosPaciente(this.pacienteSelecionado.getId());
 		this.alergias = alergiaService.retornarAlergiasPaciente(this.pacienteSelecionado.getId());
 		this.vacinas = vacinaService.retornarVacinasPaciente(this.pacienteSelecionado.getId());
+		this.antecedentesFamiliares = doencaService.retornarAntecedentesFamiliaresPaciente(this.pacienteSelecionado.getId());
 	}
 	
 	public void onAtendimentoSelecionado() {
@@ -183,5 +186,13 @@ public class AtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setVacinas(List<VacinaPaciente> vacinas) {
 		this.vacinas = vacinas;
+	}
+
+	public List<AntecedenteFamiliarPaciente> getAntecedentesFamiliares() {
+		return antecedentesFamiliares;
+	}
+
+	public void setAntecedentesFamiliares(List<AntecedenteFamiliarPaciente> antecedentesFamiliares) {
+		this.antecedentesFamiliares = antecedentesFamiliares;
 	}
 }

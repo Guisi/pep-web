@@ -30,7 +30,20 @@ public class MedicamentoAtendimentoService {
 		return medicamentoAtendimentoDao.retornarMedicamentosAtendimento(idAtendimento);
 	}
 	
-	public void removerMedicamentoAtendimento(MedicamentoAtendimento medicamentoAtendimento) {
-		medicamentoAtendimentoDao.remove(medicamentoAtendimento);
+	public void removerMedicamentosExcluidos(Long idAtendimento, List<MedicamentoAtendimento> medicamentos) {
+		List<MedicamentoAtendimento> medicamentosBase = this.retornarMedicamentosAtendimento(idAtendimento);
+		for (MedicamentoAtendimento medicamentoAtendimentoBase : medicamentosBase) {
+			boolean excluido = true;
+			for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
+				if (medicamentoAtendimentoBase.equals(medicamentoAtendimento)) {
+					excluido = false;
+					break;
+				}
+			}
+			
+			if (excluido) {
+				medicamentoAtendimentoDao.remove(medicamentoAtendimentoBase);
+			}
+		}
 	}
 }

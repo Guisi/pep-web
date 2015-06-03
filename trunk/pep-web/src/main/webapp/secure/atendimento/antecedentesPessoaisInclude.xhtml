@@ -17,6 +17,8 @@
 	
 	<ui:include src="vacinasInclude.xhtml" />
 	
+	<ui:include src="antecedentesFamiliaresInclude.xhtml" />
+	
 	<p:dialog widgetVar="dlgAntecedentesPessoaisAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.antecedentespessoais.anteriores.modal.header']}" fitViewport="true" dynamic="true"
 		rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresAntecedentesPessoais}" width="800">
@@ -63,6 +65,14 @@
 					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.vacinas.header']}">
 						<h:outputText value="#{vacina.descricao}"/>
 						<h:outputText value=" - #{vacina.observacao}" rendered="#{not empty vacina.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="antecedentesFamiliaresAnterioresTable" var="antecedenteFamiliar" value="#{atendimento.antecedentesFamiliares}"
+					rendered="#{not empty atendimento.antecedentesFamiliares}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentesfamiliares.header']}">
+						<h:outputText value="#{antecedenteFamiliar.descricao}"/>
+						<h:outputText value=" - #{antecedenteFamiliar.observacao}" rendered="#{not empty antecedenteFamiliar.observacao}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>

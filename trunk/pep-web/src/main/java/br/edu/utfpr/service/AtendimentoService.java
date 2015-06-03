@@ -13,6 +13,7 @@ import br.edu.utfpr.dao.AtendimentoDao;
 import br.edu.utfpr.model.AlergiaAtendimento;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
+import br.edu.utfpr.model.AntecedenteFamiliarAtendimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.HabitoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
@@ -39,6 +40,8 @@ public class AtendimentoService {
 	private AlergiaAtendimentoService alergiaAtendimentoService;
 	@Inject
 	private VacinaAtendimentoService vacinaAtendimentoService;
+	@Inject
+	private AntecedenteFamiliarAtendimentoService antecedenteFamiliarAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -59,122 +62,35 @@ public class AtendimentoService {
 	public Atendimento salvarAtendimento(Atendimento atendimento, List<MedicamentoAtendimento> medicamentos,
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
 			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
-			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias, List<VacinaAtendimento> vacinas) {
+			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias, List<VacinaAtendimento> vacinas,
+			List<AntecedenteFamiliarAtendimento> antecedentesFamiliares) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
 		} else {
 			// Apaga da base as queixas principais excluidas do atendimento
-			List<QueixaPrincipalAtendimento> queixasPrincipaisBase = queixaPrincipalAtendimentoService.retornarQueixasPrincipaisAtendimento(atendimento.getId());
-			for (QueixaPrincipalAtendimento queixaPrincipalBase : queixasPrincipaisBase) {
-				boolean excluido = true;
-				for (QueixaPrincipalAtendimento queixaPrincipalAtendimento : queixasPrincipais) {
-					if (queixaPrincipalBase.equals(queixaPrincipalAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					queixaPrincipalAtendimentoService.removerQueixaPrincipalAtendimento(queixaPrincipalBase);
-				}
-			}
+			queixaPrincipalAtendimentoService.removerQueixasPrincipaisExcluidas(atendimento.getId(), queixasPrincipais);
 			
 			// Apaga da base os medicamentos excluidos do atendimento
-			List<MedicamentoAtendimento> medicamentosBase = medicamentoAtendimentoService.retornarMedicamentosAtendimento(atendimento.getId());
-			for (MedicamentoAtendimento medicamentoAtendimentoBase : medicamentosBase) {
-				boolean excluido = true;
-				for (MedicamentoAtendimento medicamentoAtendimento : medicamentos) {
-					if (medicamentoAtendimentoBase.equals(medicamentoAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					medicamentoAtendimentoService.removerMedicamentoAtendimento(medicamentoAtendimentoBase);
-				}
-			}
+			medicamentoAtendimentoService.removerMedicamentosExcluidos(atendimento.getId(), medicamentos);
 			
 			// Apaga da base os antecedentes clinicos excluidos do atendimento
-			List<AntecedenteClinicoAtendimento> antecedentesClinicosBase = antecedenteClinicoAtendimentoService.retornarAntecedentesClinicosAtendimento(atendimento.getId());
-			for (AntecedenteClinicoAtendimento antecedenteClinicoBase : antecedentesClinicosBase) {
-				boolean excluido = true;
-				for (AntecedenteClinicoAtendimento antecedenteClinicoAtendimento : antecedentesClinicos) {
-					if (antecedenteClinicoBase.equals(antecedenteClinicoAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					antecedenteClinicoAtendimentoService.removerAntecedenteClinicoAtendimento(antecedenteClinicoBase);
-				}
-			}
+			antecedenteClinicoAtendimentoService.removerAntecedentesClinicosExcluidos(atendimento.getId(), antecedentesClinicos);
 			
 			// Apaga da base os antecedentes cirurgicos excluidos do atendimento
-			List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicosBase = antecedenteCirurgicoAtendimentoService.retornarAntecedentesCirurgicosAtendimento(atendimento.getId());
-			for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoBase : antecedentesCirurgicosBase) {
-				boolean excluido = true;
-				for (AntecedenteCirurgicoAtendimento antecedenteCirurgicoAtendimento : antecedentesCirurgicos) {
-					if (antecedenteCirurgicoBase.equals(antecedenteCirurgicoAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					antecedenteCirurgicoAtendimentoService.removerAntecedenteCirurgicoAtendimento(antecedenteCirurgicoBase);
-				}
-			}
+			antecedenteCirurgicoAtendimentoService.removerAntecedentesCirurgicosExcluidos(atendimento.getId(), antecedentesCirurgicos);
 			
 			// Apaga da base os habitos excluidos do atendimento
-			List<HabitoAtendimento> habitosBase = habitoAtendimentoService.retornarHabitosAtendimento(atendimento.getId());
-			for (HabitoAtendimento habitoBase : habitosBase) {
-				boolean excluido = true;
-				for (HabitoAtendimento habitoAtendimento : habitos) {
-					if (habitoBase.equals(habitoAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					habitoAtendimentoService.removerHabitoAtendimento(habitoBase);
-				}
-			}
+			habitoAtendimentoService.removerHabitosExcluidos(atendimento.getId(), habitos);
 			
-			// Apaga da base as alergias excluidass do atendimento
-			List<AlergiaAtendimento> alergiasBase = alergiaAtendimentoService.retornarAlergiasAtendimento(atendimento.getId());
-			for (AlergiaAtendimento alergiaBase : alergiasBase) {
-				boolean excluido = true;
-				for (AlergiaAtendimento alergiaAtendimento : alergias) {
-					if (alergiaBase.equals(alergiaAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					alergiaAtendimentoService.removerAlergiaAtendimento(alergiaBase);
-				}
-			}
+			// Apaga da base as alergias excluidas do atendimento
+			alergiaAtendimentoService.removerAlergiasExcluidas(atendimento.getId(), alergias);
 			
-			// Apaga da base as alergias excluidass do atendimento
-			List<VacinaAtendimento> vacinasBase = vacinaAtendimentoService.retornarVacinasAtendimento(atendimento.getId());
-			for (VacinaAtendimento vacinaBase : vacinasBase) {
-				boolean excluido = true;
-				for (VacinaAtendimento vacinaAtendimento : vacinas) {
-					if (vacinaBase.equals(vacinaAtendimento)) {
-						excluido = false;
-						break;
-					}
-				}
-				
-				if (excluido) {
-					vacinaAtendimentoService.removerVacinaAtendimento(vacinaBase);
-				}
-			}
+			// Apaga da base as vacinas excluidas do atendimento
+			vacinaAtendimentoService.removerVacinasExcluidas(atendimento.getId(), vacinas);
+			
+			// Apaga da base os antecedentes familiares excluidos do atendimento
+			antecedenteFamiliarAtendimentoService.removerAntecedentesFamiliaresExcluidos(atendimento.getId(), antecedentesFamiliares);
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -222,12 +138,19 @@ public class AtendimentoService {
 		alergiaAtendimentoService.salvarAlergiasAtendimento(alergias);
 		atendimento.setAlergias(new LinkedHashSet<AlergiaAtendimento>(alergias));
 		
-		//salva Vacinas do atendimento
+		//salva vacinas do atendimento
 		for (VacinaAtendimento vacinaAtendimento : vacinas) {
 			vacinaAtendimento.setAtendimento(atendimento);
 		}
 		vacinaAtendimentoService.salvarVacinasAtendimento(vacinas);
 		atendimento.setVacinas(new LinkedHashSet<VacinaAtendimento>(vacinas));
+		
+		//salva antecedentes familiares do atendimento
+		for (AntecedenteFamiliarAtendimento antecedenteFamiliarAtendimento : antecedentesFamiliares) {
+			antecedenteFamiliarAtendimento.setAtendimento(atendimento);
+		}
+		antecedenteFamiliarAtendimentoService.salvarAntecedentesFamiliaresAtendimento(antecedentesFamiliares);
+		atendimento.setAntecedentesFamiliares(new LinkedHashSet<AntecedenteFamiliarAtendimento>(antecedentesFamiliares));
 
 		//salva o atendimento
 		atendimentoDao.save(atendimento);

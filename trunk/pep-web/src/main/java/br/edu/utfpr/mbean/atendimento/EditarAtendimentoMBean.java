@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import br.edu.utfpr.mbean.atendimento.viewbean.AlergiasViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesCirurgicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesClinicosViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesFamiliaresViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HabitosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.TratamentosAndamentoViewBean;
@@ -50,6 +51,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private AlergiasViewBean alergiasViewBean;
 	@Inject
 	private VacinasViewBean vacinasViewBean;
+	@Inject
+	private AntecedentesFamiliaresViewBean antecedentesFamiliaresViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -101,6 +104,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.habitosViewBean.init(this);
 		this.alergiasViewBean.init(this);
 		this.vacinasViewBean.init(this);
+		this.antecedentesFamiliaresViewBean.init(this);
 	}
 	
 	public String cancelar() {
@@ -128,7 +132,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.antecedentesCirurgicosViewBean.getAntecedentesCirurgicosAtendimento(),
 				this.habitosViewBean.getHabitosAtendimento(),
 				this.alergiasViewBean.getAlergiasAtendimento(),
-				this.vacinasViewBean.getVacinasAtendimento());
+				this.vacinasViewBean.getVacinasAtendimento(),
+				this.antecedentesFamiliaresViewBean.getAntecedentesFamiliaresAtendimento());
 		
 		this.tratamentoViewBean.setMedicamentosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getMedicamentos()));
 		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
@@ -137,6 +142,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.habitosViewBean.setHabitosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getHabitos()));
 		this.alergiasViewBean.setAlergiasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getAlergias()));
 		this.vacinasViewBean.setVacinasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getVacinas()));
+		this.antecedentesFamiliaresViewBean.setAntecedentesFamiliaresAtendimento(new ArrayList<>(this.atendimentoSelecionado.getAntecedentesFamiliares()));
 	}
 	
 	public List<Atendimento> getAtendimentosAnterioresAntecedentesPessoais() {
@@ -146,7 +152,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 					|| !atendimento.getAntecedentesCirurgicos().isEmpty()
 					|| !atendimento.getHabitos().isEmpty()
 					|| !atendimento.getAlergias().isEmpty()
-					|| !atendimento.getVacinas().isEmpty()) {
+					|| !atendimento.getVacinas().isEmpty()
+					|| !atendimento.getAntecedentesFamiliares().isEmpty()) {
 				atendimentos.add(atendimento);
 			}
 		}
@@ -239,5 +246,13 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setVacinasViewBean(VacinasViewBean vacinasViewBean) {
 		this.vacinasViewBean = vacinasViewBean;
+	}
+
+	public AntecedentesFamiliaresViewBean getAntecedentesFamiliaresViewBean() {
+		return antecedentesFamiliaresViewBean;
+	}
+
+	public void setAntecedentesFamiliaresViewBean(AntecedentesFamiliaresViewBean antecedentesFamiliaresViewBean) {
+		this.antecedentesFamiliaresViewBean = antecedentesFamiliaresViewBean;
 	}
 }
