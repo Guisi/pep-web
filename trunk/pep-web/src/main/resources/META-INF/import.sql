@@ -379,3 +379,8 @@ INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familia
 INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'outro antecedente familiar', 2, 80);
 INSERT INTO pep_owner.tb_antecedente_familiar_atendimento(id_antecedente_familiar_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Outro antecedente familiar', 'só pra constar', 2);
 ALTER SEQUENCE pep_owner.antecedente_familiar_atendimento_sequence RESTART WITH 5;
+
+--exame fisico
+INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, aspecto_geral, id_atendimento) VALUES (1, 'teste aspecto 1', 1);
+INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, aspecto_geral, id_atendimento) VALUES (2, 'teste aspecto 2', 2);
+ALTER SEQUENCE pep_owner.exame_fisico_atendimento_sequence RESTART WITH 3;

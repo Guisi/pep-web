@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -78,6 +80,9 @@ public class Atendimento extends BaseEntity {
 	@OrderBy("id_antecedente_familiar_atendimento")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<AntecedenteFamiliarAtendimento> antecedentesFamiliares;
+	
+	@OneToOne(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private ExameFisicoAtendimento exameFisicoAtendimento;
 
 	public Long getId() {
 		return id;
@@ -185,5 +190,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setAntecedentesFamiliares(Set<AntecedenteFamiliarAtendimento> antecedentesFamiliares) {
 		this.antecedentesFamiliares = antecedentesFamiliares;
+	}
+
+	public ExameFisicoAtendimento getExameFisicoAtendimento() {
+		return exameFisicoAtendimento;
+	}
+
+	public void setExameFisicoAtendimento(ExameFisicoAtendimento exameFisicoAtendimento) {
+		this.exameFisicoAtendimento = exameFisicoAtendimento;
 	}
 }

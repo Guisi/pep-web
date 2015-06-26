@@ -291,6 +291,10 @@ fieldset {
 	padding: 0px !important;
 }
 
+.resumoAtendimentoGroupPanel > .ui-panel-content {
+	padding-left: 5px !important;
+}
+
 .datatable-no-header table thead tr {
     display: none;
 }
@@ -361,4 +365,33 @@ fieldset {
 
 .resumo-prontuario-internal-title {
 	font-weight: bold !important;
+}
+
+.exame-fisico-input {
+	width: 200px;
+	margin-left: 5px !important;
+}
+
+.exame-fisico-table tbody {
+	border: 1px solid #dddddd;
+}
+
+.exame-fisico-table tbody tr {
+	border: 1px solid #dddddd !important;
+}
+
+.exame-fisico-table tbody tr td:nth-child(even) {
+	text-align: left;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	padding: 10px 0px 10px 0px;
+}
+
+.exame-fisico-table tbody tr td:nth-child(odd) {
+	text-align: right;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+	padding: 10px 0px 10px 0px;
 }
