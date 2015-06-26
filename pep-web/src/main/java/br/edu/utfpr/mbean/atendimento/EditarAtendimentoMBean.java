@@ -23,6 +23,7 @@ import br.edu.utfpr.mbean.atendimento.viewbean.VacinasViewBean;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.ExameFisicoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -91,6 +92,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			
 			this.atendimentoSelecionado = new Atendimento();
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
+			this.atendimentoSelecionado.setExameFisicoAtendimento(new ExameFisicoAtendimento());
 		}
 		
 		//atendimentos anteriores

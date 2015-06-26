@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:panelGrid columns="2" width="100%" styleClass="exame-fisico-table">
+		
+	
+	</h:panelGrid>
+	
+	<h:panelGrid columns="4" width="100%" styleClass="exame-fisico-table">
+		<h:outputLabel for="aspectoGeralInput" value="#{msg['atendimento.examefisico.aspectogeral']}: " />
+		<p:inputText id="aspectoGeralInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.aspectoGeral}"/>
+			
+		<h:outputLabel for="mucosasInput" value="#{msg['atendimento.examefisico.mucosas']}: " />
+		<p:inputText id="mucosasInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.mucosas}"/>
+		
+		<h:outputLabel for="olhosFaceInput" value="#{msg['atendimento.examefisico.olhosface']}: " />
+		<p:inputText id="olhosFaceInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.olhosFace}"/>
+	
+		<h:outputLabel for="pescocoInput" value="#{msg['atendimento.examefisico.pescoco']}: " />
+		<p:inputText id="pescocoInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pescoco}"/>
+	
+		<h:outputLabel for="sistemaCardioInput" value="#{msg['atendimento.examefisico.sistemacardiorespiratorio']}: " />
+		<p:inputText id="sistemaCardioInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.sistemaCardiorespiratorio}"/>
+	
+		<h:outputLabel for="peleDermatologicoInput" value="#{msg['atendimento.examefisico.peledermatologico']}: " />
+		<p:inputText id="peleDermatologicoInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peleDermatologico}"/>
+	
+		<h:outputLabel for="abdomeSuperiorInput" value="#{msg['atendimento.examefisico.abdomesuperior']}: " />
+		<p:inputText id="abdomeSuperiorInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeSuperior}"/>
+	
+		<h:outputLabel for="abdomeInferiorInput" value="#{msg['atendimento.examefisico.abdomeinferior']}: " />
+		<p:inputText id="abdomeInferiorInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeInferior}"/>
+	
+		<h:outputLabel for="membrosInput" value="#{msg['atendimento.examefisico.membros']}: " />
+		<p:inputText id="membrosInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.membros}"/>
+	
+		<h:outputLabel for="neurologicoInput" value="#{msg['atendimento.examefisico.neurologico']}: " />
+		<p:inputText id="neurologicoInput" maxlength="100" styleClass="exame-fisico-input"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.neurologico}"/>
+	
+		<h:outputLabel for="observacoesInput" value="#{msg['atendimento.examefisico.observacoes']}: " />
+		<p:inputTextarea id="observacoesInput" maxlength="300" styleClass="exame-fisico-input" rows="2"
+			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.observacoes}"/>
+	</h:panelGrid>
+
+</ui:composition>
