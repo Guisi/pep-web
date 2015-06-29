@@ -372,8 +372,30 @@ fieldset {
 	margin-left: 5px !important;
 }
 
-.exame-fisico-table tbody {
+.exame-fisico-um-input {
+	width: 155px;
+	margin-left: 5px !important;
+}
+
+.exame-fisico-um-div {
+	width: 40px;
+	height: 23px;
+	display: inline-table;
+	vertical-align: top;
+	text-align: center;
+}
+
+.exame-fisico-um-label {
+	vertical-align: sub;
+}
+
+.exame-fisico-table {
 	border: 1px solid #dddddd;
+	border-collapse: collapse;
+}
+
+.exame-fisico-table tbody {
+	border-collapse: collapse;
 }
 
 .exame-fisico-table tbody tr {
@@ -382,16 +404,12 @@ fieldset {
 
 .exame-fisico-table tbody tr td:nth-child(even) {
 	text-align: left;
-	border-top: 1px solid #dddddd;
-	border-bottom: 1px solid #dddddd;
 	border-right: 1px solid #dddddd;
 	padding: 10px 0px 10px 0px;
 }
 
 .exame-fisico-table tbody tr td:nth-child(odd) {
 	text-align: right;
-	border-top: 1px solid #dddddd;
-	border-bottom: 1px solid #dddddd;
 	border-left: 1px solid #dddddd;
 	padding: 10px 0px 10px 0px;
 }

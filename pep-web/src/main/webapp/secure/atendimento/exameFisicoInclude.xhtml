@@ -7,12 +7,117 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<h:panelGrid columns="2" width="100%" styleClass="exame-fisico-table">
+	<h:panelGrid columns="4" width="100%" styleClass="exame-fisico-table" cellspacing="0" cellpadding="0">
+		<h:outputLabel for="pesoInput" value="#{msg['atendimento.examefisico.peso']}: " />
+		<p:columnGroup>
+			<p:inputText id="pesoInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.peso.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peso}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="kg" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
 		
-	
-	</h:panelGrid>
-	
-	<h:panelGrid columns="4" width="100%" styleClass="exame-fisico-table">
+		<h:outputLabel for="alturaInput" value="#{msg['atendimento.examefisico.altura']}: " />
+		<p:columnGroup>
+			<p:inputText id="alturaInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.altura.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.altura}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="cm" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="scInput" value="#{msg['atendimento.examefisico.sc']}: " />
+		<p:columnGroup>
+			<p:inputText id="scInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.sc.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.superficieCorporea}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="m²" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="temperaturaInput" value="#{msg['atendimento.examefisico.temperatura']}: " />
+		<p:columnGroup>
+			<p:inputText id="temperaturaInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.temperatura.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.temperatura}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="ºC" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="imcInput" value="#{msg['atendimento.examefisico.imc']}: " />
+		<p:columnGroup>
+			<p:inputText id="imcInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.imc.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.imc}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="kg/m²" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="cAbdominalInput" value="#{msg['atendimento.examefisico.cabdominal']}: " />
+		<p:columnGroup>
+			<p:inputText id="cAbdominalInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.cabdominal.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.circunferenciaAbdominal}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="cm" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="pressaoSentadoPasInput" value="#{msg['atendimento.examefisico.pressaosentadopas']}: " />
+		<p:columnGroup>
+			<p:inputText id="pressaoSentadoPasInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.pressaosentadopas.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPas}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="mmHg" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="pressaoSentadoPadInput" value="#{msg['atendimento.examefisico.pressaosentadopad']}: " />
+		<p:columnGroup>
+			<p:inputText id="pressaoSentadoPadInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.pressaosentadopad.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPad}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="mmHg" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="pressaoDeitadoPasInput" value="#{msg['atendimento.examefisico.pressaodeitadopas']}: " />
+		<p:columnGroup>
+			<p:inputText id="pressaoDeitadoPasInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.pressaodeitadopas.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPas}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="mmHg" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
+		<h:outputLabel for="pressaoDeitadoPadInput" value="#{msg['atendimento.examefisico.pressaodeitadopad']}: " />
+		<p:columnGroup>
+			<p:inputText id="pressaoDeitadoPadInput" maxlength="10" styleClass="exame-fisico-um-input" converterMessage="#{msg['atendimento.examefisico.pressaodeitadopad.numbervalidator.erro']}"
+				value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPad}">
+				<f:convertNumber pattern="#,##0.00"/>
+			</p:inputText>
+			<div class="ui-widget-content exame-fisico-um-div">
+				<h:outputText value="mmHg" styleClass="exame-fisico-um-label"/>
+			</div>
+		</p:columnGroup>
+		
 		<h:outputLabel for="aspectoGeralInput" value="#{msg['atendimento.examefisico.aspectogeral']}: " />
 		<p:inputText id="aspectoGeralInput" maxlength="100" styleClass="exame-fisico-input"
 			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.aspectoGeral}"/>
@@ -56,6 +161,9 @@
 		<h:outputLabel for="observacoesInput" value="#{msg['atendimento.examefisico.observacoes']}: " />
 		<p:inputTextarea id="observacoesInput" maxlength="300" styleClass="exame-fisico-input" rows="2"
 			value="#{editarAtendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.observacoes}"/>
+			
+		<p:column/>
+		<p:column/>
 	</h:panelGrid>
 
 </ui:composition>
