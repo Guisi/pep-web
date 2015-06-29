@@ -34,6 +34,33 @@ public class ExameFisicoAtendimento extends BaseEntity {
 	@Column(name="peso")
 	private Double peso;
 	
+	@Column(name="altura")
+	private Double altura;
+	
+	@Column(name="superficie_corporea")
+	private Double superficieCorporea;
+	
+	@Column(name="temperatura")
+	private Double temperatura;
+	
+	@Column(name="imc")
+	private Double imc;
+	
+	@Column(name="circunferencia_abdominal")
+	private Double circunferenciaAbdominal;
+	
+	@Column(name="pressao_sentado_pas")
+	private Double pressaoSentadoPas;
+	
+	@Column(name="pressao_sentado_pad")
+	private Double pressaoSentadoPad;
+	
+	@Column(name="pressao_deitado_pas")
+	private Double pressaoDeitadoPas;
+	
+	@Column(name="pressao_deitado_pad")
+	private Double pressaoDeitadoPad;
+	
 	@Column(name="aspecto_geral", length=100)
 	@Size(max=100)
 	private String aspectoGeral;
@@ -201,4 +228,77 @@ public class ExameFisicoAtendimento extends BaseEntity {
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
+
+	public Double getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Double altura) {
+		this.altura = altura;
+	}
+
+	public Double getSuperficieCorporea() {
+		return superficieCorporea;
+	}
+
+	public void setSuperficieCorporea(Double superficieCorporea) {
+		this.superficieCorporea = superficieCorporea;
+	}
+
+	public Double getTemperatura() {
+		return temperatura;
+	}
+
+	public void setTemperatura(Double temperatura) {
+		this.temperatura = temperatura;
+	}
+
+	public Double getImc() {
+		return imc;
+	}
+
+	public void setImc(Double imc) {
+		this.imc = imc;
+	}
+
+	public Double getCircunferenciaAbdominal() {
+		return circunferenciaAbdominal;
+	}
+
+	public void setCircunferenciaAbdominal(Double circunferenciaAbdominal) {
+		this.circunferenciaAbdominal = circunferenciaAbdominal;
+	}
+
+	public Double getPressaoSentadoPas() {
+		return pressaoSentadoPas;
+	}
+
+	public void setPressaoSentadoPas(Double pressaoSentadoPas) {
+		this.pressaoSentadoPas = pressaoSentadoPas;
+	}
+
+	public Double getPressaoSentadoPad() {
+		return pressaoSentadoPad;
+	}
+
+	public void setPressaoSentadoPad(Double pressaoSentadoPad) {
+		this.pressaoSentadoPad = pressaoSentadoPad;
+	}
+
+	public Double getPressaoDeitadoPas() {
+		return pressaoDeitadoPas;
+	}
+
+	public void setPressaoDeitadoPas(Double pressaoDeitadoPas) {
+		this.pressaoDeitadoPas = pressaoDeitadoPas;
+	}
+
+	public Double getPressaoDeitadoPad() {
+		return pressaoDeitadoPad;
+	}
+
+	public void setPressaoDeitadoPad(Double pressaoDeitadoPad) {
+		this.pressaoDeitadoPad = pressaoDeitadoPad;
+	}
+	
 }
