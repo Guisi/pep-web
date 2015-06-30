@@ -58,7 +58,7 @@
 	
 	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" 
 		draggable="true" header="#{msg['atendimento.tratamentos.anteriores.modal.header']}" fitViewport="true" dynamic="true"
-		rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.atendimentosAnteriores}" width="800">
+		rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" width="800">
 	
 		<p:dataList value="#{editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" var="atendimento" type="none" itemType="none"
 			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

@@ -382,5 +382,5 @@ ALTER SEQUENCE pep_owner.antecedente_familiar_atendimento_sequence RESTART WITH 
 
 --exame fisico
 INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, aspecto_geral, id_atendimento) VALUES (1, 'teste aspecto 1', 1);
-INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, aspecto_geral, id_atendimento) VALUES (2, 'teste aspecto 2', 2);
+INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, peso, altura, superficie_corporea, temperatura, imc, circunferencia_abdominal, pressao_sentado_pas, pressao_sentado_pad, pressao_deitado_pas, pressao_deitado_pad, aspecto_geral, id_atendimento) VALUES (2, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100.1, 'teste aspecto 2', 2);
 ALTER SEQUENCE pep_owner.exame_fisico_atendimento_sequence RESTART WITH 3;
