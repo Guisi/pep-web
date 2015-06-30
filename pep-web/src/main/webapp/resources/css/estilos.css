@@ -390,6 +390,7 @@ fieldset {
 }
 
 .exame-fisico-table {
+	margin-top: 10px;
 	border: 1px solid #dddddd;
 	border-collapse: collapse;
 }

@@ -13,6 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.constants.Constantes;
 
 @Entity
@@ -107,6 +109,19 @@ public class ExameFisicoAtendimento extends BaseEntity {
 	
 	@Transient
 	private boolean atendimentoAnterior;
+	
+	@Transient
+	public boolean hasSomeValue() {
+		return peso != null || altura != null || superficieCorporea != null || temperatura != null
+				|| imc != null || circunferenciaAbdominal != null || pressaoSentadoPas != null
+				|| pressaoSentadoPad != null || pressaoDeitadoPas != null || pressaoDeitadoPad != null
+				|| StringUtils.isNotBlank(aspectoGeral) || StringUtils.isNotBlank(mucosas)
+				|| StringUtils.isNotBlank(olhosFace) || StringUtils.isNotBlank(pescoco)
+				|| StringUtils.isNotBlank(sistemaCardiorespiratorio) || StringUtils.isNotBlank(peleDermatologico)
+				|| StringUtils.isNotBlank(abdomeSuperior) || StringUtils.isNotBlank(abdomeInferior)
+				|| StringUtils.isNotBlank(membros) || StringUtils.isNotBlank(neurologico)
+				|| StringUtils.isNotBlank(observacoes);
+	}
 	
 	@Override
 	public Long getId() {

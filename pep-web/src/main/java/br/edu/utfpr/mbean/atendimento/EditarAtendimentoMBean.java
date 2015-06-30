@@ -16,6 +16,7 @@ import br.edu.utfpr.mbean.atendimento.viewbean.AlergiasViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesCirurgicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesClinicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesFamiliaresViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.ExameFisicoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HabitosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.TratamentosAndamentoViewBean;
@@ -23,7 +24,6 @@ import br.edu.utfpr.mbean.atendimento.viewbean.VacinasViewBean;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
-import br.edu.utfpr.model.ExameFisicoAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -54,6 +54,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private VacinasViewBean vacinasViewBean;
 	@Inject
 	private AntecedentesFamiliaresViewBean antecedentesFamiliaresViewBean;
+	@Inject
+	private ExameFisicoViewBean exameFisicoViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -92,7 +94,6 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 			
 			this.atendimentoSelecionado = new Atendimento();
 			this.atendimentoSelecionado.setPaciente(this.pacienteSelecionado);
-			this.atendimentoSelecionado.setExameFisicoAtendimento(new ExameFisicoAtendimento());
 		}
 		
 		//atendimentos anteriores
@@ -107,6 +108,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.alergiasViewBean.init(this);
 		this.vacinasViewBean.init(this);
 		this.antecedentesFamiliaresViewBean.init(this);
+		this.exameFisicoViewBean.init(this);
 	}
 	
 	public String cancelar() {
@@ -256,5 +258,13 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setAntecedentesFamiliaresViewBean(AntecedentesFamiliaresViewBean antecedentesFamiliaresViewBean) {
 		this.antecedentesFamiliaresViewBean = antecedentesFamiliaresViewBean;
+	}
+
+	public ExameFisicoViewBean getExameFisicoViewBean() {
+		return exameFisicoViewBean;
+	}
+
+	public void setExameFisicoViewBean(ExameFisicoViewBean exameFisicoViewBean) {
+		this.exameFisicoViewBean = exameFisicoViewBean;
 	}
 }

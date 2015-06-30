@@ -151,6 +151,9 @@ public class AtendimentoService {
 		}
 		antecedenteFamiliarAtendimentoService.salvarAntecedentesFamiliaresAtendimento(antecedentesFamiliares);
 		atendimento.setAntecedentesFamiliares(new LinkedHashSet<AntecedenteFamiliarAtendimento>(antecedentesFamiliares));
+		
+		//seta o atendimento no exame fisico
+		atendimento.getExameFisicoAtendimento().setAtendimento(atendimento);
 
 		//salva o atendimento
 		atendimentoDao.save(atendimento);
