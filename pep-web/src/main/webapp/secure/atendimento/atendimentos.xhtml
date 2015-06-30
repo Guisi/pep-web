@@ -70,7 +70,7 @@
 								<p:panel header="#{msg['atendimento.historiamotivo.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
 									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais 
 												or not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual 
-												or not empty atendimentoMBean.atendimentoSelecionado.isda}" toggleable="true" collapsed="false">
+												or not empty atendimentoMBean.atendimentoSelecionado.isda}" toggleable="true" collapsed="true">
 									<p:dataTable id="queixasTable" var="queixaAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.queixasPrincipais}"
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais}" styleClass="datatable-no-header">
 										<p:column style="text-align: left;">
@@ -97,7 +97,7 @@
 
 								<!-- resumo tratamentos em andamento -->
 								<p:panel header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
-									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" toggleable="true" collapsed="false">
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" toggleable="true" collapsed="true">
 									<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" styleClass="datatable-no-header">
 										<p:column style="text-align: left;">
@@ -116,7 +116,7 @@
 												or not empty atendimentoMBean.atendimentoSelecionado.alergias
 												or not empty atendimentoMBean.atendimentoSelecionado.vacinas
 												or not empty atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}"
-												toggleable="true" collapsed="false">
+												toggleable="true" collapsed="true">
 
 									<!-- resumo antecedentes clínicos -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesclinicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%;" 
@@ -195,6 +195,189 @@
 											</p:column>
 										</p:dataTable>
 									</p:panel>
+								</p:panel>
+								
+								<!-- resumo exames fisicos -->
+								<p:panel header="#{msg['atendimento.examefisico.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%;" 
+									rendered="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.hasSomeValue()}" toggleable="true" collapsed="true">
+										<h:panelGrid columns="2" width="100%" style="text-align: left; padding-left: 10px;">
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peso}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.peso']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peso}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.peso.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.altura}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.altura']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.altura}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.altura.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.superficieCorporea}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.sc']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.superficieCorporea}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.sc.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.temperatura}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.temperatura']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.temperatura}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.temperatura.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.imc}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.imc']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.imc}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.imc.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.circunferenciaAbdominal}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.cabdominal']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.circunferenciaAbdominal}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.cabdominal.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPas}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.pressaosentadopas']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPas}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.pressaosentadopas.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPad}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.pressaosentadopad']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoSentadoPad}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.pressaosentadopad.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPas}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.pressaodeitadopas']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPas}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.pressaodeitadopas.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPad}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.pressaodeitadopad']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pressaoDeitadoPad}">
+														<f:convertNumber pattern="#,##0.00"/>
+													</h:outputText>
+													<h:outputText value=" #{msg['atendimento.examefisico.pressaodeitadopad.unidademedida']}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.aspectoGeral}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.aspectogeral']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.aspectoGeral}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.mucosas}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.mucosas']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.mucosas}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.olhosFace}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.olhosface']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.olhosFace}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pescoco}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.pescoco']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.pescoco}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.sistemaCardiorespiratorio}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.sistemacardiorespiratorio']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.sistemaCardiorespiratorio}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peleDermatologico}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.peledermatologico']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.peleDermatologico}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeSuperior}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.abdomesuperior']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeSuperior}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeInferior}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.abdomeinferior']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.abdomeInferior}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.membros}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.membros']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.membros}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.neurologico}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.neurologico']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.neurologico}"/>
+												</p>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.observacoes}">
+												<p>
+													<h:outputText value="#{msg['atendimento.examefisico.observacoes']}: " styleClass="internal-panel-title"/>
+													<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.observacoes}"/>
+												</p>
+											</p:outputPanel>
+										</h:panelGrid>
 								</p:panel>
 							</h:panelGrid>
 						</p:panel>
