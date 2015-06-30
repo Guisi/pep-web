@@ -16,6 +16,7 @@ import br.edu.utfpr.mbean.atendimento.viewbean.AlergiasViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesCirurgicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesClinicosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.AntecedentesFamiliaresViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.DoencasDiagnosticadasViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.ExameFisicoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HabitosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
@@ -56,6 +57,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private AntecedentesFamiliaresViewBean antecedentesFamiliaresViewBean;
 	@Inject
 	private ExameFisicoViewBean exameFisicoViewBean;
+	@Inject
+	private DoencasDiagnosticadasViewBean doencasDiagnosticadasViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -109,6 +112,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.vacinasViewBean.init(this);
 		this.antecedentesFamiliaresViewBean.init(this);
 		this.exameFisicoViewBean.init(this);
+		this.doencasDiagnosticadasViewBean.init(this);
 	}
 	
 	public String cancelar() {

@@ -384,3 +384,10 @@ ALTER SEQUENCE pep_owner.antecedente_familiar_atendimento_sequence RESTART WITH 
 INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, aspecto_geral, id_atendimento) VALUES (1, 'teste aspecto 1', 1);
 INSERT INTO pep_owner.tb_exame_fisico_atendimento(id_exame_fisico_atendimento, peso, altura, superficie_corporea, temperatura, imc, circunferencia_abdominal, pressao_sentado_pas, pressao_sentado_pad, pressao_deitado_pas, pressao_deitado_pad, aspecto_geral, mucosas, olhos_face, pescoco, sistema_cardiorespiratorio, pele_dermatologico, abdome_superior, abdome_inferior, membros, neurologico, observacoes, id_atendimento) VALUES (2, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100.1, 'teste aspecto 2', 'teste mucosas', 'teste olhos face', null, 'tá malexo', 'virado no sapo seco', 'tá bão', 'tá ruim', 'grandes', 'noiado', 'minha observaçãozinha', 2);
 ALTER SEQUENCE pep_owner.exame_fisico_atendimento_sequence RESTART WITH 3;
+
+--doenças diagnosticadas
+INSERT INTO pep_owner.tb_doenca_diagnosticada_atendimento(id_doenca_diagnosticada_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (1, '', 'Essa é fudida!', 1, 10);
+INSERT INTO pep_owner.tb_doenca_diagnosticada_atendimento(id_doenca_diagnosticada_atendimento, descricao, observacao, id_atendimento) VALUES (2, 'Churrio', 'Foi de deitar a macega!', 1);
+INSERT INTO pep_owner.tb_doenca_diagnosticada_atendimento(id_doenca_diagnosticada_atendimento, descricao, observacao, id_atendimento, id_doenca) VALUES (3, '', 'Foi de peidar lavareda!', 2, 20);
+INSERT INTO pep_owner.tb_doenca_diagnosticada_atendimento(id_doenca_diagnosticada_atendimento, descricao, observacao, id_atendimento) VALUES (4, 'Amnésia', 'Foi é? Que merda', 2);
+ALTER SEQUENCE pep_owner.doenca_diagnosticada_atendimento_sequence RESTART WITH 5;

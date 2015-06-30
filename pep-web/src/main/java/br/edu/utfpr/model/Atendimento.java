@@ -83,6 +83,10 @@ public class Atendimento extends BaseEntity {
 	
 	@OneToOne(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ExameFisicoAtendimento exameFisicoAtendimento;
+	
+	@OrderBy("id_doenca_diagnosticada_atendimento")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
+	private Set<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas;
 
 	public Long getId() {
 		return id;
@@ -198,5 +202,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setExameFisicoAtendimento(ExameFisicoAtendimento exameFisicoAtendimento) {
 		this.exameFisicoAtendimento = exameFisicoAtendimento;
+	}
+
+	public Set<DoencaDiagnosticadaAtendimento> getDoencasDiagnosticadas() {
+		return doencasDiagnosticadas;
+	}
+
+	public void setDoencasDiagnosticadas(Set<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas) {
+		this.doencasDiagnosticadas = doencasDiagnosticadas;
 	}
 }
