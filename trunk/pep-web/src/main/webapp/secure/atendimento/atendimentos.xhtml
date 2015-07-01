@@ -66,7 +66,6 @@
 	
 							<h:panelGrid id="pgResumoAtendimento" columns="1" style="width: 100%; padding-right: 10px;">
 								
-								<!-- resumo historia e motivos de atendimento -->
 								<p:panel header="#{msg['atendimento.historiamotivo.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
 									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.queixasPrincipais 
 												or not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual 
@@ -80,7 +79,7 @@
 										</p:column>
 									</p:dataTable>
 									
-									<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual and not empty atendimentoMBean.atendimentoSelecionado.isda}">
+									<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual or not empty atendimentoMBean.atendimentoSelecionado.isda}">
 										<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
 											<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.historiaDoencaAtual}" styleClass="resumo-prontuario-panel-label">
 												<h:outputText value="#{msg['atendimento.historiamotivo.historiadoencaatual']}: " styleClass="resumo-prontuario-internal-title"/>
@@ -95,7 +94,6 @@
 									</p:outputPanel>
 								</p:panel>
 
-								<!-- resumo tratamentos em andamento -->
 								<p:panel header="#{msg['atendimento.tratamentos.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
 									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.medicamentos}" toggleable="true" collapsed="true">
 									<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{atendimentoMBean.atendimentoSelecionado.medicamentos}"
@@ -108,7 +106,6 @@
 									</p:dataTable>
 								</p:panel>
 
-								<!-- resumo antecedentes pessoais -->
 								<p:panel header="#{msg['atendimento.antecedentespessoais.header']}" style="width: 100%;" styleClass="resumoAtendimentoGroupPanel"
 									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos
 												or not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos
@@ -118,7 +115,6 @@
 												or not empty atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}"
 												toggleable="true" collapsed="true">
 
-									<!-- resumo antecedentes clínicos -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesclinicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%;" 
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}">
 										<p:dataTable id="antecedentesClinicosTable" var="antecedenteClinico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesClinicos}"
@@ -131,7 +127,6 @@
 										</p:dataTable>
 									</p:panel>
 									
-									<!-- resumo antecedentes crurgicos -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentescirurgicos']}" styleClass="resumoAtendimentoPanel" style="width: 100%; margin-top: 5px;" 
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}">
 										<p:dataTable id="antecedentesCirurgicosTable" var="antecedenteCirurgico" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesCirurgicos}"
@@ -144,7 +139,6 @@
 										</p:dataTable>
 									</p:panel>
 									
-									<!-- resumo habitos -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.habitos']}" styleClass="resumoAtendimentoPanel" style="width: 100%; margin-top: 5px;"
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.habitos}">
 										<p:dataTable id="habitosTable" var="habito" value="#{atendimentoMBean.atendimentoSelecionado.habitos}"
@@ -157,7 +151,6 @@
 										</p:dataTable>
 									</p:panel>
 									
-									<!-- resumo alergias -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.alergias']}" styleClass="resumoAtendimentoPanel" style="width: 100%; margin-top: 5px;" 
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.alergias}">
 										<p:dataTable id="alergiasTable" var="alergia" value="#{atendimentoMBean.atendimentoSelecionado.alergias}"
@@ -170,7 +163,6 @@
 										</p:dataTable>
 									</p:panel>
 									
-									<!-- resumo vacinas -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.vacinas']}" styleClass="resumoAtendimentoPanel" style="width: 100%; margin-top: 5px;" 
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.vacinas}">
 										<p:dataTable id="vacinasTable" var="vacina" value="#{atendimentoMBean.atendimentoSelecionado.vacinas}"
@@ -183,7 +175,6 @@
 										</p:dataTable>
 									</p:panel>
 									
-									<!-- resumo antecedentes familiares -->
 									<p:panel header="#{msg['atendimento.antecedentespessoais.antecedentesfamiliares']}" styleClass="resumoAtendimentoPanel" style="width: 100%; margin-top: 5px;" 
 										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}">
 										<p:dataTable id="antecedentesFamiliaresTable" var="antecedenteFamiliar" value="#{atendimentoMBean.atendimentoSelecionado.antecedentesFamiliares}"
@@ -197,7 +188,6 @@
 									</p:panel>
 								</p:panel>
 								
-								<!-- resumo exames fisicos -->
 								<p:panel header="#{msg['atendimento.examefisico.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%;" 
 									rendered="#{atendimentoMBean.atendimentoSelecionado.exameFisicoAtendimento.hasSomeValue()}" toggleable="true" collapsed="true">
 										<h:panelGrid columns="2" width="100%" style="text-align: left; padding-left: 10px;">
@@ -379,6 +369,28 @@
 											</p:outputPanel>
 										</h:panelGrid>
 								</p:panel>
+								
+								<p:panel header="#{msg['atendimento.diagnostico.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.doencasDiagnosticadas or not empty atendimentoMBean.atendimentoSelecionado.impressaoDiagnostica}"
+									toggleable="true" collapsed="true">
+
+									<p:outputPanel rendered="#{not empty atendimentoMBean.atendimentoSelecionado.impressaoDiagnostica}">
+										<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
+											<p:outputPanel styleClass="resumo-prontuario-panel-label">
+												<h:outputText value="#{msg['atendimento.diagnostico.impressaodiagnostica']}: " styleClass="resumo-prontuario-internal-title"/>
+												<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.impressaoDiagnostica}"/>
+											</p:outputPanel>
+										</div>
+									</p:outputPanel>
+									
+									<p:dataTable id="doencasDiagnosticadasTable" var="doencaDiagnosticada" value="#{atendimentoMBean.atendimentoSelecionado.doencasDiagnosticadas}" 
+										rendered="#{not empty atendimentoMBean.atendimentoSelecionado.doencasDiagnosticadas}" style="margin-top: 5px;">
+										<p:column style="text-align: left;" headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.doenca']}">
+											<h:outputText value="#{doencaDiagnosticada.descricao}"/>
+											<h:outputText value=" - #{doencaDiagnosticada.observacao}" rendered="#{not empty doencaDiagnosticada.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
 							</h:panelGrid>
 						</p:panel>
 						
@@ -400,6 +412,7 @@
 										emptyMessage="#{msg['atendimento.resumoprontuario.doencasdiagnosticadas.lista.empty']}" type="definition" itemStyleClass="datalist-item">
 								        <h:outputText value="#{doenca.codigoCid} - " rendered="#{not empty doenca.codigoCid}"/>
 								        <h:outputText value="#{doenca.descricao}"/>
+								        <h:outputText value=" - #{doenca.statusDoenca.nome}" rendered="#{not empty doenca.statusDoenca}"/>
 								        <br/>
 								        <h:outputText value="(#{doenca.observacao})" styleClass="resumoprontuario-observacao" rendered="#{not empty doenca.observacao}"/>
 								    </p:dataList>
