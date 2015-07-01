@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel id="pnBotoesGruposExames">
+		<p:panel style="margin: 10px 0px 10px 0px; display: table;" rendered="#{not empty editarAtendimentoMBean.solicitacaoExamesViewBean.gruposExameDisponiveis}">
+			<ui:repeat var="grupoExame" value="#{editarAtendimentoMBean.solicitacaoExamesViewBean.gruposExameDisponiveis}">
+				<p:commandButton value="#{grupoExame.descricao}" actionListener="#{editarAtendimentoMBean.solicitacaoExamesViewBean.adicionarExamesGrupo(grupoExame)}"
+					process=":frmEditarAtendimento:solicitacoesExamesTable, @this" styleClass="botao-mais-usados-fixo"
+					update=":frmEditarAtendimento:solicitacoesExamesTable, :frmEditarAtendimento:pnBotoesGruposExames, :frmEditarAtendimento:solicitacaoExameAddInput, :frmEditarAtendimento:msgAtendimentos">
+				</p:commandButton>
+			</ui:repeat>
+		</p:panel>
+	</p:outputPanel>
+
+	<h:panelGrid columns="2" width="100%">
+		<h:panelGrid columns="2">
+			<p:selectOneMenu id="solicitacaoExameAddInput" value="#{editarAtendimentoMBean.solicitacaoExamesViewBean.exameSelecionado}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+				<f:selectItems value="#{editarAtendimentoMBean.solicitacaoExamesViewBean.examesDisponiveis}" var="solicitacaoExame" itemLabel="#{solicitacaoExame.descricao}" itemValue="#{solicitacaoExame}"/>
+				<p:ajax event="change" update="addSolicitacaoExameBtn" process="@this"/>
+			</p:selectOneMenu>
+			<p:columnGroup>
+				<p:commandButton id="addSolicitacaoExameBtn" action="#{editarAtendimentoMBean.solicitacaoExamesViewBean.adicionarExame}" icon="ui-icon-plusthick" update="@this, solicitacaoExameAddInput, solicitacoesExamesTable, pnBotoesGruposExames, :frmEditarAtendimento:msgAtendimentos"
+					disabled="#{empty editarAtendimentoMBean.solicitacaoExamesViewBean.exameSelecionado}" process="solicitacaoExameAddInput, solicitacoesExamesTable, @this" styleClass="botaoSalvar"/>
+			</p:columnGroup>
+		</h:panelGrid>
+	</h:panelGrid>
+	
+	<p:dataTable id="solicitacoesExamesTable" var="solicitacaoExameAtendimento" value="#{editarAtendimentoMBean.solicitacaoExamesViewBean.examesAtendimento}" 
+		emptyMessage="#{msg['atendimento.solicitacaoexames.exames.lista.empty']}"
+		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+		<p:column headerText="#{msg['atendimento.solicitacaoexames.exames.exame']}">
+			<h:outputText value="#{solicitacaoExameAtendimento.exame.descricao}"/>
+		</p:column>
+
+		<p:column headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.observacao']}">
+			<p:inputTextarea value="#{solicitacaoExameAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"/>
+		</p:column>
+		
+		<p:column width="30px;" style="text-align: left;">
+			<p:commandButton value="" actionListener="#{editarAtendimentoMBean.solicitacaoExamesViewBean.removerExame(index)}"
+				update="solicitacoesExamesTable, :frmEditarAtendimento:solicitacaoExameAddInput, :frmEditarAtendimento:pnBotoesGruposExames"
+				icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
+		</p:column>
+	</p:dataTable>
+
+</ui:composition>

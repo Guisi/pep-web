@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import br.edu.utfpr.constants.Constantes;
@@ -38,9 +37,6 @@ public class ExameAtendimento extends BaseEntity {
 	@Column(name="observacao", length=1000)
 	@Size(max=1000)
 	private String observacao;
-	
-	@Transient
-	private boolean atendimentoAnterior;
 	
 	@Override
 	public Long getId() {
@@ -74,13 +70,4 @@ public class ExameAtendimento extends BaseEntity {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
-	public boolean isAtendimentoAnterior() {
-		return atendimentoAnterior;
-	}
-
-	public void setAtendimentoAnterior(boolean atendimentoAnterior) {
-		this.atendimentoAnterior = atendimentoAnterior;
-	}
-	
 }

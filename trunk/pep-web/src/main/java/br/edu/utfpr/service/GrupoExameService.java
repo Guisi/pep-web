@@ -20,12 +20,12 @@ public class GrupoExameService {
 	@Inject
 	private GrupoExameDao grupoExameDao;
 	
-	public List<GrupoExame> retornarGruposExames(Boolean chkAtivo) {
-		return retornarGruposExames(null, chkAtivo);
+	public List<GrupoExame> retornarGruposExames(Boolean chkAtivo, Boolean fetchExames) {
+		return retornarGruposExames(null, chkAtivo, fetchExames);
 	}
 	
-	public List<GrupoExame> retornarGruposExames(String textoPesquisa, Boolean chkAtivo) {
-		return grupoExameDao.retornarGruposExames(textoPesquisa, chkAtivo);
+	public List<GrupoExame> retornarGruposExames(String textoPesquisa, Boolean chkAtivo, Boolean fetchExames) {
+		return grupoExameDao.retornarGruposExames(textoPesquisa, chkAtivo, fetchExames);
 	}
 	
 	public GrupoExame retornarGrupoExame(Long id) {
