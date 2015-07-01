@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div style="text-align: right; width: 100%;">
+		<h:commandLink value="Ver anteriores" onclick="PF('dlgLembretesAnteriores').show(); return false;"
+			rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresLembretes}"/>
+	</div>
+
+	<p:panel styleClass="internal-panel" style="margin-top: 10px;">
+		<h:outputText value="#{msg['atendimento.lembretes.header']}" styleClass="ui-state-default internal-panel-title"/>
+		<p:inputTextarea value="#{editarAtendimentoMBean.atendimentoSelecionado.lembretes}" 
+			autoResize="false" maxlength="1000"	rows="6" style="width: 99%; margin-top: 5px;"/>
+	</p:panel>
+
+	<p:dialog widgetVar="dlgLembretesAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.lembretes.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresLembretes}" width="800">
+	
+		<p:dataList value="#{editarAtendimentoMBean.atendimentosAnterioresLembretes}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			
+			<p:panel header="#{msg['atendimento.lembretes.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
+				<p:outputPanel style="text-align: left;">
+					<p>
+						<h:outputText value="#{atendimento.lembretes}"/>
+					</p>
+				</p:outputPanel>
+			</p:panel>
+		</p:dataList>
+	</p:dialog>
+</ui:composition>

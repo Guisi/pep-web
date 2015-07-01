@@ -91,6 +91,10 @@ public class Atendimento extends BaseEntity {
 	@OrderBy("id_doenca_diagnosticada_atendimento")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas;
+	
+	@Column(name="lembretes", length=1000)
+	@Size(max=1000)
+	private String lembretes;
 
 	public Long getId() {
 		return id;
@@ -222,5 +226,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setImpressaoDiagnostica(String impressaoDiagnostica) {
 		this.impressaoDiagnostica = impressaoDiagnostica;
+	}
+
+	public String getLembretes() {
+		return lembretes;
+	}
+
+	public void setLembretes(String lembretes) {
+		this.lembretes = lembretes;
 	}
 }
