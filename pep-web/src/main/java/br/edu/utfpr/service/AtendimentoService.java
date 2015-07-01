@@ -16,6 +16,7 @@ import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.AntecedenteFamiliarAtendimento;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.DoencaDiagnosticadaAtendimento;
+import br.edu.utfpr.model.ExameAtendimento;
 import br.edu.utfpr.model.HabitoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
@@ -45,6 +46,8 @@ public class AtendimentoService {
 	private AntecedenteFamiliarAtendimentoService antecedenteFamiliarAtendimentoService;
 	@Inject
 	private DoencaDiagnosticadaAtendimentoService doencaDiagnosticadaAtendimentoService;
+	@Inject
+	private ExameAtendimentoService exameAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -67,7 +70,7 @@ public class AtendimentoService {
 			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
 			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias, List<VacinaAtendimento> vacinas,
 			List<AntecedenteFamiliarAtendimento> antecedentesFamiliares, List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas,
-			List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAnteriores) {
+			List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAnteriores, List<ExameAtendimento> solicitacoesExames) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -98,6 +101,9 @@ public class AtendimentoService {
 			
 			// Apaga da base as doenças diagnosticadas excluidos do atendimento
 			doencaDiagnosticadaAtendimentoService.removerDoencasDiagnosticadasExcluidas(atendimento.getId(), doencasDiagnosticadas);
+			
+			// Apaga da base as solicitações de exames excluidas do atendimento
+			exameAtendimentoService.removerExamesExcluidos(atendimento.getId(), solicitacoesExames);
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -168,6 +174,13 @@ public class AtendimentoService {
 		
 		//salva doencas diagnosticadas anteriormente em caso de resolução de alguma
 		doencaDiagnosticadaAtendimentoService.salvarDoencasDiagnosticadasAtendimento(doencasDiagnosticadasAnteriores);
+		
+		//salva solicitações de exames do atendimento
+		for (ExameAtendimento exameAtendimento : solicitacoesExames) {
+			exameAtendimento.setAtendimento(atendimento);
+		}
+		exameAtendimentoService.salvarExamesAtendimento(solicitacoesExames);
+		atendimento.setExamesSolicitados(new LinkedHashSet<ExameAtendimento>(solicitacoesExames));
 		
 		//seta o atendimento no exame fisico
 		atendimento.getExameFisicoAtendimento().setAtendimento(atendimento);

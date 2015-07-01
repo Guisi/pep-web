@@ -29,7 +29,7 @@ public class GrupoExameMBean extends BaseMBean {
 	}
 	
 	public void listarGruposExames() {
-		this.grupoExameList = grupoExameService.retornarGruposExames(pesquisa, null);
+		this.grupoExameList = grupoExameService.retornarGruposExames(pesquisa, null, Boolean.FALSE);
 	}
 	
 	public String novoGrupoExame() {

@@ -20,11 +20,13 @@ import br.edu.utfpr.mbean.atendimento.viewbean.DoencasDiagnosticadasViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.ExameFisicoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HabitosViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.HistoriaAtendimentoViewBean;
+import br.edu.utfpr.mbean.atendimento.viewbean.SolicitacaoExamesViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.TratamentosAndamentoViewBean;
 import br.edu.utfpr.mbean.atendimento.viewbean.VacinasViewBean;
 import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.ExameAtendimento;
 import br.edu.utfpr.service.AtendimentoService;
 import br.edu.utfpr.service.UsuarioService;
 
@@ -59,6 +61,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 	private ExameFisicoViewBean exameFisicoViewBean;
 	@Inject
 	private DoencasDiagnosticadasViewBean doencasDiagnosticadasViewBean;
+	@Inject
+	private SolicitacaoExamesViewBean solicitacaoExamesViewBean;
 	
 	private String menuInclude;
 	private String menuHeader;
@@ -113,6 +117,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.antecedentesFamiliaresViewBean.init(this);
 		this.exameFisicoViewBean.init(this);
 		this.doencasDiagnosticadasViewBean.init(this);
+		this.solicitacaoExamesViewBean.init(this);
 	}
 	
 	public String cancelar() {
@@ -143,7 +148,8 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.vacinasViewBean.getVacinasAtendimento(),
 				this.antecedentesFamiliaresViewBean.getAntecedentesFamiliaresAtendimento(),
 				this.doencasDiagnosticadasViewBean.getDoencasDiagnosticadasAtendimento(),
-				this.doencasDiagnosticadasViewBean.getDoencasDiagnosticadasAtendimentosAnteriores());
+				this.doencasDiagnosticadasViewBean.getDoencasDiagnosticadasAtendimentosAnteriores(),
+				this.solicitacaoExamesViewBean.getExamesAtendimento());
 		
 		this.tratamentoViewBean.setMedicamentosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getMedicamentos()));
 		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
@@ -154,6 +160,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.vacinasViewBean.setVacinasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getVacinas()));
 		this.antecedentesFamiliaresViewBean.setAntecedentesFamiliaresAtendimento(new ArrayList<>(this.atendimentoSelecionado.getAntecedentesFamiliares()));
 		this.doencasDiagnosticadasViewBean.setDoencasDiagnosticadasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getDoencasDiagnosticadas()));
+		this.solicitacaoExamesViewBean.setExamesAtendimento(new ArrayList<ExameAtendimento>(this.atendimentoSelecionado.getExamesSolicitados()));
 	}
 	
 	public List<Atendimento> getAtendimentosAnterioresAntecedentesPessoais() {
@@ -291,5 +298,13 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setDoencasDiagnosticadasViewBean(DoencasDiagnosticadasViewBean doencasDiagnosticadasViewBean) {
 		this.doencasDiagnosticadasViewBean = doencasDiagnosticadasViewBean;
+	}
+
+	public SolicitacaoExamesViewBean getSolicitacaoExamesViewBean() {
+		return solicitacaoExamesViewBean;
+	}
+
+	public void setSolicitacaoExamesViewBean(SolicitacaoExamesViewBean solicitacaoExamesViewBean) {
+		this.solicitacaoExamesViewBean = solicitacaoExamesViewBean;
 	}
 }

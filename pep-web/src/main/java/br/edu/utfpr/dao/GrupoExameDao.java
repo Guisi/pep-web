@@ -18,10 +18,16 @@ public class GrupoExameDao extends GenericDao<GrupoExame, Long> implements Seria
 
 	private static final long serialVersionUID = 1L;
 
-	public List<GrupoExame> retornarGruposExames(String textoPesquisa, Boolean chkAtivo) {
+	public List<GrupoExame> retornarGruposExames(String textoPesquisa, Boolean chkAtivo, Boolean fetchExame) {
 		CriteriaBuilder qb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<GrupoExame> q = qb.createQuery(GrupoExame.class);
 		Root<GrupoExame> root = q.from(GrupoExame.class);
+		
+		if (fetchExame) {
+			q.select(root);
+			q.distinct(true);
+			root.fetch(GrupoExame_.exames);
+		}
 
 		List<Predicate> predicados = new ArrayList<>();
 		if (StringUtils.isNotBlank(textoPesquisa)) {
