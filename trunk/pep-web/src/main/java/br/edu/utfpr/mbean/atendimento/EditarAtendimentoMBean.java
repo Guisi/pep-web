@@ -141,7 +141,9 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 				this.habitosViewBean.getHabitosAtendimento(),
 				this.alergiasViewBean.getAlergiasAtendimento(),
 				this.vacinasViewBean.getVacinasAtendimento(),
-				this.antecedentesFamiliaresViewBean.getAntecedentesFamiliaresAtendimento());
+				this.antecedentesFamiliaresViewBean.getAntecedentesFamiliaresAtendimento(),
+				this.doencasDiagnosticadasViewBean.getDoencasDiagnosticadasAtendimento(),
+				this.doencasDiagnosticadasViewBean.getDoencasDiagnosticadasAtendimentosAnteriores());
 		
 		this.tratamentoViewBean.setMedicamentosAtendimento(new ArrayList<>(this.atendimentoSelecionado.getMedicamentos()));
 		this.historiaViewBean.setQueixasPrincipaisAtendimento(new ArrayList<>(this.atendimentoSelecionado.getQueixasPrincipais()));
@@ -151,6 +153,7 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		this.alergiasViewBean.setAlergiasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getAlergias()));
 		this.vacinasViewBean.setVacinasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getVacinas()));
 		this.antecedentesFamiliaresViewBean.setAntecedentesFamiliaresAtendimento(new ArrayList<>(this.atendimentoSelecionado.getAntecedentesFamiliares()));
+		this.doencasDiagnosticadasViewBean.setDoencasDiagnosticadasAtendimento(new ArrayList<>(this.atendimentoSelecionado.getDoencasDiagnosticadas()));
 	}
 	
 	public List<Atendimento> getAtendimentosAnterioresAntecedentesPessoais() {
@@ -270,5 +273,13 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 
 	public void setExameFisicoViewBean(ExameFisicoViewBean exameFisicoViewBean) {
 		this.exameFisicoViewBean = exameFisicoViewBean;
+	}
+
+	public DoencasDiagnosticadasViewBean getDoencasDiagnosticadasViewBean() {
+		return doencasDiagnosticadasViewBean;
+	}
+
+	public void setDoencasDiagnosticadasViewBean(DoencasDiagnosticadasViewBean doencasDiagnosticadasViewBean) {
+		this.doencasDiagnosticadasViewBean = doencasDiagnosticadasViewBean;
 	}
 }

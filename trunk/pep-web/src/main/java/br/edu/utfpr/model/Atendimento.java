@@ -84,6 +84,10 @@ public class Atendimento extends BaseEntity {
 	@OneToOne(mappedBy = "atendimento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private ExameFisicoAtendimento exameFisicoAtendimento;
 	
+	@Column(name="impressao_diagnostica", length=1000)
+	@Size(max=1000)
+	private String impressaoDiagnostica;
+	
 	@OrderBy("id_doenca_diagnosticada_atendimento")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "atendimento")
 	private Set<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas;
@@ -210,5 +214,13 @@ public class Atendimento extends BaseEntity {
 
 	public void setDoencasDiagnosticadas(Set<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas) {
 		this.doencasDiagnosticadas = doencasDiagnosticadas;
+	}
+
+	public String getImpressaoDiagnostica() {
+		return impressaoDiagnostica;
+	}
+
+	public void setImpressaoDiagnostica(String impressaoDiagnostica) {
+		this.impressaoDiagnostica = impressaoDiagnostica;
 	}
 }

@@ -12,6 +12,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.SetJoin;
 
+import br.edu.utfpr.constants.StatusDoenca;
 import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Atendimento_;
 import br.edu.utfpr.model.Doenca;
@@ -42,14 +43,15 @@ public class DoencaDiagnosticadaAtendimentoDao extends GenericDao<DoencaDiagnost
 		Join<DoencaDiagnosticadaAtendimento, Atendimento> atendimentoJoin = root.join(DoencaDiagnosticadaAtendimento_.atendimento);
 		root.fetch(DoencaDiagnosticadaAtendimento_.doenca, JoinType.LEFT);
 
-		List<Predicate> predicados = new ArrayList<>();
-		predicados.add(qb.equal(atendimentoJoin.get(Atendimento_.paciente).get(Usuario_.id), idPaciente));
+		Predicate predicado = qb.equal(atendimentoJoin.get(Atendimento_.paciente).get(Usuario_.id), idPaciente);
+		// doencas resolvidas nao aparecem mais em novos atendimentos
+		predicado = qb.and(predicado, qb.notEqual(root.get(DoencaDiagnosticadaAtendimento_.statusDoenca), StatusDoenca.RESOLVIDO));
 
 		if (idAtendimentoIgnorar != null) {
-			predicados.add(qb.lessThan(atendimentoJoin.get(Atendimento_.id), idAtendimentoIgnorar));
+			predicado = qb.and(predicado, qb.lessThan(atendimentoJoin.get(Atendimento_.id), idAtendimentoIgnorar));
 		}
 		
-		q.where(predicados.toArray(new Predicate[predicados.size()]));
+		q.where(predicado);
 		q.orderBy(qb.desc(atendimentoJoin.get(Atendimento_.id)), qb.asc(root.get(DoencaDiagnosticadaAtendimento_.id)));
 		
 		return entityManager.createQuery(q).getResultList();
