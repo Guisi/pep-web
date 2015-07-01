@@ -317,11 +317,11 @@ ALTER SEQUENCE pep_owner.vacina_sequence RESTART WITH 9;
 --#### atendimento #########
 --##########################
 --postgres
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, '2015-01-10 15:35', 3, 'História atendimento 1', 'ISDA atendimento 1');
-INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, '2015-05-12 10:30', 3, 'História atendimento 2', 'ISDA atendimento 2');
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, '2015-01-10 15:35', 3, 'História atendimento 1', 'ISDA atendimento 1');
+--INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, '2015-05-12 10:30', 3, 'História atendimento 2', 'ISDA atendimento 2');
 --h2
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 1', 'ISDA atendimento 1');
---INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (2, PARSEDATETIME('12 May 2015 10:30 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 2', 'ISDA atendimento 2');
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda) VALUES (1, PARSEDATETIME('10 Jan 2015 15:35 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 1', 'ISDA atendimento 1');
+INSERT INTO pep_owner.tb_atendimento(id_atendimento, data, id_paciente, historia_doenca_atual, isda, lembretes) VALUES (2, PARSEDATETIME('12 May 2015 10:30 GMT',  'dd MMM yyyy HH:mm z', 'en', 'GMT'), 3, 'História atendimento 2', 'ISDA atendimento 2', 'Só lembrando que não é pra esquecer de lembrar, ok?');
 ALTER SEQUENCE pep_owner.atendimento_sequence RESTART WITH 3;
 
 --queixas principais

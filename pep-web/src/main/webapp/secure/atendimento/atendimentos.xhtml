@@ -391,6 +391,15 @@
 										</p:column>
 									</p:dataTable>
 								</p:panel>
+								
+								<p:panel header="#{msg['atendimento.lembretes.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.lembretes}" toggleable="true" collapsed="true">
+									<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
+										<p:outputPanel styleClass="resumo-prontuario-panel-label">
+											<h:outputText value="#{atendimentoMBean.atendimentoSelecionado.lembretes}"/>
+										</p:outputPanel>
+									</div>
+								</p:panel>
 							</h:panelGrid>
 						</p:panel>
 						

@@ -74,6 +74,13 @@
 						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.diagnostico.header']}"/>
 						            </p:menuitem>
 							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.lembretes.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="lembretesInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.lembretes.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
 							</p:column>
 							
 							<p:column>

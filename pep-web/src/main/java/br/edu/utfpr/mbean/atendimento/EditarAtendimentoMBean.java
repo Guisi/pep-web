@@ -171,6 +171,16 @@ public class EditarAtendimentoMBean extends BaseAtendimentoMBean {
 		return atendimentos;
 	}
 	
+	public List<Atendimento> getAtendimentosAnterioresLembretes() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : getAtendimentosAnteriores()) {
+			if (StringUtils.isNotBlank(atendimento.getLembretes())) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
+	}
+	
 	public Atendimento getAtendimentoSelecionado() {
 		return atendimentoSelecionado;
 	}
