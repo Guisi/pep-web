@@ -227,4 +227,19 @@
 		<pattern value="/editarVacina/#{idVacina}" />
 		<view-id value="/secure/vacina/editarVacina.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarExames">
+		<pattern value="/listarExames" />
+		<view-id value="/secure/exame/exames.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoExame">
+		<pattern value="/novoExame" />
+		<view-id value="/secure/exame/editarExame.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarExame">
+		<pattern value="/editarExame/#{idExame}" />
+		<view-id value="/secure/exame/editarExame.xhtml" />
+	</url-mapping>
 </pretty-config>
