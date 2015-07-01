@@ -33,6 +33,9 @@
 					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
 						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
 					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_EXAMES">
+						<p:menuitem outcome="pretty:listarExames" value="#{msg['menu.administracao.exames']}"/>
+					</sec:ifAnyGranted>
 					<sec:ifAnyGranted roles="EDITAR_HABITOS">
 						<p:menuitem outcome="pretty:listarHabitos" value="#{msg['menu.administracao.habitos']}"/>
 					</sec:ifAnyGranted>

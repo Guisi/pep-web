@@ -30,7 +30,8 @@ INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (15
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (16, 'EDITAR_HABITOS', 'Autorização para editar hábitos.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (17, 'EDITAR_ALERGIAS', 'Autorização para editar alergias.');
 INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (18, 'EDITAR_VACINAS', 'Autorização para editar vacinas.');
-ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 19;
+INSERT INTO pep_owner.tb_autorizacao(id_autorizacao, nome, descricao) VALUES (19, 'EDITAR_EXAMES', 'Autorização para editar exames.');
+ALTER SEQUENCE pep_owner.autorizacao_sequence RESTART WITH 20;
 
 --vincula perfis aos usuarios
 INSERT INTO pep_owner.tb_usuario_perfil(id_usuario, id_perfil) VALUES (1, 1);
@@ -52,6 +53,7 @@ INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 16);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 17);
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 18);
+INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (1, 19);
 
 --vincula autorizacoes de edicao de paciente e atendimentos ao perfil Recepcionista
 INSERT INTO pep_owner.tb_perfil_autorizacao(id_perfil, id_autorizacao) VALUES (2, 7);
@@ -302,7 +304,7 @@ INSERT INTO pep_owner.tb_alergia(id_alergia, descricao, chk_ativo) VALUES (9, 'I
 INSERT INTO pep_owner.tb_alergia(id_alergia, descricao, chk_ativo) VALUES (10, 'Látex', true);
 ALTER SEQUENCE pep_owner.alergia_sequence RESTART WITH 11;
 
---alergias
+--vacinas
 INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (1, 'Anti-tetânica', true);
 INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (2, 'Pneumocócica Polivalente (Pneumo 23)', true);
 INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (3, 'Meningite C', true);
@@ -312,6 +314,80 @@ INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (6, 'Var
 INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (7, 'Tríplice Viral (Sar.+ Cax.+ Rub.) mmr/scr', true);
 INSERT INTO pep_owner.tb_vacina(id_vacina, descricao, chk_ativo) VALUES (8, 'Tetraxim (Dpat + Salk)', true);
 ALTER SEQUENCE pep_owner.vacina_sequence RESTART WITH 9;
+
+--exames
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (1, 'ÁCIDO ASCÓRBICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (2, 'ÁCIDO CÍTRICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (3, 'ÁCIDO FENILGLIOXÍLICO (PARA ESTIRENO)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (4, 'ÁCIDO FÓLICO, DOSAGEM NOS ERITRÓCITOS', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (5, 'ÁCIDO HIPÚRICO (PARA TOLUENO)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (6, 'ÁCIDO HOMO VANÍLICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (7, 'ÁCIDO HOMOGENTÍSICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (8, 'ÁCIDO LÁCTICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (9, 'ÁCIDO METILHIPÚRICO (PARA XILENOS)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (10, 'ÁCIDO ORÓTICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (11, 'ÁCIDO OXÁLICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (12, 'ÁCIDO PIRÚVICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (13, 'ÁCIDO SALICÍLICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (14, 'ÁCIDO SIÁLICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (15, 'ÁCIDO ÚRICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (16, 'ÁCIDO VALPRÓICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (17, 'ÁCIDO VANILMANDÉLICO (VMA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (18, 'ÁCIDOS GRAXOS LIVRES', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (19, 'ADENOGRAMA (NÃO INCLUI HEMOGRAMA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (20, 'ADENOSINA DE AMINASE (ADA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (21, 'ADENOVÍRUS, IGG', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (22, 'ADENOVÍRUS, IGM', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (23, 'ADRENOCORTICOTRÓFICO, HORMÔNIO (ACTH)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (24, 'ALBUMINA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (25, 'ALCAPTONÚRIA, PESQUISA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (26, 'ALDOLASE', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (27, 'ALDOSTERONA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (28, 'ALERGENOS - PERFIL ANTIGÊNICO (PAINEL C/36 ANTÍGENOS)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (29, 'ALFA-1-ANTITRIPSINA, DOSAGEM NO SORO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (30, 'ALFA-1-GLICOPROTEÍNA ÁCIDA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (31, 'ALFA-2-MACROGLOBULINA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (32, 'ALFA-FETOPROTEÍNA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (33, 'AMEBÍASE', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (34, 'AMILASE', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (35, 'AMINOÁCIDOS, FRACIONAMENTO E QUANTIFICAÇÃO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (36, 'AMÔNIA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (37, 'AMP - CÍCLICO NEFROGÊNICO (SANGUE E URINA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (38, 'AMP CÍCLICO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (39, 'ANAL SWAB, PESQUISA DE OXIÚRUS', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (40, 'ANTIESCLERODERMA (SCL 70)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (41, 'ANTIFÍGADO (GLOMÉRULO, TUB. RENAL CORTE RIM DE RATO), IFI', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (42, 'ANTÍGENO AUSTRÁLIA (HBSAG)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (43, 'ANTÍGENO CARCINOEMBRIOGÊNICO (CEA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (44, 'ANTÍGENO ESPECÍFICO PROSTÁTICO LIVRE (PSA LIVRE)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (45, 'ANTÍGENO ESPECÍFICO PROSTÁTICO TOTAL (PSA)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (46, 'ANTÍGENOS FÚNGICOS, PESQUISA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (47, 'ANTÍGENOS METÍLICOS SOLÚVEIS DO BCG (1 APLICAÇÃO)', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (48, 'ANTIGLIADINA (GLÚTEN) - IGA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (49, 'ANTI-HIALURONIDASE, DETERMINAÇÃO DA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (50, 'ANTI-JO1', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (51, 'ANTI-LA/SSB', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (52, 'ANTI-LKM-1', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (53, 'ANTIMEMBRANA BASAL', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (54, 'ANTIMICROSSOMAL', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (55, 'ANTIMITOCONDRIA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (56, 'ANTIMITOCONDRIA, M2', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (57, 'ANTIMÚSCULO CARDÍACO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (58, 'ANTIMÚSCULO ESTRIADO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (59, 'ANTIMÚSCULO LISO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (60, 'ANTINEUTRÓFILOS (ANCA)  C', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (61, 'ANTIPARIETAL', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (62, 'ANTIPEROXIDASE TIREOIDEANA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (63, 'ANTI-RNP', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (64, 'ANTI-RO/SSA', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (65, 'ANTI-SM', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (66, 'ANTITROMBINA III, DOSAGEM', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (67, 'APOLIPOPROTEÍNA A', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (68, 'APOLIPOPROTEÍNA B', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (69, 'ASLO', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (70, 'ASPERGILUS', true);
+INSERT INTO pep_owner.tb_exame(id_exame, descricao, chk_ativo) VALUES (71, 'ATIVADOR TISSULAR DE PLASMINOGÊNIO (TPA)', true);
+ALTER SEQUENCE pep_owner.exame_sequence RESTART WITH 72;
 
 --##########################
 --#### atendimento #########
