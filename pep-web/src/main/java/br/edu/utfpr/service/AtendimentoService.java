@@ -15,6 +15,7 @@ import br.edu.utfpr.model.AntecedenteCirurgicoAtendimento;
 import br.edu.utfpr.model.AntecedenteClinicoAtendimento;
 import br.edu.utfpr.model.AntecedenteFamiliarAtendimento;
 import br.edu.utfpr.model.Atendimento;
+import br.edu.utfpr.model.DoencaDiagnosticadaAtendimento;
 import br.edu.utfpr.model.HabitoAtendimento;
 import br.edu.utfpr.model.MedicamentoAtendimento;
 import br.edu.utfpr.model.QueixaPrincipalAtendimento;
@@ -42,6 +43,8 @@ public class AtendimentoService {
 	private VacinaAtendimentoService vacinaAtendimentoService;
 	@Inject
 	private AntecedenteFamiliarAtendimentoService antecedenteFamiliarAtendimentoService;
+	@Inject
+	private DoencaDiagnosticadaAtendimentoService doencaDiagnosticadaAtendimentoService;
 	
 	public List<Atendimento> retornarAtendimentosPaciente(Long idPaciente) {
 		return atendimentoDao.retornarAtendimentosPaciente(idPaciente);
@@ -63,7 +66,8 @@ public class AtendimentoService {
 			List<MedicamentoAtendimento> medicamentosAnteriores, List<QueixaPrincipalAtendimento> queixasPrincipais,
 			List<AntecedenteClinicoAtendimento> antecedentesClinicos, List<AntecedenteCirurgicoAtendimento> antecedentesCirurgicos,
 			List<HabitoAtendimento> habitos, List<AlergiaAtendimento> alergias, List<VacinaAtendimento> vacinas,
-			List<AntecedenteFamiliarAtendimento> antecedentesFamiliares) {
+			List<AntecedenteFamiliarAtendimento> antecedentesFamiliares, List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadas,
+			List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAnteriores) {
 		
 		if (atendimento.isNew()) {
 			atendimento.setData(new Date());
@@ -91,6 +95,9 @@ public class AtendimentoService {
 			
 			// Apaga da base os antecedentes familiares excluidos do atendimento
 			antecedenteFamiliarAtendimentoService.removerAntecedentesFamiliaresExcluidos(atendimento.getId(), antecedentesFamiliares);
+			
+			// Apaga da base as doenças diagnosticadas excluidos do atendimento
+			doencaDiagnosticadaAtendimentoService.removerDoencasDiagnosticadasExcluidas(atendimento.getId(), doencasDiagnosticadas);
 		}
 		
 		//salva medicamentos anteriores para o caso de descontinuidade em algum tratamento
@@ -151,6 +158,16 @@ public class AtendimentoService {
 		}
 		antecedenteFamiliarAtendimentoService.salvarAntecedentesFamiliaresAtendimento(antecedentesFamiliares);
 		atendimento.setAntecedentesFamiliares(new LinkedHashSet<AntecedenteFamiliarAtendimento>(antecedentesFamiliares));
+		
+		//salva doencas diagnosticadas do atendimento
+		for (DoencaDiagnosticadaAtendimento doencaDiagnosticadaAtendimento : doencasDiagnosticadas) {
+			doencaDiagnosticadaAtendimento.setAtendimento(atendimento);
+		}
+		doencaDiagnosticadaAtendimentoService.salvarDoencasDiagnosticadasAtendimento(doencasDiagnosticadas);
+		atendimento.setDoencasDiagnosticadas(new LinkedHashSet<DoencaDiagnosticadaAtendimento>(doencasDiagnosticadas));
+		
+		//salva doencas diagnosticadas anteriormente em caso de resolução de alguma
+		doencaDiagnosticadaAtendimentoService.salvarDoencasDiagnosticadasAtendimento(doencasDiagnosticadasAnteriores);
 		
 		//seta o atendimento no exame fisico
 		atendimento.getExameFisicoAtendimento().setAtendimento(atendimento);

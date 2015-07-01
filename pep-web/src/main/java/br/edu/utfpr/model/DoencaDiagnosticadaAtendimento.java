@@ -2,6 +2,8 @@ package br.edu.utfpr.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import br.edu.utfpr.constants.Constantes;
+import br.edu.utfpr.constants.StatusDoenca;
 
 @Entity
 @Table(name=Constantes.PEP_OWNER + "tb_doenca_diagnosticada_atendimento")
@@ -42,6 +45,10 @@ public class DoencaDiagnosticadaAtendimento extends BaseEntity {
 	@Column(name="observacao", length=1000)
 	@Size(max=1000)
 	private String observacao;
+	
+	@Column(name="status_doenca")
+	@Enumerated(EnumType.STRING)
+	private StatusDoenca statusDoenca;
 	
 	@Transient
 	private boolean atendimentoAnterior;
@@ -93,6 +100,14 @@ public class DoencaDiagnosticadaAtendimento extends BaseEntity {
 
 	public void setAtendimentoAnterior(boolean atendimentoAnterior) {
 		this.atendimentoAnterior = atendimentoAnterior;
+	}
+
+	public StatusDoenca getStatusDoenca() {
+		return statusDoenca;
+	}
+
+	public void setStatusDoenca(StatusDoenca statusDoenca) {
+		this.statusDoenca = statusDoenca;
 	}
 	
 }

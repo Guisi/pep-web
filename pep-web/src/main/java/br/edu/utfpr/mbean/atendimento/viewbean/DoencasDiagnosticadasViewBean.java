@@ -1,14 +1,19 @@
 package br.edu.utfpr.mbean.atendimento.viewbean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang.StringUtils;
+
 import br.edu.utfpr.constants.Constantes;
+import br.edu.utfpr.constants.StatusDoenca;
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
+import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Doenca;
 import br.edu.utfpr.model.DoencaDiagnosticadaAtendimento;
 import br.edu.utfpr.service.DoencaDiagnosticadaAtendimentoService;
@@ -29,6 +34,8 @@ public class DoencasDiagnosticadasViewBean extends BaseAtendimentoViewBean {
 	private List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAtendimento;
 	private List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAtendimentosAnteriores;
 	
+	private List<StatusDoenca> statusDoencaList;
+	
 	@Override
 	public void init(EditarAtendimentoMBean mbean) {
 		super.init(mbean);
@@ -42,6 +49,8 @@ public class DoencasDiagnosticadasViewBean extends BaseAtendimentoViewBean {
 		this.listarDoencasDiagnosticadasAtendimentosAnteriores();
 		this.listarDoencasDiagnosticadasDisponiveis();
 		this.listarDoencasDiagnosticadasMaisUsadas();
+		
+		this.statusDoencaList = Arrays.asList(StatusDoenca.values());
 	}
 	
 	private void listarDoencasDiagnosticadasDisponiveis() {
@@ -127,6 +136,17 @@ public class DoencasDiagnosticadasViewBean extends BaseAtendimentoViewBean {
 		Collections.sort(this.doencasDiagnosticadasDisponiveis, comparator);
 		Collections.sort(this.doencasDiagnosticadasMaisUsadas, comparator);
 	}
+	
+	public List<Atendimento> getAtendimentosAnterioresDoencasDiagnosticadas() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : getAtendimentosAnteriores()) {
+			if (!atendimento.getDoencasDiagnosticadas().isEmpty()
+					|| StringUtils.isNotBlank(atendimento.getImpressaoDiagnostica())) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
+	}
 
 	public Doenca getDoencaDiagnosticadaSelecionada() {
 		return doencaDiagnosticadaSelecionada;
@@ -166,5 +186,9 @@ public class DoencasDiagnosticadasViewBean extends BaseAtendimentoViewBean {
 
 	public void setDoencasDiagnosticadasAtendimentosAnteriores(List<DoencaDiagnosticadaAtendimento> doencasDiagnosticadasAtendimentosAnteriores) {
 		this.doencasDiagnosticadasAtendimentosAnteriores = doencasDiagnosticadasAtendimentosAnteriores;
+	}
+
+	public List<StatusDoenca> getStatusDoencaList() {
+		return statusDoencaList;
 	}
 }

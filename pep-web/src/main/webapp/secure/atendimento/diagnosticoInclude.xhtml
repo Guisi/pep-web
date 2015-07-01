@@ -7,64 +7,86 @@
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:p="http://primefaces.org/ui">
 
+	<div style="text-align: right; width: 100%;">
+		<h:commandLink value="Ver anteriores" onclick="PF('dlgDoencasDiagnosticadasAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}"/>
+	</div>
+
+	<p:panel styleClass="internal-panel" style="margin-top: 10px;">
+		<h:outputText value="#{msg['atendimento.diagnostico.impressaodiagnostica']}" styleClass="ui-state-default internal-panel-title"/>
+		<p:inputTextarea value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentoSelecionado.impressaoDiagnostica}" autoResize="false" maxlength="1000"
+			rows="4" style="width: 99%; margin-top: 5px;"/>
+	</p:panel>
+
+	<p:panel id="pnBotoesDoencasDiagnosticadas" style="margin: 10px 0px 10px 0px; display: table;">
+		<ui:repeat var="doencaDiagnosticada" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasMaisUsadas}">
+			<p:commandButton value="#{doencaDiagnosticada.codigoCid} - #{doencaDiagnosticada.descricao}" actionListener="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarDoencaDiagnosticada(doencaDiagnosticada)}"
+				process=":frmEditarAtendimento:doencasDiagnosticadasTable, @this" styleClass="botao-mais-usados-fixo"
+				update=":frmEditarAtendimento:doencasDiagnosticadasTable, :frmEditarAtendimento:pnBotoesDoencasDiagnosticadas, :frmEditarAtendimento:doencaDiagnosticadaAddInput, :frmEditarAtendimento:msgAtendimentos">
+			</p:commandButton>
+		</ui:repeat>
+	</p:panel>
+
 	<h:panelGrid columns="2" width="100%">
 		<h:panelGrid columns="2">
-			<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+			<p:selectOneMenu id="doencaDiagnosticadaAddInput" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencaDiagnosticadaSelecionada}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
 				<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
-				<f:selectItems value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
-				<p:ajax event="change" update="addMedicamentoBtn" process="@this"/>
+				<f:selectItems value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasDisponiveis}" var="doencaDiagnosticada" itemLabel="#{doencaDiagnosticada.codigoCid} - #{doencaDiagnosticada.descricao}" itemValue="#{doencaDiagnosticada}"/>
+				<p:ajax event="change" update="addDoencaDiagnosticadaBtn" process="@this"/>
 			</p:selectOneMenu>
 			<p:columnGroup>
-				<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.tratamentoViewBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
-					disabled="#{empty editarAtendimentoMBean.tratamentoViewBean.medicamentoSelecionado}" process="medicamentoAddInput, medicamentosTable, @this" styleClass="botaoSalvar"/>
-				<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.tratamentoViewBean.adicionarOutroMedicamento}"
-					value="#{msg['atendimento.botao.outrotratamento']}" process="medicamentosTable, @this" update="medicamentosTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
+				<p:commandButton id="addDoencaDiagnosticadaBtn" action="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarDoencaDiagnosticada}" icon="ui-icon-plusthick" update="@this, doencaDiagnosticadaAddInput, doencasDiagnosticadasTable, :frmEditarAtendimento:msgAtendimentos"
+					disabled="#{empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencaDiagnosticadaSelecionada}" process="doencaDiagnosticadaAddInput, doencasDiagnosticadasTable, @this" styleClass="botaoSalvar"/>
+				<p:commandButton id="addOutroDoencaDiagnosticadaBtn" action="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarOutroDoencaDiagnosticada}"
+					value="#{msg['atendimento.diagnostico.doencasdiagnosticadas.botao.outradoenca']}" process="doencasDiagnosticadasTable, @this" update="doencasDiagnosticadasTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
 			</p:columnGroup>
 		</h:panelGrid>
 	</h:panelGrid>
 	
-	<div>
-		<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentosAtendimentoAgrupado}" 
-			emptyMessage="#{msg['atendimento.tratamentos.medicamentos.lista.empty']}"
-			paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
-			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-			
-			<p:column headerText="#{msg['atendimento.tratamentos.medicamento']}">
-				<p:inputText id="nomeInput" value="#{medicamentoAtendimento.descricao}" maxlength="600" rendered="#{empty medicamentoAtendimento.medicamento and not medicamentoAtendimento.atendimentoAnterior}"
-					style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.tratamentos.campoobrigatorio.medicamento']}"/>
-				<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento or medicamentoAtendimento.atendimentoAnterior}"/>
-			</p:column>
-			
-			<p:column headerText="#{msg['atendimento.tratamentos.posologia']}">
-				<p:inputTextarea value="#{medicamentoAtendimento.posologia}" autoResize="false" maxlength="300"
-					rows="2" style="width: 98%;" rendered="#{not medicamentoAtendimento.atendimentoAnterior}"/>
-				<h:outputText value="#{medicamentoAtendimento.posologia}" rendered="#{medicamentoAtendimento.atendimentoAnterior}"/>
-			</p:column>
-			
-			<p:column headerText="#{msg['atendimento.tratamentos.emuso']}" style="width: 60px;" rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.medicamentosAtendimentosAnteriores}">
-				<p:inputSwitch value="#{medicamentoAtendimento.emUso}" onLabel="#{msg['atendimento.tratamentos.emuso.sim']}" 
-					offLabel="#{msg['atendimento.tratamentos.emuso.nao']}" rendered="#{medicamentoAtendimento.atendimentoAnterior}"/>
-			</p:column>
-			
-			<p:column width="30px;" style="text-align: left;">
-				<p:commandButton value="" actionListener="#{editarAtendimentoMBean.tratamentoViewBean.removerMedicamento(index)}" update="medicamentosTable, :frmEditarAtendimento:medicamentoAddInput"
-					icon="ui-icon-closethick" styleClass="datatable-button" process="@this" rendered="#{not medicamentoAtendimento.atendimentoAnterior}"/>
-			</p:column>
-		</p:dataTable>
-	</div>
+	<p:dataTable id="doencasDiagnosticadasTable" var="doencaDiagnosticadaAtendimento" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasAtendimentoAgrupado}" 
+		emptyMessage="#{msg['atendimento.diagnostico.doencasdiagnosticadas.lista.empty']}"
+		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+		<p:column headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.doenca']}">
+			<p:inputText id="descricaoInput" value="#{doencaDiagnosticadaAtendimento.descricao}" maxlength="300"
+				rendered="#{empty doencaDiagnosticadaAtendimento.doenca and not doencaDiagnosticadaAtendimento.atendimentoAnterior}"
+				style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.diagnostico.doencasdiagnosticadas.campoobrigatorio.doenca']}"/>
+			<h:outputText value="#{doencaDiagnosticadaAtendimento.descricao}" rendered="#{not empty doencaDiagnosticadaAtendimento.doenca or doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+		</p:column>
+
+		<p:column headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.observacao']}">
+			<p:inputTextarea value="#{doencaDiagnosticadaAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"
+				rendered="#{not doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+				
+			<h:outputText value="#{doencaDiagnosticadaAtendimento.observacao}" rendered="#{doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+		</p:column>
+		
+		<p:column>
+			<p:selectOneMenu id="statusDoencaSom" value="#{doencaDiagnosticadaAtendimento.statusDoenca}" styleClass="inputUmQuarto">
+				<f:selectItems value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.statusDoencaList}" var="status" itemLabel="#{status.nome}" itemValue="#{status}"/>
+			</p:selectOneMenu>
+		</p:column>
+		
+		<p:column width="30px;" style="text-align: left;">
+			<p:commandButton value="" actionListener="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.removerDoencaDiagnosticada(index)}"
+				update="doencasDiagnosticadasTable, :frmEditarAtendimento:doencaDiagnosticadaAddInput"
+				rendered="#{not doencaDiagnosticadaAtendimento.atendimentoAnterior}"
+				icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
+		</p:column>
+	</p:dataTable>
 	
-	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" 
-		draggable="true" header="#{msg['atendimento.tratamentos.anteriores.modal.header']}" fitViewport="true" dynamic="true"
-		rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" width="800">
+	<p:dialog widgetVar="dlgDoencasDiagnosticadasAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.diagnostico.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}" width="800">
 	
-		<p:dataList value="#{editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" var="atendimento" type="none" itemType="none"
+		<p:dataList value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}" var="atendimento" type="none" itemType="none"
 			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
-			<p:panel header="#{msg['atendimento.tratamentos.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
-				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}" styleClass="datatable-no-header">
-					<p:column style="text-align: left;">
-						<h:outputText value="#{medicamentoAtendimento.descricao}"/>
-						<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+			<p:panel header="#{msg['atendimento.diagnostico.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
+				<p:dataTable id="doencasAnteriorTable" var="doencaDiagnosticada" value="#{atendimento.doencasDiagnosticadas}" styleClass="datatable-no-header">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.diagnostico.anteriores.atendimento.diagnosticos.header']}">
+						<h:outputText value="#{doencaDiagnosticada.descricao}"/>
+						<h:outputText value=" - #{doencaDiagnosticada.observacao}" rendered="#{not empty doencaDiagnosticada.observacao}"/>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
