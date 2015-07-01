@@ -82,8 +82,16 @@
 		<p:dataList value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}" var="atendimento" type="none" itemType="none"
 			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			
 			<p:panel header="#{msg['atendimento.diagnostico.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
-				<p:dataTable id="doencasAnteriorTable" var="doencaDiagnosticada" value="#{atendimento.doencasDiagnosticadas}" styleClass="datatable-no-header">
+				<p:outputPanel rendered="#{not empty atendimento.impressaoDiagnostica}" style="text-align: left;">
+					<p>
+						<h:outputText value="#{msg['atendimento.diagnostico.impressaodiagnostica']}: " styleClass="internal-panel-title"/>
+						<h:outputText value="#{atendimento.impressaoDiagnostica}"/>
+					</p>
+				</p:outputPanel>
+				<p:dataTable id="doencasAnteriorTable" var="doencaDiagnosticada" value="#{atendimento.doencasDiagnosticadas}" 
+					rendered="#{not empty atendimento.doencasDiagnosticadas}">
 					<p:column style="text-align: left;" headerText="#{msg['atendimento.diagnostico.anteriores.atendimento.diagnosticos.header']}">
 						<h:outputText value="#{doencaDiagnosticada.descricao}"/>
 						<h:outputText value=" - #{doencaDiagnosticada.observacao}" rendered="#{not empty doencaDiagnosticada.observacao}"/>
