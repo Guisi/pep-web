@@ -242,4 +242,19 @@
 		<pattern value="/editarExame/#{idExame}" />
 		<view-id value="/secure/exame/editarExame.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarGruposExames">
+		<pattern value="/listarGruposExames" />
+		<view-id value="/secure/grupoexame/gruposExames.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoGrupoExame">
+		<pattern value="/novoGrupoExame" />
+		<view-id value="/secure/grupoexame/editarGrupoExame.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarGrupoExame">
+		<pattern value="/editarGrupoExame/#{idGrupoExame}" />
+		<view-id value="/secure/grupoexame/editarGrupoExame.xhtml" />
+	</url-mapping>
 </pretty-config>
