@@ -8,10 +8,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.edu.utfpr.mbean.atendimento.EditarAtendimentoMBean;
+import br.edu.utfpr.model.Atendimento;
 import br.edu.utfpr.model.Exame;
 import br.edu.utfpr.model.ExameAtendimento;
 import br.edu.utfpr.model.GrupoExame;
-import br.edu.utfpr.service.ExameAtendimentoService;
 import br.edu.utfpr.service.ExameService;
 import br.edu.utfpr.service.GrupoExameService;
 
@@ -21,8 +21,6 @@ public class SolicitacaoExamesViewBean extends BaseAtendimentoViewBean {
 	
 	@Inject
 	private ExameService exameService;
-	@Inject
-	private ExameAtendimentoService exameAtendimentoService;
 	@Inject
 	private GrupoExameService grupoExameService;
 	
@@ -43,7 +41,6 @@ public class SolicitacaoExamesViewBean extends BaseAtendimentoViewBean {
 			this.examesAtendimento = new ArrayList<ExameAtendimento>(getAtendimentoSelecionado().getExamesSolicitados());
 		}
 		
-		this.listarExamesAtendimentosAnteriores();
 		this.listarExamesDisponiveis();
 		this.listarGruposExame();
 	}
@@ -66,27 +63,16 @@ public class SolicitacaoExamesViewBean extends BaseAtendimentoViewBean {
 	private void atualizarGruposExameDisponiveis() {
 		this.gruposExameDisponiveis = new ArrayList<GrupoExame>();
 		
+		List<Exame> examesAtendimento = new ArrayList<>();
+		for (ExameAtendimento exameAtendimento : this.examesAtendimento) {
+			examesAtendimento.add(exameAtendimento.getExame());
+		}
+		// só mostra grupos que tenham algum exame ainda não existente no atendimento
 		for (GrupoExame grupoExame : this.gruposExame) {
-			boolean temExameNaoIncluido = true;
-			for (Exame exameGrupo : grupoExame.getExames()) {
-				boolean temExame = false;
-				for (ExameAtendimento exameAtendimento : this.examesAtendimento) {
-					if (exameGrupo.equals(exameAtendimento.getExame())) {
-						temExame = true;
-						break;
-					}
-				}
-			}
-			
-			if (temExameNaoIncluido) {
+			if (!examesAtendimento.containsAll(grupoExame.getExames())) {
 				this.gruposExameDisponiveis.add(grupoExame);
 			}
 		}
-	}
-	
-	private void listarExamesAtendimentosAnteriores() {
-		this.examesAtendimentosAnteriores = exameAtendimentoService
-				.retornarExamesAtendimentosAnteriores(getPacienteSelecionado().getId(), getAtendimentoSelecionado().getId());
 	}
 	
 	public void adicionarExame() {
@@ -140,6 +126,16 @@ public class SolicitacaoExamesViewBean extends BaseAtendimentoViewBean {
 		}
 
 		this.atualizarGruposExameDisponiveis();
+	}
+	
+	public List<Atendimento> getAtendimentosAnterioresExamesSolicitados() {
+		List<Atendimento> atendimentos = new ArrayList<>();
+		for (Atendimento atendimento : getAtendimentosAnteriores()) {
+			if (!atendimento.getExamesSolicitados().isEmpty()) {
+				atendimentos.add(atendimento);
+			}
+		}
+		return atendimentos;
 	}
 
 	public Exame getExameSelecionado() {

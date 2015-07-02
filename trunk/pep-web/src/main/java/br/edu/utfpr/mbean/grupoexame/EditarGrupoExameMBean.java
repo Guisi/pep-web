@@ -62,6 +62,12 @@ public class EditarGrupoExameMBean extends BaseMBean {
 	}
 	
 	public String salvarGrupoExame() {
+		if (this.examesGrupoSelecionado.isEmpty()) {
+			addErrorMessage(getMsgs().getString("grupoexame.exames.lista.obrigatorio"));
+			return null;
+		}
+		
+		
 		boolean isNew = grupoExameSelecionado.isNew();
 		try {
 			grupoExameSelecionado.setExames(new LinkedHashSet<Exame>(this.examesGrupoSelecionado));

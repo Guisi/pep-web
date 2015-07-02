@@ -20,10 +20,6 @@ public class ExameAtendimentoService {
 		return exameAtendimentoDao.retornarExamesAtendimento(idAtendimento);
 	}
 
-	public List<ExameAtendimento> retornarExamesAtendimentosAnteriores(Long idPaciente, Long idAtendimentoIgnorar) {
-		return exameAtendimentoDao.retornarExamesAtendimentosAnteriores(idPaciente, idAtendimentoIgnorar);
-	}
-	
 	public void salvarExamesAtendimento(List<ExameAtendimento> examesAtendimento) {
 		for (ExameAtendimento exameAtendimento : examesAtendimento) {
 			exameAtendimentoDao.save(exameAtendimento);

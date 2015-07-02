@@ -392,6 +392,18 @@
 									</p:dataTable>
 								</p:panel>
 								
+								<p:panel header="#{msg['atendimento.solicitacaoexames.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
+									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.examesSolicitados}" toggleable="true" collapsed="true">
+
+									<p:dataTable id="examesSolicitadosTable" var="exameSolicitado" value="#{atendimentoMBean.atendimentoSelecionado.examesSolicitados}" 
+										style="margin-top: 5px;">
+										<p:column style="text-align: left;" headerText="#{msg['atendimento.solicitacaoexames.exames.exame']}">
+											<h:outputText value="#{exameSolicitado.exame.descricao}"/>
+											<h:outputText value=" - #{exameSolicitado.observacao}" rendered="#{not empty exameSolicitado.observacao}"/>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+								
 								<p:panel header="#{msg['atendimento.lembretes.header']}" styleClass="resumoAtendimentoPanel" style="width: 100%" 
 									rendered="#{not empty atendimentoMBean.atendimentoSelecionado.lembretes}" toggleable="true" collapsed="true">
 									<div class="ui-widget-content" style="padding: 4px 10px 4px 10px;">
