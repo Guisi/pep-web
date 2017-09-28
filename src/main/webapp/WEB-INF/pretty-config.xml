@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
+	
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/login.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="alterarSenha">
+		<pattern value="/alterarSenha" />
+		<view-id value="/alterarSenha.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="logout"> 
+	    <pattern value="/logout" /> 
+	    <view-id value="/processLogout" />
+	</url-mapping>
+	
+	<url-mapping id="notfound"> 
+	    <pattern value="/notfound" /> 
+	    <view-id value="/404.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="home">
+		<pattern value="/home" />
+		<view-id value="/secure/home.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="listarUsuarios">
+		<pattern value="/listarUsuarios" />
+		<view-id value="/secure/usuarios/usuarios.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoUsuario">
+		<pattern value="/novoUsuario" />
+		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarUsuario">
+		<pattern value="/editarUsuario/#{idUsuario}" />
+		<view-id value="/secure/usuarios/editarUsuario.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="editarInformacoesPessoais">
+		<pattern value="/editarInformacoesPessoais" />
+		<view-id value="/secure/usuarios/editarInformacoesPessoais.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="listarPerfis">
+		<pattern value="/listarPerfis" />
+		<view-id value="/secure/perfil/perfis.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoPerfil">
+		<pattern value="/novoPerfil" />
+		<view-id value="/secure/perfil/editarPerfil.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarPerfil">
+		<pattern value="/editarPerfil/#{idPerfil}" />
+		<view-id value="/secure/perfil/editarPerfil.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarEspecialidades">
+		<pattern value="/listarEspecialidades" />
+		<view-id value="/secure/especialidade/especialidades.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaEspecialidade">
+		<pattern value="/novaEspecialidade" />
+		<view-id value="/secure/especialidade/editarEspecialidade.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarEspecialidade">
+		<pattern value="/editarEspecialidade/#{idEspecialidade}" />
+		<view-id value="/secure/especialidade/editarEspecialidade.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarConvenios">
+		<pattern value="/listarConvenios" />
+		<view-id value="/secure/convenio/convenios.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoConvenio">
+		<pattern value="/novoConvenio" />
+		<view-id value="/secure/convenio/editarConvenio.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarConvenio">
+		<pattern value="/editarConvenio/#{idConvenio}" />
+		<view-id value="/secure/convenio/editarConvenio.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarPacientes">
+		<pattern value="/listarPacientes" />
+		<view-id value="/secure/paciente/pacientes.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoPaciente">
+		<pattern value="/novoPaciente" />
+		<view-id value="/secure/paciente/editarPaciente.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarPaciente">
+		<pattern value="/editarPaciente/#{idUsuario}" />
+		<view-id value="/secure/paciente/editarPaciente.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarMedicamentos">
+		<pattern value="/listarMedicamentos" />
+		<view-id value="/secure/medicamento/medicamentos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoMedicamento">
+		<pattern value="/novoMedicamento" />
+		<view-id value="/secure/medicamento/editarMedicamento.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarMedicamento">
+		<pattern value="/editarMedicamento/#{idMedicamento}" />
+		<view-id value="/secure/medicamento/editarMedicamento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="atendimentos">
+		<pattern value="/atendimentos/#{idPaciente}" />
+		<view-id value="/secure/atendimento/atendimentos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoAtendimento">
+		<pattern value="/novoAtendimento/#{idPaciente}" />
+		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="editarAtendimento">
+		<pattern value="/editarAtendimento/#{idAtendimento}" />
+		<view-id value="/secure/atendimento/editarAtendimento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarQueixasPrincipais">
+		<pattern value="/listarQueixasPrincipais" />
+		<view-id value="/secure/queixaprincipal/queixasprincipais.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaQueixaPrincipal">
+		<pattern value="/novaQueixaPrincipal" />
+		<view-id value="/secure/queixaPrincipal/editarQueixaPrincipal.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarQueixaPrincipal">
+		<pattern value="/editarQueixaPrincipal/#{idQueixaPrincipal}" />
+		<view-id value="/secure/queixaprincipal/editarQueixaPrincipal.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarDoencas">
+		<pattern value="/listarDoencas" />
+		<view-id value="/secure/doenca/doencas.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaDoenca">
+		<pattern value="/novaDoenca" />
+		<view-id value="/secure/doenca/editarDoenca.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarDoenca">
+		<pattern value="/editarDoenca/#{idDoenca}" />
+		<view-id value="/secure/doenca/editarDoenca.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarProcedimentos">
+		<pattern value="/listarProcedimentos" />
+		<view-id value="/secure/procedimento/procedimentos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoProcedimento">
+		<pattern value="/novoProcedimento" />
+		<view-id value="/secure/procedimento/editarProcedimento.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarProcedimento">
+		<pattern value="/editarProcedimento/#{idProcedimento}" />
+		<view-id value="/secure/procedimento/editarProcedimento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarHabitos">
+		<pattern value="/listarHabitos" />
+		<view-id value="/secure/habito/habitos.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoHabito">
+		<pattern value="/novoHabito" />
+		<view-id value="/secure/habito/editarHabito.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarHabito">
+		<pattern value="/editarHabito/#{idHabito}" />
+		<view-id value="/secure/habito/editarHabito.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarAlergias">
+		<pattern value="/listarAlergias" />
+		<view-id value="/secure/alergia/alergias.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaAlergia">
+		<pattern value="/novaAlergia" />
+		<view-id value="/secure/alergia/editarAlergia.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarAlergia">
+		<pattern value="/editarAlergia/#{idAlergia}" />
+		<view-id value="/secure/alergia/editarAlergia.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarVacinas">
+		<pattern value="/listarVacinas" />
+		<view-id value="/secure/vacina/vacinas.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novaVacina">
+		<pattern value="/novaVacina" />
+		<view-id value="/secure/vacina/editarVacina.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarVacina">
+		<pattern value="/editarVacina/#{idVacina}" />
+		<view-id value="/secure/vacina/editarVacina.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarExames">
+		<pattern value="/listarExames" />
+		<view-id value="/secure/exame/exames.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoExame">
+		<pattern value="/novoExame" />
+		<view-id value="/secure/exame/editarExame.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarExame">
+		<pattern value="/editarExame/#{idExame}" />
+		<view-id value="/secure/exame/editarExame.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarGruposExames">
+		<pattern value="/listarGruposExames" />
+		<view-id value="/secure/grupoexame/gruposExames.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="novoGrupoExame">
+		<pattern value="/novoGrupoExame" />
+		<view-id value="/secure/grupoexame/editarGrupoExame.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="editarGrupoExame">
+		<pattern value="/editarGrupoExame/#{idGrupoExame}" />
+		<view-id value="/secure/grupoexame/editarGrupoExame.xhtml" />
+	</url-mapping>
+</pretty-config>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{pacienteMBean.emptyStr}"/>
+		
+			<h:form id="frmPacientes">
+				<p:messages id="msgPacientes"/>
+				
+				<sec:ifAnyGranted roles="EDITAR_PACIENTES">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{pacienteMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['paciente.botao.procurar']}" action="#{pacienteMBean.listarPacientes}" 
+								icon="ui-icon-search" update="pacienteTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['paciente.botao.novo']}" action="#{pacienteMBean.novoPaciente}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
+				</sec:ifAnyGranted>
+			
+				<p:dataTable id="pacienteTable" var="paciente" value="#{pacienteMBean.pacienteList}" emptyMessage="#{msg['paciente.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['paciente.lista.header']}"/>
+				    </f:facet>
+				    <p:column headerText="#{msg['paciente.numeroprontuario']}">
+				    	<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
+							<h:commandLink id="verProntuarioLink" action="#{pacienteMBean.verProntuario(paciente.id)}">
+								<h:outputText value="#{paciente.numeroProntuario}" />
+							</h:commandLink>
+						</sec:ifAnyGranted>
+						<sec:ifNotGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
+							<h:outputText value="#{paciente.numeroProntuario}" />
+						</sec:ifNotGranted>
+					</p:column>
+				    
+					<p:column headerText="#{msg['paciente.cpf']}">
+						<h:outputText value="#{paciente.cpfFormatado}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['paciente.nome']}">
+						<h:outputText value="#{paciente.nomeCompleto}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['paciente.email']}">
+						<h:outputText value="#{paciente.email}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['paciente.celular']}">
+						<h:outputText value="#{paciente.celularFormatado}" />
+					</p:column>
+					
+					<p:column width="140px;">
+						<sec:ifAnyGranted roles="MANUTENIR_ATENDIMENTOS, VISUALIZAR_ATENDIMENTOS">
+							<p:commandButton action="#{pacienteMBean.verProntuario(paciente.id)}" icon="ui-icon-clipboard" styleClass="datatable-button" title="#{msg['botao.prontuario']}"/>
+						</sec:ifAnyGranted>
+						<sec:ifAnyGranted roles="EDITAR_PACIENTES">
+							<p:commandButton action="#{pacienteMBean.onEditPacienteClick(paciente.id)}" icon="ui-icon-pencil" styleClass="datatable-button datatable-button-right" title="#{msg['botao.editar']}"/>
+							<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" styleClass="datatable-button datatable-button-right" title="#{msg['botao.inativar']}">
+								<f:setPropertyActionListener target="#{pacienteMBean.pacienteSelecionado}" value="#{paciente}"/>
+							</p:commandButton>
+						</sec:ifAnyGranted>
+
+						<p:commandButton action="#{pacienteMBean.listarHistoricoPaciente(paciente.id)}" icon="ui-icon-search" styleClass="datatable-button datatable-button-right"
+							update=":frmPacientes:historicoAlteracoesTable" oncomplete="PF('dlgHistoricoAlteracoes').show();" title="#{msg['botao.historicoalteracoes']}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['paciente.remover.confirmacao']}">
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{pacienteMBean.removerPaciente}" update="pacienteTable, msgPacientes" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
+			    
+			    <ui:include src="../auditoria/auditoria.xhtml">
+			    	<ui:param name="mbean" value="#{pacienteMBean}" />
+			    </ui:include>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,416 @@
+.ui-widget {
+	font-size: 12px !important;
+	font-family: arial, sans-serif;
+}
+
+body {
+	background-color: #F2F2F2;
+	margin: 0px;
+	height: 100%;
+}
+
+fieldset {
+	border: 1px solid #dddddd;
+	text-align: center;
+	padding-top: 5px;
+}
+
+.headerBox {
+	width: 980px;
+	height: 60px;
+	margin: 0px 0px 0px 0px;
+	background-size: 100% 100%;
+	text-align: left;
+	font-size: 18px !important;
+	font-weight: bold !important;
+	padding-top: 10px !important;
+	padding-left: 15px !important;
+}
+
+#headerBoxLogin {
+	height: 40px;
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 15px;
+	color: inherit;
+}
+
+.header-title {
+	font-size: 12px !important;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	font-weight: bold !important;
+}
+
+#fullPageDiv {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	text-align: center;
+}
+
+#centerPageDiv {
+	left: 50%;
+	margin-left: -500px;
+	position: relative;
+	width: 1000px;
+	min-width: 1000px;
+	height: 100%;
+}
+
+#logindiv {
+	width: 500px;
+	height: 222px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -111px;
+	margin-left: -250px;
+}
+
+#alterarsenhadiv {
+	width: 500px;
+	height: 250px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -250px;
+}
+
+.ui-panel-titlebar-icon {
+   float: left !important;
+}
+
+.nopadding {
+	padding: 0px !important;
+}
+
+.panelgrid-nopadding td {
+	padding: 0px !important;
+}
+
+.noborder {
+	border: 0px;
+}
+
+.noborder tbody {
+	border: 0px;
+}
+
+.noborder tbody tr {
+	border: 0px;
+}
+
+.noborder tbody tr td {
+	border: 0px !important;
+}
+
+.leftMenu {
+	vertical-align: top;
+	width: 150px;
+}
+
+.rightContent {
+	vertical-align: top;
+}
+
+.atendimento-leftMenu {
+	vertical-align: top;
+	width: 213px;
+}
+
+.labelColumn {
+	text-align: left;
+}
+
+.valueColumn {
+	text-align: left;
+}
+
+.inputInteiro {
+	width: 700px !important;
+}
+
+.inputTresQuartos {
+	width: 520px !important;
+}
+
+.inputMeio {
+	width: 334px !important;
+}
+
+.inputUmQuarto {
+	width: 156px !important;
+}
+
+.datatable-button {
+	width: 28px;
+	height: 28px;
+	vertical-align: top;
+}
+
+.datatable-button-right {
+	margin-left: 5px;
+}
+
+.ui-datatable .ui-datatable-odd.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-datatable .ui-datatable-even.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-state-highlight {
+	background: linear-gradient(#ffffff, #C0C0BE);
+	border: 1px solid #969696;
+	color: #000;
+}
+
+.ui-messages-info {
+	color: #393666 !important;
+	background-color: #D6E0F0 !important;
+	border-color: #B5B0F1 !important;
+}
+
+.leftAligned {
+	text-align: left;
+}
+
+.rightAligned {
+	text-align: right;
+}
+
+.centerAligned {
+	text-align: center;
+}
+
+.divBotoesEdicao {
+	margin: 10px 10px 10px 0px;
+	text-align: right;
+}
+
+.botaoNovo {
+	margin: 0px;
+	margin-bottom: 7px;
+}
+
+.botaoSalvar {
+	margin-left: 5px;
+}
+
+.picklist-large tbody tr td ul {
+	width: 300px !important;
+}
+
+.picklist-nopadding tbody tr td {
+	padding: 0px;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	padding: .4em 1em;
+	position: relative;
+}
+
+.ui-dialog .ui-dialog-title {
+	float: left;
+	margin: .1em 16px .1em 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	position: absolute;
+	right: .3em;
+	top: 50%;
+	width: 19px;
+	margin: -10px 0 0 0;
+	padding: 1px;
+	height: 18px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+	display: block;
+	margin: 1px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close:hover,.ui-dialog .ui-dialog-titlebar-close:focus {
+	padding: 0;
+}
+
+.ui-dialog-title {
+	font-size: 12px !important;
+}
+
+.ui-dialog .ui-dialog-content {
+	position: relative;
+	border: 0;
+	padding: .5em 1em;
+	background: none;
+	overflow: auto;
+	font-size: 12px !important;
+}
+
+.ui-widget-overlay {
+	background: #aaaaaa url(../imgs/ui-bg-flat.png) 50% 50% repeat-x;
+	opacity: .30;
+	filter: Alpha(Opacity = 30);
+}
+
+.moduloAtendimentoPanel {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.atendimentoPanel {
+	padding: 0px !important;
+}
+
+.atendimentoPanel > .ui-panel-content {
+	padding: 1px !important;
+}
+
+.atendimentosPanel > .ui-panel-titlebar {
+	text-align: left;
+	padding: 0px 0px 0px 15px !important;
+}
+
+.atendimentosPanel > .ui-panel-content {
+	padding: 5px !important;
+}
+
+.resumoAtendimentoPanel > .ui-panel-titlebar {
+	border-bottom: 0px;
+}
+
+.resumoAtendimentoPanel > .ui-panel-content {
+	padding: 0px !important;
+}
+
+.resumoAtendimentoGroupPanel > .ui-panel-content {
+	padding-left: 5px !important;
+}
+
+.datatable-no-header table thead tr {
+    display: none;
+}
+
+.ui-accordion .ui-state-active {
+	margin-bottom: 0px !important;
+}
+
+.ui-accordion .ui-accordion-header {
+	margin-bottom: 5px;
+}
+
+.ui-accordion .ui-accordion-content {
+	padding: 0px !important;
+	text-align: left;
+	margin-bottom: 5px !important;
+}
+
+.datalist-item {
+	border-bottom: 1px solid #dddddd;
+	margin: 0px 10px 10px 10px;
+}
+
+.datalist-noborder .ui-datalist-content {
+	border: 0px !important;
+}
+
+.internal-panel {
+	margin-top: 10px;
+	text-align: left;
+}
+
+.internal-panel-title {
+	font-size: 12px !important;
+	font-weight: bold !important;
+	border: 0px !important;
+	background: none !important;
+}
+
+.botao-mais-usados {
+	float: left;
+	margin-right: 5px !important;
+	margin-bottom: 5px !important;
+}
+
+.botao-mais-usados-fixo {
+	float: left;
+	margin-right: 5px !important;
+	margin-bottom: 5px !important;
+	max-width: 300px;
+}
+
+.botao-mais-usados-fixo span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.resumoprontuario-observacao {
+	font-size: 10px;
+}
+
+.resumo-prontuario-panel-label {
+	text-align: left;
+	padding: 2px;
+	font-size: 11px !important;
+}
+
+.resumo-prontuario-internal-title {
+	font-weight: bold !important;
+}
+
+.exame-fisico-input {
+	width: 200px;
+	margin-left: 5px !important;
+}
+
+.exame-fisico-um-input {
+	width: 155px;
+	margin-left: 5px !important;
+}
+
+.exame-fisico-um-div {
+	width: 40px;
+	height: 23px;
+	display: inline-table;
+	vertical-align: top;
+	text-align: center;
+}
+
+.exame-fisico-um-label {
+	vertical-align: sub;
+}
+
+.exame-fisico-table {
+	margin-top: 10px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse;
+}
+
+.exame-fisico-table tbody {
+	border-collapse: collapse;
+}
+
+.exame-fisico-table tbody tr {
+	border: 1px solid #dddddd !important;
+}
+
+.exame-fisico-table tbody tr td:nth-child(even) {
+	text-align: left;
+	border-right: 1px solid #dddddd;
+	padding: 10px 0px 10px 0px;
+}
+
+.exame-fisico-table tbody tr td:nth-child(odd) {
+	text-align: right;
+	border-left: 1px solid #dddddd;
+	padding: 10px 0px 10px 0px;
+}

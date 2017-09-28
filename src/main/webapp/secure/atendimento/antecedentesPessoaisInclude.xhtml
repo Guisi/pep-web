@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:include src="antecedentesClinicosInclude.xhtml" />
+	
+	<ui:include src="antecedentesCirurgicosInclude.xhtml" />
+	
+	<ui:include src="habitosInclude.xhtml" />
+	
+	<ui:include src="alergiasInclude.xhtml" />
+	
+	<ui:include src="vacinasInclude.xhtml" />
+	
+	<ui:include src="antecedentesFamiliaresInclude.xhtml" />
+	
+	<p:dialog widgetVar="dlgAntecedentesPessoaisAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.antecedentespessoais.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.atendimentosAnterioresAntecedentesPessoais}" width="800">
+	
+		<p:dataList value="#{editarAtendimentoMBean.atendimentosAnterioresAntecedentesPessoais}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="1" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			
+			<p:panel header="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px; text-align: left;">
+				<p:dataTable id="antecedentesClinicosAnterioresTable" var="antecedenteClinico" value="#{atendimento.antecedentesClinicos}"
+					rendered="#{not empty atendimento.antecedentesClinicos}">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentesclinicos.header']}">
+						<h:outputText value="#{antecedenteClinico.descricao}"/>
+						<h:outputText value=" - #{antecedenteClinico.observacao}" rendered="#{not empty antecedenteClinico.observacao}"/>
+					</p:column>
+				</p:dataTable>
+			
+				<p:dataTable id="antecedentesCirurgicosTable" var="antecedenteCirurgico" value="#{atendimento.antecedentesCirurgicos}"
+					rendered="#{not empty atendimento.antecedentesCirurgicos}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentescirurgicos.header']}">
+						<h:outputText value="#{antecedenteCirurgico.descricao}"/>
+						<h:outputText value=" - #{antecedenteCirurgico.observacao}" rendered="#{not empty antecedenteCirurgico.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="habitosAnterioresTable" var="habito" value="#{atendimento.habitos}"
+					rendered="#{not empty atendimento.habitos}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.habitos.header']}">
+						<h:outputText value="#{habito.descricao}"/>
+						<h:outputText value=" - #{habito.observacao}" rendered="#{not empty habito.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="alergiasAnterioresTable" var="alergia" value="#{atendimento.alergias}"
+					rendered="#{not empty atendimento.alergias}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.alergias.header']}">
+						<h:outputText value="#{alergia.descricao}"/>
+						<h:outputText value=" - #{alergia.observacao}" rendered="#{not empty alergia.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="vacinasAnterioresTable" var="vacina" value="#{atendimento.vacinas}"
+					rendered="#{not empty atendimento.vacinas}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.vacinas.header']}">
+						<h:outputText value="#{vacina.descricao}"/>
+						<h:outputText value=" - #{vacina.observacao}" rendered="#{not empty vacina.observacao}"/>
+					</p:column>
+				</p:dataTable>
+				
+				<p:dataTable id="antecedentesFamiliaresAnterioresTable" var="antecedenteFamiliar" value="#{atendimento.antecedentesFamiliares}"
+					rendered="#{not empty atendimento.antecedentesFamiliares}" style="margin-top: 7px;">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.antecedentespessoais.anteriores.atendimento.antecedentesfamiliares.header']}">
+						<h:outputText value="#{antecedenteFamiliar.descricao}"/>
+						<h:outputText value=" - #{antecedenteFamiliar.observacao}" rendered="#{not empty antecedenteFamiliar.observacao}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:dataList>
+	</p:dialog>
+</ui:composition>

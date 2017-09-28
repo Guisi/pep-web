@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{alergiaMBean.emptyStr}"/>
+		
+			<h:form id="frmEditarAlergias">
+				<p:messages id="msgAlergias"/>
+				
+				<div align="right">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{alergiaMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['alergia.botao.procurar']}" action="#{alergiaMBean.listarAlergias}" 
+								icon="ui-icon-search" update="alergiaTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['alergia.botao.novo']}" action="#{alergiaMBean.novaAlergia}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
+				</div>
+				
+				<p:dataTable id="alergiaTable" var="alergia" value="#{alergiaMBean.alergiaList}" emptyMessage="#{msg['alergia.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['alergia.lista.header']}"/>
+				    </f:facet>
+					
+					<p:column headerText="#{msg['alergia.descricao']}" styleClass="leftAligned" sortBy="#{alergia.descricao}">
+						<h:outputText value="#{alergia.descricao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['alergia.chkativo']}" styleClass="centerAligned" width="10%" sortBy="#{alergia.chkAtivo}">
+						<h:selectBooleanCheckbox value="#{alergia.chkAtivo}" disabled="true"/>
+					</p:column>
+					
+					<p:column width="70px;" style="text-align: center;">
+						<p:commandButton value="" action="#{alergiaMBean.editarAlergia(alergia.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

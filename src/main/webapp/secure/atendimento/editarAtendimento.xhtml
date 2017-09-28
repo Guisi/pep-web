@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{editarAtendimentoMBean.emptyStr}"/>
+			
+			<h:form id="frmEditarAtendimento">
+			
+				<p:messages id="msgAtendimentos"/>
+				
+				<p:outputPanel rendered="#{not empty editarAtendimentoMBean.atendimentoSelecionado and not empty editarAtendimentoMBean.pacienteSelecionado}">
+				
+					<p:panel header="#{editarAtendimentoMBean.atendimentoSelecionado.new ? msg['atendimento.header.novo'] : msg['atendimento.header.editar'].concat(' ').concat(editarAtendimentoMBean.atendimentoSelecionado.dataFormatada)}"
+						styleClass="atendimentoPanel">
+
+						<h:panelGrid columns="1" style="width: 100%;">
+							<p:panel>
+								<h:panelGrid columns="2" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+									<h:panelGroup>
+										<h:commandLink action="#{editarAtendimentoMBean.editarPaciente}">
+											<h:outputText value="#{editarAtendimentoMBean.pacienteSelecionado.nomeCompleto}" style="font-size: 16px; font-weight: bold;"/>
+										</h:commandLink>
+										<br/>
+										<div style="margin-top: 7px;">
+											<h:outputText value="#{editarAtendimentoMBean.idadePaciente}"/>
+											<h:outputText value=" #{editarAtendimentoMBean.estadoCivilPaciente}"/>
+											<h:outputText value=" #{editarAtendimentoMBean.cidadePaciente}"/>
+										</div>
+									</h:panelGroup>
+								</h:panelGrid>
+							</p:panel>
+						</h:panelGrid>
+						
+						<h:panelGrid id="pngMenuAtendimento" columns="2" columnClasses="atendimento-leftMenu,rightContent" style="width: 100%;">
+							<p:column style="width: 213px;">
+								<p:menu style="margin-top: 6px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.historiamotivo.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="historiaAtendimentoInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.historiamotivo.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.tratamentos.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="tratamentosInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.tratamentos.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.antecedentespessoais.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="antecedentesPessoaisInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.antecedentespessoais.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.examefisico.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="exameFisicoInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.examefisico.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.diagnostico.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="diagnosticoInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.diagnostico.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.solicitacaoexames.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="solicitacaoExamesInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.solicitacaoexames.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							    
+							    <p:menu style="margin-top: 5px; width: 213px;">
+						            <p:menuitem value="#{msg['atendimento.lembretes.header']}" update="panelAtendimentoInclude, msgAtendimentos">
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuInclude}" value="lembretesInclude.xhtml"/>
+						            	<f:setPropertyActionListener target="#{editarAtendimentoMBean.menuHeader}" value="#{msg['atendimento.lembretes.header']}"/>
+						            </p:menuitem>
+							    </p:menu>
+							</p:column>
+							
+							<p:column>
+								<p:outputPanel id="panelAtendimentoInclude">
+									<fieldset>
+										<legend>
+											<h:outputText value="#{editarAtendimentoMBean.menuHeader != null ? editarAtendimentoMBean.menuHeader : msg['atendimento.historiamotivo.header']}" />
+										</legend>
+										<ui:include src="#{editarAtendimentoMBean.menuInclude != null ? editarAtendimentoMBean.menuInclude : 'historiaAtendimentoInclude.xhtml'}" />
+									</fieldset>
+								</p:outputPanel>
+							</p:column>
+						</h:panelGrid>
+						
+						<div class="divBotoesEdicao">
+							<p:commandButton value="#{msg['botao.cancelar']}" action="#{editarAtendimentoMBean.cancelar}" icon="ui-icon-close" immediate="true"/>
+							<p:commandButton value="#{msg['botao.salvar']}" update="msgAtendimentos" action="#{editarAtendimentoMBean.salvar}" icon="ui-icon-check" styleClass="botaoSalvar"/>
+							<p:commandButton value="#{msg['botao.finalizar']}" update="msgAtendimentos" action="#{editarAtendimentoMBean.finalizar}" icon="ui-icon-check" styleClass="botaoSalvar"/>
+						</div>
+					</p:panel>
+
+				</p:outputPanel>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

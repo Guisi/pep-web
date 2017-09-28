@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{procedimentoMBean.emptyStr}"/>
+		
+			<h:form id="frmProcedimentos">
+				<p:messages id="msgProcedimentos"/>
+				
+				<div align="right">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{procedimentoMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['procedimento.botao.procurar']}" action="#{procedimentoMBean.listarProcedimentos}" 
+								icon="ui-icon-search" update="procedimentoTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['procedimento.botao.novo']}" action="#{procedimentoMBean.novoProcedimento}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
+				</div>
+				
+				<p:dataTable id="procedimentoTable" var="procedimento" value="#{procedimentoMBean.procedimentoList}" emptyMessage="#{msg['procedimento.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['procedimento.lista.header']}"/>
+				    </f:facet>
+					
+					<p:column headerText="#{msg['procedimento.descricao']}" styleClass="leftAligned" sortBy="#{procedimento.descricao}">
+						<h:outputText value="#{procedimento.descricao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['procedimento.tipo']}" styleClass="leftAligned" sortBy="#{procedimento.tipoProcedimento}">
+						<h:outputText value="#{procedimento.tipoProcedimento.nome}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['procedimento.chkativo']}" styleClass="centerAligned" width="10%" sortBy="#{procedimento.chkAtivo}">
+						<h:selectBooleanCheckbox value="#{procedimento.chkAtivo}" disabled="true"/>
+					</p:column>
+					
+					<p:column width="70px;" style="text-align: center;">
+						<p:commandButton value="" action="#{procedimentoMBean.editarProcedimento(procedimento.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html lang="pt-br" 
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+      
+	<h:form id="formMenu">
+		<p:menubar>
+			<sec:ifAnyGranted roles="EDITAR_PACIENTES, VISUALIZAR_PACIENTES">
+				<p:menuitem outcome="pretty:listarPacientes" value="#{msg['menu.pacientes']}"/>
+			</sec:ifAnyGranted>
+			<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS, EDITAR_PERFIS, EDITAR_ESPECIALIDADES, EDITAR_CONVENIOS, EDITAR_MEDICAMENTOS, EDITAR_QUEIXAS_PRINCIPAIS">
+				<p:submenu label="#{msg['menu.administracao']}">
+					<sec:ifAnyGranted roles="EDITAR_USUARIOS, VISUALIZAR_USUARIOS">
+						<p:menuitem outcome="pretty:listarUsuarios" value="#{msg['menu.administracao.usuarios']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_PERFIS">
+						<p:menuitem outcome="pretty:listarPerfis" value="#{msg['menu.administracao.perfilusuario']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_ALERGIAS">
+						<p:menuitem outcome="pretty:listarAlergias" value="#{msg['menu.administracao.alergias']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_CONVENIOS">
+						<p:menuitem outcome="pretty:listarConvenios" value="#{msg['menu.administracao.convenios']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_DOENCAS">
+						<p:menuitem outcome="pretty:listarDoencas" value="#{msg['menu.administracao.doencas']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_ESPECIALIDADES">
+						<p:menuitem outcome="pretty:listarEspecialidades" value="#{msg['menu.administracao.especialidades']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_EXAMES">
+						<p:menuitem outcome="pretty:listarExames" value="#{msg['menu.administracao.exames']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_GRUPOS_EXAMES">
+						<p:menuitem outcome="pretty:listarGruposExames" value="#{msg['menu.administracao.gruposexames']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_HABITOS">
+						<p:menuitem outcome="pretty:listarHabitos" value="#{msg['menu.administracao.habitos']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_MEDICAMENTOS">
+						<p:menuitem outcome="pretty:listarMedicamentos" value="#{msg['menu.administracao.medicamentos']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_PROCEDIMENTOS">
+						<p:menuitem outcome="pretty:listarProcedimentos" value="#{msg['menu.administracao.procedimentos']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_QUEIXAS_PRINCIPAIS">
+						<p:menuitem outcome="pretty:listarQueixasPrincipais" value="#{msg['menu.administracao.queixasprincipais']}"/>
+					</sec:ifAnyGranted>
+					<sec:ifAnyGranted roles="EDITAR_VACINAS">
+						<p:menuitem outcome="pretty:listarVacinas" value="#{msg['menu.administracao.vacinas']}"/>
+					</sec:ifAnyGranted>
+				</p:submenu>
+			</sec:ifAnyGranted>
+			
+			<f:facet name="options">
+				<p:panelGrid columns="2" styleClass="noborder" columnClasses="rightAligned nopadding, leftAligned nopadding">
+					<h:outputText value="Tema: " style="vertical-align: middle;"/>
+					<p:themeSwitcher id="basic" style="width:165px; margin-left: 5px; margin-right: 5px; margin-top: 2px;" value="#{themeSwitcherView.theme}">
+			            <f:selectItem itemLabel="Escolha o tema" itemValue="" />
+			            <f:selectItems value="#{themeSwitcherView.themes}"/>
+			            <p:ajax listener="#{themeSwitcherView.saveTheme}" />
+			        </p:themeSwitcher>
+				</p:panelGrid>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+</html>

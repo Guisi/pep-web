@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{perfilMBean.emptyStr}"/>
+		
+			<h:form id="frmPerfis">
+				<p:messages id="msgPerfis"/>
+				
+				<div align="right">
+					<p:commandButton value="#{msg['perfil.botao.novo']}" action="#{perfilMBean.novoPerfil}"
+						icon="ui-icon-document" styleClass="botaoNovo"/>
+				</div>
+				
+				<p:dataTable id="perfilTable" var="perfil" value="#{perfilMBean.perfilList}" emptyMessage="#{msg['perfil.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="5"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['perfil.lista.header']}"/>
+				    </f:facet>
+					
+					<p:column headerText="#{msg['perfil.nome']}" width="20%">
+						<h:outputText value="#{perfil.nome}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['perfil.descricao']}" styleClass="leftAligned">
+						<h:outputText value="#{perfil.descricao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['perfil.possuiespecialidades']}">
+						<h:selectBooleanCheckbox value="#{perfil.possuiEspecialidades}" disabled="true"/>
+					</p:column>
+					
+					<p:column headerText="#{msg['perfil.possuiconvenios']}">
+						<h:selectBooleanCheckbox value="#{perfil.possuiConvenios}" disabled="true"/>
+					</p:column>
+					
+					<p:column width="65px;" style="text-align: left;">
+						<p:commandButton value="" action="#{perfilMBean.editarPerfil(perfil.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+						<p:commandButton value="" oncomplete="PF('excluirDlg').show();" icon="ui-icon-closethick" 
+							styleClass="datatable-button datatable-button-right" rendered="#{not perfil.perfilPreDefinido}">
+							<f:setPropertyActionListener target="#{perfilMBean.perfilSelecionado}" value="#{perfil}"/>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog widgetVar="excluirDlg" showEffect="fade" hideEffect="fade" header="#{msg['general.confirmation']}" message="#{msg['perfil.remover.confirmacao']}">
+			        <p:commandButton value="#{msg['botao.sim']}" actionListener="#{perfilMBean.removerPerfil}" update="perfilTable, msgPerfis" oncomplete="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="#{msg['botao.nao']}" onclick="PF('excluirDlg').hide();" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			    </p:confirmDialog>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

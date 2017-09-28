@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/base.xhtml">
+
+	<ui:define name="content">
+		<p:panel>
+			<h:outputText value="#{medicamentoMBean.emptyStr}"/>
+		
+			<h:form id="frmMedicamentos">
+				<p:messages id="msgMedicamentos"/>
+				
+				<div align="right">
+					<p:panelGrid columns="2" styleClass="noborder panelgrid-nopadding" columnClasses="leftAligned, rightAligned" style="width: 100%;">
+						<h:panelGroup>
+							<p:inputText value="#{medicamentoMBean.pesquisa}" style="margin-bottom: 5px; width: 200px;"/>
+							<p:commandButton title="#{msg['medicamento.botao.procurar']}" action="#{medicamentoMBean.listarMedicamentos}" 
+								icon="ui-icon-search" update="medicamentoTable" style="height: 26px; margin-left: 3px;"/>
+						</h:panelGroup>
+						<p:commandButton value="#{msg['medicamento.botao.novo']}" action="#{medicamentoMBean.novoMedicamento}"
+							icon="ui-icon-document" styleClass="botaoNovo"/>
+					</p:panelGrid>
+				</div>
+				
+				<p:dataTable id="medicamentoTable" var="medicamento" value="#{medicamentoMBean.medicamentoList}" emptyMessage="#{msg['medicamento.lista.empty']}"
+					paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+					<f:facet name="header">
+				        <h:outputText value="#{msg['medicamento.lista.header']}"/>
+				    </f:facet>
+					
+					<p:column headerText="#{msg['medicamento.principioativo']}" styleClass="leftAligned" width="40%" sortBy="#{medicamento.principioAtivo}">
+						<h:outputText value="#{medicamento.principioAtivo}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['medicamento.apresentacao']}" styleClass="leftAligned" width="40%" sortBy="#{medicamento.apresentacao}">
+						<h:outputText value="#{medicamento.apresentacao}" />
+					</p:column>
+					
+					<p:column headerText="#{msg['medicamento.chkativo']}" styleClass="centerAligned" width="8%" sortBy="#{medicamento.chkAtivo}">
+						<h:selectBooleanCheckbox value="#{medicamento.chkAtivo}" disabled="true"/>
+					</p:column>
+					
+					<p:column width="70px;" style="text-align: center;">
+						<p:commandButton value="" action="#{medicamentoMBean.editarMedicamento(medicamento.id)}" icon="ui-icon-pencil" styleClass="datatable-button"/>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>

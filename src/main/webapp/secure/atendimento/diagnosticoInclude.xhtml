@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div style="text-align: right; width: 100%;">
+		<h:commandLink value="Ver anteriores" onclick="PF('dlgDoencasDiagnosticadasAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}"/>
+	</div>
+
+	<p:panel styleClass="internal-panel" style="margin-top: 10px;">
+		<h:outputText value="#{msg['atendimento.diagnostico.impressaodiagnostica']}" styleClass="ui-state-default internal-panel-title"/>
+		<p:inputTextarea value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentoSelecionado.impressaoDiagnostica}" autoResize="false" maxlength="1000"
+			rows="4" style="width: 99%; margin-top: 5px;"/>
+	</p:panel>
+
+	<p:panel id="pnBotoesDoencasDiagnosticadas" style="margin: 10px 0px 10px 0px; display: table;">
+		<ui:repeat var="doencaDiagnosticada" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasMaisUsadas}">
+			<p:commandButton value="#{doencaDiagnosticada.codigoCid} - #{doencaDiagnosticada.descricao}" actionListener="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarDoencaDiagnosticada(doencaDiagnosticada)}"
+				process=":frmEditarAtendimento:doencasDiagnosticadasTable, @this" styleClass="botao-mais-usados-fixo"
+				update=":frmEditarAtendimento:doencasDiagnosticadasTable, :frmEditarAtendimento:pnBotoesDoencasDiagnosticadas, :frmEditarAtendimento:doencaDiagnosticadaAddInput, :frmEditarAtendimento:msgAtendimentos">
+			</p:commandButton>
+		</ui:repeat>
+	</p:panel>
+
+	<h:panelGrid columns="2" width="100%">
+		<h:panelGrid columns="2">
+			<p:selectOneMenu id="doencaDiagnosticadaAddInput" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencaDiagnosticadaSelecionada}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+				<f:selectItems value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasDisponiveis}" var="doencaDiagnosticada" itemLabel="#{doencaDiagnosticada.codigoCid} - #{doencaDiagnosticada.descricao}" itemValue="#{doencaDiagnosticada}"/>
+				<p:ajax event="change" update="addDoencaDiagnosticadaBtn" process="@this"/>
+			</p:selectOneMenu>
+			<p:columnGroup>
+				<p:commandButton id="addDoencaDiagnosticadaBtn" action="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarDoencaDiagnosticada}" icon="ui-icon-plusthick" update="@this, doencaDiagnosticadaAddInput, doencasDiagnosticadasTable, :frmEditarAtendimento:msgAtendimentos"
+					disabled="#{empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencaDiagnosticadaSelecionada}" process="doencaDiagnosticadaAddInput, doencasDiagnosticadasTable, @this" styleClass="botaoSalvar"/>
+				<p:commandButton id="addOutroDoencaDiagnosticadaBtn" action="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.adicionarOutroDoencaDiagnosticada}"
+					value="#{msg['atendimento.diagnostico.doencasdiagnosticadas.botao.outradoenca']}" process="doencasDiagnosticadasTable, @this" update="doencasDiagnosticadasTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
+			</p:columnGroup>
+		</h:panelGrid>
+	</h:panelGrid>
+	
+	<p:dataTable id="doencasDiagnosticadasTable" var="doencaDiagnosticadaAtendimento" value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.doencasDiagnosticadasAtendimentoAgrupado}" 
+		emptyMessage="#{msg['atendimento.diagnostico.doencasdiagnosticadas.lista.empty']}"
+		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+		paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+		<p:column headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.doenca']}">
+			<p:inputText id="descricaoInput" value="#{doencaDiagnosticadaAtendimento.descricao}" maxlength="300"
+				rendered="#{empty doencaDiagnosticadaAtendimento.doenca and not doencaDiagnosticadaAtendimento.atendimentoAnterior}"
+				style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.diagnostico.doencasdiagnosticadas.campoobrigatorio.doenca']}"/>
+			<h:outputText value="#{doencaDiagnosticadaAtendimento.descricao}" rendered="#{not empty doencaDiagnosticadaAtendimento.doenca or doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+		</p:column>
+
+		<p:column headerText="#{msg['atendimento.diagnostico.doencasdiagnosticadas.observacao']}">
+			<p:inputTextarea value="#{doencaDiagnosticadaAtendimento.observacao}" autoResize="false" maxlength="1000" rows="2" style="width: 98%;"
+				rendered="#{not doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+				
+			<h:outputText value="#{doencaDiagnosticadaAtendimento.observacao}" rendered="#{doencaDiagnosticadaAtendimento.atendimentoAnterior}"/>
+		</p:column>
+		
+		<p:column>
+			<p:selectOneMenu id="statusDoencaSom" value="#{doencaDiagnosticadaAtendimento.statusDoenca}" styleClass="inputUmQuarto">
+				<f:selectItems value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.statusDoencaList}" var="status" itemLabel="#{status.nome}" itemValue="#{status}"/>
+			</p:selectOneMenu>
+		</p:column>
+		
+		<p:column width="30px;" style="text-align: left;">
+			<p:commandButton value="" actionListener="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.removerDoencaDiagnosticada(index)}"
+				update="doencasDiagnosticadasTable, :frmEditarAtendimento:doencaDiagnosticadaAddInput"
+				rendered="#{not doencaDiagnosticadaAtendimento.atendimentoAnterior}"
+				icon="ui-icon-closethick" styleClass="datatable-button" process="@this"/>
+		</p:column>
+	</p:dataTable>
+	
+	<p:dialog widgetVar="dlgDoencasDiagnosticadasAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.diagnostico.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}" width="800">
+	
+		<p:dataList value="#{editarAtendimentoMBean.doencasDiagnosticadasViewBean.atendimentosAnterioresDoencasDiagnosticadas}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			
+			<p:panel header="#{msg['atendimento.diagnostico.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
+				<p:outputPanel rendered="#{not empty atendimento.impressaoDiagnostica}" style="text-align: left;">
+					<p>
+						<h:outputText value="#{msg['atendimento.diagnostico.impressaodiagnostica']}: " styleClass="internal-panel-title"/>
+						<h:outputText value="#{atendimento.impressaoDiagnostica}"/>
+					</p>
+				</p:outputPanel>
+				<p:dataTable id="doencasAnteriorTable" var="doencaDiagnosticada" value="#{atendimento.doencasDiagnosticadas}" 
+					rendered="#{not empty atendimento.doencasDiagnosticadas}">
+					<p:column style="text-align: left;" headerText="#{msg['atendimento.diagnostico.anteriores.atendimento.diagnosticos.header']}">
+						<h:outputText value="#{doencaDiagnosticada.descricao}"/>
+						<h:outputText value=" - #{doencaDiagnosticada.observacao}" rendered="#{not empty doencaDiagnosticada.observacao}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:dataList>
+	</p:dialog>
+</ui:composition>

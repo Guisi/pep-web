@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+	<div style="text-align: right; width: 100%;">
+		<h:commandLink value="Ver anteriores" onclick="PF('dlgTratamentosAnteriores').show(); return false;" rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}"/>
+	</div>
+	<h:panelGrid columns="2" width="100%">
+		<h:panelGrid columns="2">
+			<p:selectOneMenu id="medicamentoAddInput" value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentoSelecionado}" converter="genericEntityConverter" style="width: 420px; margin-top: 2px;" filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
+				<f:selectItems value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentosDisponiveis}" var="medicamento" itemLabel="#{medicamento.principioAtivo} - #{medicamento.apresentacao}" itemValue="#{medicamento}"/>
+				<p:ajax event="change" update="addMedicamentoBtn" process="@this"/>
+			</p:selectOneMenu>
+			<p:columnGroup>
+				<p:commandButton id="addMedicamentoBtn" action="#{editarAtendimentoMBean.tratamentoViewBean.adicionarMedicamento}" icon="ui-icon-plusthick" update="@this, medicamentosTable, medicamentoAddInput, :frmEditarAtendimento:msgAtendimentos"
+					disabled="#{empty editarAtendimentoMBean.tratamentoViewBean.medicamentoSelecionado}" process="medicamentoAddInput, medicamentosTable, @this" styleClass="botaoSalvar"/>
+				<p:commandButton id="addOutroMedicamentoBtn" action="#{editarAtendimentoMBean.tratamentoViewBean.adicionarOutroMedicamento}"
+					value="#{msg['atendimento.botao.outrotratamento']}" process="medicamentosTable, @this" update="medicamentosTable, :frmEditarAtendimento:msgAtendimentos" styleClass="botaoSalvar"/>
+			</p:columnGroup>
+		</h:panelGrid>
+	</h:panelGrid>
+	
+	<div>
+		<p:dataTable id="medicamentosTable" var="medicamentoAtendimento" value="#{editarAtendimentoMBean.tratamentoViewBean.medicamentosAtendimentoAgrupado}" 
+			emptyMessage="#{msg['atendimento.tratamentos.medicamentos.lista.empty']}"
+			paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10" rowIndexVar="index"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+			
+			<p:column headerText="#{msg['atendimento.tratamentos.medicamento']}">
+				<p:inputText id="nomeInput" value="#{medicamentoAtendimento.descricao}" maxlength="600" rendered="#{empty medicamentoAtendimento.medicamento and not medicamentoAtendimento.atendimentoAnterior}"
+					style="width: 96%;" required="true" requiredMessage="#{msg['atendimento.tratamentos.campoobrigatorio.medicamento']}"/>
+				<h:outputText value="#{medicamentoAtendimento.descricao}" rendered="#{not empty medicamentoAtendimento.medicamento or medicamentoAtendimento.atendimentoAnterior}"/>
+			</p:column>
+			
+			<p:column headerText="#{msg['atendimento.tratamentos.posologia']}">
+				<p:inputTextarea value="#{medicamentoAtendimento.posologia}" autoResize="false" maxlength="300"
+					rows="2" style="width: 98%;" rendered="#{not medicamentoAtendimento.atendimentoAnterior}"/>
+				<h:outputText value="#{medicamentoAtendimento.posologia}" rendered="#{medicamentoAtendimento.atendimentoAnterior}"/>
+			</p:column>
+			
+			<p:column headerText="#{msg['atendimento.tratamentos.emuso']}" style="width: 60px;" rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.medicamentosAtendimentosAnteriores}">
+				<p:inputSwitch value="#{medicamentoAtendimento.emUso}" onLabel="#{msg['atendimento.tratamentos.emuso.sim']}" 
+					offLabel="#{msg['atendimento.tratamentos.emuso.nao']}" rendered="#{medicamentoAtendimento.atendimentoAnterior}"/>
+			</p:column>
+			
+			<p:column width="30px;" style="text-align: left;">
+				<p:commandButton value="" actionListener="#{editarAtendimentoMBean.tratamentoViewBean.removerMedicamento(index)}" update="medicamentosTable, :frmEditarAtendimento:medicamentoAddInput"
+					icon="ui-icon-closethick" styleClass="datatable-button" process="@this" rendered="#{not medicamentoAtendimento.atendimentoAnterior}"/>
+			</p:column>
+		</p:dataTable>
+	</div>
+	
+	<p:dialog widgetVar="dlgTratamentosAnteriores" modal="true" closable="true" resizable="false" 
+		draggable="true" header="#{msg['atendimento.tratamentos.anteriores.modal.header']}" fitViewport="true" dynamic="true"
+		rendered="#{not empty editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" width="800">
+	
+		<p:dataList value="#{editarAtendimentoMBean.tratamentoViewBean.atendimentosAnterioresTratamentos}" var="atendimento" type="none" itemType="none"
+			paginator="true" rows="5" paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginatorPosition="bottom" paginatorAlwaysVisible="false" styleClass="datalist-noborder">
+			<p:panel header="#{msg['atendimento.tratamentos.anteriores.atendimento.header']} #{atendimento.dataFormatada}" style="margin-top: 5px;">
+				<p:dataTable id="medicamentosAnteriorTable" var="medicamentoAtendimento" value="#{atendimento.medicamentos}" styleClass="datatable-no-header">
+					<p:column style="text-align: left;">
+						<h:outputText value="#{medicamentoAtendimento.descricao}"/>
+						<h:outputText value=" - #{medicamentoAtendimento.posologia}" rendered="#{not empty medicamentoAtendimento.posologia}"/>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</p:dataList>
+	</p:dialog>
+</ui:composition>
