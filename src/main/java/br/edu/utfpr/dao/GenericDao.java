@@ -24,7 +24,7 @@ import br.edu.utfpr.model.Revisao;
 @SuppressWarnings("unchecked")
 public abstract class GenericDao<T extends BaseEntity, PK> {
 	
-	//@PersistenceContext(unitName = "pepPU")
+	@PersistenceContext(unitName = "pepPU")
 	protected EntityManager entityManager;
 	
 	public void save(T entity) {
